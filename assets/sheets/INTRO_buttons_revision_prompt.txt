@@ -1,0 +1,21 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Each item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.
+Characters face the viewer at a slight high 3/4 angle unless a direction is given. "Side" always means facing RIGHT.
+
+Exactly TWO separate button sprites in a two-row sheet, centered one above the other, same outer dimensions and silhouette, each approximately 4:1 width to height. Top: red START button with small winding-key pictogram. Bottom: cream HELP button with small open-book pictogram. Icon occupies only leftmost 18 percent; preserve 70 percent of the button face as plain empty area for code-rendered Korean text. No letters, numbers, labels or pseudo-writing. Clean chunky hand-inked lines, little solid darker base lip to suggest pressability but NO cast shadow. No ornamental protrusions that disrupt the rounded rectangular hit area. Pure #FF00FF background, generous margin and gap; exactly two objects.
+
+one wide rounded rectangular cartoon start button, muted red face, brass and cream double rim, thick dark plum outline, a small brass butterfly winding key pictogram on the left, broad empty center-right for a Korean label added by code, no lettering, no cast shadow
+
+one wide rounded rectangular cartoon help button, cream face, brass and dark plum double rim, thick dark plum outline, a small open book pictogram with blank pages on the left, broad empty center-right for a Korean label added by code, no lettering, no cast shadow
+
+References: style_anchor.png is the primary project drawing style and palette. ref_02_character.jpg is technique only; do not copy its character, title or lettering. Other supplied project artwork is for continuity.
+
+CRITICAL SHEET LAYOUT: Use a SQUARE 1024x1024 canvas. Top button fully contained in x=80..944, y=100..320. Bottom button fully contained in x=80..944, y=650..870. At least 300 pixels of EMPTY MAGENTA between the two buttons. Each is a simple rounded rectangle with short brass corners, NO FAN ORNAMENTS above or below, NO flourishes sticking out, no connecting decorations. They must not touch. Preserve isolated game-button design, NOT long intertitle-card banners.

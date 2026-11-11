@@ -38,15 +38,17 @@
   function startRound(n) {
     const b = WT.Game.state.boss;
     b.round = n; b.si = 0; b.atk = null; b.state = 'card'; b.t = 0;
+    WT.Audio.play('sfx_round_card');
     b.card = { title: `제${n}라운드`, sub: ['째깍 충격파를 조심하라', '종소리가 울리면 음표 곁으로', '마지막 스프링'][n - 1] };
   }
   function nextAttack() {
     const b = WT.Game.state.boss, R = ROUNDS[b.round];
-    if (b.si >= R.seq.length) { b.state = 'tired'; b.t = 0; b.pose = 'tired'; b.atk = null; return; }
+    if (b.si >= R.seq.length) { b.state = 'tired'; b.t = 0; b.pose = 'tired'; b.atk = null; WT.Audio.play('sfx_boss_tired'); return; }
     const type = R.seq[b.si++];
     b.state = 'attack'; b.t = 0;
     b.atk = { type, t: 0, phase: 'tele', n: 0, next: 0 };
     b.pose = { shock: 'slam', gears: 'throw', bell: 'bell' }[type];
+    WT.Audio.play('sfx_boss_tele');
   }
 
   // ───────── 피격 ─────────
@@ -54,6 +56,7 @@
     const s = WT.Game.state, ar = s.arena, p = s.player;
     if (ar.inv > 0 || ar.sleepT > 0) return;
     ar.hp--; ar.inv = 1.3;
+    WT.Audio.play(ar.hp <= 0 ? 'sfx_player_faint' : 'sfx_player_hit');
     const dx = p.x - fromX, dy = p.y - fromY, d = Math.hypot(dx, dy) || 1;
     tryMove(p, dx / d * 50, dy / d * 30);
     WT.Game.burst('sparkle', p.x, p.y - 60, 6);
@@ -84,6 +87,7 @@
     const r = b.round;
     WT.Wind.open(() => {
       b.springs--; b.state = 'hurt'; b.t = 0; b.pose = 'hurt'; b.hitFlash = 0.5;
+      WT.Audio.play('sfx_spring_pop');
       WT.Game.burst('spring', A.boss.x + 60, A.boss.y - 120, 1);
       WT.Game.burst('sparkle', A.boss.x, A.boss.y - 120, 12);
       WT.UI.flash();
@@ -91,7 +95,7 @@
     }, {
       title: '과감기!', guide: '백작이 버티기 전에 끝까지 감아라! (원 그리기 / A·D 번갈아)',
       timeLimit: 8 - r * 0.6, resist: 0.04 + r * 0.035, back: 'wind_boss_back', variant: 'boss',
-      onFail: () => { b.state = 'recover'; b.t = 0; b.pose = 'idle'; WT.Game.toast('백작이 버텨 냈다! 다시 지치게 만들자'); }
+      onFail: () => { b.state = 'recover'; b.t = 0; b.pose = 'idle'; WT.Audio.play('sfx_overwind_fail'); WT.Audio.play('sfx_boss_recover', { delay: 0.5 }); WT.Game.toast('백작이 버텨 냈다! 다시 지치게 만들자'); }
     });
   };
 
@@ -123,11 +127,11 @@
     if (b.state === 'gap') { b.pose = 'idle'; if (b.t > 0.7) nextAttack(); }
     if (b.state === 'tired') {
       if (Math.random() < dt * 6) WT.Game.burst('steam', A.boss.x + rnd(-40, 40), A.boss.y - 200, 1);
-      if (b.t > TIRED) { b.state = 'recover'; b.t = 0; b.pose = 'idle'; WT.Game.toast('백작이 다시 일어났다!'); }
+      if (b.t > TIRED) { b.state = 'recover'; b.t = 0; b.pose = 'idle'; WT.Audio.play('sfx_boss_recover'); WT.Game.toast('백작이 다시 일어났다!'); }
     }
     if (b.state === 'recover' && b.t > 1) { b.si = 0; b.state = 'gap'; b.t = 0; }
     if (b.state === 'hurt' && b.t > 1.8) {
-      if (b.springs <= 0) { b.state = 'defeated'; b.t = 0; b.pose = 'cuckoo'; WT.Game.burst('sparkle', A.boss.x, A.boss.y - 60, 20); }
+      if (b.springs <= 0) { b.state = 'defeated'; b.t = 0; b.pose = 'cuckoo'; WT.Game.burst('sparkle', A.boss.x, A.boss.y - 60, 20); WT.Audio.play('sfx_boss_cuckoo'); WT.Audio.jingle('jingle_boss_clear'); }
       else startRound(b.round + 1);
     }
     if (b.state === 'defeated' && b.t > 2.2 && !b.ended) { b.ended = true; WT.Game.endAct2(); }
@@ -167,6 +171,7 @@
       if (a.phase === 'go') {
         if (a.n < R.rings && a.t >= a.next) {
           ar.rings.push({ r: 70, speed: 290 * R.k, hit: false });
+          WT.Audio.play('sfx_boss_slam');
           a.n++; a.next = a.t + 0.6 / R.k;
           WT.Game.burst('dust', A.boss.x - 70, A.boss.y, 1); WT.Game.burst('dust', A.boss.x + 70, A.boss.y, 1);
           WT.UI.shake && WT.UI.shake(0.18);
@@ -181,12 +186,13 @@
           const y = a.n % 2 === 0 ? Math.max(A.bounds.y1 + 40, Math.min(A.bounds.y2, p.y)) : rnd(A.bounds.y1 + 60, A.bounds.y2);
           const big = Math.random() < R.big;
           ar.gears.push({ x: fromLeft ? -40 : WT.W + 40, y, vx: (fromLeft ? 1 : -1) * rnd(320, 400) * R.k, r: big ? 40 : 22, big, rot: 0, warn: 0.65 });
+          WT.Audio.play('sfx_gear_warn');
           a.n++; a.next = a.t + 0.75 / R.k;
         }
         if (a.n >= R.gears && ar.gears.length === 0) end();
       }
     } else if (a.type === 'bell') {
-      if (a.phase === 'tele' && a.t > 1.0) { a.phase = 'go'; a.t = 0; ar.fog = 4.6; WT.UI.flash(); }
+      if (a.phase === 'tele' && a.t > 1.0) { a.phase = 'go'; a.t = 0; ar.fog = 4.6; WT.UI.flash(); WT.Audio.play('sfx_boss_bell'); }
       if (a.phase === 'go' && ar.fog <= 0) end();
     }
     function end() { b.state = 'gap'; b.t = 0; b.atk = null; }

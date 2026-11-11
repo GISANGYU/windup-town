@@ -51,7 +51,37 @@ def main():
             if os.path.normcase(p) not in keep:
                 os.remove(p)
     print(f"{n}개  {total_in / 1e6:.1f}MB → {total_out / 1e6:.1f}MB  ({OUT})")
+    build_audio(keep)
     stamp_index()
+
+
+def build_audio(keep):
+    """assets/audio/*.wav → assets_web/audio/*.ogg (Vorbis). 브라우저가 OGG를 못 읽으면 게임이 WAV로 되돌아간다."""
+    import json
+    import re
+    try:
+        import soundfile as sf
+    except ImportError:
+        print("soundfile 없음: 오디오 압축 건너뜀 (pip install soundfile)")
+        return
+    t = open(os.path.join(ROOT, "assets", "audio", "audio_manifest.js"), encoding="utf-8").read()
+    m = json.loads(t[re.search(r"^window\.AUDIO_MANIFEST\s*=", t, re.M).end():].strip().rstrip(";"))
+    tin = tout = n = 0
+    for d in m["bgm"] + m["sfx"]:
+        src = os.path.join(ROOT, "assets", d["file"].replace("/", os.sep))
+        if not os.path.exists(src):
+            continue
+        dst = os.path.join(OUT, os.path.splitext(d["file"])[0].replace("/", os.sep) + ".ogg")
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        x, sr = sf.read(src)
+        # libsndfile 은 긴 파일을 OGG로 한 번에 쓰면 조용히 멈춘다 → 4096 샘플씩 나눠 쓴다
+        ch = 1 if x.ndim == 1 else x.shape[1]
+        with sf.SoundFile(dst, "w", samplerate=sr, channels=ch, format="OGG", subtype="VORBIS") as o:
+            for i in range(0, len(x), 4096):
+                o.write(x[i:i + 4096])
+        keep.add(os.path.normcase(dst))
+        tin += os.path.getsize(src); tout += os.path.getsize(dst); n += 1
+    print(f"오디오 {n}개  {tin / 1e6:.1f}MB → {tout / 1e6:.1f}MB")
 
 
 def stamp_index():

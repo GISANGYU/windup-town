@@ -1,0 +1,132 @@
+{
+  "canvas": {
+    "w": 1280,
+    "h": 720
+  },
+  "assets": [
+    {
+      "id": "bg_intro",
+      "file": "bg/bg_intro.png"
+    },
+    {
+      "id": "ui_button_start",
+      "file": "ui/ui_button_start.png"
+    },
+    {
+      "id": "ui_button_help",
+      "file": "ui/ui_button_help.png"
+    },
+    {
+      "id": "ui_help_modal",
+      "file": "ui/ui_help_modal.png"
+    }
+  ],
+  "title": {
+    "text": "태엽 마을",
+    "x": 640,
+    "y": 190,
+    "fontFamily": "Do Hyeon",
+    "fontSize": 92,
+    "color": "#3D3346"
+  },
+  "subtitle": {
+    "text": "멈춘 마을에 다시 음악을",
+    "x": 640,
+    "y": 275,
+    "fontSize": 24,
+    "color": "#3D3346"
+  },
+  "buttons": [
+    {
+      "asset": "ui_button_start",
+      "label": "시작",
+      "rect": {
+        "x": 440,
+        "y": 355,
+        "w": 400,
+        "h": 112
+      },
+      "textCenter": {
+        "x": 680,
+        "y": 410
+      },
+      "fontSize": 38,
+      "color": "#FBF6EA",
+      "intendedAction": "기존 오프닝 컷신 재생"
+    },
+    {
+      "asset": "ui_button_help",
+      "label": "게임설명",
+      "rect": {
+        "x": 440,
+        "y": 485,
+        "w": 400,
+        "h": 112
+      },
+      "textCenter": {
+        "x": 680,
+        "y": 540
+      },
+      "fontSize": 32,
+      "color": "#3D3346",
+      "intendedAction": "게임설명 모달 열기"
+    }
+  ],
+  "modal": {
+    "asset": "ui_help_modal",
+    "rect": {
+      "x": 180,
+      "y": 48,
+      "w": 920,
+      "h": 600
+    },
+    "scrim": "rgba(20,15,19,0.68)",
+    "title": "게임설명",
+    "objective": "흩어진 태엽 열쇠 3개를 찾아, 그라모에게 음악을 되찾아 주세요.",
+    "controls": [
+      {
+        "key": "W A S D / 방향키",
+        "action": "이동"
+      },
+      {
+        "key": "Shift",
+        "action": "누른 채 이동하면 빨리 걷기"
+      },
+      {
+        "key": "Space",
+        "action": "점프 · 덤불과 돌 넘기"
+      },
+      {
+        "key": "E",
+        "action": "말 걸기 · 열쇠 줍기 · 문 들어가기"
+      }
+    ],
+    "winding": {
+      "title": "태엽 감기",
+      "text": "마우스로 열쇠 둘레에 원을 그리거나 A · D를 번갈아 누르세요."
+    },
+    "footer": "보상을 받으면 집에 들어가 가구를 꾸밀 수 있어요.",
+    "dismiss": {
+      "label": "닫기",
+      "key": "Esc",
+      "recommendedRect": {
+        "x": 980,
+        "y": 145,
+        "w": 64,
+        "h": 48
+      }
+    },
+    "contentSafeRect": {
+      "x": 265,
+      "y": 175,
+      "w": 750,
+      "h": 415
+    }
+  },
+  "integrationStatus": "이미지·문구·배치 제안만 제공. 기존 게임 이벤트와 시작 흐름 연결은 별도 구현.",
+  "notes": [
+    "이미지에는 텍스트를 넣지 않음. 기존 Do Hyeon / Gowun Dodum 폰트로 오버레이.",
+    "모달을 여는 동안 이동·점프 등 게임 입력을 차단하고 닫을 때 설명 버튼으로 초점을 돌릴 것.",
+    "게임설명은 대화형 버튼으로 구현하고 모달에는 닫기 버튼과 Esc 처리를 제공할 것."
+  ]
+}

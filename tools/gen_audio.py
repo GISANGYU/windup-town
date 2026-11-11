@@ -924,6 +924,96 @@ def sfx_round_card():
     return fade(norm(reverb(x, SR, mix=.3, dur=1.4)[: len(x)], 0.8), SR, 0.001, 0.4)
 
 
+# ───────────────────────── 2차 검토에서 추가 ─────────────────────────
+def sfx_text_blip_boss():
+    """째깍 백작 말투: 낮은 금속 '짹'"""
+    t = t_axis(0.07, SR)
+    x = np.sin(2 * np.pi * 150 * t) * np.exp(-t * 30) * 0.8
+    s = tick(SR, 0.7, 1500)
+    x[:len(s)] += s
+    return fade(norm(lp(x, 3000, SR), 0.5), SR)
+
+
+def sfx_clock_midnight():
+    """제2막 오프닝: 자정 시계탑 종 12번 (약 7.5초)"""
+    x = np.zeros(int(7.6 * SR))
+    for k in range(12):
+        s = bell_hit(SR, 196, 1.4, 0.55)
+        hi = bell_hit(SR, 392.5, 0.8, 0.15)
+        s[: len(hi)] += hi
+        j = int(k * 0.55 * SR)
+        x[j:j + len(s)] += s[: len(x) - j]
+    x = reverb(x, SR, mix=0.35, dur=1.8)[: len(x)]
+    return fade(norm(lp(x, 4000, SR), 0.8), SR, 0.001, 1.0)
+
+
+def sfx_overwind_fail():
+    """과감기 실패(백작이 버팀): 태엽이 '드르르륵' 되감기며 튕겨 나옴"""
+    x = np.zeros(int(1.0 * SR))
+    tpos, k = 0.0, 0
+    while tpos < 0.5:
+        s = tick(SR, 0.5, 2600 - k * 60)
+        j = int(tpos * SR)
+        x[j:j + len(s)] += s[: len(x) - j]
+        tpos += 0.025
+        k += 1
+    t = t_axis(0.45, SR)
+    boing = np.sin(2 * np.pi * np.cumsum(500 * np.exp(-t * 3) + 90) / SR) * np.exp(-t * 5) * 0.7
+    j = int(0.5 * SR)
+    x[j:j + len(boing)] += boing
+    k2 = lp(kick(SR, 0.8), 500, SR)
+    x[j:j + len(k2)] += k2[: len(x) - j]
+    return fade(norm(x, 0.75), SR, 0.001, 0.1)
+
+
+def sfx_timer_tick():
+    """과감기 남은 시간 경고: 남은 3초부터 1초마다 '똑'"""
+    x = np.zeros(int(0.15 * SR))
+    s = woodblock(SR, 1200, 1, 0.12)
+    x[:len(s)] += s
+    s2 = tick(SR, 0.5, 3600)
+    x[:len(s2)] += s2
+    return fade(norm(x, 0.6), SR)
+
+
+def sfx_lamp_on():
+    """가로등이 깨어나 켜짐: '팅' + 전구 웅"""
+    t = t_axis(0.8, SR)
+    hum = (np.sin(2 * np.pi * 120 * t) + 0.3 * np.sin(2 * np.pi * 240 * t)) * np.minimum(1, t / 0.15) * np.exp(-t * 3) * 0.3
+    x = hum.copy()
+    p =porcelain(2600, 0.4, 0.6)
+    x[:len(p)] += p
+    return fade(norm(x, 0.55), SR, 0.001, 0.2)
+
+
+def sfx_boss_recover():
+    """백작이 다시 일어남: 낮은 태엽 감기 + '삐걱'"""
+    x = np.zeros(int(0.9 * SR))
+    tpos, k = 0.0, 0
+    while tpos < 0.6:
+        s = tick(SR, 0.4, 1200 + k * 50)
+        j = int(tpos * SR)
+        x[j:j + len(s)] += s[: len(x) - j]
+        tpos += 0.05
+        k += 1
+    t = t_axis(0.4, SR)
+    creak = bp(np.sign(np.sin(2 * np.pi * np.cumsum(200 + 120 * t) / SR)) * 1.0, 300, 1800, SR) * np.exp(-t * 4) * 0.4
+    j = int(0.5 * SR)
+    x[j:j + len(creak)] += creak[: len(x) - j]
+    return fade(norm(x, 0.6), SR, 0.001, 0.1)
+
+
+def sfx_drowsy_loop():
+    """졸음 게이지가 찰 때: 느린 하품 웅웅 루프 (2초). 볼륨을 drowsy 값에 비례"""
+    n = 2 * SR
+    t = np.arange(n) / SR
+    f = 110 + 6 * np.sin(2 * np.pi * 0.5 * t)
+    x = np.sin(2 * np.pi * np.cumsum(f) / SR) + 0.3 * np.sin(2 * np.pi * 2 * np.cumsum(f) / SR)
+    x *= 0.6 + 0.4 * np.sin(2 * np.pi * 1.0 * t) ** 2
+    x += lp(noise(n), 400, SR) * 0.15
+    return norm(x, 0.4)
+
+
 BGM = {
     "bgm_town_sleepy": bgm_town_sleepy,
     "bgm_town_awake": bgm_town_awake,
@@ -955,6 +1045,9 @@ SFX = {
     "sfx_gear_roll": sfx_gear_roll, "sfx_boss_bell": sfx_boss_bell, "sfx_player_hit": sfx_player_hit,
     "sfx_player_faint": sfx_player_faint, "sfx_boss_tired": sfx_boss_tired, "sfx_spring_pop": sfx_spring_pop,
     "sfx_boss_cuckoo": sfx_boss_cuckoo, "sfx_round_card": sfx_round_card,
+    "sfx_text_blip_boss": sfx_text_blip_boss, "sfx_clock_midnight": sfx_clock_midnight,
+    "sfx_overwind_fail": sfx_overwind_fail, "sfx_timer_tick": sfx_timer_tick, "sfx_lamp_on": sfx_lamp_on,
+    "sfx_boss_recover": sfx_boss_recover, "sfx_drowsy_loop": sfx_drowsy_loop,
 }
 
 if __name__ == "__main__":

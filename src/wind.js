@@ -42,26 +42,35 @@
     el.classList.add('open');
     setMsg('');
   };
-  W.close = function () { W.active = false; st = null; el.classList.remove('open'); };
+  W.close = function () { W.active = false; st = null; el.classList.remove('open'); WT.Audio.stop('sfx_wind_unwind'); };
+  // 손을 떼서 풀리고 있는 중인가 (sfx_wind_unwind 루프 조건)
+  W.unwinding = function () { return !!(st && !st.done && !st.drag && st.idle > 0.5 && st.p > st.lock + 0.001); };
 
   // 감기 입력 (양수만 진행, 반대로 돌리면 조금 풀림)
   W.add = function (v) {
     if (!st || st.done) return;
-    if (v > 0) { st.p = Math.min(1, st.p + v); st.idle = 0; }
+    if (v > 0) {
+      st.p = Math.min(1, st.p + v); st.idle = 0;
+      // 래칫 '드륵': 진행 0.02마다 1번 (A·D 탭은 W.key 에서 매번)
+      st.ratchet = (st.ratchet || 0) + v;
+      if (st.ratchet >= 0.02) { st.ratchet = 0; WT.Audio.play('sfx_wind_ratchet', { rate: 0.9 + st.p * 0.3 }); }
+    }
     else st.p = Math.max(st.lock, st.p + v * 0.5);
     const notch = Math.floor(st.p * 3 + 1e-6);
     if (notch > Math.round(st.lock * 3) && notch < 3) {
       st.lock = notch / 3; st.shake = 0.35; pop(D.notch[notch - 1]);
+      WT.Audio.play('sfx_wind_notch', { rate: 1 + (notch - 1) * 0.06 });
     }
     if (st.p >= 1) {
       st.p = 1; st.lock = 1; st.done = 0.01; st.shake = 0.6; pop(D.notch[2]); setMsg(D.done);
+      WT.Audio.play('sfx_wind_complete');
     }
   };
   W.key = function (code) {
     if (!st) return false;
     const side = ['KeyA', 'ArrowLeft'].includes(code) ? 'L' : ['KeyD', 'ArrowRight'].includes(code) ? 'R' : null;
     if (!side) return false;
-    if (st.lastKey && st.lastKey !== side) W.add(PER_TAP);
+    if (st.lastKey && st.lastKey !== side) { st.ratchet = -1; W.add(PER_TAP); WT.Audio.play('sfx_wind_ratchet', { rate: 0.9 + st.p * 0.3 }); }
     st.lastKey = side;
     st.hand = side === 'L' ? -1 : 1;
     return true;
@@ -81,6 +90,9 @@
     if (!st.done && st.opts.resist) st.p = Math.max(st.lock, st.p - st.opts.resist * dt);
     if (!st.done && st.opts.timeLimit) {
       st.left -= dt;
+      // 남은 3초부터 1초마다 째깍
+      const sec = Math.ceil(st.left);
+      if (st.left > 0 && sec <= 3 && sec !== st.lastTick) { st.lastTick = sec; WT.Audio.play('sfx_timer_tick', { rate: 1 + (3 - sec) * 0.08 }); }
       setMsg(`남은 시간 ${Math.max(0, st.left).toFixed(1)}초`);
       if (st.left <= 0) { const f = st.opts.onFail; W.close(); f && f(); return; }
     }

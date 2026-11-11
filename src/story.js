@@ -15,6 +15,7 @@
     const st = WT.Game.state.ui.story;
     if (!st || st.tr) return;
     st.tr = { t: 0, dur: TR, fired: false };
+    WT.Audio.play('sfx_story_next');
   }
   S.next = function () {
     const st = WT.Game.state.ui.story;

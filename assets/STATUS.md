@@ -1,6 +1,6 @@
 # 리소스 현황
 
-OK 74 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 74
+OK 78 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 78
 
 | 상태 | ID | 필수 | 파일 | 메모 |
 |---|---|---|---|---|
@@ -78,3 +78,7 @@ OK 74 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 74
 | OK | `furn_cuckoo` |  | furniture/furn_cuckoo.png |  |
 | OK | `ui_card_frame` |  | ui/ui_card_frame.png |  |
 | OK | `ui_key_e` |  | ui/ui_key_e.png |  |
+| OK | `bg_intro` |  | bg/bg_intro.png |  |
+| OK | `ui_button_start` |  | ui/ui_button_start.png |  |
+| OK | `ui_button_help` |  | ui/ui_button_help.png |  |
+| OK | `ui_help_modal` |  | ui/ui_help_modal.png |  |

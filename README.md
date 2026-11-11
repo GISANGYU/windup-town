@@ -25,6 +25,7 @@ python tools/serve.py
 | 마우스 원 그리기 / A·D 번갈아 | 태엽 감기 |
 | 클릭·드래그, 1~5, R, G, Delete | 집 꾸미기 |
 | Esc | 닫기·취소·나가기 |
+| M | 소리 켜기/끄기 |
 
 ## 구성
 - 제1막 · 멈춘 음악 (튜토리얼): 오프닝 컷신 → 열쇠 3개 → 태엽 감기 → 집 꾸미기
@@ -38,6 +39,6 @@ python tools/serve.py
 ## 배포 (GitHub Pages)
 이미지를 바꾼 뒤 푸시하기 전에 웹용 압축본을 다시 만든다.
 ```
-python tools/build_web_assets.py   # assets/*.png → assets_web/*.webp (약 30MB → 2.5MB)
+python tools/build_web_assets.py   # 이미지 PNG → WebP (30MB → 2.5MB), 소리 WAV → OGG (10.5MB → 1.2MB)
 ```
 배포 사이트는 `assets_web/`를, 로컬 서버는 원본 `assets/`를 읽는다.

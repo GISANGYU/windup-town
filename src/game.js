@@ -115,6 +115,7 @@
     const s = G.state;
     if (s.quest.stage !== 'none') return;
     s.quest.stage = 'started';
+    WT.Audio.play('sfx_quest_start'); WT.Audio.play('sfx_key_appear', { delay: 0.4 });
     s.world.keys.forEach((k) => G.burst('sparkle', k.x, k.y - 30, 5));
     G.toast('퀘스트 시작 · 멈춘 음악');
   };
@@ -124,10 +125,11 @@
     if (!k || k.taken || s.quest.stage !== 'started') return;
     k.taken = true;
     s.inventory.keys++;
+    WT.Audio.play('sfx_key_pickup');
     s.player.action = 'happy'; s.player.actionT = 0.9;
     G.burst('sparkle', k.x, k.y - 30, 8);
     G.toast(`태엽 열쇠 ${s.inventory.keys} / 3`);
-    if (s.inventory.keys >= 3) { s.quest.stage = 'ready'; G.toast('열쇠를 다 모았다! 그라모 영감에게 가자'); }
+    if (s.inventory.keys >= 3) { s.quest.stage = 'ready'; G.toast('열쇠를 다 모았다! 그라모 영감에게 가자'); WT.Audio.play('sfx_keys_complete', { delay: 0.5 }); }
   };
 
   // 열쇠를 꽂고 → 태엽 감기 모달(사용자가 직접 감음) → 끝나면 짧은 진동 연출 → 완료
@@ -136,16 +138,18 @@
     if (s.quest.stage !== 'ready') return;
     const p = s.player, g = W.npcs.gramo;
     p.x = g.x + 70; p.y = g.y + 18; p.dir = 'side'; p.facing = -1;
-    WT.Wind.open(() => { s.ui.cutscene = { type: 'wind', t: 0, dur: 0.9 }; });
+    WT.Wind.open(() => { s.ui.cutscene = { type: 'wind', t: 0, dur: 0.9 }; WT.Audio.play('sfx_gramo_wake'); });
   };
 
   function finishWind() {
     const s = G.state;
     s.quest.stage = 'completed';
     s.world.musicOn = true;
+    WT.Audio.jingle('jingle_quest_clear'); // 끝나면 BGM 규칙에 따라 bgm_town_awake
     s.npcs.gramo.mood = 'awake';
     s.npcs.pip.mood = 'awake';
     s.npcs.lamp.mood = 'awake';
+    WT.Audio.play('sfx_lamp_on', { delay: 0.6 });
     s.player.action = 'happy'; s.player.actionT = 1.2;
     const g = W.npcs.gramo;
     G.burst('note', g.x, g.y - 170, 10);
@@ -159,6 +163,7 @@
     const s = G.state;
     if (s.quest.stage !== 'completed' || s.npcs.pip.delivered) return;
     s.npcs.pip.delivered = true;
+    WT.Audio.play('sfx_reward_unlock');
     if (!s.house.unlocked.includes('gramophone')) s.house.unlocked.push('gramophone');
     G.toast('새 가구 · 미니 축음기');
     WT.UI.refreshToolbar();
@@ -185,7 +190,7 @@
         s.episode = 3; s.scene = 'town'; s.boss = null; s.arena = null;
         G.setScene('town'); WT.UI.setScene('town');
         s.player.x = W.npcs.gramo.x; s.player.y = W.npcs.gramo.y + 70; s.player.dir = 'down';
-        if (!s.house.unlocked.includes('cuckoo')) s.house.unlocked.push('cuckoo');
+        if (!s.house.unlocked.includes('cuckoo')) { s.house.unlocked.push('cuckoo'); WT.Audio.play('sfx_reward_unlock', { delay: 0.6 }); }
         G.toast('새 가구 · 뻐꾸기시계');
       }));
     } });
@@ -198,6 +203,7 @@
   G.enterHouse = function () {
     const s = G.state;
     s.tut.done.house = true;
+    WT.Audio.play('sfx_door');
     iris(s.player.x, s.player.y - 50, () => {
       s.scene = 'house'; s.house.placing = null; s.house.selected = null;
       WT.UI.setScene('house');
@@ -231,6 +237,7 @@
     const h = G.state.house;
     if (!h.unlocked.includes(type)) return;
     h.placing = h.placing === type ? null : type; h.selected = null;
+    WT.Audio.play('sfx_furn_select');
     WT.UI.refreshToolbar();
   };
   G.placeAt = function (x, y) {
@@ -241,6 +248,7 @@
     h.furniture.push(f);
     h.selected = f.id; h.placing = null;
     G.burst('dust', cx, cy, 1);
+    WT.Audio.play('sfx_furn_place');
     WT.UI.refreshToolbar();
     return f;
   };
@@ -253,6 +261,7 @@
     }
     const f = G.furnAt(x, y);
     h.selected = f ? f.id : null;
+    if (f) WT.Audio.play('sfx_furn_select');
     if (f) h.drag = { id: f.id, dx: f.x - x, dy: f.y - y, moved: false };
     WT.UI.refreshToolbar();
   };
@@ -265,21 +274,21 @@
     [f.x, f.y] = clampRoom(snap(x + h.drag.dx), snap(y + h.drag.dy));
     h.drag.moved = true;
   };
-  G.pointerUp = function () { G.state.house.drag = null; };
+  G.pointerUp = function () { const d = G.state.house.drag; if (d && d.moved) WT.Audio.play('sfx_furn_place'); G.state.house.drag = null; };
   G.deleteSelected = function () {
     const h = G.state.house;
     if (h.selected == null) return;
     const f = h.furniture.find((q) => q.id === h.selected);
-    if (f) G.burst('dust', f.x, f.y, 1);
+    if (f) { G.burst('dust', f.x, f.y, 1); WT.Audio.play('sfx_furn_delete'); }
     h.furniture = h.furniture.filter((q) => q.id !== h.selected);
     h.selected = null;
     WT.UI.refreshToolbar();
   };
   G.flipSelected = function () {
     const h = G.state.house, f = h.furniture.find((q) => q.id === h.selected);
-    if (f) f.flip = !f.flip;
+    if (f) { f.flip = !f.flip; WT.Audio.play('sfx_furn_flip'); }
   };
-  G.toggleSnap = function () { G.state.house.snap = !G.state.house.snap; G.toast(G.state.house.snap ? '격자 맞춤 켬' : '격자 맞춤 끔'); };
+  G.toggleSnap = function () { G.state.house.snap = !G.state.house.snap; WT.Audio.play('sfx_ui_toggle'); G.toast(G.state.house.snap ? '격자 맞춤 켬' : '격자 맞춤 끔'); };
   G.cancel = function () {
     const s = G.state;
     if (s.ui.dialog) return WT.UI.closeDialog();
@@ -290,7 +299,7 @@
   };
 
   // ───────── 연출 도우미 ─────────
-  G.toast = function (text) { G.state.ui.toast = { text, t: 2.2 }; };
+  G.toast = function (text) { G.state.ui.toast = { text, t: 2.2 }; WT.Audio.play('sfx_toast'); };
   G.burst = function (type, x, y, n) {
     for (let i = 0; i < n; i++) {
       const a = Math.random() * Math.PI * 2, sp = type === 'dust' ? 40 : 60 + Math.random() * 80;
@@ -334,7 +343,8 @@
     if (u.transition) {
       const tr = u.transition;
       tr.t += dt;
-      if (!tr.done && tr.t >= tr.dur / 2) { tr.done = true; tr.mid && tr.mid(); }
+      if (!tr.snd) { tr.snd = 1; WT.Audio.play(tr.done ? 'sfx_iris_open' : 'sfx_iris_close'); }
+      if (!tr.done && tr.t >= tr.dur / 2) { tr.done = true; tr.mid && tr.mid(); WT.Audio.play('sfx_iris_open'); }
       if (tr.t >= tr.dur) u.transition = null;
     }
 
@@ -355,6 +365,7 @@
         if (input.held('up')) my -= 1; if (input.held('down')) my += 1;
       }
       p.moving = !!(mx || my);
+      if (!p.moving) p.stepT = 0;
       p.run = input.held('run');
       if (p.moving) {
         const len = Math.hypot(mx, my), sp = CFG.speed * (p.run ? CFG.runMul : 1) * dt;
@@ -362,7 +373,14 @@
         const ox = p.x, oy = p.y;
         if (!blocked(nx, p.y, p.z)) p.x = nx;
         if (!blocked(p.x, ny, p.z)) p.y = ny;
-        s.tut.moved += Math.hypot(p.x - ox, p.y - oy);
+        const moved = Math.hypot(p.x - ox, p.y - oy);
+        s.tut.moved += moved;
+        if (p.z === 0 && moved > 0.1) {
+          p.stepT = (p.stepT || 0) - dt;
+          if (p.stepT <= 0) { p.stepAlt = !p.stepAlt; WT.Audio.play(p.stepAlt ? 'sfx_step_01' : 'sfx_step_02', { rate: 0.95 + Math.random() * 0.1 }); p.stepT = p.run ? 0.22 : 0.32; }
+        }
+        p.bumpCd = Math.max(0, (p.bumpCd || 0) - dt);
+        if (moved <= 0.01 && p.z === 0 && !p.bumpCd) { WT.Audio.play('sfx_bump'); p.bumpCd = 0.5; }
         if (p.run) s.tut.ranT += dt;
         if (Math.abs(mx) >= Math.abs(my) && mx) { p.dir = 'side'; p.facing = mx > 0 ? 1 : -1; }
         else if (my) p.dir = my < 0 ? 'up' : 'down';
@@ -370,7 +388,7 @@
       // 점프
       if (p.z > 0 || p.vz > 0) {
         p.vz -= CFG.gravity * dt; p.z += p.vz * dt;
-        if (p.z <= 0) { p.z = 0; p.vz = 0; p.landT = 0.18; G.burst('dust', p.x, p.y, 1); pushOut(p); }
+        if (p.z <= 0) { p.z = 0; p.vz = 0; p.landT = 0.18; G.burst('dust', p.x, p.y, 1); pushOut(p); WT.Audio.play('sfx_land'); p.stepT = 0.15; }
       }
       if (s.scene === 'arena') WT.Boss.update(dt);
       // 졸음 / 음표
@@ -395,6 +413,7 @@
     if (G.state.arena && G.state.arena.sleepT > 0) return;
     p.vz = CFG.jumpV; p.z = 0.01;
     G.state.tut.jumped = true;
+    WT.Audio.play('sfx_jump');
   };
 
   // ───────── 튜토리얼 안내 (제1막) ─────────

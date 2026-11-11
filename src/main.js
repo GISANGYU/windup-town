@@ -21,6 +21,8 @@
 
   window.addEventListener('keydown', (e) => {
     const s = WT.Game.state, c = e.code;
+    WT.Audio.unlock();
+    if (c === 'KeyM' && !e.repeat) { const m = WT.Audio.toggleMute(); WT.Game.toast(m ? '소리 끔 (M)' : '소리 켬 (M)'); return; }
     if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Backspace', 'F8'].includes(c)) e.preventDefault();
     if (e.repeat) { held.add(c); return; }
     held.add(c);
@@ -52,6 +54,7 @@
   window.addEventListener('keyup', (e) => held.delete(e.code));
   window.addEventListener('blur', () => held.clear());
 
+  window.addEventListener('pointerdown', () => WT.Audio.unlock());
   canvas.addEventListener('pointerdown', (e) => { const [x, y] = toGame(e); WT.Game.pointerDown(x, y); canvas.setPointerCapture(e.pointerId); });
   canvas.addEventListener('pointermove', (e) => { const [x, y] = toGame(e); WT.Game.pointerMove(x, y); });
   canvas.addEventListener('pointerup', () => WT.Game.pointerUp());
@@ -62,6 +65,39 @@
   WT.Render.init(canvas);
   WT.UI.init();
   WT.Wind.init();
+  // ───────── 소리 연출 (매 프레임) ─────────
+  const D = WT.DIALOGUE;
+  let lastPanel = null;
+  function audioTick(t) {
+    const A = WT.Audio, s = WT.Game.state, st = s.ui.story;
+    // 불러오기: 로컬은 바로, 배포 사이트는 이미지가 80% 들어오거나 6초가 지나면 (이미지 먼저)
+    if (!A.started) { const as = WT.Assets.status(); if (!WT.Assets.useWeb || as.ok / as.all > 0.8 || t > 6) A.load(); }
+    let want = null, rate = 1;
+    if (st) {
+      const p = st.panels[st.i];
+      const key = p ? [D.opening, D.ending, D.act2open, D.act2end].indexOf(st.panels) + ':' + st.i : null;
+      if (p && key !== lastPanel) {
+        lastPanel = key;
+        if (p.art === 'curtain') A.jingle('jingle_act_end');
+        if (st.panels === D.act2open && st.i === 1) A.play('sfx_clock_midnight'); // 자정 종 12번
+        else if (p.art === 'teaser') A.jingle('jingle_tease');
+      }
+      want = (st.panels === D.opening || st.panels === D.act2open) ? 'bgm_story' : null;
+    } else {
+      lastPanel = null;
+      if (s.scene === 'arena') want = s.boss && s.boss.state !== 'intro' && s.boss.state !== 'defeated' ? 'bgm_boss' : null;
+      else if (s.scene === 'house') { want = 'bgm_house'; rate = s.world.musicOn ? 1 : 0.92; }
+      else want = s.world.musicOn ? 'bgm_town_awake' : 'bgm_town_sleepy';
+    }
+    if (s.ui.cutscene || A.held()) want = null; // 그라모 깨어남·징글 동안은 BGM 비움
+    A.bgm(want, { rate });
+    A.loopIf('amb_projector', !!st);
+    A.loopIf('sfx_gear_roll', s.scene === 'arena' && !!s.arena && s.arena.gears.some((g) => g.warn <= 0));
+    A.loopIf('sfx_wind_unwind', WT.Wind.unwinding());
+    const dz = s.scene === 'arena' && s.arena ? s.arena.drowsy : 0;
+    A.loopIf('sfx_drowsy_loop', dz > 0.01, { vol: (A.defs.sfx_drowsy_loop ? A.defs.sfx_drowsy_loop.vol : 0.4) * Math.min(1, dz) });
+  }
+
   if (/[?&]act2/.test(location.search)) { // 바로 제2막 (점검용)
     const s = WT.Game.state; s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true;
     ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone');
@@ -77,6 +113,7 @@
     if (WT.Assets.version !== seenVersion) { seenVersion = WT.Assets.version; if (s.scene === 'house') WT.UI.refreshToolbar(); }
     if (s.world.musicOn !== wasMusic) { wasMusic = s.world.musicOn; document.body.classList.toggle('music', wasMusic); }
     WT.UI.debug();
+    audioTick(now / 1000);
     requestAnimationFrame(loop);
   }
   requestAnimationFrame(loop);
@@ -183,6 +220,9 @@
       WT.Story.skip(); step(10);
       ok('마을 복귀 · 뻐꾸기시계 해금', s.scene === 'town' && s.house.unlocked.includes('cuckoo'));
       // 과감기 실패
+      // 오디오: manifest 51개 불러오기 시도, 실패해도 에러 없음
+      ok(`오디오 manifest ${Object.keys(WT.Audio.defs).length}개 로드 시도`, (() => { WT.Audio.load(); const n = Object.keys(WT.Audio.defs).length; return n >= 51 && WT.Audio.attempted() === (WT.Audio.ready ? n : 0); })());
+      ok('오디오 실패해도 에러 없음', (() => { try { WT.Audio.play('없는_소리'); WT.Audio.play('sfx_jump'); WT.Audio.loop('sfx_gear_roll'); WT.Audio.stop('sfx_gear_roll'); WT.Audio.bgm('bgm_boss'); WT.Audio.bgm(null); WT.Audio.jingle('jingle_tease'); return true; } catch (e) { return false; } })());
       ok('과감기 시간 초과 처리', (() => { let failed = false; WT.Wind.open(() => {}, { timeLimit: 0.2, onFail: () => { failed = true; } }); step(30); return failed && !WT.Wind.active; })());
     } catch (e) { out.push('ERROR ' + e.message + '\n' + e.stack); }
     const pre = document.createElement('pre'); pre.id = 'selftest'; pre.textContent = out.join('\n'); document.body.appendChild(pre);

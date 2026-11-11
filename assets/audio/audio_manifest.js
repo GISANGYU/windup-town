@@ -57,6 +57,21 @@ window.AUDIO_MANIFEST = {
     {"id":"sfx_player_faint","file":"audio/sfx/sfx_player_faint.wav","vol":0.6,"when":"ar.hp<=0 잠듦"},
     {"id":"sfx_boss_tired","file":"audio/sfx/sfx_boss_tired.wav","vol":0.55,"when":"b.state='tired'"},
     {"id":"sfx_spring_pop","file":"audio/sfx/sfx_spring_pop.wav","vol":0.7,"when":"과감기 성공(b.springs--)"},
-    {"id":"sfx_boss_cuckoo","file":"audio/sfx/sfx_boss_cuckoo.wav","vol":0.65,"when":"b.pose='cuckoo'(defeated)"}
+    {"id":"sfx_boss_cuckoo","file":"audio/sfx/sfx_boss_cuckoo.wav","vol":0.65,"when":"b.pose='cuckoo'(defeated)"},
+    {"id":"sfx_text_blip_boss","file":"audio/sfx/sfx_text_blip_boss.wav","vol":0.3,"when":"글자 출력(who='boss'). 2글자마다 1번"},
+    {"id":"sfx_clock_midnight","file":"audio/sfx/sfx_clock_midnight.wav","vol":0.6,"when":"act2open 2번째 카드(자정 종 12번)"},
+    {"id":"sfx_overwind_fail","file":"audio/sfx/sfx_overwind_fail.wav","vol":0.6,"when":"과감기 onFail(백작이 버팀)"},
+    {"id":"sfx_timer_tick","file":"audio/sfx/sfx_timer_tick.wav","vol":0.5,"when":"과감기 timeLimit 남은 3초부터 1초마다"},
+    {"id":"sfx_lamp_on","file":"audio/sfx/sfx_lamp_on.wav","vol":0.45,"when":"finishWind에서 lamp.mood='awake'(가로등 켜짐)"},
+    {"id":"sfx_boss_recover","file":"audio/sfx/sfx_boss_recover.wav","vol":0.5,"when":"b.state='recover'(백작이 다시 일어남)"},
+    {"id":"sfx_drowsy_loop","file":"audio/sfx/sfx_drowsy_loop.wav","loop":true,"vol":0.4,"when":"보스전 졸음: 볼륨 = vol × ar.drowsy, drowsy=0이면 정지"}
+  ],
+  "reuse": [
+    "제2막 오프닝(act2open): bgm_story를 playbackRate 0.9로",
+    "제2막 끝 카드(curtain): jingle_act_end",
+    "뻐꾸기시계 가구 해금(endAct2 toast): sfx_reward_unlock",
+    "보스 피격 후 잠듦 → 재시작 아이리스: sfx_iris_close / sfx_iris_open",
+    "제2막 이후 마을(episode 3): bgm_town_awake",
+    "집에 뻐꾸기시계(cuckoo) 가구를 놓을 때: sfx_furn_place 뒤에 sfx_boss_cuckoo를 vol 0.3으로"
   ]
 };

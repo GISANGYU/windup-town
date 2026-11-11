@@ -50,6 +50,7 @@
 | `Delete` / `Backspace` | 선택한 가구 삭제 | 집 안 |
 | `` ` `` (백틱) | 디버그: 충돌 박스, 리소스 현황 | 전체 |
 | `F8` | 이미지 전체 다시 불러오기 | 전체 |
+| `M` | 소리 켜기/끄기 (브라우저에 기억) | 전체 |
 
 대화 중이거나 화면이 전환되는 동안에는 이동과 점프를 막는다.
 
@@ -150,12 +151,14 @@ windup-town/
 ├─ ASSET_GUIDE.md        이미지 제작 기준 (Codex 작업 지시)
 ├─ AGENTS.md             Codex가 자동으로 읽는 요약 지시
 ├─ assets/
-│  ├─ manifest.js        리소스 목록 (단일 기준)
+│  ├─ manifest.js        이미지 목록 (단일 기준)
+│  ├─ audio/             소리 WAV + audio_manifest.js(소리 목록, 연결 위치) + preview.html
 │  ├─ refs/              스타일 레퍼런스. 이미지 생성 때마다 첨부
 │  ├─ sheets/            생성 원본 시트 (자르기 전)
 │  └─ bg/ player/ npc/ portrait/ props/ furniture/ fx/ ui/ story/ wind/
 ├─ src/
 │  ├─ config.js          상수, 키 설정
+│  ├─ audio.js           소리(Web Audio): 미리 불러오기, 효과음, 반복음, BGM 크로스페이드, 음소거
 │  ├─ assets.js          불러오기, 자동 자르기, 핫 리로드, 임시 도형
 │  ├─ world.js           맵 배치, 충돌 박스
 │  ├─ dialogue.js        대사
@@ -169,7 +172,10 @@ windup-town/
 └─ tools/
    ├─ slice_sheet.py     시트 한 장을 개별 PNG로 자르기
    ├─ check_assets.py    이름·크기·투명도 검사, assets/STATUS.md 생성
-   └─ contact_sheet.py   만든 이미지를 한 장에 모아 스타일 비교
+   ├─ contact_sheet.py   만든 이미지를 한 장에 모아 스타일 비교
+   ├─ serve.py           캐시 끈 개발 서버
+   ├─ gen_audio.py       소리 절차 합성(외부 음원 없음)
+   └─ build_web_assets.py 배포용 압축본(WebP·OGG) + index.html 버전 표시
 ```
 
 ## 11. 실행
@@ -279,3 +285,22 @@ python tools/serve.py
 - **자막 카드:** 제목은 이중 테두리 + 모서리 장식, 대사는 화면 아래 어두운 카드.
 - **필름:** 그레인, 세로 스크래치, 비네팅, 밝기 깜빡임이 컷신 위에도 덮인다. 컷신은 미세하게 흔들린다(게이트 위브).
 - **타격감:** 충격파·피격 때 화면 흔들림, 큰 사건(태엽 완료, 스프링 튕김)은 흰 섬광.
+
+## 15. 소리
+- 목록: `assets/audio/audio_manifest.js` (id, file, loop, vol, when). 재생: `src/audio.js` (`WT.Audio`).
+- 브라우저 자동재생 제한 때문에 첫 키 입력이나 클릭에서 소리가 켜진다.
+- 파일이 없거나 해석에 실패하면 그 소리만 조용하다. 게임은 그대로 돈다.
+- 배포 사이트는 `assets_web/audio/*.ogg`(약 1.2MB)를 먼저 쓰고, 실패하면 WAV.
+
+| 장면 | BGM |
+|---|---|
+| 오프닝·제2막 시작 컷신 | bgm_story |
+| 제1막 끝·제2막 끝 컷신 | 없음 (카드별 징글: 막 끝 jingle_act_end, 예고 jingle_tease, 자정 sfx_clock_midnight) |
+| 마을 | musicOn 전 bgm_town_sleepy / 후 bgm_town_awake (0.8초 크로스페이드) |
+| 집 | bgm_house (musicOn 전에는 재생 속도 0.92) |
+| 보스전 | bgm_boss (백작 등장 대사·퇴치 후에는 없음) |
+| 태엽 완료 | sfx_gramo_wake → jingle_quest_clear → bgm_town_awake |
+
+- 글자 출력음: 깨어 있으면 2글자, 졸리면 3글자, 백작은 2글자마다(재생 속도 0.9~1.1 무작위)
+- 발소리: step_01·02를 번갈아, 걷기 0.32초 / Shift 0.22초 간격
+- 반복음은 조건이 끝나면 멈춘다: 태엽 풀림(sfx_wind_unwind), 톱니 구르기(sfx_gear_roll), 영사기(amb_projector, 컷신 동안), 졸음(sfx_drowsy_loop, 볼륨 = 졸음 게이지)
