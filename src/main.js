@@ -39,7 +39,7 @@
       if (isKey(c, 'act') || isKey(c, 'jump')) WT.Act3.blinkDown(); else if (isKey(c, 'cancel')) WT.Act3.blinkCancel();
       return;
     }
-    if (WT.Act4 && WT.Act4.key && WT.Act4.key(c, true)) return;
+    if (WT.BatteryModal && WT.BatteryModal.active) { WT.BatteryModal.key(c, true); return; }
     if (s.scene === 'road' && !s.ui.dialog) { if (isKey(c, 'cancel')) return; WT.Road.key(c, true); return; }
     if (s.ui.dialog) {
       if (isKey(c, 'act') || isKey(c, 'jump') || c === 'Enter') WT.UI.advance();
@@ -50,6 +50,7 @@
     if (s.scene === 'town' || s.scene === 'arena') {
       if (isKey(c, 'act')) WT.Game.interact();
       else if (isKey(c, 'jump')) WT.Game.jump();
+      else if (c === 'KeyQ' && WT.Act3) WT.Act3.swapKey();
     } else if (s.scene === 'house') {
       const type = Object.keys(WT.FURN).find((t) => WT.FURN[t].key === e.key);
       if (type) WT.Game.selectPlacing(type);
@@ -62,7 +63,7 @@
     held.delete(e.code);
     const s = WT.Game.state;
     if (WT.Act3 && WT.Act3.blinkActive() && (isKey(e.code, 'act') || isKey(e.code, 'jump'))) WT.Act3.blinkUp();
-    if (WT.Act4 && WT.Act4.key) WT.Act4.key(e.code, false);
+    if (WT.BatteryModal && WT.BatteryModal.active) WT.BatteryModal.key(e.code, false);
     if (s.scene === 'road') WT.Road.key(e.code, false);
   });
   window.addEventListener('blur', () => held.clear());
@@ -82,19 +83,16 @@
   // ───────── 소리 연출 (매 프레임) ─────────
   const D = WT.DIALOGUE;
   let lastPanel = null;
-  const STORIES = () => [D.opening, D.ending, D.act2open, D.act2end, D.act3open, D.radioDown, D.act3end, D.act4open, D.act4chase, D.act4past, D.act4end, D.act5open, D.act5zone2, D.act5zone3, D.act5end].filter(Boolean);
+  const STORIES = () => [D.opening, D.ending, D.act2open, D.act2end, D.act3open, D.act3montage, D.act3recall, D.act3key, D.act4open, D.act4zone2, D.act4gate, D.act5open, D.act5collapse, D.act5reborn, D.act5end].filter(Boolean);
   // 컷신별 BGM (제3막~)
   function storyBgm(panels) {
-    if (panels === D.act3open) return 'bgm_festival';
-    if (panels === D.act3end) return 'bgm_town_awake';
-    if (panels === D.act4open) return 'bgm_act4_tension';
-    if (panels === D.act4past) return 'bgm_flashback';
-    if (panels === D.act4end || panels === D.act5open) return 'bgm_story';
-    if (panels === D.act5end) return 'bgm_finale';
-    return null;
+    const map = new Map([[D.act3open, 'bgm_festival'], [D.act3montage, 'bgm_radio_theme'], [D.act3recall, 'bgm_recall_night'], [D.act3key, 'bgm_departure'],
+      [D.act4open, 'bgm_story'], [D.act5open, 'bgm_story'], [D.act5end, 'bgm_ending']]);
+    const id = map.get(panels);
+    return id && WT.Audio.defs[id] ? id : id ? 'bgm_story' : null;
   }
   // 막 스크립트가 켜고 끄는 반복음
-  const LOOP_IDS = ['sfx_battery_hum', 'amb_radio_static', 'sfx_stake_pull', 'sfx_jump_charge', 'sfx_charge', 'sfx_elevator', 'sfx_conveyor'];
+  const LOOP_IDS = ['sfx_battery_hum', 'amb_radio_static', 'sfx_jump_charge', 'sfx_charge', 'sfx_elevator', 'sfx_conveyor', 'sfx_magnet_loop', 'sfx_bomb_roll'];
   function audioTick(t) {
     const A = WT.Audio, s = WT.Game.state, st = s.ui.story;
     // 불러오기: 로컬은 바로, 배포 사이트는 이미지가 80% 들어오거나 6초가 지나면 (이미지 먼저)
@@ -122,7 +120,7 @@
     }
     // 제3막 이후: 막별 음악 결정(스템, 얇아짐)
     let mus = null;
-    if (!st) mus = (WT.Road && WT.Road.music && WT.Road.music(s)) || (WT.Act4 && WT.Act4.music && WT.Act4.music(s)) || (WT.Act3 && WT.Act3.music && WT.Act3.music(s));
+    if (!st) mus = (WT.Road && WT.Road.music && WT.Road.music(s)) || (WT.Act3 && WT.Act3.music && WT.Act3.music(s));
     if (mus && mus.want !== undefined) want = mus.want;
     if (want && !A.defs[want]) want = mus && mus.fallback !== undefined ? mus.fallback : 'bgm_town_awake'; // 아직 없는 곡이면 대신
     if (s.ui.cutscene || A.held()) { want = null; A.layers(null); } // 그라모 깨어남·징글 동안은 BGM 비움
@@ -143,29 +141,24 @@
     const s = WT.Game.state; s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true;
     ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone');
     WT.Game.startAct2();
-  } else if (/[?&]act[345]/.test(location.search)) { // 바로 제3·4·5막 (점검용)
+  } else if (/[?&]act[345]/.test(location.search)) { // 점검용: ?act3 마을(3막 직전) · ?act4&zone=1~3 · ?act5 볼트 남작
     const s = WT.Game.state, n = +location.search.match(/act([345])/)[1];
+    const q = (k) => (location.search.match(new RegExp(k + '=([a-z0-9]+)')) || [])[1];
     s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true; s.episode = 3;
     ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone', 'cuckoo');
-    if (n >= 4) { s.act3.stage = 'done'; s.act3.pipDone = s.act3.lampDone = s.act3.named = true; s.npcs.radio.power = 'wind'; s.inventory.battery = 1; s.house.unlocked.push('bunting', 'lantern', 'banner'); }
-    if (n >= 5 && WT.Act4) WT.Act4.skipToEnd();
     s.player.x = 640; s.player.y = 470; WT.Game.setScene('town'); WT.UI.setScene('town');
-    if (n === 5 && WT.Road) { // ?act5&zone=2&x=3000&power=battery (점검용)
-      const q = (k) => (location.search.match(new RegExp(k + '=([a-z0-9]+)')) || [])[1];
-      WT.Road.enter(+(q('zone') || 1));
-      const r = s.road; if (q('x')) { r.p.x = +q('x'); r.camX = Math.max(0, r.p.x - 420); } if (q('power')) { r.p.power = q('power'); r.battery = 100; }
-      r.after = [];
+    if (q('modal')) WT.BatteryModal.open(q('modal'), () => {}); // 점검용: &modal=insert|remove
+    if (n >= 4) {
+      Object.assign(s.act3, { stage: 'gone' }); s.inventory.gramoKey = true; s.inventory.battery = 1;
+      s.npcs.pip.power = s.npcs.lamp.power = 'battery'; s.npcs.pip.frozen = s.npcs.lamp.frozen = true; s.npcs.gramo.keys = 2;
+      WT.Road.enter(n === 5 ? 4 : +(q('zone') || 1));
+      const r = s.road; if (q('x')) { r.p.x = +q('x'); r.camX = Math.max(0, r.p.x - 420); } if (q('power')) r.p.power = q('power');
+      if (q('swap')) { r.p.swapT = 0.6; r.p.swapTo = r.p.power === 'wind' ? 'battery' : 'wind'; r.freezeShot = true; } // 점검용: 갈아끼우기 연출
+      if (q('fight') && r.boss) { WT.RoadBoss.startNow(r); if (q('reborn')) { r.boss.reborn = true; r.boss.round = 2; r.boss.plugged = true; WT.RoadBoss.startNow(r); } } // &fight=1(&reborn=1)
     }
-    // 점검용: ?act3&shot=trial|persuade|radioDown — 그 단계 화면으로 바로
-    const shot = (location.search.match(/shot=(\w+)/) || [])[1];
-    if (n === 4 && shot === 'stakes') WT.Act4.debugStakes();
-    if (n === 3 && shot) {
-      const a = s.act3; a.stage = shot === 'festival' ? 'festival' : shot;
-      if (['trial', 'persuade', 'radioDown'].includes(shot)) { s.npcs.pip.power = shot === 'trial' ? 'battery' : 'wind'; s.npcs.lamp.power = 'battery'; }
-      if (shot === 'trial') { s.player.power = 'battery'; s.player.x = 1000; s.player.y = 600; }
-      if (shot === 'radioDown') { s.npcs.radio.off = true; s.npcs.lamp.power = 'wind'; }
-      WT.Act3.refresh();
-    }
+  } else if (/[?&]story=/.test(location.search)) { // 점검용: ?story=act3recall&i=1 컷신 한 장 바로 보기
+    const m = location.search.match(/story=([a-z0-9]+)/i), i = +((location.search.match(/[?&]i=(\d+)/) || [])[1] || 0);
+    if (m && WT.DIALOGUE[m[1]]) { WT.Story.play(WT.DIALOGUE[m[1]]); WT.Game.state.ui.story.i = i; WT.Game.state.ui.story.tr = null; }
   } else if (!/[?&](nointro|selftest)/.test(location.search)) WT.Intro.show();
 
   let last = performance.now(), seenVersion = -1, wasMusic = false;
@@ -176,7 +169,7 @@
     const s = WT.Game.state;
     if (WT.Assets.version !== seenVersion) { seenVersion = WT.Assets.version; if (s.scene === 'house') WT.UI.refreshToolbar(); }
     if (s.world.musicOn !== wasMusic) { wasMusic = s.world.musicOn; document.body.classList.toggle('music', wasMusic); }
-    const mech = s.scene === 'town' && s.act3 ? ['pip', 'lamp'].filter((k) => s.npcs[k].power === 'battery').length + (s.player.power === 'battery' ? 1 : 0) + (s.act4 && WT.Act4 ? WT.Act4.mech() : 0) : 0;
+    const mech = s.scene === 'town' && s.act3 ? ['pip', 'lamp'].filter((k) => s.npcs[k].power === 'battery').length + (s.player.power === 'battery' ? 1 : 0) : 0;
     if (String(Math.min(3, mech)) !== document.body.dataset.mech) document.body.dataset.mech = String(Math.min(3, mech));
     WT.UI.debug();
     if (WT.Intro.active) WT.Intro.update();
@@ -288,111 +281,98 @@
       ok('제2막 끝 컷신', !!s.ui.story && s.ui.story.panels === WT.DIALOGUE.act2end);
       WT.Story.skip(); step(10);
       ok('마을 복귀 · 뻐꾸기시계 해금', s.scene === 'town' && s.house.unlocked.includes('cuckoo'));
-      // ───── 제3막 ─────
-      { const A3 = WT.Act3, L3 = WT.WORLD.act3, D3 = WT.DIALOGUE;
+      // ───── 제3막 「건전지가 온 날」 ─────
+      { const D3 = WT.DIALOGUE, A3 = WT.Act3, BM = WT.BatteryModal;
+        const stepH = (n, keys) => { for (let i = 0; i < n; i++) G.update(1 / 60, { held: (k) => keys.includes(k) }); };
         closeAll(); step(80);
         p.x = 640; p.y = 400; G.interact(); ok('3막: 그라모 축제 제안', !!s.ui.dialog && s.ui.dialog.who === 'gramo'); closeAll();
-        ok('3막: 축제 준비 시작', s.act3.stage === 'festival');
-        L3.deco.forEach((d) => { p.x = d.x; p.y = d.y + 30; p.z = 0; s.player.action = null; G.interact(); });
-        ok('축제 장식 3개', s.act3.deco.every(Boolean));
-        step(150); ok('3막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D3.act3open);
-        WT.Story.skip(); step(130);
-        ok('라디오 씨 등장', WT.npcVisible('radio') && !!s.ui.dialog && s.ui.dialog.who === 'radio');
-        closeAll(); step(90);
-        ok('다음 날: 피프·가로등 건전지', s.act3.stage === 'morning' && s.npcs.pip.power === 'battery' && s.npcs.lamp.power === 'battery');
-        p.x = 420; p.y = 520; G.interact();
-        ok('건전지 말투: 한 번에 출력', !!s.ui.dialog && s.ui.dialog.flat && document.getElementById('cardTyped').textContent === '배달 완료. 다음.'); closeAll();
-        const R3 = WT.WORLD.npcs.radio; p.x = R3.x; p.y = R3.y + 50; G.interact(); closeAll();
-        ok('보글 건전지 체험 시작', s.act3.stage === 'trial' && p.power === 'battery');
-        p.x = 640; p.y = 520; { const x0 = p.x; G.update(1 / 60, { held: (k) => k === 'left' }); ok('건전지: 1.6배 빠름', Math.abs((x0 - p.x) - WT.CFG.speed * 1.6 / 60) < 0.3); }
-        p.z = 0; p.vz = 0; G.jump(); ok('건전지: 점프 봉인', p.vz === 0 && p.z === 0);
-        p.x = 1000; p.y = 600; G.jump(); step(70);
-        ok('덤불 앞 점프 실패 → 체험 끝', !!s.ui.dialog && s.ui.dialog.who === 'bogle'); closeAll();
-        ok('건전지를 빼고 1개 보관', s.act3.stage === 'persuade' && p.power === 'wind' && s.inventory.battery === 1);
-        L3.sheets.forEach((q, i) => A3.interact({ type: 'sheet', id: i }));
-        ok('악보 조각 3개', s.act3.sheets.every(Boolean));
-        p.x = 420; p.y = 520; G.interact(); closeAll(); ok('피프 감기 모달', WT.Wind.active);
-        WT.Wind.finishNow(); step(100); closeAll();
-        ok('피프가 태엽으로', s.npcs.pip.power === 'wind' && s.act3.pipDone);
-        p.x = 845; p.y = 350; G.interact(); closeAll(); ok('힌트 전 가로등은 반응 없음', !A3.blinkActive());
-        p.x = 292; p.y = 600; G.interact(); closeAll(); ok('뻐꾸기 백작 힌트', s.act3.hint);
-        p.x = 845; p.y = 350; G.interact(); closeAll(); ok('깜빡임 미니게임 시작', A3.blinkActive() && G.locked());
-        step(220); ok('따라 하기 차례', s.act3.blink && s.act3.blink.phase === 'input');
-        const press = (d) => { A3.blinkDown(); step(Math.round(d * 60)); A3.blinkUp(); step(4); };
-        press(0.6); ok('틀리면 다시 보여 줌', s.act3.blink.phase === 'show');
-        step(260); press(0.1); press(0.6); press(0.1); step(60);
-        ok('깜빡임 성공 → 감기 모달', WT.Wind.active); WT.Wind.finishNow(); step(100); closeAll();
-        ok('가로등 이름 「반디」', s.act3.named && WT.npcName('lamp') === '반디' && s.npcs.lamp.power === 'wind');
-        step(160); ok('라디오 씨 멈춤 컷신', !!s.ui.story && s.ui.story.panels === D3.radioDown && s.npcs.radio.off);
-        WT.Story.skip(); step(130); closeAll(); ok('크랭크 감기 모달', WT.Wind.active);
-        WT.Wind.finishNow(); step(240); closeAll(); step(80);
-        ok('3막 끝 컷신 · 태엽 라디오', !!s.ui.story && s.ui.story.panels === D3.act3end && s.npcs.radio.power === 'wind');
+        step(80); ok('3막 오프닝 컷신(축제 → 그라모 태엽 풀림 → 라디오)', !!s.ui.story && s.ui.story.panels === D3.act3open && D3.act3open.length === 3);
+        WT.Story.skip(); step(120);
+        ok('라디오 씨 등장 대사', WT.npcVisible('radio') && !!s.ui.dialog && s.ui.dialog.who === 'radio' && s.npcs.gramo.mood === 'sleepy');
+        closeAll(); ok('건전지가 퍼지는 컷신', !!s.ui.story && s.ui.story.panels === D3.act3montage);
+        WT.Story.skip(); step(100); ok('피프·가로등 건전지', s.npcs.pip.power === 'battery' && s.npcs.lamp.power === 'battery');
+        ok('라디오 씨가 보글에게도 건전지', !!s.ui.dialog && s.ui.dialog.lines === D3.act3.radio.gift); closeAll();
+        ok('건전지 끼우기 모달', BM.active && G.locked());
+        BM.finishNow(); step(80); ok('보글 건전지 상태 · 튜토리얼', !BM.active && p.power === 'battery' && s.act3.stage === 'tutorial');
+        p.x = 300; p.y = 420; p.z = 0; stepH(80, ['right']); ok('달리면 보글의 혼잣말', !!s.ui.dialog && s.ui.dialog.who === 'bogle'); closeAll();
+        p.vz = 0; G.jump(); ok('점프 막힘 → 깨달음', p.vz === 0 && !!s.ui.dialog && s.ui.dialog.lines === D3.act3.bogle.stiff); closeAll();
+        key('KeyQ'); ok('Q → 건전지 빼기 모달', BM.active); BM.finishNow(); step(80);
+        ok('태엽으로 돌아옴 · 건전지 보관', p.power === 'wind' && s.inventory.battery === 1); closeAll();
+        key('KeyQ'); ok('Q 갈아끼우기: 0.6초 동안 잠금', G.locked()); step(45); ok('건전지로', p.power === 'battery');
+        key('KeyQ'); step(45); ok('다시 태엽으로', p.power === 'wind' && s.act3.tut === 5);
+        step(160); ok('회수 신호 컷신', !!s.ui.story && s.ui.story.panels === D3.act3recall && s.npcs.pip.frozen && s.npcs.lamp.frozen);
+        WT.Story.skip(); step(80); ok('라디오 씨의 고백', !!s.ui.dialog && s.ui.dialog.lines === D3.act3.radio.confess);
+        closeAll(); ok('그라모의 열쇠 · 출발 컷신', !!s.ui.story && s.ui.story.panels === D3.act3key);
+        WT.Story.skip(); step(80); ok('열쇠를 받고 4막으로', s.inventory.gramoKey && s.npcs.gramo.keys === 2 && !!s.ui.story && s.ui.story.panels === D3.act4open);
         WT.Story.skip(); step(130); closeAll();
-        ok('3막 완료 · 축제 장식 해금', s.act3.stage === 'done' && s.house.unlocked.includes('banner'));
       }
-      // ───── 제4막 ─────
-      { const A4 = WT.Act4, D4 = WT.DIALOGUE, a = s.act4;
-        const R4 = WT.WORLD.npcs.radio; p.x = R4.x; p.y = R4.y + 50; p.z = 0; G.interact(); closeAll(); step(80);
-        ok('4막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D4.act4open);
-        WT.Story.skip(); step(130); closeAll();
-        ok('4막: 측량기 3대 · 라디오 씨 동행', a.stage === 'stakes' && a.surveyors.length === 3 && A4.following() && !WT.npcVisible('radio'));
-        step(150); ok('말뚝 둘레가 회색으로 번짐', A4.greyAt(560, 300) > 0.3);
-        const sv = a.surveyors;
-        A4.interact({ type: 'surveyor', id: 0 }); ok('잡음 방송 → 측량기 멈춤', sv[0].state === 'stun');
-        A4.interact({ type: 'surveyor', id: 1 }); ok('잡음 쿨다운 중엔 안 됨', sv[1].state !== 'stun');
-        A4.interact({ type: 'surveyor', id: 0 }); ok('멈춘 동안 건전지 빼기 → 정지', sv[0].state === 'stopped');
-        step(370); A4.interact({ type: 'surveyor', id: 1 }); A4.interact({ type: 'surveyor', id: 1 }); ok('두 번째 측량기 정지', sv[1].state === 'stopped');
-        { const k = a.stakes[0]; p.x = k.x; p.y = k.y + 24; p.z = 0; ok('E 길게 누르기 시작', A4.key('KeyE', true) && !!a.hold); step(30); A4.key('KeyE', false); ok('중간에 떼면 안 뽑힘', !k.pulled && !a.hold); }
-        for (let n = 0; n < 12 && a.stakes.some((k) => !k.pulled); n++) { const i = a.stakes.findIndex((k) => !k.pulled), k = a.stakes[i]; p.x = k.x; p.y = k.y + 24; a.hold = { i, t: 0 }; step(70); }
-        ok('말뚝 모두 뽑음', a.stakes.every((k) => k.pulled));
-        step(150); ok('추격 컷신', !!s.ui.story && s.ui.story.panels === D4.act4chase);
-        WT.Story.skip(); step(130);
-        ok('추격: 보글이 건전지로', a.stage === 'chase' && p.power === 'battery');
-        { const f = sv.find((q) => q.state === 'flee'); p.x = f.x + 30; p.y = f.y; step(2); }
-        ok('잡으면 건전지가 닳고 지도 떨어짐', a.stage === 'map' && p.power === 'wind' && s.inventory.batteryEmpty && !!a.map);
-        p.x = a.map.x; p.y = a.map.y + 20; G.interact(); ok('도시 지도 획득', s.inventory.map === true);
-        step(110); ok('라디오 씨 회상 컷신', !!s.ui.story && s.ui.story.panels === D4.act4past);
-        WT.Story.skip(); step(130); closeAll(); step(80);
-        ok('4막 끝 컷신', !!s.ui.story && s.ui.story.panels === D4.act4end);
-        WT.Story.skip(); step(130);
-        ok('4막 완료 · 라디오 씨 제자리', a.stage === 'done' && WT.npcVisible('radio'));
-      }
-      // ───── 제5막 (횡스크롤) ─────
+      // ───── 제4막 「발전소로 가는 길」 · 중간 보스 ─────
       { const RD = WT.Road, P5 = RD.P, GY = WT.ROAD_GY, D5 = WT.DIALOGUE;
         const stepH = (n, keys) => { for (let i = 0; i < n; i++) G.update(1 / 60, { held: (k) => keys.includes(k) }); };
         const r = () => s.road, it = (type, n) => r().items.filter((q) => q.type === type)[n || 0];
-        const place = (x, power) => { const q = r().p; q.x = x; q.y = GY; q.vy = 0; q.onGround = true; q.shortT = 0; q.hurtT = 0; q.swapT = 0; q.inv = 0; if (power) q.power = power; return q; };
-        ok('4막 끝 → 라디오 씨 대사가 바로 나옴', !!s.ui.dialog && s.ui.dialog.who === 'radio'); closeAll(); step(80);
-        ok('5막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D5.act5open);
-        WT.Story.skip(); step(130); closeAll();
-        ok('5막: 횡스크롤 구간 1 · 건전지는 빈 채로', s.scene === 'road' && r().zone === 1 && r().p.power === 'wind' && r().battery === 0);
-        { const q = place(300), x0 = q.x; stepH(1, ['right']); ok('태엽: 기본 속도', Math.abs((q.x - x0) - P5.walk / 60) < 0.5); }
-        key('KeyQ'); ok('빈 건전지로는 못 갈아끼움', r().p.swapT <= 0 && r().p.power === 'wind');
-        place(it('charger').x); key('KeyE'); step(100); ok('충전소에서 E → 건전지 100', r().battery === 100);
-        place(300); key('Space'); ok('태엽: Space 점프', r().p.vy < 0); step(60);
-        { const q = place(300); key('KeyQ'); ok('갈아끼우는 동안 멈춤', q.swapT > 0); const x0 = q.x; stepH(30, ['right']); ok('0.6초 동안 못 움직임', q.x === x0); stepH(10, []); ok('건전지 모드로', q.power === 'battery'); }
-        { const q = place(300), x0 = q.x; stepH(1, ['right']); ok('건전지: 1.6배 빠름', Math.abs((q.x - x0) - P5.walk * 1.6 / 60) < 0.5); key('Space'); ok('건전지: 점프 봉인', q.vy === 0); }
-        { const g = it('gate'), q = place(g.x - 30, 'battery'); r().battery = 100; stepH(80, ['right']); ok('건전지 속도로 셔터 통과', q.x > g.x + g.w + 10);
-          g.state = 0; g.t = 0; g.snd = 0; place(g.x - 30, 'wind'); stepH(150, ['right']); ok('태엽 속도면 셔터에 막힘', r().p.x < g.x + g.w); }
-        { const l = it('lift'); place(l.x + 50, 'wind'); key('KeyE'); ok('태엽 발판: 감기 모달', WT.Wind.active); WT.Wind.finishNow(); step(100); step(200); ok('발판이 끝까지 올라감', l.state === 2); }
-        { const q = place(1570); q.y = GY + 10; q.onGround = false; step(40); step(90); closeAll(); ok('구덩이에 빠지면 체크포인트에서 다시', Math.abs(r().p.x - r().checkpoint) < 2); }
-        RD.clearNow(); step(5); ok('구간 1 통과', r().cleared); step(110); step(80);
-        ok('구간 2 컷신', !!s.ui.story && s.ui.story.panels === D5.act5zone2); WT.Story.skip(); step(130); closeAll();
-        ok('구간 2 공장 지대', r().zone === 2);
-        { const c = it('conveyor'), q = place(c.x + 100, 'wind'), x0 = q.x; stepH(30, ['right']); ok('태엽: 컨베이어에 밀려남', q.x < x0);
-          place(c.x + 100, 'battery'); r().battery = 100; const x1 = r().p.x; stepH(30, ['right']); ok('건전지: 컨베이어 통과', r().p.x > x1); }
-        { const w = it('puddle'), q = place(w.x + 20, 'battery'); r().battery = 100; r().hp = 3; stepH(2, ['right']); ok('건전지로 물웅덩이 → 합선', q.shortT > 0 && r().hp === 2);
-          const q2 = place(w.x + 20, 'wind'); stepH(2, ['right']); ok('태엽은 물웅덩이 괜찮음', q2.shortT <= 0 && r().hp === 2); }
-        { const b = it('bridge'); place(b.post, 'wind'); key('KeyE'); WT.Wind.finishNow(); step(100); step(60); ok('도개교 감기 → 다리 내려옴', b.state === 2); }
-        RD.clearNow(); step(5); step(110); step(80); WT.Story.skip(); step(130); closeAll();
-        ok('구간 3 도시', r().zone === 3);
-        { const d = it('door'); place(d.x - 60, 'wind'); stepH(40, ['right']); ok('태엽: 자동문 안 열림', r().p.x < d.x);
-          r().p.power = 'battery'; r().battery = 100; stepH(40, ['right']); ok('건전지: 자동문 열림', r().p.x > d.x); }
-        { const e = it('elevator'); place(e.x + 60, 'battery'); r().battery = 100; stepH(150, []); ok('건전지로 승강기 올라감', e.y > 200); }
-        { const q = place(400, 'wind'); r().wind = 0.01; stepH(5, ['right']); ok('태엽이 다 풀리면 잠듦', q.sleepT > 0); step(220); closeAll(); ok('체크포인트에서 태엽 다시 가득', r().wind > 98); }
-        RD.clearNow(); step(5); step(110); step(80);
-        ok('5막 끝 컷신', !!s.ui.story && s.ui.story.panels === D5.act5end); WT.Story.skip(); step(80);
-        ok('엔딩 → 마을로 돌아옴', s.scene === 'town' && s.episode === 4 && !s.road);
+        const place = (x, power, y) => { const q = r().p; q.x = x; q.y = y || GY; q.vy = 0; q.vx = 0; q.onGround = true; q.shortT = 0; q.hurtT = 0; q.swapT = 0; q.inv = 0; if (power) q.power = power; return q; };
+        ok('4막 구간 1 · 라디오 씨 건전지 80', s.scene === 'road' && r().zone === 1 && r().radioBat === 80);
+        { const q = place(200, 'wind'); r().battery = 100; key('KeyQ'); ok('갈아끼우는 동안 멈춤', q.swapT > 0.5); const x0 = q.x; stepH(30, ['right']); ok('0.6초 동안 못 움직임', q.x === x0); stepH(10, []); ok('건전지 모드로', q.power === 'battery'); }
+        { const q = place(400, 'wind', GY - 120); q.onGround = false; q.vy = -200; r().battery = 100; key('KeyQ'); const y0 = q.y, vy0 = q.vy; stepH(20, ['right']);
+          ok('공중에서도 Q · 갈아끼우는 동안 시간이 멈춤', q.y === y0 && q.vy === vy0 && q.swapT > 0); stepH(30, []); ok('멈춤이 풀리면 건전지 · 다시 떨어짐', q.power === 'battery' && q.y !== y0); stepH(40, []); }
+        { const q = place(200, 'battery'), x0 = q.x; stepH(30, ['right']); ok('건전지: 1.6배 빠름', Math.abs((q.x - x0) - P5.walk * 1.6 / 2) < 3); key('Space'); ok('건전지: 점프 봉인', q.vy === 0); }
+        place(it('charger').x, 'wind'); r().battery = 10; key('KeyE'); step(100); ok('충전소에서 E → 건전지 100', r().battery === 100);
+        { const c = it('conveyor'), q = place(c.x + 100, 'wind'), x0 = q.x; stepH(30, ['right']); ok('태엽: 컨베이어에 밀려남', q.x < x0); }
+        { const g = it('gate'), q = place(g.x - 30, 'battery'); r().battery = 100; stepH(70, ['right']); ok('건전지 속도로 셔터 통과', q.x > g.x + g.w + 10); }
+        { const w = it('puddle'), q = place(w.x + 20, 'battery'); r().battery = 100; r().hp = 3; stepH(2, ['right']); ok('건전지로 물웅덩이 → 합선', q.shortT > 0 && r().hp === 2); }
+        RD.clearNow(); step(5); step(110); step(80); ok('구간 2 컷신', !!s.ui.story && s.ui.story.panels === D5.act4zone2); WT.Story.skip(); step(130); closeAll();
+        ok('구간 2 도시 · 라디오 씨 건전지 줄어듦', r().zone === 2 && r().radioBat < 80);
+        { const d = it('door'); place(d.x - 60, 'wind'); stepH(40, ['right']); ok('태엽: 자동문 안 열림', r().p.x < d.x); r().p.power = 'battery'; r().battery = 100; stepH(40, ['right']); ok('건전지: 자동문 열림', r().p.x > d.x); }
+        RD.clearNow(); step(5); step(110); step(80); ok('정문 컷신', !!s.ui.story && s.ui.story.panels === D5.act4gate); WT.Story.skip(); step(130);
+        const b = () => r().boss;
+        ok('중간 보스: 두꺼비집 문지기', r().zone === 3 && !!b() && b().kind === 'toad');
+        closeAll(); ok('문지기 전투 시작', b().state === 'attack');
+        step(40); ok('첫 공격: 자석 혀', !!b().atk && b().atk.type === 'tongue');
+        { const t0 = b().atk.t; place(500, 'wind'); r().battery = 100; key('KeyQ'); step(20); ok('갈아끼우는 동안 보스 공격도 멈춤', b().atk.t === t0); step(30); }
+        { place(500, 'wind'); stepH(50, []); ok('태엽은 혀에 끌려감', r().p.x > 520); place(500, 'battery'); r().battery = 100; stepH(50, ['left']); ok('건전지는 버팀', r().p.x <= 500); }
+        { place(500, 'battery'); r().battery = 0.2; let err = null; try { stepH(60, ['left']); } catch (e) { err = e; }
+          ok('보스전에서 건전지가 다 떨어지면 라디오 씨가 알려 줌', !err && !!s.ui.dialog && s.ui.dialog.lines === D5.act5.radio.empty); closeAll(); step(45);
+          ok('자동으로 태엽으로 돌아와 계속 움직임', r().p.power === 'wind' && !G.locked());
+          place(it('charger').x, 'wind'); key('KeyE'); step(100); ok('아레나 충전소에서 다시 충전', r().battery === 100); }
+        const force = () => { b().queue = []; b().atk = null; b().gap = 0; b().haz = { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0 }; step(2); };
+        force(); ok('과열 1: 머리 위 레버', b().state === 'over' && b().weak === 'high');
+        place(990, 'wind'); key('KeyE'); ok('땅에서는 레버에 안 닿음', b().state === 'over');
+        place(880, 'wind', GY - 170); key('KeyE'); ok('높은 발판에서 E → 차단기', b().state === 'hurt' && b().hits === 1);
+        step(90); ok('2라운드', b().round === 1 && b().state === 'attack');
+        r().p.x = 150; force(); ok('과열 2: 어디 있었든 같은 자리로 밀려남', b().state === 'over' && b().weak === 'rush' && r().p.x === 970 - 25 - 540);
+        r().p.power = 'wind'; stepH(160, ['right']); ok('태엽 속도로는 입이 닫힘', b().state === 'recover' && b().hits === 1);
+        step(70); r().p.x = 700; force(); r().p.power = 'wind'; r().battery = 100;
+        key('KeyQ'); stepH(40, []); ok('밀려난 뒤 Q(시간 정지)로 건전지', r().p.power === 'battery');
+        stepH(115, ['right']); key('KeyE'); ok('건전지로 달려 입 안 차단기(여유 있게)', b().state === 'hurt' && b().hits === 2 && b().t < 1.3);
+        step(170); ok('문지기 쓰러짐', b().state === 'down' && !!s.ui.dialog); closeAll(); step(100);
+        ok('5막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D5.act5open); WT.Story.skip(); step(130);
+      }
+      // ───── 제5막 「볼트 남작」 ─────
+      { const GY = WT.ROAD_GY, D5 = WT.DIALOGUE;
+        const stepH = (n, keys) => { for (let i = 0; i < n; i++) G.update(1 / 60, { held: (k) => keys.includes(k) }); };
+        const r = () => s.road, b = () => r().boss;
+        const place = (x, power, y) => { const q = r().p; q.x = x; q.y = y || GY; q.vy = 0; q.vx = 0; q.onGround = true; q.shortT = 0; q.hurtT = 0; q.swapT = 0; q.inv = 0; if (power) q.power = power; return q; };
+        const force = () => { b().queue = []; b().atk = null; b().gap = 0; b().haz = { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0 }; step(2); };
+        ok('최종 보스: 볼트 남작', r().zone === 4 && b().kind === 'volt' && r().radioBat === 40);
+        closeAll(); ok('남작 전투 시작', b().state === 'attack');
+        force(); ok('과열 1: 라디오 씨 잡음 방송(건전지 -20)', b().state === 'over' && b().weak === 'high' && r().radioBat === 20);
+        place(860, 'wind', GY - 260); key('KeyE'); ok('높은 발판에서 플러그 뽑기', b().state === 'hurt' && b().hits === 1);
+        step(90); force(); ok('과열 2: 밀려남 · 라디오 씨 건전지 0', b().weak === 'rush' && r().radioBat === 0);
+        r().p.power = 'battery'; r().battery = 100; stepH(110, ['right']); key('KeyE'); ok('밀려난 자리에서 건전지로 달려 낮은 플러그', b().state === 'hurt' && b().hits === 2);
+        step(130); ok('라디오 씨가 쓰러짐', b().state === 'collapse' && !!s.ui.dialog && s.ui.dialog.lines === D5.act5.radio.last);
+        closeAll(); ok('쓰러짐 컷신', !!s.ui.story && s.ui.story.panels === D5.act5collapse); WT.Story.skip(); step(60);
+        { let g = 0; while (s.ui.dialog && g++ < 6) WT.UI.closeDialog(); }
+        ok('그라모의 열쇠를 꽂는 감기 모달', WT.Wind.active); WT.Wind.finishNow(); step(100);
+        ok('변신 컷신', !!s.ui.story && s.ui.story.panels === D5.act5reborn && b().reborn && !s.inventory.gramoKey);
+        WT.Story.skip(); step(60); closeAll(); ok('최종 라운드', b().round === 2 && b().state === 'attack');
+        place(150, 'wind'); r().wind = 50; step(30); ok('라디오 씨 음표 안에서 태엽이 참', r().wind > 54);
+        force(); ok('과열 3: 마지막 플러그', b().state === 'over' && b().weak === 'final');
+        place(900, 'wind'); key('KeyE'); step(90); ok('플러그를 뽑으면 녹슨 크랭크', b().state === 'over' && b().plugged === false);
+        key('KeyE'); ok('크랭크 과감기 모달', WT.Wind.active); WT.Wind.finishNow(); step(100);
+        ok('남작이 작은 발전기로', b().state === 'small'); step(110); closeAll(); step(100);
+        ok('결말 컷신', !!s.ui.story && s.ui.story.panels === D5.act5end); WT.Story.skip(); step(80);
+        ok('마을로 · 친구들 깨어남 · 라디오 씨 남음', s.scene === 'town' && s.episode === 4 && !s.npcs.pip.frozen && s.npcs.radio.reborn && WT.npcVisible('radio'));
+        p.x = WT.WORLD.npcs.radio.x; p.y = WT.WORLD.npcs.radio.y + 50; G.interact(); ok('결말 뒤 라디오 씨 대사', !!s.ui.dialog && s.ui.dialog.lines === D5.town4.radio); closeAll();
       }
       // 과감기 실패
       // 오디오: manifest 51개 불러오기 시도, 실패해도 에러 없음

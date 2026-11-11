@@ -358,6 +358,7 @@
   }
   // 라디오 씨: o.power 'battery'|'wind', o.off, o.t
   PH.radio = function (ctx, h, o) {
+    if (o.reborn) return PH.radioReborn(ctx, h, o);
     const k = h / 130; ctx.scale(k, k);
     const wind = o.power === 'wind' && !o.off, t = o.t || 0, sw = wind ? Math.sin(t * 6) : 0;
     // 다리(짧고 뻣뻣)
@@ -460,6 +461,79 @@
     rr(ctx, -22, -22, 44, 18, 9, '#a8c4dc', 3); rr(ctx, 12, -26, 14, 26, 7, '#8fb0cc', 3);
     ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1.5; for (let x = -16; x < 10; x += 7) { ctx.beginPath(); ctx.moveTo(x, -20); ctx.lineTo(x, -6); ctx.stroke(); }
     style(ctx, 'transparent', 2); ctx.strokeStyle = '#6e7884'; ctx.beginPath(); ctx.moveTo(-4, -22); ctx.lineTo(-4, -4); ctx.stroke();
+  };
+
+  // 변신 후 라디오 씨: 머리 위 나팔, 등 열쇠, 출렁이는 팔다리, 파이 눈
+  PH.radioReborn = function (ctx, h, o) {
+    const k = h / 140; ctx.scale(k, k);
+    const t = o.t || 0, sw = Math.sin(t * 7);
+    hose(ctx, -14, -30, -22 + sw * 8, -6, -6, 6); hose(ctx, 14, -30, 22 - sw * 8, -6, 6, 6);
+    shoe(ctx, -24 + sw * 8, 0, 11); shoe(ctx, 24 - sw * 8, 0, 11);
+    hose(ctx, -40, -70, -62, -104 + sw * 8, -10, 5); glove(ctx, -62, -104 + sw * 8, 7);
+    hose(ctx, 40, -70, 62, -100 - sw * 8, 10, 5); glove(ctx, 62, -100 - sw * 8, 7);
+    // 등 열쇠 (회전)
+    ctx.save(); ctx.translate(-46, -64); ctx.rotate(t * 2); ell(ctx, -8, 0, 7, 8, C.yellow, 2.5); ell(ctx, 8, 0, 7, 8, C.yellow, 2.5); ctx.restore();
+    // 몸통: 나무 + 금 테두리
+    style(ctx, '#b9824f'); ctx.beginPath(); ctx.moveTo(-42, -28); ctx.lineTo(-42, -96); ctx.quadraticCurveTo(-42, -122, 0, -122); ctx.quadraticCurveTo(42, -122, 42, -96); ctx.lineTo(42, -28); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = C.yellow; ctx.lineWidth = 3; ctx.beginPath(); ctx.roundRect(-36, -114, 72, 80, 14); ctx.stroke();
+    // 나팔 (머리 위로 피어남)
+    style(ctx, C.yellow); ctx.beginPath(); ctx.moveTo(-6, -120); ctx.lineTo(-40, -176); ctx.quadraticCurveTo(0, -196, 40, -176); ctx.lineTo(6, -120); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ell(ctx, 0, -180, 38, 10, '#e0a93a', 3);
+    // 얼굴: 다이얼 볼 + 파이 눈 + 웃는 입
+    ell(ctx, -24, -62, 9, 9, '#e8b98a', 2.5); ell(ctx, 24, -62, 9, 9, '#e8b98a', 2.5);
+    pieEye(ctx, -14, -88, 10, 1); pieEye(ctx, 14, -88, 10, 1);
+    style(ctx, C.red, 3); ctx.beginPath(); ctx.arc(0, -60, 14, 0.1 * Math.PI, 0.9 * Math.PI); ctx.closePath(); ctx.fill(); ctx.stroke();
+  };
+  // 볼트 남작: 구리 발전기 몸, 테슬라 코일 머리, 전깃줄 콧수염, 플러그 팔 (왼쪽을 봄)
+  PH.volt = function (ctx, h, o) {
+    if (o.state === 'small') { const k = h / 120; ctx.scale(k, k); rr(ctx, -30, -80, 60, 70, 14, '#8a4b2a'); ell(ctx, 0, -86, 18, 10, C.yellow, 3); pieEye(ctx, -10, -52, 7, 1); pieEye(ctx, 10, -52, 7, 1); style(ctx, 'transparent', 3); ctx.beginPath(); ctx.moveTo(-14, -34); ctx.quadraticCurveTo(0, -40, 14, -34); ctx.stroke(); hose(ctx, -12, -10, -14, 0, -2, 5); hose(ctx, 12, -10, 14, 0, 2, 5); ctx.save(); ctx.translate(34, -50); ctx.rotate((o.t || 0) * 3); rr(ctx, -3, -18, 6, 18, 3, C.yellow, 2); ctx.restore(); return; }
+    const k = h / 300; ctx.scale(k, k);
+    const t = o.t || 0, st = o.state, atk = o.atk;
+    // 다리
+    rr(ctx, -70, -60, 46, 60, 10, '#3a2d2a'); rr(ctx, 24, -60, 46, 60, 10, '#3a2d2a');
+    // 몸통
+    rr(ctx, -110, -230, 220, 180, 50, '#8a4b2a');
+    ctx.strokeStyle = '#c99a3a'; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(-104, -170); ctx.lineTo(104, -170); ctx.moveTo(-104, -110); ctx.lineTo(104, -110); ctx.stroke();
+    // 가슴 판(과열 때 열림)
+    if (st === 'over' || st === 'hurt') { rr(ctx, -60, -200, 90, 110, 8, '#2a1d1a'); [[-40, -170], [-15, -150], [10, -130]].forEach(([x, y]) => { rr(ctx, x - 8, y - 8, 22, 16, 3, C.yellow, 2.5); }); if (o.plugged === false) { ctx.save(); ctx.translate(-15, -145); ctx.rotate(t * 2); rr(ctx, -4, -30, 8, 30, 3, '#8a6a4a', 3); ell(ctx, 0, -32, 8, 8, '#6a4a2a', 3); ctx.restore(); } }
+    // 플러그 팔
+    const reach = atk === 'magnet' ? -150 : atk === 'floor' || atk === 'floorSeq' ? -40 : -110;
+    const ay = atk === 'floor' || atk === 'floorSeq' ? -20 : -150;
+    hose(ctx, -100, -180, reach, ay, -20, 14, '#2a2230'); rr(ctx, reach - 34, ay - 20, 34, 40, 8, '#c99a3a', 4);
+    hose(ctx, 100, -180, 130, -100, 20, 14, '#2a2230'); rr(ctx, 120, -90, 30, 36, 8, '#c99a3a', 4);
+    // 머리: 다이얼 얼굴 + 코일
+    ell(ctx, -10, -270, 70, 56, C.cream, 5);
+    pieEye(ctx, -40, -282, 12, st === 'over' ? 0.5 : 1, -0.5); pieEye(ctx, 0, -282, 12, st === 'over' ? 0.5 : 1, -0.5);
+    style(ctx, 'transparent', 5); ctx.beginPath(); ctx.moveTo(-60, -250); ctx.quadraticCurveTo(-36, -240, -20, -254); ctx.quadraticCurveTo(-4, -240, 20, -250); ctx.stroke();
+    rr(ctx, -30, -360, 40, 40, 6, '#c99a3a', 4);
+    for (let i = 0; i < 4; i++) { ctx.strokeStyle = '#8a4b2a'; ctx.lineWidth = 6; ctx.beginPath(); ctx.ellipse(-10, -330 - i * 10, 26 - i * 3, 5, 0, 0, 7); ctx.stroke(); }
+    if (st !== 'over' && Math.sin(t * 20) > 0.3) { ctx.strokeStyle = '#fff3a8'; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(-10, -370); ctx.lineTo(-30, -395); ctx.lineTo(-14, -400); ctx.lineTo(-34, -425); ctx.stroke(); }
+    if (st === 'over' && Math.sin(t * 6) > 0) ell(ctx, 40, -340, 16, 12, C.cream, 3);
+  };
+  // 두꺼비집 문지기: 회녹색 철 상자 두꺼비, 머리 위 레버 (왼쪽을 봄)
+  PH.toad = function (ctx, h, o) {
+    const k = h / 230; ctx.scale(k, k);
+    const t = o.t || 0, st = o.state, atk = o.atk, down = st === 'down';
+    if (down) ctx.rotate(Math.PI);
+    if (down) ctx.translate(0, 120);
+    // 다리
+    ell(ctx, -90, -14, 40, 18, '#6f8a6a', 4); ell(ctx, 90, -14, 40, 18, '#6f8a6a', 4);
+    // 몸
+    rr(ctx, -130, -170, 260, 156, 40, '#6f8a6a');
+    ctx.fillStyle = 'rgba(61,51,70,.35)'; for (let i = 0; i < 6; i++) { ctx.beginPath(); ctx.arc(-100 + i * 40, -40, 4, 0, 7); ctx.fill(); }
+    // 입
+    const mouth = st === 'over' && o.weak === 'rush';
+    if (mouth) { rr(ctx, -130, -120, 120, 90, 20, '#2a1d1a'); rr(ctx, -80, -70, 18, 30, 3, C.red, 3); }
+    else { style(ctx, 'transparent', 5); ctx.beginPath(); ctx.moveTo(-128, -90); ctx.quadraticCurveTo(-40, -70, 40, -96); ctx.stroke(); }
+    // 목주머니
+    if (atk === 'floor') { ell(ctx, -60, -40, 60 + Math.sin(t * 20) * 6, 36, C.yellow, 4); }
+    // 눈
+    ell(ctx, -80, -176, 26, 22, '#6f8a6a', 4); ell(ctx, -20, -176, 26, 22, '#6f8a6a', 4);
+    pieEye(ctx, -80, -180, 12, st === 'over' ? 0.5 : 1, -0.5); pieEye(ctx, -20, -180, 12, st === 'over' ? 0.5 : 1, -0.5);
+    // 레버
+    rr(ctx, -6, -200, 50, 24, 6, '#9ba3ae', 3);
+    ctx.save(); ctx.translate(18, -196); ctx.rotate(st === 'hurt' || down ? 0.9 : -0.4); rr(ctx, -5, -46, 10, 46, 4, '#4a505a', 3); ell(ctx, 0, -50, 11, 11, C.red, 3); ctx.restore();
+    if (st === 'over' && Math.sin(t * 6) > 0) ell(ctx, 60, -200, 16, 12, C.cream, 3);
   };
   WT.PH_COLORS = { GREY, STEEL, SIGNAL, HONEY };
   WT.dotEyes = dotEyes;

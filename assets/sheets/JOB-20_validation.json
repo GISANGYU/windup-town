@@ -1,0 +1,96 @@
+{
+  "job": "JOB-20",
+  "date": "2026-11-12",
+  "tool": "built-in image_gen",
+  "regenerations": 0,
+  "assets": [
+    {
+      "id": "npc_radio_jam",
+      "file": "npc/npc_radio_jam.png",
+      "size": [
+        1200,
+        942
+      ],
+      "mode": "RGBA",
+      "check": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0,
+      "minimum_300px_height": true
+    },
+    {
+      "id": "npc_radio_reborn_idle",
+      "file": "npc/npc_radio_reborn_idle.png",
+      "size": [
+        313,
+        501
+      ],
+      "mode": "RGBA",
+      "check": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0,
+      "minimum_300px_height": true
+    },
+    {
+      "id": "npc_radio_reborn_talk",
+      "file": "npc/npc_radio_reborn_talk.png",
+      "size": [
+        380,
+        495
+      ],
+      "mode": "RGBA",
+      "check": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0,
+      "minimum_300px_height": true
+    },
+    {
+      "id": "npc_radio_reborn_dance",
+      "file": "npc/npc_radio_reborn_dance.png",
+      "size": [
+        459,
+        501
+      ],
+      "mode": "RGBA",
+      "check": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0,
+      "minimum_300px_height": true
+    },
+    {
+      "id": "npc_radio_reborn_broadcast",
+      "file": "npc/npc_radio_reborn_broadcast.png",
+      "size": [
+        784,
+        509
+      ],
+      "mode": "RGBA",
+      "check": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0,
+      "minimum_300px_height": true
+    },
+    {
+      "id": "portrait_radio_reborn",
+      "file": "portrait/portrait_radio_reborn.png",
+      "size": [
+        333,
+        524
+      ],
+      "mode": "RGBA",
+      "check": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0,
+      "minimum_300px_height": true
+    }
+  ],
+  "visual_checks": {
+    "style_match": true,
+    "no_text_or_ground_shadows": true,
+    "jam_glowing_dot_eyes": true,
+    "reborn_pie_cut_eyes": true,
+    "dance_eyes": "closed joyful expression",
+    "right_facing_attacks": true,
+    "five_reborn_sheet_items": true,
+    "sound_effects_preserved": true
+  }
+}

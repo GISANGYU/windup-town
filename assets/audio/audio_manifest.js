@@ -1,4 +1,4 @@
-// 태엽 마을 — 사운드 리소스 목록. 생성: python tools/gen_audio.py (1·2막), python tools/gen_audio_act3_5.py (3~5막). 절차 합성, 외부 음원 없음
+// 태엽 마을 — 사운드 리소스 목록. 생성: python tools/gen_audio.py (1·2막), python tools/gen_audio_act3_5.py (3~5막), python tools/gen_audio_act3_5b.py (새 3~5막 볼트 남작 이야기, jobs/AUDIO2.md). 절차 합성, 외부 음원 없음
 // vol = 권장 기본 볼륨(0~1). loop = 반복 재생. when = 연결할 곳(src 함수 기준).
 // act = 소속 막(3~5막 항목에만 있음, 미리듣기 묶음용). 3막 마을은 bgm_town_awake 대신 스템 3개(_base·_pip·_lamp)를 동시에 재생.
 // 상태 규칙: musicOn=false면 bgm_town_sleepy, true면 bgm_town_awake. 두 곡 전환은 0.8초 크로스페이드 권장.
@@ -32,7 +32,16 @@ window.AUDIO_MANIFEST = {
     {"id":"bgm_road3","file":"audio/bgm/bgm_road3.wav","loop":true,"vol":0.5,"when":"구간3 도시. 전자 리듬 128BPM, 마을 멜로디(단조)는 멀리서 희미하게","act":5},
     {"id":"bgm_finale","file":"audio/bgm/bgm_finale.wav","loop":true,"vol":0.55,"when":"송신탑 결말 story_21~22. 마을 멜로디 + 도시의 일정한 리듬, 뒤 8마디에 라디오 테마 대선율","act":5},
     {"id":"jingle_checkpoint","file":"audio/bgm/jingle_checkpoint.wav","loop":false,"vol":0.55,"when":"체크포인트 도착. 축음기 나팔 3음","act":5},
-    {"id":"jingle_zone_clear","file":"audio/bgm/jingle_zone_clear.wav","loop":false,"vol":0.65,"when":"구간 끝. 2.2초 팡파르","act":5}
+    {"id":"jingle_zone_clear","file":"audio/bgm/jingle_zone_clear.wav","loop":false,"vol":0.65,"when":"구간 끝. 2.2초 팡파르","act":5},
+    {"id":"bgm_recall_night","file":"audio/bgm/bgm_recall_night.wav","loop":true,"vol":0.4,"when":"3막 회수 신호 밤·고백. 저음 드론 + 멀리서 울리는 사이렌, 60BPM 8마디","act":3},
+    {"id":"bgm_departure","file":"audio/bgm/bgm_departure.wav","loop":true,"vol":0.4,"when":"그라모의 열쇠·출발 컷신. 마을 곡을 오르골로 느리게 72BPM","act":3},
+    {"id":"bgm_toad_boss","file":"audio/bgm/bgm_toad_boss.wav","loop":true,"vol":0.5,"when":"4막 중간 보스전(두꺼비집 문지기). 150BPM G단조, 개굴 튜바 베이스 + 전기 버즈 타악","act":4},
+    {"id":"jingle_toad_defeat","file":"audio/bgm/jingle_toad_defeat.wav","loop":false,"vol":0.65,"when":"문지기 쓰러짐. 퓨즈 펑 + 하강 튜바 + 승리 3음(3.2초)","act":4},
+    {"id":"bgm_volt_boss","file":"audio/bgm/bgm_volt_boss.wav","loop":true,"vol":0.5,"when":"5막 볼트 남작 1·2라운드. 168BPM E단조, 발전기 험 + 톱니파 리프","act":5},
+    {"id":"bgm_volt_final","file":"audio/bgm/bgm_volt_final.wav","loop":true,"vol":0.55,"when":"5막 최종 라운드(라디오 씨 변신 후). 같은 168BPM, 마을 곡을 금관으로 + 보스 리듬 아래","act":5},
+    {"id":"jingle_radio_reborn","file":"audio/bgm/jingle_radio_reborn.wav","loop":false,"vol":0.75,"when":"라디오 씨 변신 컷신(7.2초). 정적 → 래칫(1.3~3.2초) → 3.35초 팡파르","act":5},
+    {"id":"jingle_volt_defeat","file":"audio/bgm/jingle_volt_defeat.wav","loop":false,"vol":0.7,"when":"남작이 작은 발전기가 됨(5.2초). 기계 화음이 쪼그라듦 → 2.4초부터 오르골 한 소절","act":5},
+    {"id":"bgm_ending","file":"audio/bgm/bgm_ending.wav","loop":true,"vol":0.5,"when":"결말·이후 마을. 마을 곡 피아노(그라모)·나팔(라디오 씨) 듀엣 126BPM","act":5}
   ],
   "sfx": [
     {"id":"amb_projector","file":"audio/sfx/amb_projector.wav","loop":true,"vol":0.15,"when":"컷신 동안 깔리는 영사기 소리(선택)"},
@@ -134,7 +143,36 @@ window.AUDIO_MANIFEST = {
     {"id":"sfx_lift_wind","file":"audio/sfx/sfx_lift_wind.wav","vol":0.55,"when":"태엽 승강 발판이 올라감","act":5},
     {"id":"sfx_drawbridge","file":"audio/sfx/sfx_drawbridge.wav","vol":0.6,"when":"도개교 내려옴 (쿵 = 1.15초 지점)","act":5},
     {"id":"sfx_fall","file":"audio/sfx/sfx_fall.wav","vol":0.5,"when":"구덩이에 떨어짐","act":5},
-    {"id":"sfx_spark_hit","file":"audio/sfx/sfx_spark_hit.wav","vol":0.6,"when":"감전 전선 피격 (player_hit 포함, 따로 겹쳐 틀지 않음)","act":5}
+    {"id":"sfx_spark_hit","file":"audio/sfx/sfx_spark_hit.wav","vol":0.6,"when":"감전 전선 피격 (player_hit 포함, 따로 겹쳐 틀지 않음)","act":5},
+    {"id":"sfx_battery_insert","file":"audio/sfx/sfx_battery_insert.wav","vol":0.6,"when":"건전지 끼우기 모달 완료 / 갈아끼우기(건전지로). 덮개 → 마찰 → 딸깍(0.33초) → 전자음 상승","act":3},
+    {"id":"sfx_battery_shake","file":"audio/sfx/sfx_battery_shake.wav","vol":0.45,"when":"건전지 빼기 모달, A·D 한 번마다. 0.18초 덜그럭","act":3},
+    {"id":"sfx_battery_pop","file":"audio/sfx/sfx_battery_pop.wav","vol":0.6,"when":"건전지가 빠짐. 뽁 → 전자음 하강 → 래칫 한 번(0.55초)","act":3},
+    {"id":"sfx_recall_signal","file":"audio/sfx/sfx_recall_signal.wav","vol":0.6,"when":"회수 신호. 멀리서 커지는 사이렌 파동 3번(3.3초)","act":3},
+    {"id":"sfx_thread_pull","file":"audio/sfx/sfx_thread_pull.wav","vol":0.5,"when":"태엽 힘이 실로 빠져나감. 하강 글리산도 + 느려지는 래칫","act":3},
+    {"id":"sfx_freeze","file":"audio/sfx/sfx_freeze.wav","vol":0.5,"when":"사물이 회색으로 굳음. 하강음 + 금속 정적, 0.9초에서 뚝 끊김","act":3},
+    {"id":"sfx_key_give","file":"audio/sfx/sfx_key_give.wav","vol":0.6,"when":"그라모가 열쇠를 뽑아 건넴. 딸깍 + 오르골 한 음","act":3},
+    {"id":"sfx_toad_croak","file":"audio/sfx/sfx_toad_croak.wav","vol":0.6,"when":"문지기 방전 울음. 낮은 개-굴 + 전기 버즈","act":4},
+    {"id":"sfx_toad_tongue","file":"audio/sfx/sfx_toad_tongue.wav","vol":0.55,"when":"자석 혀 발사. 늘어나는 고무 소리 + 자석 웅","act":4},
+    {"id":"sfx_breaker","file":"audio/sfx/sfx_breaker.wav","vol":0.7,"when":"차단기 레버 내림. 철컥 + 전원 꺼지는 하강","act":4},
+    {"id":"sfx_floor_charge","file":"audio/sfx/sfx_floor_charge.wav","vol":0.45,"when":"바닥 칸 경고. 정확히 0.8초, 끝에서 감전과 맞물림","act":4},
+    {"id":"sfx_floor_zap","file":"audio/sfx/sfx_floor_zap.wav","vol":0.55,"when":"바닥 칸 감전. 0.35초 파지직","act":4},
+    {"id":"sfx_magnet_loop","file":"audio/sfx/sfx_magnet_loop.wav","loop":true,"vol":0.4,"when":"자석 흡입 동안. 1초 루프, 웅웅 4번 맥동","act":4},
+    {"id":"sfx_coolant_spray","file":"audio/sfx/sfx_coolant_spray.wav","vol":0.5,"when":"냉각수 분사. 치이익 1초","act":5},
+    {"id":"sfx_lightning_warn","file":"audio/sfx/sfx_lightning_warn.wav","vol":0.45,"when":"낙뢰 경고(0.45초 전). 고음 띠링","act":5},
+    {"id":"sfx_lightning_strike","file":"audio/sfx/sfx_lightning_strike.wav","vol":0.65,"when":"낙뢰. 쾅 + 지지직 꼬리","act":5},
+    {"id":"sfx_bomb_roll","file":"audio/sfx/sfx_bomb_roll.wav","loop":true,"vol":0.3,"when":"건전지 폭탄이 구르는 동안. 1초 루프, 덜컹 6번 + 도화선","act":5},
+    {"id":"sfx_bomb_boom","file":"audio/sfx/sfx_bomb_boom.wav","vol":0.55,"when":"폭탄 터짐. 카툰 펑","act":5},
+    {"id":"sfx_plug_pull","file":"audio/sfx/sfx_plug_pull.wav","vol":0.7,"when":"보스 플러그 뽑기. 뽁 + 스파크 + 하강 버즈 비명","act":5},
+    {"id":"sfx_volt_laugh","file":"audio/sfx/sfx_volt_laugh.wav","vol":0.55,"when":"남작 웃음. 톱니파 음절 '하-하-하-하-하' (기계음)","act":5},
+    {"id":"sfx_volt_overheat","file":"audio/sfx/sfx_volt_overheat.wav","vol":0.55,"when":"남작 과열. 김 빠짐 + 경보 두 번","act":5},
+    {"id":"sfx_radio_jam_beam","file":"audio/sfx/sfx_radio_jam_beam.wav","vol":0.6,"when":"라디오 씨 잡음 빔. 1.1초까지 유지, 이후 0.5초 동안 힘이 빠짐","act":5},
+    {"id":"sfx_radio_collapse","file":"audio/sfx/sfx_radio_collapse.wav","vol":0.6,"when":"라디오 씨 쓰러짐. 전원 꺼짐 → 털썩(1.7초) → 마지막 지직(2.1초)","act":5},
+    {"id":"sfx_reborn_horn","file":"audio/sfx/sfx_reborn_horn.wav","vol":0.65,"when":"변신 중 나팔이 피어남. 금관 글리산도 + 반짝","act":5},
+    {"id":"sfx_crank_rusty","file":"audio/sfx/sfx_crank_rusty.wav","vol":0.5,"when":"남작 크랭크 과감기, 진행마다. 녹슨 삐걱 래칫 0.35초","act":5},
+    {"id":"sfx_volt_shrink","file":"audio/sfx/sfx_volt_shrink.wav","vol":0.6,"when":"남작이 작아짐. 뾰로롱 하강 + 작은 딸깍","act":5},
+    {"id":"sfx_timestop","file":"audio/sfx/sfx_timestop.wav","vol":0.6,"when":"Q 갈아끼우기 순간 시간 정지. 정확히 0.6초(26460샘플)","act":5},
+    {"id":"sfx_swap_wind","file":"audio/sfx/sfx_swap_wind.wav","vol":0.55,"when":"태엽으로 갈아끼울 때. 래칫 4번(0.5초)","act":5},
+    {"id":"sfx_threads_return","file":"audio/sfx/sfx_threads_return.wav","vol":0.6,"when":"결말: 빛줄기가 마을로 돌아옴. 상승 아르페지오","act":5}
   ],
   "reuse": [
     "제2막 오프닝(act2open): bgm_story를 playbackRate 0.9로",

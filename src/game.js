@@ -37,19 +37,18 @@
       episode: 1, act1Done: false, boss: null, arena: null
     };
     if (WT.Act3) WT.Act3.initState(G.state);
-    if (WT.Act4) WT.Act4.initState(G.state);
     if (WT.Road) WT.Road.initState(G.state);
   };
 
   G.locked = function () {
     const u = G.state.ui;
-    return !!(u.dialog || u.transition || u.cutscene || u.story || (WT.Wind && WT.Wind.active) || (WT.Act3 && WT.Act3.busy()) || (WT.Act4 && WT.Act4.busy()));
+    return !!(u.dialog || u.transition || u.cutscene || u.story || (WT.Wind && WT.Wind.active) || (WT.Act3 && WT.Act3.busy()) || (WT.BatteryModal && WT.BatteryModal.active));
   };
 
   // ───────── 목표 문구 (HUD) ─────────
   G.objective = function () {
     const s = G.state, st = s.quest.stage;
-    if (s.episode >= 3) { const o = (WT.Act4 && WT.Act4.objective()) || (WT.Act3 && WT.Act3.objective()); if (o) return o; }
+    if (s.episode >= 3) { const o = WT.Act3 && WT.Act3.objective(); if (o) return o; }
     if (st === 'none') return '광장의 축음기에게 말을 걸어 보자';
     if (st === 'started') return `태엽 열쇠를 모으자  ${s.inventory.keys} / 3`;
     if (st === 'ready') return '그라모 영감에게 열쇠를 가져가자';
@@ -66,7 +65,6 @@
     const consider = (t, d, range) => { if (d <= range && d < bd) { best = t; bd = d; } };
     Object.entries(W.npcs).forEach(([id, n]) => WT.npcVisible(id) && consider({ type: 'npc', id, x: n.x, y: n.y, h: n.h }, dist(p, n), CFG.talkRange));
     if (WT.Act3) WT.Act3.targets(consider, p);
-    if (WT.Act4) WT.Act4.targets(consider, p);
     if (s.quest.stage === 'started') s.world.keys.forEach((k) => !k.taken && consider({ type: 'key', id: k.id, x: k.x, y: k.y, h: 44 }, dist(p, k), CFG.pickRange));
     consider({ type: 'door', x: W.door.x, y: W.door.y - 30, h: 80 }, dist(p, W.door), CFG.doorRange);
     return best;
@@ -83,7 +81,6 @@
     if (t.type === 'key') return G.pickKey(t.id);
     if (t.type === 'door') return G.enterHouse();
     if (WT.Act3 && WT.Act3.interact(t)) return;
-    if (WT.Act4 && WT.Act4.interact(t)) return;
     if (t.type === 'npc') {
       p.dir = Math.abs(t.x - p.x) > Math.abs(t.y - p.y) ? 'side' : (t.y < p.y ? 'up' : 'down');
       if (p.dir === 'side') p.facing = t.x > p.x ? 1 : -1;
@@ -350,6 +347,7 @@
     const u = s.ui;
     WT.Story.update(dt);
     WT.Wind.update(dt);
+    if (WT.BatteryModal) WT.BatteryModal.update(dt);
     if (u.toast) { u.toast.t -= dt; if (u.toast.t <= 0) u.toast = null; }
     if (p.actionT > 0) { p.actionT -= dt; if (p.actionT <= 0) p.action = null; }
     if (p.landT > 0) p.landT -= dt;
@@ -433,7 +431,6 @@
     }
 
     if (WT.Act3) WT.Act3.update(dt);
-    if (WT.Act4) WT.Act4.update(dt);
     if (s.scene === 'road' && WT.Road) WT.Road.update(dt, input);
     // 입자
     G.particles.forEach((q) => { q.life += dt; q.x += q.vx * dt; q.y += q.vy * dt; if (q.type === 'sparkle') q.vy += 80 * dt; if (q.type === 'spring') { q.vy += 900 * dt; q.rot += dt * 12; } if (q.type === 'steam') { q.vy = -60; q.vx *= 0.95; } });
@@ -456,7 +453,7 @@
     const s = G.state, T = D.tips, tut = s.tut, st = s.quest.stage, p = s.player;
     if (s.scene === 'arena') return G.locked() ? null : WT.Boss.tip();
     if (s.scene === 'road') return WT.Road ? WT.Road.tip() : null;
-    if (s.episode >= 3 && s.scene === 'town') return (WT.Act4 && WT.Act4.tip()) || (WT.Act3 ? WT.Act3.tip() : null);
+    if (s.episode >= 3 && s.scene === 'town') return WT.Act3 ? WT.Act3.tip() : null;
     if (s.episode !== 1 || s.scene !== 'town' || G.locked()) return null;
     if (tut.moved < 120) return T.move;
     const t = G.nearestTarget();

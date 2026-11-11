@@ -182,3 +182,89 @@
 | 2026-11-11 | JOB-17 | ui/ui_icon_battery.png | 최종 저장; PNG RGBA; slice_sheet로 투명 분리 | 합격 |
 | 2026-11-11 | JOB-17 / 검수 | sheets/JOB-17_contact.png; sheets/JOB-17_validation.json | check_assets 및 contact_sheet 실행 | JOB17 파일 검사 7/7 OK; 전체 155/155 OK, 누락 0, 오류 0. 시각 미해결: story_20_city_gate 발밑 그림자 |
 
+| 2026-11-12 | JOB-19 | sheets/JOB-19_a.png | 내장 image_gen; 고정 블록 + anchor/ref_02; 대기·방전·자석 혀·머리 레버 과열, 전체 프롬프트 sheets/JOB-19_prompts.json | 합격: 생성 원본 시각 검수, 분리 검수 진행 |
+
+| 2026-11-12 | JOB-20 | sheets/JOB-20_a.png | 내장 image_gen; STYLE+SPRITE+RADIO 고정 블록, 필수 레퍼런스 4장; 회색 잡음 방송; 전체 프롬프트 sheets/JOB-20_prompts.json | 합격 |
+| 2026-11-12 | JOB-20 | sheets/JOB-20_b.png | 내장 image_gen; STYLE+SPRITE+RADIO REBORN 고정 블록, 필수 레퍼런스 4장; 변신 후 4자세와 초상화; 전체 프롬프트 sheets/JOB-20_prompts.json | 합격 |
+| 2026-11-12 | JOB-20 | npc/npc_radio_jam.png | RADIO in side view facing RIGHT, straining, antenna pointing forward and shooting jagged grey static waves, dial eyes as two glowing dots, battery-powered stiff body; slice_sheet 투명 PNG 분리, 최소 높이 300px 충족 | 합격 |
+| 2026-11-12 | JOB-20 | npc/npc_radio_reborn_idle.png | RADIO REBORN standing proud facing the viewer, gramophone horn speaker blooming from his head, brass wind-up key on his back, bouncy rubber hose limbs, warm smile; slice_sheet 투명 PNG 분리, 최소 높이 300px 충족 | 합격 |
+| 2026-11-12 | JOB-20 | npc/npc_radio_reborn_talk.png | RADIO REBORN talking happily, one glove raised, horn speaker tilted, pie-cut eyes wide; slice_sheet 투명 PNG 분리, 최소 높이 300px 충족 | 합격 |
+| 2026-11-12 | JOB-20 | npc/npc_radio_reborn_dance.png | RADIO REBORN dancing on one leg, rubber hose arms waving, music notes popping from his horn speaker; slice_sheet 투명 PNG 분리, 최소 높이 300px 충족 | 합격 |
+| 2026-11-12 | JOB-20 | npc/npc_radio_reborn_broadcast.png | RADIO REBORN in side view facing RIGHT, legs planted wide, a big stream of music notes and warm golden sound rings blasting from his horn speaker; slice_sheet 투명 PNG 분리, 최소 높이 300px 충족 | 합격 |
+| 2026-11-12 | JOB-20 | portrait/portrait_radio_reborn.png | close-up bust of RADIO REBORN with the horn speaker and pie-cut eyes, warm smile; slice_sheet 투명 PNG 분리, 최소 높이 300px 충족 | 합격 |
+| 2026-11-12 | JOB-20 / 검수 | sheets/JOB-20_contact.png; sheets/JOB-20_validation.json | check_assets, contact_sheet 실행; 6/6 OK, 재생성 없음; 검수 시점 전체 166/206 OK, 다른 JOB 누락 40, 확인 필요 0, 오류 0 | 합격 |
+| 2026-11-12 | JOB-19 | sheets/JOB-19_a_draft.png | 초안 자동 분리 시 자석 당김선이 croak 쪽으로 포함됨 | 재생성: 당김선을 자석 끝에 밀착하도록 위치 수정 |
+| 2026-11-12 | JOB-19 | sheets/JOB-19_a.png | 내장 image_gen; anchor/ref_02/초안 첨부; sheets/JOB-19_a_revision_prompt.txt | 합격: 4개 분리 및 효과 귀속 확인 |
+| 2026-11-12 | JOB-19 | sheets/JOB-19_b.png | 내장 image_gen; anchor/ref_02/시트 a 첨부; 입 안 레버·피격·쓰러짐·초상화, sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | boss/boss_toad_idle.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | boss/boss_toad_croak.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | boss/boss_toad_tongue.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | boss/boss_toad_overheat_top.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | boss/boss_toad_overheat_mouth.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | boss/boss_toad_hurt.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | boss/boss_toad_down.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 | portrait/portrait_toad.png | 고정 블록·개별 prompt, 왼쪽 방향, slice_sheet 투명 PNG; sheets/JOB-19_prompts.json | 합격 |
+| 2026-11-12 | JOB-19 / 검수 | sheets/JOB-19_contact.png; sheets/JOB-19_validation.json | 8/8 OK; 높이 300px 이상, RGBA, 잔여 마젠타 0; a시트 재생성 1회 및 인접 스프라이트 경계 조각 제거; check_assets/contact_sheet 완료 | 합격 |
+
+| 2026-11-12 | JOB-18 | sheets/JOB-18_a_draft.png | 내장 image_gen; 고정 블록과 지정 레퍼런스; 전체 프롬프트 sheets/JOB-18_generation_record.json | 재생성: 방전 자세 발과 자석 효과의 분리 영역 중첩 |
+| 2026-11-12 | JOB-18 | sheets/JOB-18_a.png | 내장 image_gen; 고정 블록과 지정 레퍼런스; 전체 프롬프트 sheets/JOB-18_generation_record.json | 합격: 간격 확대 후 5개 분리 |
+| 2026-11-12 | JOB-18 | sheets/JOB-18_b_draft.png | 내장 image_gen; 고정 블록과 지정 레퍼런스; 전체 프롬프트 sheets/JOB-18_generation_record.json | 재생성: 번개 위쪽 잘림 및 크랭크 자세 장갑 손 |
+| 2026-11-12 | JOB-18 | sheets/JOB-18_b.png | 내장 image_gen; 고정 블록과 지정 레퍼런스; 전체 프롬프트 sheets/JOB-18_generation_record.json | 합격: 번개 여백과 플러그 손 수정, 4개 분리 |
+| 2026-11-12 | JOB-18 | sheets/JOB-18_c.png | 내장 image_gen; 고정 블록과 지정 레퍼런스; 전체 프롬프트 sheets/JOB-18_generation_record.json | 합격: 작은 발전기와 초상화 3개 분리 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_idle.png | BARON VOLT standing tall and smug facing LEFT, plug arms crossed, coil head crackling with small sparks, wire moustache curled; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_spark.png | BARON VOLT slamming both plug-shaped fists into the floor facing LEFT, bright sparks bursting from the floor, furious face; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_magnet.png | BARON VOLT facing LEFT with both arms stretched forward, his plug hands turned into horseshoe magnets, curved pull lines, greedy grin; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_spray.png | BARON VOLT facing LEFT spraying a stream of blue coolant water from a pipe on his side onto the floor, smug; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_throw.png | BARON VOLT facing LEFT bowling a big grey battery with a lit fuse along the floor with one arm, sly grin; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_strike.png | BARON VOLT facing LEFT raising his coil head to the sky, lightning bolts forking upward from the coil, eyes glowing; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_overheat.png | BARON VOLT slumped and overheated facing LEFT, steam puffs from his coil, panting, a panel on his chest swung open showing three big plugs stuck into sockets, clearly visible; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_hurt.png | BARON VOLT jolting with a shocked face facing LEFT, spiral eyes, one plug flying out of his chest, sparks; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_crank.png | BARON VOLT on his knees facing LEFT, his chest panel fully open revealing a big old rusty hand crank inside, his face surprised and a little ashamed; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | boss/boss_volt_small.png | a small cute hand-crank flashlight dynamo with a tiny face, little wire moustache, a brass crank on its side, gentle smile, rubber hose legs, no electricity effects; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | portrait/portrait_volt.png | close-up bust of BARON VOLT, coil head crackling, wire moustache, arrogant smile; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 | portrait/portrait_volt_small.png | close-up of the small hand-crank flashlight dynamo with a gentle smile; slice_sheet로 투명 PNG 분리 | 합격 |
+| 2026-11-12 | JOB-18 / 검수 | sheets/JOB-18_contact.png; sheets/JOB-18_validation.json | check_assets 및 contact_sheet 실행; 개별 투명 이미지 시각 검수 | JOB18 12/12 OK, 잔여 마젠타 0; 전체 OK 185, 다른 JOB 누락 21, 확인 필요 0, 오류 0 |
+
+| 2026-11-12 | JOB-21 | sheets/JOB-21_volt_draft.png | 초기 발전소 홀에 공중 발판 3개가 그려져 제거 요청 | 재생성 |
+| 2026-11-12 | JOB-21 | sheets/JOB-21_c_draft.png | 초기 모달의 빈 슬롯이 아래로 치우쳐 정렬·크기 수정 요청 | 재생성 |
+| 2026-11-12 | JOB-21 | road/road_platform_metal.png | 리벳 철판·경고 줄무늬 횡스크롤 발판 | 합격 |
+| 2026-11-12 | JOB-21 | props/prop_battery_bomb.png | 점 눈·불붙은 도화선의 회색 건전지 폭탄 | 합격 |
+| 2026-11-12 | JOB-21 | props/prop_plug.png | 황동 2핀 플러그·검은 케이블 | 합격 |
+| 2026-11-12 | JOB-21 | props/prop_breaker.png | 붉은 손잡이 차단기 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_lightning.png | 노랑·흰색 세로 낙뢰 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_spark_floor.png | 가로로 긴 방전 불꽃 띠 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_magnet_wave.png | 빨강·회색 자석 물결 3개를 하나로 분리 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_coolant.png | 얇은 파란 냉각수·서리 반짝임 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_recall_thread.png | 휘어지는 금빛 회수 실 | 합격 |
+| 2026-11-12 | JOB-21 | wind/wind_bogle_back.png | 보글 등·빈 가로 건전지 슬롯·양쪽 접점·덮개 열림; 슬롯 위치와 덮개 크기 재생성 | 합격 |
+| 2026-11-12 | JOB-21 | road/bg_gate_arena.png | 발전소 정문; 공중 발판 없음·하단 120px 비움 | 합격 |
+| 2026-11-12 | JOB-21 | road/bg_volt_arena.png | 발전소 홀·오른쪽 소켓으로 흐르는 빛; 공중 발판 제거 재생성 | 합격 |
+| 2026-11-12 | JOB-22 | story/story_30_gramo_unwind.png | 내장 image_gen; 밤 축제·늘어지는 음표·태엽 풀린 그라모; 전체 프롬프트 JOB-22_prompts.json | 합격 |
+| 2026-11-12 | JOB-22 | assets/story/story_32_battery_montage.png | 내장 image_gen; 건전지 몽타주·탈색·점 눈; 전체 프롬프트 JOB-22_prompts.json | 합격 |
+| 2026-11-12 | JOB-22 | assets/story/story_33_recall_night.png | 내장 image_gen; 회수 신호·등에서 도시로 흐르는 금빛 실; 전체 프롬프트 JOB-22_prompts.json | 합격 |
+| 2026-11-12 | JOB-22 | sheets/JOB-22_story_34_draft.png | 라디오 고백 장면 | 재생성: 스피커 그릴 누락·그라모 나팔 잘림 |
+| 2026-11-12 | JOB-22 | assets/story/story_34_radio_confess.png | 내장 image_gen; 고백·스피커 그릴 복원·측면 빈 배터리 게이지 | 합격: 재생성 1회 |
+| 2026-11-12 | JOB-22 | assets/story/story_35_gramo_key.png | 내장 image_gen; 황동 열쇠 전달·그라모 등에 남은 열쇠 2개 | 합격 |
+| 2026-11-12 | JOB-22 | sheets/JOB-22_story_36_draft.png | 새벽 출발 | 재생성: 회색 피프·가로등의 파이 눈과 웃는 표정 |
+| 2026-11-12 | JOB-22 | assets/story/story_36_departure.png | 내장 image_gen; 새벽 출발·회색 친구 점 눈·그라모 열쇠 2개 | 합격: 재생성 1회 |
+| 2026-11-12 | JOB-22 | sheets/JOB-22_story_37_draft.png | 발전소 정문·두꺼비집 | 재생성: 캐릭터 발밑 바닥 그림자 |
+| 2026-11-12 | JOB-22 | assets/story/story_37_toad_gate.png | 내장 image_gen; 발전소 정문·전기 목주머니·붉은 차단기 | 합격: 바닥 그림자 재생성 1회 |
+| 2026-11-12 | JOB-22 | assets/story/story_38_volt_reveal.png | 내장 image_gen; 거대 발전소 홀·플러그 손·가슴 소켓에 흡수되는 금빛 실 | 합격 |
+| 2026-11-12 | JOB-22 | sheets/JOB-22_story_39_draft.png | 라디오 쓰러짐 | 재생성: 발전소 대신 마을 배경·하단 다이얼 위치 |
+| 2026-11-12 | JOB-22 | assets/story/story_39_radio_collapse.png | 내장 image_gen; 발전소 내부·꺼진 다이얼·마지막 잡음·보글 걱정 | 합격: 배경 재생성 1회 |
+| 2026-11-12 | JOB-22 | assets/story/story_40_key_insert.png | 내장 image_gen; 등 열쇠 삽입·황금빛 그라모 기억·남은 열쇠 2개 | 합격 |
+| 2026-11-12 | JOB-22 | assets/story/story_41_radio_reborn.png | 내장 image_gen; 금빛 변신·회색 잔상·피어나는 나팔·음표 파동 | 합격 |
+| 2026-11-12 | JOB-22 | assets/story/story_42_volt_small.png | 내장 image_gen; 손전등 발전기·보글의 크랭크 감기 | 자막 영역 최종 검수 중 |
+| 2026-11-12 | JOB-22 | sheets/JOB-22_story_42_draft.png | 작은 남작 | 재생성: 얼굴이 자막 경계에 걸림 |
+| 2026-11-12 | JOB-22 | assets/story/story_42_volt_small.png | 내장 image_gen; 작은 남작과 크랭크·얼굴 및 손동작 자막 위로 이동 | 합격: 재생성 1회 |
+| 2026-11-12 | JOB-22 | sheets/JOB-22_story_43_draft.png | 마을 귀환 | 재생성: 그라모 등 열쇠 1개만 보임 |
+| 2026-11-12 | JOB-22 | assets/story/story_43_home.png | 내장 image_gen; 금빛 실 귀환·함께 연주·그라모 열쇠 2개 | 합격: 재생성 1회 |
+| 2026-11-12 | JOB-22 | sheets/JOB-22_story_39_draft2.png | 라디오 쓰러짐 자막 가림 검수 | 재생성: 아래쪽 스피커 얼굴이 자막에 가려짐 |
+| 2026-11-12 | JOB-22 | assets/story/story_39_radio_collapse.png | 내장 image_gen; 쓰러진 라디오 전체 얼굴 및 스피커를 자막 위로 이동 | 합격: 재생성 총 2회 |
+| 2026-11-12 | JOB-22 / 검수 | sheets/JOB-22_contact.png; sheets/JOB-22_subtitle_safe_preview.png; sheets/JOB-22_validation.json | 13/13 PNG RGBA 1280x720·개별 시각 검수·하단 30% 자막 가림 검수·check_assets/contact_sheet 완료; 6장 재생성 총 7회 | 합격; 전체 OK 206, 누락 2(JOB22 외 story_44, story_45), 확인 필요 0, 오류 0 |
+
+2026-11-12 | JOB-23 | assets/sheets/JOB-23_story_44_draft.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 코일 머리 윤곽과 밤 발전소 명암 보정 | 재생성
+2026-11-12 | JOB-23 | assets/sheets/JOB-23_story_45_draft.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 지도 자막 가림, 코일 윤곽 및 내부 하이라이트 수정 | 재생성
+2026-11-12 | JOB-23 | assets/sheets/JOB-23_story_45_draft2.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 코일 내부 분홍색 틈과 콧수염 하이라이트 제거 | 재생성
+2026-11-12 | JOB-23 | assets/story/story_45_shadow_plan.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 건전지 회수 실, 마을 지도와 건전지 표시, 경례; 자막 안전영역 확보 | 합격
+2026-11-12 | JOB-23 | assets/story/story_44_shadow_hall.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 마을에서 가슴으로 모이는 금빛 실, 두 실루엣, 밤 발전소 | 합격

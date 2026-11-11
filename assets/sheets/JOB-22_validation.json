@@ -1,0 +1,270 @@
+{
+  "job": "JOB-22",
+  "date": "2026-11-12",
+  "outputs": [
+    {
+      "id": "story_30_gramo_unwind",
+      "file": "assets/story/story_30_gramo_unwind.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "f30797e3d46eb090fd468337bff04b75d7f1f2b34af0d6fbf1df8187773c68d4"
+    },
+    {
+      "id": "story_32_battery_montage",
+      "file": "assets/story/story_32_battery_montage.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "23d1748cbf5e553f8c1171fba6f6a38a61bdcc0dc21694a9df25a4a26cacb592"
+    },
+    {
+      "id": "story_33_recall_night",
+      "file": "assets/story/story_33_recall_night.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "066a4fa91ba14e413452e35983596f5eb8b3486d81af2dac12095eead6531c59"
+    },
+    {
+      "id": "story_34_radio_confess",
+      "file": "assets/story/story_34_radio_confess.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "06676c1ec6365ff7409bbb97fe303023ea7263ef897c6fdf60cc965e7339d68a"
+    },
+    {
+      "id": "story_35_gramo_key",
+      "file": "assets/story/story_35_gramo_key.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "62a9bf1902461612a495aa59da52787d919abbdedbe2713d6adb5bdf6a2b929f"
+    },
+    {
+      "id": "story_36_departure",
+      "file": "assets/story/story_36_departure.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "a4b017be01457595322cf7bbfd2e35ff8d0cafbbdccd734eb9e418353b23c71e"
+    },
+    {
+      "id": "story_37_toad_gate",
+      "file": "assets/story/story_37_toad_gate.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "3762b0c60ac39209dcbce0a661a6ddf33a6b054c62ea10ad56cdbe1116bb31da"
+    },
+    {
+      "id": "story_38_volt_reveal",
+      "file": "assets/story/story_38_volt_reveal.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "1859e2085633bc3c7ef30f8610121f7963fd19bb3665d33cfe2ca338f1c28e8d"
+    },
+    {
+      "id": "story_39_radio_collapse",
+      "file": "assets/story/story_39_radio_collapse.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "9f8768091df76d35ff0507c95c8125a8c0b4802b6be08462ce75c7015f31b8ee"
+    },
+    {
+      "id": "story_40_key_insert",
+      "file": "assets/story/story_40_key_insert.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "23fdedbb2e0288623112b0af3029d0d67c6cec999503f9930cef1ad44d7426a6"
+    },
+    {
+      "id": "story_41_radio_reborn",
+      "file": "assets/story/story_41_radio_reborn.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "ce50a40ee64f769db5a10b3095f803fd4e63014476b8cb2ee5696c19e9a5971a"
+    },
+    {
+      "id": "story_42_volt_small",
+      "file": "assets/story/story_42_volt_small.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "ccd993793ac60f5eebe38a8e6423544eda6ac00c8324b5c4f3f896463901a7e3"
+    },
+    {
+      "id": "story_43_home",
+      "file": "assets/story/story_43_home.png",
+      "source_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "format": "PNG",
+      "mode": "RGBA",
+      "alpha_extrema": [
+        255,
+        255
+      ],
+      "sha256": "b019cca714136f0fc846c4b01ca2e33310b531d60947b4b4c33b3f45466499f6"
+    }
+  ],
+  "count": 13,
+  "technical_checks": "13 readable PNG RGBA, exact 1280x720, opaque full backgrounds",
+  "regenerated_ids": [
+    "story_34_radio_confess",
+    "story_36_departure",
+    "story_37_toad_gate",
+    "story_39_radio_collapse",
+    "story_42_volt_small",
+    "story_43_home"
+  ],
+  "visual_review": "passed individual review and lower-30-percent subtitle mask: important faces and key story actions visible; battery dot eyes vs wind-up pie eyes; GRAMO two remaining keys after story_35; no lettering or framing",
+  "regeneration_attempts": 7,
+  "out_of_scope_missing": [
+    "story_44_shadow_hall",
+    "story_45_shadow_plan"
+  ],
+  "export": "Mechanical PNG RGBA export to exact 1280x720; generated originals preserved in generation record source paths; no cropping"
+}

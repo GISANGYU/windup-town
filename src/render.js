@@ -119,11 +119,13 @@
     const awake = st.mood === 'awake';
     let ids, ph;
     if (id === 'gramo') { ph = PH.gramo; ids = awake ? (A.has('npc_gramo_awake_02') && beat(t / 2 + 0.25) > 0.5 && Math.floor(t * CFG.bpm / 60) % 2 ? ['npc_gramo_awake_02', 'npc_gramo_awake'] : ['npc_gramo_awake']) : ['npc_gramo_sleepy']; }
+    else if (id === 'radio' && st.reborn) { ph = PH.radio; ids = [WT.Game.state.ui.dialog && WT.Game.state.ui.dialog.who === 'radio' ? 'npc_radio_reborn_talk' : Math.floor(t * CFG.bpm / 60) % 2 ? 'npc_radio_reborn_dance' : 'npc_radio_reborn_idle', 'npc_radio_reborn_idle']; }
     else if (id === 'radio') { ph = PH.radio; ids = st.off ? ['npc_radio_off', 'npc_radio_idle'] : st.power === 'wind' ? ['npc_radio_crank', 'npc_radio_idle'] : (WT.Game.state.ui.dialog && WT.Game.state.ui.dialog.who === 'radio' && Math.floor(t * 4) % 2 ? ['npc_radio_talk', 'npc_radio_idle'] : ['npc_radio_idle']); }
     else if (id === 'cuckoo') { ph = PH.cuckoo; ids = ['boss_cuckoo']; }
     else if (id === 'pip') { ph = PH.pip; ids = awake ? (A.has('npc_pip_awake_02') && Math.floor(t * CFG.bpm / 60) % 2 ? ['npc_pip_awake_02', 'npc_pip_awake'] : ['npc_pip_awake']) : ['npc_pip_sleepy']; }
     else { ph = PH.lamp; const lit = WT.Act3 && WT.Act3.lampLit(); ids = [(lit != null ? lit : awake) ? 'npc_lamp_on' : 'npc_lamp_off']; }
     const bat = st.power === 'battery' || (id === 'radio' && st.off);
+    const frozen = !!st.frozen;
     let sx = 1, sy = 1, rot = 0, bob = 0;
     const c = s.ui.cutscene;
     const party = c && c.type === 'party' ? 1 + 1.5 * Math.min(1, c.t / 0.3) : 1; // 깨어난 직후 2초: 동작을 크게
@@ -131,12 +133,13 @@
     else { rot = 0.06 + Math.sin(t * 1.2 + n.x) * 0.03; sy = 0.97 + Math.sin(t * 1.6) * 0.015; }
     if (id === 'gramo' && c && c.type === 'wind') { rot = Math.sin(c.t * 40) * 0.05; sy = 1 + Math.sin(c.t * 20) * 0.04; }
     if (id === 'cuckoo') { const b = s.world.musicOn ? beat(t, 0.25) : 0; sy = 1 + b * 0.05; sx = 1 - b * 0.03; bob = b * 5; rot = Math.sin(t * 2) * 0.04; }
-    if (bat) { sx = 1; sy = 1; bob = 0; rot = st.off ? 0.18 : 0; } // 건전지: 튀지 않음, 꺼지면 고꾸라짐
-    const lampOn = id === 'lamp' && st.power === 'battery'; // 건전지 가로등: 깜빡이지 않고 하얗게 켜져 있음
+    if (bat) { sx = 1; sy = 1; bob = 0; rot = st.off ? 0.18 : frozen ? 0.1 : 0; } // 건전지: 튀지 않음, 꺼지거나 굳으면 기울어짐
+    const lampOn = id === 'lamp' && st.power === 'battery' && !frozen; // 건전지 가로등: 깜빡이지 않고 하얗게 켜져 있음
+    if (id === 'lamp' && frozen) ids = ['npc_lamp_off'];
     if (lampOn) ids = ['npc_lamp_on'];
     shadow(n.x, n.y, n.foot[0] * 1.15);
-    if (bat) { ctx.save(); ctx.filter = st.off ? 'grayscale(1) brightness(.8)' : 'grayscale(1) contrast(1.05) brightness(1.04)'; }
-    WT.drawThing(ctx, ids, ph, n.x, n.y - bob, { h: n.h, sx, sy, rot, mood: id === 'cuckoo' ? 'cuckoo' : st.mood, pose: id === 'cuckoo' ? 'cuckoo' : undefined, t, wind: st.wind, power: st.power, off: st.off, crank: id === 'radio' && st.power === 'wind' });
+    if (bat) { ctx.save(); ctx.filter = st.off || frozen ? 'grayscale(1) brightness(.78)' : 'grayscale(1) contrast(1.05) brightness(1.04)'; }
+    WT.drawThing(ctx, ids, ph, n.x, n.y - bob, { h: n.h, sx, sy, rot, mood: id === 'cuckoo' ? 'cuckoo' : st.mood, pose: id === 'cuckoo' ? 'cuckoo' : undefined, t, wind: st.wind, power: st.power, off: st.off, reborn: id === 'radio' && st.reborn });
     if (bat) ctx.restore();
     if (lampOn) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = 'rgba(235,240,255,.22)'; ctx.beginPath(); ctx.arc(n.x + 30, n.y - n.h * 0.82, 44, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
   }
@@ -173,7 +176,7 @@
 
   function drawPrompt(target, t) {
     if (!target) return;
-    const label = { npc: '대화하기', key: '줍기', door: '들어가기', boss: '과감기!', deco: '장식 놓기', sheet: '줍기', ribbon: '줍기', stake: '길게: 뽑기', surveyor: target.label || '잡음 방송' }[target.type] || '살펴보기';
+    const label = { npc: '대화하기', key: '줍기', door: '들어가기', boss: '과감기!', festival_power: '전원 연결', festival_signal: '신호 분리', deco: '장식 놓기', sheet: '줍기', ribbon: '줍기', stake: '길게: 뽑기', surveyor: target.label || '잡음 방송' }[target.type] || '살펴보기';
     const x = target.x, y = target.y - target.h - 26 - Math.abs(Math.sin(t * 4)) * 5;
     ctx.save();
     ctx.font = '22px "Do Hyeon", sans-serif';
@@ -303,7 +306,6 @@
     W.props.forEach((p) => list.push({ y: p.y, f: () => drawProp(p, t) }));
     Object.keys(W.npcs).forEach((id) => WT.npcVisible(id) && list.push({ y: W.npcs[id].y, f: () => drawNpc(id, t) }));
     if (WT.Act3) WT.Act3.drawList(list, t, ctx, R);
-    if (WT.Act4) WT.Act4.drawList(list, t, ctx, R);
     if (s.quest.stage === 'started') s.world.keys.forEach((k) => !k.taken && list.push({ y: k.y, f: () => drawKey(k, t) }));
     list.push({ y: s.player.y, f: () => drawPlayer(t) });
     list.sort((a, b) => a.y - b.y).forEach((d) => d.f());
@@ -313,7 +315,6 @@
     drawDebug(target);
     drawHud(t);
     if (WT.Act3) WT.Act3.drawOverlay(ctx, t);
-    if (WT.Act4) WT.Act4.drawOverlay(ctx, t);
     drawTip(t);
   }
 
@@ -363,6 +364,7 @@
     if (s.scene === 'intro') WT.Intro.draw(ctx, t); else if (s.scene === 'town') town(t); else if (s.scene === 'arena') { WT.Boss.draw(ctx, t, R); drawTip(t); } else if (s.scene === 'road') { WT.Road.draw(ctx, t, R); drawTip(t); } else house(t);
     ctx.restore();
     WT.Story.draw(ctx, t);
+    if (WT.BatteryModal) WT.BatteryModal.draw(ctx);
     drawFilm(t);
     drawIris();
   };

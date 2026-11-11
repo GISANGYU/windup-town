@@ -126,18 +126,18 @@
       ctx.fillStyle = '#c99a3a'; ctx.strokeStyle = C.outline; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, 40, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.restore();
       if (p > 0.66) for (let i = 0; i < 2; i++) WT.drawThing(ctx, 'fx_steam', PH.steam, cx + (i ? 150 : -150), cy - 170 - Math.sin(t * 8 + i) * 10, { h: 50, anchor: 'center' });
-    } else if (['pip', 'lamp', 'radio', 'self'].includes(st.opts.variant)) {
+    } else if (['pip', 'lamp', 'radio', 'self', 'volt'].includes(st.opts.variant)) {
       // 주민·라디오·보글 등: 색 상자 + 가운데 축
-      const col = { pip: C.red, lamp: '#5a5266', radio: '#b9824f', self: C.white }[st.opts.variant];
+      const col = { pip: C.red, lamp: '#5a5266', radio: '#b9824f', self: C.white, volt: '#8a4b2a' }[st.opts.variant];
       const g = p < 1 ? 1 - p : 0;
       ctx.save(); ctx.translate(cx, cy);
-      if (st.opts.variant !== 'radio') { ctx.filter = `grayscale(${g.toFixed(2)})`; }
+      if (st.opts.variant !== 'radio' && st.opts.variant !== 'volt') { ctx.filter = `grayscale(${g.toFixed(2)})`; }
       ctx.fillStyle = col; ctx.strokeStyle = C.outline; ctx.lineWidth = 6;
       ctx.beginPath(); ctx.roundRect(-170, -150, 340, 290, st.opts.variant === 'radio' ? [90, 90, 24, 24] : 30); ctx.fill(); ctx.stroke();
       if (st.opts.variant === 'radio') { ctx.fillStyle = C.cream; ctx.beginPath(); ctx.roundRect(-150, 70, 300, 50, 12); ctx.fill(); ctx.stroke(); }
       ctx.fillStyle = '#c99a3a'; ctx.beginPath(); ctx.arc(0, 0, 40, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.restore();
-      if (st.opts.variant !== 'radio' && p < 0.95) { // 빠지는 건전지
+      if (!['radio', 'volt', 'self'].includes(st.opts.variant) && p < 0.95) { // 빠지는 건전지
         WT.drawThing(ctx, 'prop_battery', PH.battery, cx + 210 + p * 40, cy + 40 - p * 80, { h: 70, rot: 0.4 + p, alpha: 1 - p });
       }
     } else {

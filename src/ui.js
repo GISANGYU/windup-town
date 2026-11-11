@@ -17,6 +17,7 @@
   // opt: { who, name, mood, lines[], onClose }
   UI.dialog = function (opt) {
     const s = WT.Game.state;
+    if (!opt.lines || !opt.lines.length) { if (opt.onClose) opt.onClose(); return; } // 대사가 없으면 열지 않고 넘어감
     s.ui.dialog = Object.assign({ i: 0 }, opt);
     const card = $('#card');
     card.classList.remove('closing');
@@ -33,6 +34,13 @@
     const cv = $('#cardPortrait'), c = cv.getContext('2d');
     c.clearRect(0, 0, cv.width, cv.height);
     const id = `portrait_${opt.who}_${opt.mood}`;
+    if (opt.who === 'volt' || opt.who === 'voltSmall' || opt.who === 'toad') { // 3~5막 보스
+      const pid = { volt: 'portrait_volt', voltSmall: 'portrait_volt_small', toad: 'portrait_toad' }[opt.who];
+      if (WT.Assets.has(pid)) { WT.drawThing(c, pid, null, cv.width / 2, cv.height / 2, { h: cv.height * 0.9, anchor: 'center' }); return; }
+      const sid = { volt: 'boss_volt_idle', voltSmall: 'boss_volt_small', toad: 'boss_toad_idle' }[opt.who];
+      WT.drawThing(c, sid, opt.who === 'toad' ? WT.PH.toad : WT.PH.volt, cv.width / 2, cv.height * 0.98, { h: cv.height * (opt.who === 'voltSmall' ? 0.6 : 0.95), state: opt.who === 'voltSmall' ? 'small' : 'attack', t: 0 });
+      return;
+    }
     if (opt.who === 'boss') {
       const pid = opt.mood === 'cuckoo' ? 'portrait_boss_cuckoo' : 'portrait_boss_angry';
       if (WT.Assets.has(pid)) { WT.drawThing(c, pid, null, cv.width / 2, cv.height / 2, { h: cv.height * 0.9, anchor: 'center' }); return; }
@@ -74,7 +82,7 @@
       typing.n++;
       // 글자 출력음: 깨어 있으면 2글자, 졸리면 3글자마다. 공백은 건너뜀
       const sleepy = d.mood === 'sleepy', every = sleepy ? 3 : 2, ch = text[typing.n - 1];
-      const blip = d.who === 'boss' ? 'sfx_text_blip_boss' : d.who === 'radio' ? (WT.Audio.defs.sfx_text_blip_radio ? 'sfx_text_blip_radio' : 'sfx_text_blip_awake') : sleepy ? 'sfx_text_blip_sleepy' : 'sfx_text_blip_awake';
+      const blip = ['boss', 'volt', 'toad'].includes(d.who) ? 'sfx_text_blip_boss' : d.who === 'radio' ? (WT.Audio.defs.sfx_text_blip_radio ? 'sfx_text_blip_radio' : 'sfx_text_blip_awake') : sleepy ? 'sfx_text_blip_sleepy' : 'sfx_text_blip_awake';
       if (typing.n % every === 1 && ch && ch.trim()) WT.Audio.play(blip, { rate: 0.9 + Math.random() * 0.2 });
       el.textContent = text.slice(0, typing.n);
       if (typing.n >= text.length) { clearInterval(typing.timer); typing.timer = null; lineReady(); }

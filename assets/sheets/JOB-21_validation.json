@@ -1,0 +1,134 @@
+[
+  {
+    "id": "bg_gate_arena",
+    "file": "road/bg_gate_arena.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "bg_volt_arena",
+    "file": "road/bg_volt_arena.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "road_platform_metal",
+    "file": "road/road_platform_metal.png",
+    "size": [
+      602,
+      155
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "fx_lightning",
+    "file": "fx/fx_lightning.png",
+    "size": [
+      121,
+      471
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "fx_spark_floor",
+    "file": "fx/fx_spark_floor.png",
+    "size": [
+      628,
+      119
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "fx_magnet_wave",
+    "file": "fx/fx_magnet_wave.png",
+    "size": [
+      296,
+      360
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "fx_coolant",
+    "file": "fx/fx_coolant.png",
+    "size": [
+      486,
+      122
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "prop_battery_bomb",
+    "file": "props/prop_battery_bomb.png",
+    "size": [
+      453,
+      412
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "prop_plug",
+    "file": "props/prop_plug.png",
+    "size": [
+      519,
+      263
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "prop_breaker",
+    "file": "props/prop_breaker.png",
+    "size": [
+      345,
+      341
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "fx_recall_thread",
+    "file": "fx/fx_recall_thread.png",
+    "size": [
+      525,
+      117
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  },
+  {
+    "id": "wind_bogle_back",
+    "file": "wind/wind_bogle_back.png",
+    "size": [
+      976,
+      1179
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": []
+  }
+]

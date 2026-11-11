@@ -1,0 +1,173 @@
+{
+  "job": "JOB-18",
+  "assets": [
+    {
+      "id": "boss_volt_idle",
+      "file": "boss/boss_volt_idle.png",
+      "size": [
+        207,
+        408
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_spark",
+      "file": "boss/boss_volt_spark.png",
+      "size": [
+        327,
+        391
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_magnet",
+      "file": "boss/boss_volt_magnet.png",
+      "size": [
+        361,
+        382
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_spray",
+      "file": "boss/boss_volt_spray.png",
+      "size": [
+        252,
+        397
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_throw",
+      "file": "boss/boss_volt_throw.png",
+      "size": [
+        427,
+        380
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_strike",
+      "file": "boss/boss_volt_strike.png",
+      "size": [
+        378,
+        572
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_overheat",
+      "file": "boss/boss_volt_overheat.png",
+      "size": [
+        334,
+        538
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_hurt",
+      "file": "boss/boss_volt_hurt.png",
+      "size": [
+        497,
+        498
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_crank",
+      "file": "boss/boss_volt_crank.png",
+      "size": [
+        418,
+        464
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "boss_volt_small",
+      "file": "boss/boss_volt_small.png",
+      "size": [
+        449,
+        435
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "portrait_volt",
+      "file": "portrait/portrait_volt.png",
+      "size": [
+        616,
+        694
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    },
+    {
+      "id": "portrait_volt_small",
+      "file": "portrait/portrait_volt_small.png",
+      "size": [
+        606,
+        492
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "remaining_magenta_pixels": 0
+    }
+  ],
+  "visual_review": {
+    "contact_sheet": "assets/sheets/JOB-18_contact.png",
+    "result": "passed",
+    "checks": [
+      "Left-facing boss actions",
+      "Consistent coil, copper casing and wire moustache",
+      "Three inserted chest plugs in overheat",
+      "Visible rusty manual crank",
+      "Small flashlight form without electricity",
+      "No neighboring sprite contamination",
+      "No text or ground shadows"
+    ]
+  },
+  "project_status_at_check": {
+    "OK": 185,
+    "missing": 21,
+    "needs_review": 0,
+    "errors": 0,
+    "required_missing": [
+      "bg_gate_arena",
+      "bg_volt_arena",
+      "wind_bogle_back"
+    ]
+  }
+}

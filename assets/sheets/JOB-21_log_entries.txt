@@ -1,0 +1,14 @@
+| 2026-11-12 | JOB-21 | sheets/JOB-21_volt_draft.png | 초기 발전소 홀에 공중 발판 3개가 그려져 제거 요청 | 재생성 |
+| 2026-11-12 | JOB-21 | sheets/JOB-21_c_draft.png | 초기 모달의 빈 슬롯이 아래로 치우쳐 정렬·크기 수정 요청 | 재생성 |
+| 2026-11-12 | JOB-21 | road/road_platform_metal.png | 리벳 철판·경고 줄무늬 횡스크롤 발판 | 합격 |
+| 2026-11-12 | JOB-21 | props/prop_battery_bomb.png | 점 눈·불붙은 도화선의 회색 건전지 폭탄 | 합격 |
+| 2026-11-12 | JOB-21 | props/prop_plug.png | 황동 2핀 플러그·검은 케이블 | 합격 |
+| 2026-11-12 | JOB-21 | props/prop_breaker.png | 붉은 손잡이 차단기 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_lightning.png | 노랑·흰색 세로 낙뢰 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_spark_floor.png | 가로로 긴 방전 불꽃 띠 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_magnet_wave.png | 빨강·회색 자석 물결 3개를 하나로 분리 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_coolant.png | 얇은 파란 냉각수·서리 반짝임 | 합격 |
+| 2026-11-12 | JOB-21 | fx/fx_recall_thread.png | 휘어지는 금빛 회수 실 | 합격 |
+| 2026-11-12 | JOB-21 | wind/wind_bogle_back.png | 보글 등·빈 가로 건전지 슬롯·양쪽 접점·덮개 열림; 슬롯 위치와 덮개 크기 재생성 | 합격 |
+| 2026-11-12 | JOB-21 | road/bg_gate_arena.png | 발전소 정문; 공중 발판 없음·하단 120px 비움 | 합격 |
+| 2026-11-12 | JOB-21 | road/bg_volt_arena.png | 발전소 홀·오른쪽 소켓으로 흐르는 빛; 공중 발판 제거 재생성 | 합격 |

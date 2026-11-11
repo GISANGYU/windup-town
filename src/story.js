@@ -290,6 +290,145 @@
         ctx.restore(); }
       for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2 + t; WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 640 + Math.cos(a) * r * 0.8, 160 + Math.sin(a) * r * 0.5, { h: 40, anchor: 'center' }); }
     },
+    gramoUnwind(ctx, t) {
+      bg(ctx, '#2a2c44', '#3b3046'); ground(ctx, '#5f6650');
+      for (let i = 0; i < 6; i++) { ctx.fillStyle = 'rgba(242,193,78,.8)'; ctx.beginPath(); ctx.arc(160 + i * 190, 150 + (i % 2) * 30, 14, 0, 7); ctx.fill(); }
+      PH.stage && WT.drawThing(ctx, 'prop_stage', PH.stage, 640, 560, { h: 150, anchor: 'center' });
+      const k = Math.min(1, t / 3);
+      WT.drawThing(ctx, ['npc_gramo_sleepy', 'npc_gramo_awake'], PH.gramo, 640, 545, { h: 240, mood: k > 0.5 ? 'sleepy' : 'awake', t, rot: k * 0.18 });
+      for (let i = 0; i < 5; i++) WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 560 + i * 45, 260 + k * 160 + i * 12, { h: 40, anchor: 'center', rot: k * 1.2, sy: 1 + k * 0.6, alpha: 1 - k * 0.5 });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 330, 610, { h: 150, mood: 'awake', t, rot: k * 0.25 });
+    },
+    montage(ctx, t) {
+      ctx.fillStyle = '#d7be97'; ctx.fillRect(0, 0, WT.W / 2, WT.H); ctx.fillStyle = '#2a2c44'; ctx.fillRect(WT.W / 2, 0, WT.W / 2, WT.H);
+      ctx.strokeStyle = C.outline; ctx.lineWidth = 6; ctx.beginPath(); ctx.moveTo(WT.W / 2, 0); ctx.lineTo(WT.W / 2, WT.H); ctx.stroke();
+      ctx.save(); ctx.filter = 'grayscale(.8)';
+      const x = 120 + ((t * 300) % 420);
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, x, 600, { h: 170, mood: 'awake', t, rot: 0.15 });
+      ctx.strokeStyle = 'rgba(61,51,70,.5)'; ctx.lineWidth = 4; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.moveTo(x - 160, 470 + i * 30); ctx.lineTo(x - 70, 470 + i * 30); ctx.stroke(); }
+      WT.drawThing(ctx, 'npc_lamp_on', PH.lamp, 960, 640, { h: 380, mood: 'awake' });
+      ctx.restore();
+      ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = 'rgba(240,245,255,.35)'; ctx.beginPath(); ctx.arc(1010, 330, 120, 0, 7); ctx.fill(); ctx.restore();
+    },
+    recall(ctx, t) {
+      bg(ctx, '#160f18', '#2a1a22');
+      ctx.fillStyle = '#3a2a30'; for (let i = 0; i < 8; i++) ctx.fillRect(820 + i * 55, 300 - (i * 37 % 100), 40, 300);
+      const g = ctx.createRadialGradient(1050, 260, 10, 1050, 260, 360); g.addColorStop(0, `rgba(224,71,60,${0.6 + Math.sin(t * 6) * 0.2})`); g.addColorStop(1, 'rgba(224,71,60,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, WT.W, WT.H);
+      ground(ctx, '#3a3d34');
+      ctx.save(); ctx.filter = 'grayscale(1) brightness(.85)';
+      WT.drawThing(ctx, 'npc_pip_sleepy', PH.pip, 300, 620, { h: 160, mood: 'sleepy', rot: 0.1 }); WT.drawThing(ctx, 'npc_lamp_off', PH.lamp, 520, 640, { h: 300, mood: 'sleepy' });
+      ctx.restore();
+      ctx.strokeStyle = 'rgba(242,193,78,.9)'; ctx.lineWidth = 4;
+      [[300, 520], [540, 380]].forEach(([x, y], i) => { const k = (t * 0.4 + i * 0.3) % 1; ctx.beginPath(); ctx.moveTo(x, y); ctx.bezierCurveTo(x + 200, y - 200, 900, 200 + Math.sin(t * 3 + i) * 40, x + (1050 - x) * k, y + (260 - y) * k); ctx.stroke(); });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 760, 650, { h: 150, dir: 'side', t, flip: true });
+    },
+    confess(ctx, t) {
+      bg(ctx, '#232338', '#1a1828'); ground(ctx, '#3f4436');
+      ctx.fillStyle = '#6b4a2a'; ctx.strokeStyle = C.outline; ctx.lineWidth = 5; ctx.fillRect(540, 560, 160, 70); ctx.strokeRect(540, 560, 160, 70);
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, 620, 570, { h: 190, power: 'battery', t, rot: 0.08, alpha: 0.9 });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 820, 640, { h: 150, dir: 'side', t, flip: true });
+      WT.drawThing(ctx, 'npc_gramo_sleepy', PH.gramo, 330, 620, { h: 200, mood: 'sleepy', t });
+    },
+    gramoKey(ctx, t) {
+      bg(ctx, '#3a2a30', '#2a1d22');
+      ctx.fillStyle = 'rgba(242,193,78,.25)'; ctx.beginPath(); ctx.arc(640, 360, 300, 0, 7); ctx.fill();
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 470, 640, { h: 380, mood: 'awake', t, flip: true });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 860, 650, { h: 220, dir: 'side', t, flip: true });
+      const k = Math.min(1, t / 2.5);
+      WT.drawThing(ctx, 'prop_key', PH.key, 560 + k * 200, 360 + Math.sin(t * 3) * 6, { h: 90, rot: k * 0.6 });
+    },
+    departure(ctx, t) {
+      bg(ctx, '#f6c98e', '#e9b47a');
+      ctx.fillStyle = '#f2c14e'; ctx.beginPath(); ctx.arc(1000, 470, 110, Math.PI, 0); ctx.fill();
+      ground(ctx, '#a3a578');
+      ctx.fillStyle = C.sand; ctx.beginPath(); ctx.moveTo(500, WT.H); ctx.quadraticCurveTo(820, 520, 1280, 470); ctx.lineTo(1280, 500); ctx.quadraticCurveTo(860, 560, 700, WT.H); ctx.fill();
+      const x = Math.min(860, 620 + t * 50);
+      WT.drawThing(ctx, ['player_walk_side_01', 'player_idle_side'], PH.bogle, x, 640 - Math.abs(Math.sin(t * 10)) * 6, { h: 170, pose: 'walk', dir: 'side', t });
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, x - 130, 640, { h: 140, power: 'battery', t });
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 220, 620, { h: 210, mood: 'awake', t, rot: Math.sin(t * 2) * 0.05 });
+      ctx.save(); ctx.filter = 'grayscale(1)'; WT.drawThing(ctx, 'npc_pip_sleepy', PH.pip, 380, 640, { h: 120, mood: 'sleepy' }); ctx.restore();
+    },
+    toadGate(ctx, t) {
+      bg(ctx, '#b0827a', '#6e5a62');
+      ctx.fillStyle = '#5c6470'; ctx.strokeStyle = C.outline; ctx.lineWidth = 6; ctx.fillRect(300, 120, 680, 520); ctx.strokeRect(300, 120, 680, 520);
+      ctx.fillStyle = '#e07a3a'; for (let x = 310; x < 970; x += 60) ctx.fillRect(x, 130, 30, 14);
+      ground(ctx, '#5a5e66');
+      WT.drawThing(ctx, ['boss_toad_croak', 'boss_toad_idle'], PH.toad, 760, 610, { h: 330, t, atk: 'floor' });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 280, 650, { h: 130, dir: 'side', t });
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, 170, 650, { h: 120, power: 'battery', t });
+    },
+    voltReveal(ctx, t) {
+      bg(ctx, '#3a2a2a', '#1e1618');
+      for (let i = 0; i < 9; i++) { const a = i / 9 * Math.PI - Math.PI; ctx.strokeStyle = 'rgba(242,193,78,.8)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(640 + Math.cos(a) * 640, 360 + Math.sin(a) * 300); ctx.quadraticCurveTo(700, 200, 820, 330 + Math.sin(t * 2 + i) * 10); ctx.stroke(); }
+      ground(ctx, '#3a3436');
+      WT.drawThing(ctx, ['boss_volt_idle'], PH.volt, 860, 640, { h: 470, t, state: 'attack' });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 300, 660, { h: 120, dir: 'side', t });
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, 190, 660, { h: 110, power: 'battery', t });
+    },
+    radioCollapse(ctx, t) {
+      bg(ctx, '#2a2226', '#161013'); ground(ctx, '#3a3436');
+      ctx.save(); ctx.filter = 'grayscale(1) brightness(.8)'; WT.drawThing(ctx, 'npc_radio_off', PH.radio, 520, 640, { h: 200, power: 'battery', off: true, rot: 0.3 }); ctx.restore();
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 360, 650, { h: 150, dir: 'side', t });
+      ctx.globalAlpha = 0.85; WT.drawThing(ctx, ['boss_volt_idle'], PH.volt, 1050, 640, { h: 420, t, state: 'attack' }); ctx.globalAlpha = 1;
+    },
+    radioReborn(ctx, t) {
+      bg(ctx, '#3a2a1a', '#1e1610');
+      const g = ctx.createRadialGradient(560, 420, 10, 560, 420, 420); g.addColorStop(0, 'rgba(242,193,78,.9)'); g.addColorStop(1, 'rgba(242,193,78,0)');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, WT.W, WT.H);
+      ground(ctx, '#4a3e30');
+      const k = Math.min(1, t / 1.5);
+      WT.drawThing(ctx, ['npc_radio_reborn_broadcast', 'npc_radio_reborn_idle'], PH.radio, 560, 640, { h: 200 + k * 60, reborn: true, t, sy: 0.8 + k * 0.2 });
+      for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2 + t; WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 560 + Math.cos(a) * 240 * k, 380 + Math.sin(a) * 160 * k, { h: 44, anchor: 'center' }); }
+      WT.drawThing(ctx, ['boss_volt_idle'], PH.volt, 1100, 640, { h: 380, t, state: 'over', alpha: 0.8 });
+    },
+    voltSmall(ctx, t) {
+      bg(ctx, '#4a3a30', '#2a2220'); ground(ctx, '#4a4440');
+      WT.drawThing(ctx, 'boss_volt_small', PH.volt, 640, 640, { h: 170, t, state: 'small' });
+      WT.drawThing(ctx, 'player_happy', PH.bogle, 430, 650, { h: 160, pose: 'happy', t });
+      WT.drawThing(ctx, ['npc_radio_reborn_dance', 'npc_radio_reborn_idle'], PH.radio, 880, 650, { h: 190, reborn: true, t });
+    },
+    home(ctx, t) {
+      bg(ctx, '#f6dcae', '#e9c08a'); ground(ctx, '#a3a578');
+      PH.stage && WT.drawThing(ctx, 'prop_stage', PH.stage, 640, 560, { h: 150, anchor: 'center' });
+      const b = Math.abs(Math.sin(t * 3.5));
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 560, 545 - b * 8, { h: 230, mood: 'awake', t });
+      WT.drawThing(ctx, ['npc_radio_reborn_dance', 'npc_radio_reborn_idle'], PH.radio, 740, 550 - b * 10, { h: 230, reborn: true, t });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 260, 630 - b * 10, { h: 150, mood: 'awake', t });
+      WT.drawThing(ctx, 'npc_lamp_on', PH.lamp, 1050, 660, { h: 300, mood: 'awake' });
+      for (let i = 0; i < 8; i++) { const k = (t * 0.4 + i / 8) % 1; ctx.strokeStyle = `rgba(242,193,78,${1 - k})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(100 + i * 150, -20 + k * 300); ctx.lineTo(110 + i * 150, 20 + k * 300); ctx.stroke(); }
+    },
+    shadowHall(ctx, t) {
+      bg(ctx, '#140e12', '#22161a');
+      for (let i = 0; i < 5; i++) { ctx.fillStyle = '#2c2228'; ctx.fillRect(80 + i * 240, 60, 90, 360); }
+      // 마을에서 끌려오는 실
+      for (let i = 0; i < 8; i++) { const sx = 60 + i * 150, k = (t * 0.35 + i * 0.13) % 1; ctx.strokeStyle = `rgba(242,193,78,${0.5 + 0.4 * Math.sin(t * 3 + i)})`; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(sx, 120); ctx.quadraticCurveTo(sx + (760 - sx) * 0.5, 80 + i * 10, 760, 330); ctx.stroke(); ctx.fillStyle = C.yellow; ctx.beginPath(); ctx.arc(sx + (760 - sx) * k, 120 + (330 - 120) * k * k, 5, 0, 7); ctx.fill(); }
+      const g = ctx.createRadialGradient(760, 330, 10, 760, 330, 260); g.addColorStop(0, 'rgba(242,193,78,.35)'); g.addColorStop(1, 'rgba(242,193,78,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, WT.W, WT.H);
+      // 그림자 둘
+      ctx.save(); ctx.filter = 'brightness(0)';
+      WT.drawThing(ctx, 'boss_volt_idle', PH.volt, 820, 640, { h: 540, t, state: 'attack' });
+      ctx.fillRect(300, 470, 260, 260); // 문지기가 올라선 단(자막에 가리지 않게)
+      WT.drawThing(ctx, 'boss_toad_idle', PH.toad, 430, 470, { h: 210, t });
+      ctx.restore();
+      ctx.fillStyle = C.yellow; [[770, 230], [812, 230], [384, 350], [412, 350]].forEach(([x, y], i) => { ctx.globalAlpha = 0.7 + 0.3 * Math.sin(t * 2 + i); ctx.beginPath(); ctx.ellipse(x, y, i < 2 ? 12 : 7, i < 2 ? 7 : 5, 0, 0, 7); ctx.fill(); }); ctx.globalAlpha = 1;
+    },
+    shadowPlan(ctx, t) {
+      bg(ctx, '#0e0a0c', '#2a1012');
+      const g = ctx.createLinearGradient(0, WT.H, 0, 0); g.addColorStop(0, 'rgba(224,71,60,.45)'); g.addColorStop(1, 'rgba(224,71,60,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, WT.W, WT.H);
+      // 탁자 위 지도: 마을마다 건전지 표시
+      ctx.fillStyle = '#5a4030'; ctx.fillRect(140, 520, 1000, 200);
+      ctx.fillStyle = '#c9b48a'; ctx.beginPath(); ctx.roundRect(260, 500, 760, 120, 8); ctx.fill();
+      for (let i = 0; i < 6; i++) { ctx.save(); ctx.translate(320 + i * 120, 560 + (i % 2) * 20); WT.PH.battery(ctx, 26); ctx.restore(); }
+      ctx.save(); ctx.filter = 'brightness(0)';
+      WT.drawThing(ctx, 'boss_volt_magnet', PH.volt, 760, 520, { h: 520, t, atk: 'magnet' });
+      WT.drawThing(ctx, 'boss_toad_idle', PH.toad, 300, 520, { h: 200, t });
+      ctx.restore();
+      // 들어 올린 건전지 + 빨려 나가는 실
+      WT.drawThing(ctx, 'prop_battery', PH.battery, 560, 250 + Math.sin(t * 2) * 4, { h: 70 });
+      ctx.strokeStyle = 'rgba(242,193,78,.9)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(560, 220); ctx.quadraticCurveTo(650, 160 + Math.sin(t * 3) * 20, 740, 280); ctx.stroke();
+      ctx.fillStyle = C.yellow; [[715, 210], [752, 210], [262, 405], [284, 405]].forEach(([x, y], i) => { ctx.beginPath(); ctx.ellipse(x, y, i < 2 ? 11 : 6, i < 2 ? 6 : 4, 0, 0, 7); ctx.fill(); });
+      ctx.strokeStyle = C.yellow; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(733, 240, 26, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+    },
     teaser(ctx, t) {
       bg(ctx, '#1f1a2a', '#0e0b12');
       ctx.fillStyle = '#1d1720'; ctx.fillRect(520, 260, 240, 460);

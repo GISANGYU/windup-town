@@ -101,9 +101,74 @@ JOBS = {
                "회색 도시 속에서 **보글만 원래 색**인 대비가 5막 컷신의 공통 규칙.",
                "`story_22_music_spreads`는 결말 후보. 회색 사물들이 처음으로 러버호스 곡선으로 튀는 순간.",
                "아이콘 2개는 같은 크기의 둥근 배지. 태엽=크림 바탕+황동 열쇠, 건전지=회색 바탕+회색 건전지. 작게 줄여도 구분되게 단순하게."]),
+    # ───── 2026-11-12 새 이야기(볼트 남작) ─────
+    18: dict(
+        title="볼트 남작 (최종 보스)", act="5막", dep=[],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_02_character.jpg", "assets/boss/boss_idle.png (2막 백작과 같은 크기감·악당 톤)"],
+        blocks=["STYLE BLOCK", "SPRITE RULES", "SIDE-SCROLL RULES", "BARON VOLT"],
+        sheets=[("a", ["boss_volt_idle", "boss_volt_spark", "boss_volt_magnet", "boss_volt_spray", "boss_volt_throw"], "공격 자세 5개 한 줄 (모두 왼쪽 보기)"),
+                ("b", ["boss_volt_strike", "boss_volt_overheat", "boss_volt_hurt", "boss_volt_crank"], "낙뢰·과열·피격·크랭크 4개 한 줄"),
+                ("c", ["boss_volt_small", "portrait_volt", "portrait_volt_small"], "작은 발전기 + 초상화 2개")],
+        rules=["보스 아레나는 오른쪽에 보스가 서므로 **모든 자세가 왼쪽(보글 쪽)을 본다.** SIDE-SCROLL RULES의 'Characters face RIGHT'의 예외.",
+               "`boss_volt_overheat`는 가슴 판이 열려 **플러그 3개가 꽂힌 소켓**이 분명히 보여야 한다(플레이어가 노리는 곳).",
+               "`boss_volt_crank`는 몸속의 **녹슨 손 크랭크**가 주인공. 결말의 반전이다.",
+               "`boss_volt_small`은 귀여운 손전등형 수동 발전기. 전기 효과 없이, 남작의 콧수염만 작게 남긴다.",
+               "무섭지 않게: 1930년대 카툰 악당, 거만하지만 우스꽝스럽게."]),
+    19: dict(
+        title="두꺼비집 문지기 (중간 보스)", act="4막", dep=[],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_02_character.jpg"],
+        blocks=["STYLE BLOCK", "SPRITE RULES", "SIDE-SCROLL RULES", "TOAD GATEKEEPER"],
+        sheets=[("a", ["boss_toad_idle", "boss_toad_croak", "boss_toad_tongue", "boss_toad_overheat_top"], "자세 4개 한 줄 (모두 왼쪽 보기)"),
+                ("b", ["boss_toad_overheat_mouth", "boss_toad_hurt", "boss_toad_down", "portrait_toad"], "자세 3개 + 초상화")],
+        rules=["모든 자세가 **왼쪽**을 본다(아레나 오른쪽에 섬).",
+               "머리 위 **차단기 레버**는 모든 자세에서 같은 자리. `overheat_top`에서 특히 분명하게.",
+               "`overheat_mouth`는 입이 화면을 크게 차지하고 **입 안에 레버**가 보여야 한다(플레이어가 뛰어드는 곳).",
+               "우렁차지만 조금 멍청한 문지기. 징그럽지 않게, 둥글고 만화적으로."]),
+    20: dict(
+        title="라디오 씨 — 잡음 방송 / 변신 후 모습", act="5막", dep=[],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_02_character.jpg", "assets/npc/npc_radio_idle.png (변신 전 기준)", "assets/npc/npc_gramo_awake.png (나팔 모양 참고)"],
+        blocks=["STYLE BLOCK", "SPRITE RULES", "RADIO (npc_radio_jam만)", "RADIO REBORN (나머지)"],
+        sheets=[("a", ["npc_radio_jam"], "변신 전 잡음 방송 1개"),
+                ("b", ["npc_radio_reborn_idle", "npc_radio_reborn_talk", "npc_radio_reborn_dance", "npc_radio_reborn_broadcast", "portrait_radio_reborn"], "변신 후 4자세 + 초상화")],
+        rules=["**변신 전과 후의 실루엣이 확 달라야 한다.** 뻣뻣한 회색 상자 → 머리 위로 피어난 나팔, 출렁이는 팔다리, 등의 황동 열쇠, 금 테두리.",
+               "변신 후 눈은 파이 눈. 다이얼 자리는 볼처럼 남겨도 좋다.",
+               "`npc_radio_reborn_broadcast`와 `npc_radio_jam`은 오른쪽을 본다(아레나 왼쪽에 섬)."]),
+    21: dict(
+        title="보스 아레나 배경 + 공격 이펙트 + 건전지 모달", act="4·5막", dep=[],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_03_stage_layers.jpg", "assets/road/bg_road3_far.png (도시 색 기준)", "assets/props/prop_battery.png"],
+        blocks=["STYLE BLOCK", "BACKGROUND RULES (배경 2장)", "SPRITE RULES (나머지)", "SIDE-SCROLL RULES", "BOGLE (wind_bogle_back)"],
+        singles=["bg_gate_arena", "bg_volt_arena"],
+        sheets=[("a", ["road_platform_metal", "prop_battery_bomb", "prop_plug", "prop_breaker"], "소품 4개 한 줄"),
+                ("b", ["fx_lightning", "fx_spark_floor", "fx_magnet_wave", "fx_coolant", "fx_recall_thread"], "이펙트 5개 (2줄 격자 가능)"),
+                ("c", ["wind_bogle_back"], "건전지 모달 배경 1개")],
+        rules=["아레나 배경 2장은 **한 화면 고정**(반복 아님). 아래 120px 바닥 띠는 비워 둔다(게임이 바닥을 그림). 공중 발판은 그려 넣지 않는다(게임이 `road_platform_metal`로 놓음).",
+               "`bg_volt_arena`는 오른쪽 가운데로 빛나는 실들이 빨려 드는 소켓이 있어야 한다(보스 자리).",
+               "`wind_bogle_back`은 보글 등 클로즈업, 가운데 **빈 건전지 칸**(덮개 열림). 건전지는 그리지 않는다(게임이 끼움)."]),
+    22: dict(
+        title="3~5막 컷신 13장", act="3·4·5막", dep=[18, 19, 20],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_01_carnival.jpg", "assets/story/story_08_festival.png (축제 톤)", "JOB-18·19·20 결과 (보스·라디오 씨 모습 고정)"],
+        blocks=["STYLE BLOCK", "BACKGROUND RULES", "등장하는 캐릭터 블록 전부"],
+        singles=["story_30_gramo_unwind", "story_32_battery_montage", "story_33_recall_night", "story_34_radio_confess", "story_35_gramo_key", "story_36_departure", "story_37_toad_gate", "story_38_volt_reveal", "story_39_radio_collapse", "story_40_key_insert", "story_41_radio_reborn", "story_42_volt_small", "story_43_home"],
+        rules=["화면 아래 30%는 자막 카드가 덮는다. 중요한 얼굴은 위쪽 70%에.",
+               "건전지를 넣은 것은 **회색 + 불빛 점 눈**, 태엽인 것은 원래 색 + 파이 눈. 이 대비가 컷신 전체의 규칙.",
+               "그라모는 3막 5(`story_35`)부터 **등의 열쇠가 2개**다.",
+               "`story_41_radio_reborn`은 이 게임의 하이라이트. 금빛, 음표, 변신 전후가 한 장에 보이도록 빛 속에서 피어나는 순간으로."]),
+
+    23: dict(
+        title="흑막 암시 컷신 2장 (볼트 남작·문지기 실루엣)", act="3막", dep=[18, 19],
+        refs=["assets/refs/style_anchor.png", "assets/story/story_02_thief.png (1막 째깍 그림자 — 실루엣 연출 기준)", "JOB-18 결과 boss_volt_idle (실루엣 윤곽)", "JOB-19 결과 boss_toad_idle (실루엣 윤곽)", "assets/road/bg_volt_arena.png (발전소 홀)"],
+        blocks=["STYLE BLOCK", "BACKGROUND RULES"],
+        singles=["story_44_shadow_hall", "story_45_shadow_plan"],
+        rules=["**정체를 보여 주지 않는다.** 볼트 남작과 두꺼비집 문지기는 **검은 실루엣 + 빛나는 노란 눈**만. 얼굴·색·디테일 금지. 5막에서 정체가 드러난다.",
+               "실루엣 윤곽은 JOB-18·19 결과와 같아야 한다(코일 머리, 플러그 팔, 콧수염 / 머리 위 레버, 넓적한 몸). 나중에 \"아, 그 그림자가 이 녀석이었구나\"가 되게.",
+               "남작 그림자는 크게, 문지기 그림자는 그 앞에 작게. 흑막이 둘이라는 게 한눈에 보이게.",
+               "`story_44`: 빛나는 실(태엽 힘)이 그림자 가슴으로 빨려 드는 장면이 중심. `story_45`: 그림자가 건전지를 들어 보이고, 건전지에서 실이 빨려 나가는 모습 + 마을 지도의 건전지 표시.",
+               "화면 아래 30%는 자막 카드가 덮는다. 글자·숫자 금지(지도에도)."]),
 }
 
-ACT = {"3막": "제3막 「태엽 없는 손님」 (GAME_DESIGN.md 17절)", "4막": "제4막 「도시에서 온 방송」 (GAME_DESIGN.md 18절)", "5막": "제5막 「갈아끼우는 길」 (GAME_DESIGN.md 19절)"}
+ACT = {"3막": "제3막 (GAME_DESIGN.md 18절)", "4막": "제4막 (GAME_DESIGN.md 19절)", "5막": "제5막 「볼트 남작」 (GAME_DESIGN.md 20절)",
+       "4·5막": "제4·5막 보스 아레나 (GAME_DESIGN.md 19·20절)", "3·4·5막": "제3~5막 (GAME_DESIGN.md 18~20절)"}
+NEW_FROM = 18   # 이 번호부터가 새 이야기 작업. 이전 JOB 지시서(9~17)는 다시 만들지 않는다.
 
 
 def size(a):
@@ -112,6 +177,8 @@ def size(a):
 
 os.makedirs(os.path.join(ROOT, "jobs"), exist_ok=True)
 for n, J in JOBS.items():
+    if n < NEW_FROM:
+        continue
     items = {a["id"]: a for a in by_job[f"JOB-{n}"]}
     listed = [i for s in J.get("sheets", []) for i in s[1]] + J.get("singles", [])
     assert sorted(listed) == sorted(items), (n, set(items) ^ set(listed))
@@ -155,20 +222,19 @@ for n, J in JOBS.items():
     open(os.path.join(ROOT, "jobs", f"JOB-{n:02d}.md"), "w", encoding="utf-8", newline="\n").write("\n".join(L))
 
 # README
-R = ["# 제3~5막 이미지 작업 (Codex)", "",
-     "Codex 창마다 **\"JOB9 진행해\"**, **\"JOB10 진행해\"** 처럼 번호만 말하면 된다. Codex는 `jobs/JOB-NN.md`를 읽고 그 JOB만 한다.", "",
+R = ["# 이미지 작업 (Codex)", "",
+     "Codex 창마다 **\"JOB18 진행해\"** 처럼 번호만 말하면 된다. Codex는 `jobs/JOB-NN.md`를 읽고 그 JOB만 한다.", "",
+     "## 지금 할 작업 — 새 이야기(볼트 남작, GAME_DESIGN.md 17~21절)", "",
      "| JOB | 막 | 내용 | 파일 수 | 먼저 끝나야 하는 JOB | 지시서 |", "|---|---|---|---|---|---|"]
 for n, J in JOBS.items():
-    R.append(f"| JOB-{n} | {J['act']} | {J['title']} | {len(by_job[f'JOB-{n}'])} | {', '.join(f'JOB-{d}' for d in J['dep']) or '없음'} | [JOB-{n:02d}.md](JOB-{n:02d}.md) |")
-R += ["", f"합계 {sum(len(v) for k, v in by_job.items())}개.", "",
-      "## 동시에 돌리는 순서", "",
-      "1. **1차 (바로 동시에)**: JOB-9, JOB-10, JOB-12, JOB-14, JOB-15",
-      "2. **2차**: JOB-11 (9·10 뒤), JOB-13 (9·12 뒤), JOB-16 (15 뒤)",
-      "3. **3차**: JOB-17 (9·14·15 뒤)", "",
-      "게임 개발 순서가 3막 → 4막 → 5막이라 **3막용(JOB-9·10·11)을 먼저** 끝내면 바로 화면에 반영된다. 이미지가 없어도 게임은 임시 도형으로 돌아간다.", "",
+    if n >= NEW_FROM:
+        R.append(f"| JOB-{n} | {J['act']} | {J['title']} | {len(by_job[f'JOB-{n}'])} | {', '.join(f'JOB-{d}' for d in J['dep']) or '없음'} | [JOB-{n:02d}.md](JOB-{n:02d}.md) |")
+R += ["", "순서: **1차(동시에)** JOB-18, JOB-19, JOB-20, JOB-21 → **2차** JOB-22(컷신, 18·19·20 뒤), JOB-23(흑막 실루엣 컷신, 18·19 뒤).", "",
+      "## 끝난 작업 (이전 이야기, JOB-9~17)", "",
+      "모두 완료. 그중 새 이야기에서도 쓰는 것: 라디오 씨 변신 전 모습(JOB-9), 건전지·축제 소품(JOB-10), 축제·라디오 등장 컷신 story_08·09(JOB-11), 보글 횡스크롤 포즈(JOB-14), 길 배경·장애물(JOB-15·16), HUD 아이콘(JOB-17). 측량기(JOB-12·13)와 나머지 이전 컷신은 쓰지 않는다.", "",
       "## 공통", "",
       "- 기준: `ASSET_GUIDE.md`(스타일·블록), `assets/manifest.js`(ID·경로·크기·prompt, `job` 필드로 소속 JOB 표시)",
-      "- 새 캐릭터 블록: ASSET_GUIDE 5절 **RADIO**, **SURVEYOR**, 눈 규칙 예외(건전지 = 불빛 점 눈), **SIDE-SCROLL RULES**",
-      "- 소리는 Codex 작업이 아니다. `jobs/AUDIO.md` 참고(다른 Claude 창).", ""]
+      "- 새 캐릭터 블록: ASSET_GUIDE 5절 **BARON VOLT**, **TOAD GATEKEEPER**, **RADIO REBORN**",
+      "- 소리는 Codex 작업이 아니다. `jobs/AUDIO2.md` 참고(소리 담당 Claude 창).", ""]
 open(os.path.join(ROOT, "jobs", "README.md"), "w", encoding="utf-8", newline="\n").write("\n".join(R))
-print("ok", len(JOBS))
+print("ok")

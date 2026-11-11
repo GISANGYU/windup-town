@@ -58,7 +58,8 @@
 | JOB-5 | 가구 + 이펙트 + UI | a: 가구 4개 / b: 이펙트 5개 / c: UI 2개 | anchor, ref_02 |
 | JOB-6 | 배경 | 3장 각각 따로 (시트 아님) | anchor, ref_04, ref_03 |
 | JOB-8 | 제2막 보스 (추가) | a: 백작 포즈 6개(idle, slam, throw, bell, tired, hurt) 한 장 / b: 뻐꾸기시계 + 초상화 2 + 가구 뻐꾸기시계 / c: 이펙트 4개(톱니, 스프링, 김, 종소리) / 배경·컷신·감기 모달은 각각 따로 | anchor, ref_02, ref_01, 완성된 npc_gramo_awake |
-| JOB-9 ~ JOB-17 | 제3~5막 (추가) | JOB별 지시서 `jobs/JOB-09.md` ~ `jobs/JOB-17.md`. 순서·의존은 `jobs/README.md` | 각 지시서에 적힘 |
+| JOB-18 ~ JOB-22 | 새 3~5막(볼트 남작) | JOB별 지시서 `jobs/JOB-18.md` ~ `jobs/JOB-22.md`. 순서는 `jobs/README.md` | 각 지시서에 적힘 |
+| JOB-9 ~ JOB-17 | 제3~5막 (이전 이야기, 완료) | JOB별 지시서 `jobs/JOB-09.md` ~ `jobs/JOB-17.md`. 순서·의존은 `jobs/README.md` | 각 지시서에 적힘 |
 | JOB-7 | 컷신 + 감기 모달 (추가) | 컷신 5장 각각 따로(16:9, BACKGROUND RULES) / 감기 모달 2개는 마젠타 시트 1장 | anchor, ref_01, ref_03, 완성된 bg_town_ground |
 
 - 초상화(JOB-3)는 NPC(JOB-2) 결과를 레퍼런스로 써야 해서 JOB-2가 끝난 뒤 시작한다. 나머지 5개는 동시에 돌려도 된다.
@@ -167,6 +168,27 @@ A boxy cool grey #9BA3AE metal head with one big round glass lens on the front a
 Three thin perfectly STRAIGHT steel #6E7884 tripod legs (NOT rubber hose, rigid straight lines), one small mechanical claw arm.
 Emotionless and precise. Still outlined in dark plum #3D3346 like everything else.
 ```
+**BARON VOLT (볼트 남작, 제5막 최종 보스)**
+```
+BARON VOLT: a huge villainous GENERATOR, the body is one big round-shouldered dynamo casing in dark copper #8A4B2A with brass #C99A3A bands and rivets.
+His head is a tall glass-and-copper TESLA COIL crackling with small yellow sparks; under it a cream dial face with pie-cut eyes and a curled black WIRE MOUSTACHE.
+His two arms are thick black cables ending in big brass PLUG hands with two prongs. A chest panel can swing open to show sockets.
+Short thick legs with black boots. About three times BOGLE's height. Arrogant, greedy, funny-villain, never gory.
+```
+**TOAD GATEKEEPER (두꺼비집 문지기, 제4막 중간 보스)**
+```
+TOAD GATEKEEPER: a wide squat TOAD shaped like an old metal FUSE BOX, the body is a grey-green #6F8A6A steel box with rounded corners and rivets.
+A big red-handled BREAKER LEVER sticks up from the top of its head. Huge wide mouth (the box lid), pie-cut eyes on top bumps, an inflatable throat sac that glows yellow with electricity.
+Stubby rubber hose legs with big webbed feet. About twice BOGLE's height. Loud, proud, a little dim, cartoonish.
+```
+**RADIO REBORN (변신 후 라디오 씨, 제5막~)**
+```
+RADIO REBORN: the same honey-wood table RADIO but reborn by a wind-up key: a brass GRAMOPHONE HORN speaker blooms out of the top of his head like a flower,
+a big brass wind-up key turns slowly on his back, gold #F2C14E trim around the cabinet, his two dials became round cheeks and he now has pie-cut eyes above them,
+long bouncy rubber hose arms and legs with white gloves and red round shoes. Warm, joyful, full of music. His silhouette must look clearly different from the old stiff RADIO.
+```
+**보스 아레나 방향 예외**: 볼트 남작과 두꺼비집 문지기는 아레나 오른쪽에 서므로 **모든 자세가 왼쪽**을 본다. 라디오 씨의 `npc_radio_jam`, `npc_radio_reborn_broadcast`는 왼쪽에 서서 **오른쪽**을 본다.
+
 **눈 규칙 예외 (제3막~)**: 건전지로 움직이는 것(건전지 상태의 라디오 씨, 측량기, 건전지 대시 중인 보글, 5막의 건전지 사물들)은 파이 눈 대신 **작은 둥근 불빛 점 두 개**로 그린다. 기계화를 보여 주는 의도된 차이다. 태엽으로 돌아오면 다시 파이 눈이다.
 
 **SIDE-SCROLL RULES** (제5막 `view: side`: 보글 횡스크롤 포즈, `road/` 전부)
@@ -362,5 +384,58 @@ Mid layers: draw only the lower part, leave the upper part empty flat #FF00FF ma
 | 컷신 | `story/story_22_music_spreads.png` | 선택 | 1280×720 | front34 | 5막 끝(후보): 송신탑에서 음표와 색이 퍼져 회색 도시의 사물들이 박자에 맞춰 튀기 시작 |
 | UI | `ui/ui_icon_wind.png` | 필수 | 높이 56px | front34 | 5막 HUD 태엽 모드 아이콘(둥근 배지 + 황동 열쇠) |
 | UI | `ui/ui_icon_battery.png` | 필수 | 높이 56px | front34 | 5막 HUD 건전지 모드 아이콘(둥근 배지 + 회색 건전지) |
+| 보스 | `boss/boss_volt_idle.png` | 필수 | 높이 300px | side | 볼트 남작 대기. 거만하게 서서 코일 머리가 지지직 |
+| 보스 | `boss/boss_volt_spark.png` | 필수 | 높이 300px | side | 방전 바닥: 두 플러그 팔로 바닥을 내려침 |
+| 보스 | `boss/boss_volt_magnet.png` | 필수 | 높이 300px | side | 자석 흡입: 두 팔을 앞으로 뻗어 끌어당김 |
+| 보스 | `boss/boss_volt_spray.png` | 선택 | 높이 300px | side | 냉각수: 옆구리 파이프로 물을 뿌림 |
+| 보스 | `boss/boss_volt_throw.png` | 선택 | 높이 300px | side | 건전지 폭탄 던지기 |
+| 보스 | `boss/boss_volt_strike.png` | 필수 | 높이 300px | side | 추적 낙뢰: 코일 머리를 치켜들어 번개를 부름 |
+| 보스 | `boss/boss_volt_overheat.png` | 필수 | 높이 300px | side | 과열: 주저앉아 김을 뿜고 몸통 플러그 구멍이 드러남 |
+| 보스 | `boss/boss_volt_hurt.png` | 선택 | 높이 300px | side | 플러그를 뽑혔을 때 몸이 출렁 |
+| 보스 | `boss/boss_volt_crank.png` | 필수 | 높이 300px | side | 마지막: 몸통이 열려 녹슨 크랭크가 드러남 |
+| 보스 | `boss/boss_volt_small.png` | 필수 | 높이 120px | side | 퇴치 후: 작은 손전등형 수동 발전기가 됨 |
+| 초상화 | `portrait/portrait_volt.png` | 선택 | 높이 200px | front34 | 대화 카드용 볼트 남작 |
+| 초상화 | `portrait/portrait_volt_small.png` | 선택 | 높이 200px | front34 | 대화 카드용 작은 발전기 |
+| 보스 | `boss/boss_toad_idle.png` | 필수 | 높이 230px | side | 두꺼비집 문지기 대기 |
+| 보스 | `boss/boss_toad_croak.png` | 필수 | 높이 230px | side | 방전 울음: 목주머니가 부풀며 번개 |
+| 보스 | `boss/boss_toad_tongue.png` | 필수 | 높이 230px | side | 자석 혀: 혀를 길게 뻗음(혀 끝이 자석) |
+| 보스 | `boss/boss_toad_overheat_top.png` | 필수 | 높이 230px | side | 과열 1: 엎드려 헐떡이고 머리 위 레버가 드러남 |
+| 보스 | `boss/boss_toad_overheat_mouth.png` | 필수 | 높이 230px | side | 과열 2: 입을 크게 벌림, 입 안에 레버 |
+| 보스 | `boss/boss_toad_hurt.png` | 선택 | 높이 230px | side | 차단기가 내려가 몸이 깜빡 |
+| 보스 | `boss/boss_toad_down.png` | 필수 | 높이 230px | side | 퓨즈가 나가 쓰러짐 |
+| 초상화 | `portrait/portrait_toad.png` | 선택 | 높이 200px | front34 | 대화 카드용 두꺼비집 문지기 |
+| NPC | `npc/npc_radio_jam.png` | 필수 | 높이 140px | front34 | 변신 전 라디오 씨: 안테나로 잡음 방송을 쏨(건전지, 회색) |
+| NPC | `npc/npc_radio_reborn_idle.png` | 필수 | 높이 140px | front34 | 변신 후 라디오 씨 대기 |
+| NPC | `npc/npc_radio_reborn_talk.png` | 선택 | 높이 140px | front34 | 변신 후 말하기 |
+| NPC | `npc/npc_radio_reborn_dance.png` | 선택 | 높이 140px | front34 | 변신 후 춤 |
+| NPC | `npc/npc_radio_reborn_broadcast.png` | 필수 | 높이 140px | front34 | 변신 후 음악 방송(보스전) |
+| 초상화 | `portrait/portrait_radio_reborn.png` | 선택 | 높이 200px | front34 | 대화 카드용 변신 후 라디오 씨 |
+| 길(5막) | `road/bg_gate_arena.png` | 필수 | 1280×720 | side | 중간 보스 아레나: 발전소 정문 앞(옆에서 본 한 화면) |
+| 길(5막) | `road/bg_volt_arena.png` | 필수 | 1280×720 | side | 최종 보스 아레나: 발전소 중심 홀 |
+| 길(5막) | `road/road_platform_metal.png` | 필수 | 높이 40px | side | 공중 철판 발판 |
+| 이펙트 | `fx/fx_lightning.png` | 선택 | 높이 300px | side | 낙뢰(위에서 아래로 떨어지는 번개 한 줄기) |
+| 이펙트 | `fx/fx_spark_floor.png` | 선택 | 높이 60px | side | 방전 바닥 띠(바닥 위 가로로 긴 전기 불꽃) |
+| 이펙트 | `fx/fx_magnet_wave.png` | 선택 | 높이 120px | side | 자석 끌어당김 물결 |
+| 이펙트 | `fx/fx_coolant.png` | 선택 | 높이 24px | side | 냉각수 물웅덩이 |
+| 소품 | `props/prop_battery_bomb.png` | 필수 | 높이 70px | side | 굴러오는 건전지 폭탄 |
+| 소품 | `props/prop_plug.png` | 필수 | 높이 70px | side | 보스 몸에 꽂힌 큰 플러그 |
+| 소품 | `props/prop_breaker.png` | 필수 | 높이 70px | side | 차단기 레버 |
+| 이펙트 | `fx/fx_recall_thread.png` | 선택 | 높이 80px | side | 회수 신호에 끌려가는 빛나는 실 |
+| 감기 모달 | `wind/wind_bogle_back.png` | 필수 | 높이 430px | front34 | 건전지 모달 배경: 보글 등 클로즈업, 가운데 덮개가 열린 건전지 칸(비어 있음) |
+| 컷신 | `story/story_30_gramo_unwind.png` | 선택 | 1280×720 | front34 | 3막 1: 밤새 음악을 틀던 그라모의 태엽이 풀려 음악이 늘어지고 축제가 휘청임 |
+| 컷신 | `story/story_32_battery_montage.png` | 선택 | 1280×720 | front34 | 3막 2: 건전지를 받은 피프는 쌩쌩, 가로등은 밤새 환함(살짝 회색, 불빛 점 눈) |
+| 컷신 | `story/story_33_recall_night.png` | 선택 | 1280×720 | front34 | 3막 3: 회수 신호. 도시 쪽 하늘의 붉은 빛, 회색으로 굳은 피프·가로등에서 빛나는 실이 도시로 끌려감 |
+| 컷신 | `story/story_34_radio_confess.png` | 선택 | 1280×720 | front34 | 3막 4: 꺼져 가는 라디오 씨가 고백하고 보글이 듣는다 |
+| 컷신 | `story/story_35_gramo_key.png` | 선택 | 1280×720 | front34 | 3막 5: 그라모가 등에서 태엽 열쇠 하나를 뽑아 보글에게 건넴 |
+| 컷신 | `story/story_36_departure.png` | 선택 | 1280×720 | front34 | 3막 끝: 새벽, 보글과 라디오 씨가 마을을 떠남. 뒤에 회색으로 굳은 친구들과 손 흔드는 그라모 |
+| 컷신 | `story/story_37_toad_gate.png` | 선택 | 1280×720 | front34 | 4막 끝: 발전소 정문, 개굴! 길을 막는 두꺼비집 문지기 |
+| 컷신 | `story/story_38_volt_reveal.png` | 선택 | 1280×720 | front34 | 5막 1: 발전소 홀, 빛나는 실들을 빨아들이는 볼트 남작 |
+| 컷신 | `story/story_39_radio_collapse.png` | 선택 | 1280×720 | front34 | 5막 2: 마지막 잡음을 쏘고 회색으로 쓰러진 라디오 씨, 비웃는 남작 |
+| 컷신 | `story/story_40_key_insert.png` | 선택 | 1280×720 | front34 | 5막 3: 보글이 그라모의 열쇠를 라디오 씨 등에 꽂음(그라모의 기억이 희미하게 겹침) |
+| 컷신 | `story/story_41_radio_reborn.png` | 선택 | 1280×720 | front34 | 5막 4: 변신. 나팔이 피고 음표가 터져 나오는 라디오 씨 |
+| 컷신 | `story/story_42_volt_small.png` | 선택 | 1280×720 | front34 | 5막 5: 작은 손전등 발전기가 된 남작 |
+| 컷신 | `story/story_43_home.png` | 선택 | 1280×720 | front34 | 결말: 빛나는 실이 마을로 돌아오고 피프·가로등이 깨어남, 라디오 씨와 그라모가 함께 음악을 틂 |
+| 컷신 | `story/story_44_shadow_hall.png` | 선택 | 1280×720 | front34 | 3막 흑막 1: 어두운 발전소 홀. 여러 마을에서 끌려온 빛나는 실이 거대한 그림자(볼트 남작 실루엣)의 가슴으로 빨려 듦. 앞쪽에 작은 두꺼비 실루엣 |
+| 컷신 | `story/story_45_shadow_plan.png` | 선택 | 1280×720 | front34 | 3막 흑막 2: 그림자 남작이 건전지 하나를 치켜들고 설명, 탁자 위 지도의 마을들에 건전지 표시. 옆에서 두꺼비 그림자가 경례 |
 
 각 ID의 개별 프롬프트(⑤)는 `assets/manifest.js`의 `prompt` 값을 그대로 쓴다.

@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-12",
+  "tool": "built-in image_gen",
+  "assets": [
+    {
+      "id": "boss_toad_idle",
+      "file": "boss/boss_toad_idle.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        401,
+        469
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "boss_toad_croak",
+      "file": "boss/boss_toad_croak.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        411,
+        494
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "boss_toad_tongue",
+      "file": "boss/boss_toad_tongue.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        647,
+        477
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "boss_toad_overheat_top",
+      "file": "boss/boss_toad_overheat_top.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        481,
+        424
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "boss_toad_overheat_mouth",
+      "file": "boss/boss_toad_overheat_mouth.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        528,
+        599
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "boss_toad_hurt",
+      "file": "boss/boss_toad_hurt.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        446,
+        568
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "boss_toad_down",
+      "file": "boss/boss_toad_down.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        521,
+        504
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "portrait_toad",
+      "file": "portrait/portrait_toad.png",
+      "status": "OK",
+      "issues": [],
+      "size": [
+        407,
+        521
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "magenta_pixels": 0,
+      "height_at_least_300": true
+    }
+  ],
+  "slicing": {
+    "a": "--pad 0; removed only disconnected fragments <80 px touching left/right crop edge for idle/croak (neighboring sprites)",
+    "b": "defaults"
+  },
+  "revision": "Sheet a regenerated once to keep magnetic pull lines with tongue pose, not croak.",
+  "visual_review": "8/8 passed: left-facing poses, crown lever, mouth lever, magnet, spiral/X eyes, no text or floor shadows.",
+  "status_snapshot": "OK 182 · 확인 필요 0 · 없음 24 · 오류 0 / 전체 206"
+}

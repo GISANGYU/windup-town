@@ -16,73 +16,25 @@
 //   end {x}                   구간 끝
 // tip: 해당 장애물 앞에서 모드별 안내(dialogue.js act5.tip)
 WT.ROAD_GY = 600;
+// 구간 1·2(길) → 구간 3 문지기 아레나 → 구간 4 볼트 남작 아레나. 아레나는 len 1280, level.boss로 road_boss.js가 맡는다.
+// 태엽·건전지가 닳으므로 건전지 구간 앞마다 충전소를 둔다.
 WT.ROAD_LEVELS = [
-  { // 구간 1 · 들판길 (태엽 위주, 첫 갈아끼우기)
-    kind: 'grass', len: 5400, bg: 'bg_road1', bgm: 'bgm_road1',
-    ground: [[0, 1500], [1640, 3520], [3660, 5400]],
-    items: [
-      { type: 'checkpoint', x: 140 },
-      { type: 'bush', x: 640, tip: 'bush' },
-      { type: 'ledge', x: 960, w: 260, h: 100, tip: 'bush' },
-      { type: 'pit', x: 1500, w: 140, tip: 'pit' },
-      { type: 'checkpoint', x: 1820 },
-      { type: 'lift', x: 2090, w: 110, h: 240, tip: 'lift' },
-      { type: 'ledge', x: 2200, w: 240, h: 240 },
-      { type: 'charger', x: 2640, tip: 'charger' },
-      { type: 'gate', x: 2900, w: 340, tip: 'gate' },
-      { type: 'checkpoint', x: 3330 },
-      { type: 'pit', x: 3520, w: 140, tip: 'pit' },
-      { type: 'bush', x: 4150, tip: 'bush' },
-      { type: 'ledge', x: 4560, w: 240, h: 190, tip: 'tall' },
-      { type: 'end', x: 5250 }
-    ]
-  },
-  { // 구간 2 · 공장 지대 (반반, 교체 타이밍)
-    kind: 'metal', len: 5800, bg: 'bg_road2', bgm: 'bgm_road2',
-    ground: [[0, 1640], [1780, 2420], [2720, 3560], [3700, 5800]],
-    items: [
-      { type: 'checkpoint', x: 140 },
-      { type: 'charger', x: 330, tip: 'charger' },
-      { type: 'conveyor', x: 560, w: 520, v: -270, tip: 'conveyor' },
-      { type: 'puddle', x: 1260, w: 170, tip: 'puddle' },
-      { type: 'pit', x: 1640, w: 140, tip: 'pit' },
-      { type: 'checkpoint', x: 1920 },
-      { type: 'bridge', x: 2420, w: 300, post: 2300, tip: 'bridge' },
-      { type: 'checkpoint', x: 2850 },
-      { type: 'charger', x: 2990, tip: 'charger' },
-      { type: 'gate', x: 3140, w: 340, tip: 'gate' },
-      { type: 'pit', x: 3560, w: 140, tip: 'pit' },
-      { type: 'checkpoint', x: 3860 },
-      { type: 'charger', x: 4020, tip: 'charger' },
-      { type: 'conveyor', x: 4220, w: 600, v: -270, tip: 'conveyor' },
-      { type: 'puddle', x: 4980, w: 170, tip: 'puddle' },
-      { type: 'bush', x: 5320, tip: 'bush' },
-      { type: 'end', x: 5650 }
-    ]
-  },
-  { // 구간 3 · 도시 (건전지 위주, 마지막은 태엽)
-    kind: 'metal', len: 5800, bg: 'bg_road3', bgm: 'bgm_road3',
-    ground: [[0, 4100], [4240, 5800]],
-    items: [
-      { type: 'checkpoint', x: 140 },
-      { type: 'charger', x: 330, tip: 'charger' },
-      { type: 'door', x: 720, tip: 'door' },
-      { type: 'elevator', x: 1060, w: 120, h: 250, tip: 'elevator' },
-      { type: 'ledge', x: 1180, w: 320, h: 250 },
-      { type: 'wire', x: 1760, tip: 'wire' },
-      { type: 'checkpoint', x: 1980 },
-      { type: 'charger', x: 2160, tip: 'charger' },
-      { type: 'door', x: 2420, tip: 'door' },
-      { type: 'door', x: 2700, tip: 'door' },
-      { type: 'gate', x: 3000, w: 360, tip: 'gate' },
-      { type: 'checkpoint', x: 3480 },
-      { type: 'charger', x: 3620, tip: 'charger' },
-      { type: 'conveyor', x: 3760, w: 300, v: -270, tip: 'conveyor' },
-      { type: 'pit', x: 4100, w: 140, tip: 'pit' },
-      { type: 'puddle', x: 4420, w: 170, tip: 'puddle' },
-      { type: 'wire', x: 4800, tip: 'wire' },
-      { type: 'bush', x: 5080, tall: true, tip: 'tall' },
-      { type: 'end', x: 5650 }
-    ]
-  }
+ { kind: 'metal', len: 3000, bg: 'bg_road2', bgm: 'bgm_road2', ground: [[0, 1560], [1700, 3000]], items: [
+  {type:'checkpoint', x:140}, {type:'charger', x:300, tip:'charger'}, {type:'conveyor', x:450, w:400, v:-270, tip:'conveyor'},
+  {type:'gate', x:1000, w:260, tip:'gate'}, {type:'pit', x:1560, w:140, tip:'pit'},
+  {type:'checkpoint', x:1850}, {type:'puddle', x:2100, w:150, tip:'puddle'}, {type:'end', x:2800}
+ ]},
+ { kind: 'metal', len: 3400, bg: 'bg_road3', bgm: 'bgm_road3', ground: [[0, 3400]], items: [
+  {type:'checkpoint', x:140}, {type:'charger', x:300, tip:'charger'}, {type:'door', x:500, tip:'door'}, {type:'wire', x:930, tip:'wire'},
+  {type:'checkpoint', x:1250}, {type:'charger', x:1330, tip:'charger'}, {type:'gate', x:1450, w:260, tip:'gate'},
+  {type:'wire', x:2000, tip:'wire'}, {type:'end', x:2350}
+ ]},
+ // 구간 3 · 발전소 정문: 두꺼비집 문지기 (한 화면 아레나)
+ { kind: 'metal', len: 1280, bg: 'bg_gate_arena', bgm: 'bgm_toad_boss', boss: 'toad', ground: [[0, 1280]], items: [
+  {type:'checkpoint', x:200}, {type:'charger', x:320, tip:'charger'}, {type:'platform', x:430, w:140, h:100}, {type:'platform', x:790, w:130, h:170}
+ ]},
+ // 구간 4 · 발전소 중심 홀: 볼트 남작 (한 화면 아레나)
+ { kind: 'metal', len: 1280, bg: 'bg_volt_arena', bgm: 'bgm_volt_boss', boss: 'volt', ground: [[0, 1280]], items: [
+  {type:'checkpoint', x:220}, {type:'charger', x:490, tip:'charger'}, {type:'platform', x:300, w:140, h:110}, {type:'platform', x:540, w:140, h:190}, {type:'platform', x:760, w:140, h:260}
+ ]}
 ];

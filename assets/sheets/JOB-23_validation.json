@@ -1,0 +1,26 @@
+[
+  {
+    "id": "story_44_shadow_hall",
+    "file": "story/story_44_shadow_hall.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "visual_review": "accepted: silhouette identity, story action, no text, subtitle essential content above 70%"
+  },
+  {
+    "id": "story_45_shadow_plan",
+    "file": "story/story_45_shadow_plan.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "visual_review": "accepted: silhouette identity, story action, no text, subtitle essential content above 70%"
+  }
+]

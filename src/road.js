@@ -1,8 +1,11 @@
-// 제5막 「갈아끼우는 길」 — 횡스크롤. 태엽(느림·점프·태엽 장치) ↔ 건전지(빠름·점프 봉인·전기 장치) 갈아끼우기.
-// 기획: GAME_DESIGN.md 19절. 구간 데이터: src/road_levels.js. 상태: state.road (scene = 'road')
+// 횡스크롤 엔진(제4·5막) — 태엽(느림·점프·태엽 장치) ↔ 건전지(빠름·점프 봉인·전기 장치) 갈아끼우기.
+// 구간 1·2(길) → 구간 3 두꺼비집 문지기 아레나 → 구간 4 볼트 남작 아레나. 아레나 보스는 src/road_boss.js.
+// 기획: GAME_DESIGN.md 19·20절. 구간 데이터: src/road_levels.js. 상태: state.road (scene = 'road')
 (function () {
   const G = WT.Game, C = WT.C, PH = WT.PH, GY = WT.ROAD_GY;
   const D = () => WT.DIALOGUE.act5;
+  const D4 = () => WT.DIALOGUE.act4;
+  const RADIO_BAT = [80, 62, 48, 40]; // 구간마다 줄어드는 라디오 씨 건전지(이야기 연출)
   const RD = WT.Road = {};
   const P = {
     walk: 230, batteryMul: 1.6, gravity: 2000, jumpV: 700, chargeMul: 1.36, chargeT: 0.55,
@@ -18,7 +21,7 @@
   // ───────── 입장 · 구간 ─────────
   RD.start = function () {
     const s = G.state, p = s.player;
-    G.irisThen(p.x, p.y - 50, () => WT.Story.play(WT.DIALOGUE.act5open, () => RD.enter(1)));
+    G.irisThen(p.x, p.y - 50, () => WT.Story.play(WT.DIALOGUE.act4open, () => RD.enter(1)));
   };
   RD.enter = function (zone) {
     const s = G.state, prev = s.road;
@@ -28,17 +31,19 @@
     WT.UI.setScene('road');
     s.road = {
       zone, L, camX: 0, t: 0,
-      battery: prev ? prev.battery : (s.inventory.batteryEmpty ? 0 : 100), wind: 100, hp: 3,
+      battery: 100, wind: 100, hp: 3,
       checkpoint: L.items.find((i) => i.type === 'checkpoint').x,
       items: L.items.map((i) => Object.assign({}, i, { state: 0, t: 0, y: 0 })),
-      p: null, follow: { x: 40, y: GY }, cleared: false, after: []
+      p: null, follow: { x: 40, y: GY }, cleared: false, after: [],
+      radioBat: RADIO_BAT[zone - 1], boss: null
     };
     spawn(s.road.checkpoint);
     const r = s.road;
-    r.p.power = prev && prev.p ? 'wind' : 'wind';
     WT.Audio.play('sfx_wind_self');
-    after(0.9, () => WT.UI.dialog({ who: 'radio', name: '라디오 씨', mood: 'awake', lines: D().radio['zone' + zone] }));
+    if (L.boss) WT.RoadBoss.init(r);
+    else after(0.9, () => WT.UI.dialog({ who: 'radio', name: '라디오 씨', mood: 'battery', lines: D4().radio['zone' + zone] }));
   };
+  RD.after = (t, fn) => after(t, fn);
   function after(t, fn) { R().after.push({ t, fn }); }
   function spawn(x) {
     const r = R();
@@ -54,7 +59,7 @@
     const s = G.state, r = R();
     if (r.dying) return;
     r.dying = true;
-    G.irisThen(r.p.x - r.camX, r.p.y - 50, () => { r.dying = false; r.wind = 100; r.hp = 3; spawn(r.checkpoint); s.ui.transition.cx = r.p.x - r.camX; s.ui.transition.cy = GY - 50; });
+    G.irisThen(r.p.x - r.camX, r.p.y - 50, () => { r.dying = false; r.wind = 100; r.hp = 3; spawn(r.checkpoint); if (r.boss) WT.RoadBoss.onRespawn(r); s.ui.transition.cx = r.p.x - r.camX; s.ui.transition.cy = GY - 50; });
     if (why === 'sleep') after(0.5, () => WT.UI.dialog({ who: 'radio', name: '라디오 씨', mood: 'awake', lines: D().radio.sleep }));
   }
 
@@ -75,8 +80,10 @@
         case 'elevator': out.push({ x: it.x, y: GY - it.y, w: it.w, h: 20, top: true, mover: it }); break;
         case 'lift': out.push({ x: it.x, y: GY - it.y, w: it.w, h: 20, top: true, mover: it }); break;
         case 'bridge': if (it.state === 2) out.push({ x: it.x, y: GY, w: it.w, h: 24, top: true }); break;
+        case 'platform': out.push({ x: it.x, y: GY - it.h, w: it.w, h: 20, top: true }); break;
       }
     });
+    if (r.boss) WT.RoadBoss.solids(r, out);
     return out;
   }
   const hit = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
@@ -110,16 +117,24 @@
     const r = R(), p = r.p;
     const to = p.power === 'wind' ? 'battery' : 'wind';
     if (to === 'battery' && r.battery <= 0) { G.toast(D().toast.noBattery); WT.Audio.play('sfx_jump_blocked'); return; }
-    p.swapT = P.swapT; p.swapTo = to; p.charge = null; p.vx = 0;
-    WT.Audio.play(forced ? (WT.Audio.defs.sfx_auto_swap ? 'sfx_auto_swap' : 'sfx_swap') : 'sfx_swap');
-    if (!WT.Audio.defs.sfx_swap) WT.Audio.play(to === 'battery' ? 'sfx_battery_in' : 'sfx_battery_out');
+    p.swapT = P.swapT; p.swapTo = to; p.charge = null;
+    RD.swapSound(to, forced);
   }
+  // 시간이 멈추는 우웅~ + 건전지 딸깍 / 태엽 끼기기긱
+  RD.swapSound = function (to, forced) {
+    const A = WT.Audio, has = (id) => !!A.defs[id];
+    A.play(has('sfx_timestop') ? 'sfx_timestop' : forced && has('sfx_auto_swap') ? 'sfx_auto_swap' : 'sfx_swap');
+    if (to === 'battery') A.play(has('sfx_battery_insert') ? 'sfx_battery_insert' : 'sfx_battery_in', { delay: 0.15 });
+    else if (has('sfx_swap_wind')) A.play('sfx_swap_wind', { delay: 0.1 });
+    else [0.1, 0.22, 0.34, 0.46].forEach((d, i) => A.play('sfx_wind_ratchet', { delay: d, rate: 0.9 + i * 0.08 }));
+  };
   function near(type, range) {
     const r = R(), p = r.p;
     return r.items.find((it) => it.type === type && Math.abs((it.type === 'bridge' ? it.post : it.x + (it.w ? it.w / 2 : 0)) - p.x) < (range || 80));
   }
   function act() {
     const r = R(), p = r.p, T = D().toast;
+    if (r.boss && WT.RoadBoss.act(r)) return;
     const ch = near('charger', 70);
     if (ch) { p.chargingT = P.chargeTime; p.vx = 0; return; }
     const lift = r.items.find((it) => it.type === 'lift' && p.x > it.x - 30 && p.x < it.x + it.w + 30 && it.state === 0);
@@ -151,6 +166,13 @@
     r.t += dt;
     if (r.after.length && !s.ui.transition && !s.ui.story && !s.ui.dialog) { const q = r.after[0]; q.t -= dt; if (q.t <= 0) { r.after.shift(); q.fn(); if (s.road !== r) return; } }
     const locked = G.locked() || r.dying;
+    // 갈아끼우기: 그동안 주변 시간이 멈춘다(보스·공격·장치·중력 모두 정지). 공중에서도 가능.
+    if (p.swapT > 0 && !locked) {
+      p.swapT -= r.freezeShot && p.swapT < 0.3 ? 0 : dt; // 점검용 스크린샷이면 정지 중간에 멈춰 둠
+      if (p.swapT <= 0) { p.power = p.swapTo; G.toast(p.power === 'battery' ? T.swapB : T.swapW); WT.Audio.play(p.power === 'battery' ? 'sfx_battery_in' : 'sfx_wind_notch', { vol: 0.4 }); }
+      camera(dt);
+      return;
+    }
     // 장치
     r.items.forEach((it) => {
       if (it.type === 'gate') {
@@ -185,7 +207,6 @@
     if (p.inv > 0) p.inv -= dt;
     if (p.hurtT > 0) p.hurtT -= dt;
     if (p.landT > 0) p.landT -= dt;
-    if (p.swapT > 0) { p.swapT -= dt; p.vx = 0; if (p.swapT <= 0) { p.power = p.swapTo; G.toast(p.power === 'battery' ? T.swapB : T.swapW); WT.Audio.play(p.power === 'battery' ? 'sfx_battery_in' : 'sfx_wind_notch', { vol: 0.4 }); } }
     if (p.shortT > 0) { p.shortT -= dt; p.vx = 0; }
     if (p.chargingT > 0) { p.chargingT -= dt; p.vx = 0; r.battery = Math.min(100, r.battery + 100 / P.chargeTime * dt); if (p.chargingT <= 0) { r.battery = 100; WT.Audio.play(WT.Audio.defs.sfx_charge_full ? 'sfx_charge_full' : 'sfx_reward_unlock'); G.toast(T.charged); } }
     if (p.sleepT > 0) { p.sleepT -= dt; if (p.sleepT <= 0) respawn('sleep'); camera(dt); return; }
@@ -202,7 +223,7 @@
     p.moving = !!dir && !frozen;
     // 컨베이어
     const conv = p.onGround && r.items.find((it) => it.type === 'conveyor' && p.x > it.x && p.x < it.x + it.w);
-    const extra = conv ? conv.v : 0;
+    const extra = (conv ? conv.v : 0) + (r.boss ? WT.RoadBoss.force(r) : 0);
     // 자원
     // 부족 경고음: 건전지 20% 아래 1초마다, 태엽 20% 아래 2초마다
     p.warnT = (p.warnT || 0) - dt;
@@ -250,13 +271,14 @@
       if (it.type === 'wire' && Math.abs(p.x - it.x) < 34 && p.y > GY - 30) hurt(1);
       if (it.type === 'end' && p.x > it.x && !r.cleared) clear();
     });
+    if (r.boss) WT.RoadBoss.update(dt, r);
     camera(dt);
   };
   function camera(dt) {
     const r = R(), p = r.p;
     const want = Math.max(0, Math.min(r.L.len - WT.W, p.x - 420 + p.facing * 60));
     r.camX += (want - r.camX) * Math.min(1, dt * 5);
-    const f = r.follow, back = p.x - p.facing * 80;
+    const f = r.follow, back = r.boss ? 90 : p.x - p.facing * 80; // 아레나에서는 왼쪽 끝 송신 자리
     f.x += (back - f.x) * Math.min(1, dt * 3); f.y = groundAt(f.x);
   }
   function groundAt(x) { const r = R(); const seg = r.L.ground.find(([a, b]) => x >= a && x <= b); return seg ? GY : GY + 60; }
@@ -267,19 +289,33 @@
     WT.Audio.jingle('jingle_zone_clear');
     G.toast(D().toast.clear);
     const next = r.zone + 1;
-    after(1.4, () => G.irisThen(r.p.x - r.camX, r.p.y - 50, () => {
-      if (next <= WT.ROAD_LEVELS.length) WT.Story.play(next === 2 ? WT.DIALOGUE.act5zone2 : WT.DIALOGUE.act5zone3, () => RD.enter(next));
-      else WT.Story.play(WT.DIALOGUE.act5end, finish);
-    }));
+    after(1.4, () => G.irisThen(r.p.x - r.camX, r.p.y - 50, () =>
+      WT.Story.play(next === 2 ? WT.DIALOGUE.act4zone2 : WT.DIALOGUE.act4gate, () => RD.enter(next))));
   }
+  // 보스를 쓰러뜨린 뒤 (road_boss.js가 부름)
+  RD.bossDone = function (kind) {
+    const r = R();
+    G.irisThen(WT.W / 2, WT.H / 2, () => {
+      if (kind === 'toad') WT.Story.play(WT.DIALOGUE.act5open, () => RD.enter(4));
+      else WT.Story.play(WT.DIALOGUE.act5end, finish);
+    });
+    void r;
+  };
+  RD.hurt = (d) => hurt(d);
+  RD.box = box;
   function finish() {
     const s = G.state, p = s.player;
     s.road = null; s.scene = 'town'; s.episode = 4;
     G.setScene('town'); WT.UI.setScene('town');
     p.x = WT.WORLD.npcs.radio.x - 80; p.y = WT.WORLD.npcs.radio.y + 40; p.dir = 'down'; p.power = 'wind';
-    s.inventory.batteryEmpty = false;
-    if (!s.house.unlocked.includes('gramophone')) s.house.unlocked.push('gramophone');
-    G.toast('끝 · 마을로 돌아왔다');
+    // 빼앗긴 태엽 힘이 돌아옴: 친구들이 깨어나고, 라디오 씨는 태엽 라디오로 마을에 남는다
+    ['pip', 'lamp'].forEach((k) => { s.npcs[k].frozen = false; s.npcs[k].power = 'wind'; s.npcs[k].mood = 'awake'; });
+    Object.assign(s.npcs.radio, { reborn: true, power: 'wind', off: false });
+    s.npcs.gramo.mood = 'awake';
+    if (s.act3) s.act3.stage = 'done';
+    WT.Act3 && WT.Act3.refresh();
+    WT.Audio.play(WT.Audio.defs.sfx_threads_return ? 'sfx_threads_return' : 'sfx_reward_unlock');
+    G.toast('마을로 돌아왔다 · 음악이 둘이 되었다');
   }
   RD.finish = finish;
   RD.clearNow = function () { const r = R(); if (r) { r.p.x = r.L.items.find((i) => i.type === 'end').x + 10; } };
@@ -296,6 +332,7 @@
       sfx_conveyor: r.items.some((it) => it.type === 'conveyor' && Math.abs(p.x - (it.x + it.w / 2)) < it.w / 2 + 200) ? 0.8 : 0,
       sfx_elevator: r.items.some((it) => it.type === 'elevator' && it.moving) ? 1 : 0
     };
+    if (r.boss) { const m = WT.RoadBoss.music(r); Object.assign(loops, m.loops || {}); return { want: m.want, fallback: m.fallback || 'bgm_boss', thin: p.power === 'battery' ? 0.35 : 0, loops }; }
     return { want: r.L.bgm, fallback: 'bgm_town_awake', thin: p.power === 'battery' ? 0.55 : 0, loops };
   };
 
@@ -305,6 +342,7 @@
     if (!r || G.locked()) return null;
     const p = r.p, T = D().tip;
     if (p.swapT > 0) return '갈아끼우는 중…';
+    if (r.boss) return WT.RoadBoss.tip(r);
     if (p.power === 'wind' && r.wind < 20) return '태엽이 풀려 간다 · 나팔 기둥까지 서두르자';
     if (p.power === 'battery' && r.battery < 20) return '건전지가 거의 다 됐다 · 충전소를 찾자';
     const it = r.items.find((q) => q.tip && (q.type === 'bridge' ? q.post : q.x) - p.x < 340 && (q.type === 'bridge' ? q.post : q.x) + (q.w || 0) - p.x > -30);
@@ -341,7 +379,9 @@
   RD.draw = function (ctx, t, Rn) {
     const s = G.state, r = R();
     if (!r) return;
-    const Z = ZONE_COL[r.zone - 1], cam = r.camX, p = r.p;
+    const Z = ZONE_COL[Math.min(r.zone, 3) - 1], cam = r.camX, p = r.p;
+    if (r.boss && WT.Assets.has(r.L.bg)) { WT.drawThing(ctx, r.L.bg, null, WT.W / 2, WT.H, { h: WT.H, sx: WT.W / (WT.H * WT.Assets.aspect(r.L.bg)) }); }
+    else {
     // 하늘 · 먼 배경 · 중간
     const g = ctx.createLinearGradient(0, 0, 0, WT.H); g.addColorStop(0, Z.sky[0]); g.addColorStop(1, Z.sky[1]);
     ctx.fillStyle = g; ctx.fillRect(0, 0, WT.W, WT.H);
@@ -354,18 +394,25 @@
       c.fillStyle = Z.mid; c.strokeStyle = C.outline; c.lineWidth = 3;
       for (let i = -1; i < 12; i++) { const x = ((off % 200) + 200) % 200 - 200 + i * 200; c.beginPath(); if (r.zone === 1) c.ellipse(x + 100, GY - 20, 70, 60, 0, Math.PI, 0); else c.rect(x + 60, GY - 180 + (i % 3) * 30, 40, 200); c.fill(); c.stroke(); }
     });
+    }
     ctx.save(); ctx.translate(-Math.round(cam), 0);
     // 땅
     r.L.ground.forEach(([a, b]) => { if (b < cam - 50 || a > cam + WT.W + 50) return; tileFill(ctx, r.L.kind === 'grass' ? 'road_ground_grass' : 'road_ground_metal', a, GY, b - a, WT.H - GY, Z.ground, Z.top); ctx.strokeStyle = C.outline; ctx.lineWidth = 4; ctx.strokeRect(a, GY, b - a, WT.H - GY + 10); });
     // 장치 · 장애물
     r.items.forEach((it) => { if (it.x + (it.w || 0) < cam - 200 || it.x > cam + WT.W + 200) return; drawItem(ctx, it, t, r); });
-    // 라디오 씨 (뒤따라옴)
-    const f = r.follow, bb = Math.abs(Math.sin(t * 6));
-    WT.drawThing(ctx, ['npc_radio_crank', 'npc_radio_idle'], PH.radio, f.x, f.y - bb * 4, { h: 100, power: 'wind', crank: true, t, flip: p.facing < 0 });
+    if (r.boss) WT.RoadBoss.draw(ctx, t, r);
+    // 라디오 씨 (길에서는 뒤따라옴, 아레나에서는 왼쪽 송신 자리 — 보스 모듈이 그림)
+    if (!r.boss) {
+      const f = r.follow, low = r.radioBat < 50, flick = low && Math.sin(t * 11) > 0.7;
+      ctx.save(); if (flick) ctx.globalAlpha = 0.6;
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, f.x, f.y, { h: 100, power: 'battery', t, flip: p.facing < 0, rot: low ? Math.sin(t * 2) * 0.03 : 0 });
+      ctx.restore();
+    }
     drawBogle(ctx, t, r);
     ctx.restore();
     Rn.drawParticles();
     drawHud(ctx, t, r);
+    if (p.swapT > 0) { drawTimeStop(ctx, t, r); ctx.save(); ctx.translate(-Math.round(r.camX), 0); drawBogle(ctx, t, r); ctx.restore(); }
     if (p.sleepT > 0) { ctx.fillStyle = `rgba(20,14,18,${Math.min(0.6, (1.6 - p.sleepT) * 0.6)})`; ctx.fillRect(0, 0, WT.W, WT.H); }
   };
   function drawItem(ctx, it, t, r) {
@@ -431,6 +478,9 @@
         if (Math.random() < 0.5) WT.drawThing(ctx, 'fx_static', PH.static, it.x + 18 + (Math.random() - 0.5) * 20, GY - 20 - Math.random() * 20, { h: 34, anchor: 'center' });
         break;
       }
+      case 'platform':
+        if (!WT.drawThing(ctx, 'road_platform_metal', null, it.x + it.w / 2, GY - it.h + 34, { h: 40, sx: it.w / 200 })) { blk(it.x, GY - it.h, it.w, 20, '#7a7f88'); ctx.fillStyle = '#e07a3a'; for (let x = it.x + 6; x < it.x + it.w - 10; x += 24) ctx.fillRect(x, GY - it.h + 4, 10, 4); }
+        break;
       case 'end': {
         ctx.fillStyle = C.cream; ctx.strokeStyle = C.outline; ctx.lineWidth = 4; ctx.fillRect(it.x, GY - 170, 10, 170); ctx.strokeRect(it.x, GY - 170, 10, 170);
         ctx.fillStyle = C.red; ctx.beginPath(); ctx.moveTo(it.x + 10, GY - 168); ctx.lineTo(it.x + 70, GY - 150 + Math.sin(t * 4) * 4); ctx.lineTo(it.x + 10, GY - 130); ctx.closePath(); ctx.fill(); ctx.stroke();
@@ -465,9 +515,28 @@
     WT.drawThing(ctx, ids, PH.bogle, p.x, p.y - bob, { h: 110, flip: p.facing < 0, sx, sy, rot, pose, dir: 'side', t });
     if (bat && !WT.Assets.has('player_dash_side_01')) WT.drawThing(ctx, 'prop_battery_pack', PH.batteryPack, p.x - p.facing * 38, p.y - 60, { h: 38, anchor: 'center' });
     if (bat || p.sleepT > 0) ctx.restore();
-    if (p.swapT > 0) { const k = 1 - p.swapT / P.swapT; ctx.save(); ctx.strokeStyle = C.yellow; ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(p.x, p.y - 140, 18, -Math.PI / 2, -Math.PI / 2 + k * Math.PI * 2); ctx.stroke(); ctx.restore(); }
     if (p.shortT > 0 && Math.random() < 0.6) WT.drawThing(ctx, 'fx_static', PH.static, p.x + (Math.random() - 0.5) * 50, p.y - 50 - Math.random() * 50, { h: 30, anchor: 'center' });
     if (p.charge && p.charge.t > 0.1) { const k = Math.min(1, p.charge.t / P.chargeT); ctx.save(); ctx.fillStyle = k >= 1 ? C.yellow : C.cream; ctx.fillRect(p.x - 30, p.y + 10, 60 * k, 6); ctx.restore(); }
+  }
+  // 시간 정지 연출: 화면이 푸르스름하게 바래고, 보글 둘레로 시계 눈금 고리가 돈다
+  function drawTimeStop(ctx, t, r) {
+    const p = r.p, k = 1 - p.swapT / P.swapT, x = p.x - r.camX, y = p.y - 60;
+    const toB = p.swapTo === 'battery';
+    ctx.save();
+    ctx.globalCompositeOperation = 'saturation'; ctx.fillStyle = `rgba(128,128,128,${0.75})`; ctx.fillRect(0, 0, WT.W, WT.H);
+    ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = 'rgba(30,40,70,.28)'; ctx.fillRect(0, 0, WT.W, WT.H);
+    const R = 90 + Math.sin(k * Math.PI) * 20;
+    ctx.strokeStyle = toB ? '#e8edf2' : C.yellow; ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.arc(x, y, R, -Math.PI / 2, -Math.PI / 2 + k * Math.PI * 2); ctx.stroke();
+    for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2 + (toB ? 0 : k * 2); ctx.lineWidth = i % 3 ? 2 : 4; ctx.beginPath(); ctx.moveTo(x + Math.cos(a) * (R + 8), y + Math.sin(a) * (R + 8)); ctx.lineTo(x + Math.cos(a) * (R + 18), y + Math.sin(a) * (R + 18)); ctx.stroke(); }
+    // 바뀌는 쪽 아이콘이 등 쪽으로 들어감
+    const ix = x - p.facing * (60 - k * 30), iy = y - 20;
+    if (toB) WT.drawThing(ctx, 'prop_battery', PH.battery, ix, iy + 20, { h: 44, rot: Math.PI / 2 * p.facing });
+    else WT.drawThing(ctx, 'prop_key', PH.key, ix, iy + 22, { h: 44, rot: k * Math.PI * 4 });
+    ctx.font = '26px "Do Hyeon", sans-serif'; ctx.textAlign = 'center'; ctx.fillStyle = toB ? '#e8edf2' : C.yellow; ctx.strokeStyle = C.outline; ctx.lineWidth = 6;
+    const word = toB ? (k > 0.6 ? '딸깍!' : '우웅…') : (k > 0.6 ? '끼기기긱!' : '우웅…');
+    ctx.strokeText(word, x, y - R - 26); ctx.fillText(word, x, y - R - 26);
+    ctx.restore();
   }
   function gauge(ctx, x, y, w, k, col, label, icon, ph, active) {
     ctx.save();
@@ -488,10 +557,20 @@
     ctx.fillStyle = 'rgba(244,230,200,.94)'; ctx.strokeStyle = C.outline; ctx.lineWidth = 4;
     ctx.beginPath(); ctx.roundRect(20, 18, w, 48, 14); ctx.fill(); ctx.stroke();
     ctx.fillStyle = C.outline; ctx.fillText(name, 40, 43);
-    // 진행 막대
-    ctx.fillStyle = 'rgba(43,34,48,.6)'; ctx.fillRect(40 + w, 38, 200, 8);
-    ctx.fillStyle = C.yellow; ctx.fillRect(40 + w, 38, 200 * Math.min(1, p.x / r.L.len), 8);
+    // 진행 막대(길) · 라디오 씨 건전지
+    if (!r.boss) { ctx.fillStyle = 'rgba(43,34,48,.6)'; ctx.fillRect(40 + w, 38, 200, 8); ctx.fillStyle = C.yellow; ctx.fillRect(40 + w, 38, 200 * Math.min(1, p.x / r.L.len), 8); }
     ctx.restore();
+    if (!(r.boss && r.boss.reborn)) {
+      const x = 590, y = 76, k = Math.max(0, r.radioBat / 100);
+      ctx.save(); ctx.fillStyle = 'rgba(43,34,48,.88)'; ctx.strokeStyle = C.cream; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.roundRect(x, y, 190, 50, 14); ctx.fill(); ctx.stroke();
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, x + 24, y + 46, { h: 40, power: 'battery' });
+      ctx.font = '16px "Do Hyeon", sans-serif'; ctx.fillStyle = C.cream; ctx.textBaseline = 'middle'; ctx.fillText('라디오 씨', x + 48, y + 15);
+      ctx.fillStyle = '#3a2d36'; ctx.beginPath(); ctx.roundRect(x + 48, y + 27, 128, 12, 6); ctx.fill();
+      ctx.fillStyle = k < 0.3 ? '#e07a3a' : '#e8edf2'; ctx.beginPath(); ctx.roundRect(x + 48, y + 27, 128 * k, 12, 6); ctx.fill();
+      ctx.restore();
+    }
+    if (r.boss) WT.RoadBoss.hud(ctx, t, r);
     const icW = (c) => PH.key(c, 30, {}), icB = (c, h) => PH.battery(c, h);
     gauge(ctx, 20, 76, 220, r.wind / 100, C.yellow, '태엽', 'ui_icon_wind', (c) => { c.translate(0, 14); icW(c); }, p.power === 'wind');
     gauge(ctx, 250, 76, 220, r.battery / 100, '#e8edf2', '건전지', 'ui_icon_battery', (c) => { c.translate(0, 16); icB(c, 30); }, p.power === 'battery');

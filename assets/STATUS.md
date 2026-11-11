@@ -1,6 +1,6 @@
 # 리소스 현황
 
-OK 155 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 155
+OK 208 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 208
 
 | 상태 | ID | 필수 | 파일 | 메모 |
 |---|---|---|---|---|
@@ -159,3 +159,56 @@ OK 155 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 155
 | OK | `story_22_music_spreads` |  | story/story_22_music_spreads.png |  |
 | OK | `ui_icon_wind` | ● | ui/ui_icon_wind.png |  |
 | OK | `ui_icon_battery` | ● | ui/ui_icon_battery.png |  |
+| OK | `boss_volt_idle` | ● | boss/boss_volt_idle.png |  |
+| OK | `boss_volt_spark` | ● | boss/boss_volt_spark.png |  |
+| OK | `boss_volt_magnet` | ● | boss/boss_volt_magnet.png |  |
+| OK | `boss_volt_spray` |  | boss/boss_volt_spray.png |  |
+| OK | `boss_volt_throw` |  | boss/boss_volt_throw.png |  |
+| OK | `boss_volt_strike` | ● | boss/boss_volt_strike.png |  |
+| OK | `boss_volt_overheat` | ● | boss/boss_volt_overheat.png |  |
+| OK | `boss_volt_hurt` |  | boss/boss_volt_hurt.png |  |
+| OK | `boss_volt_crank` | ● | boss/boss_volt_crank.png |  |
+| OK | `boss_volt_small` | ● | boss/boss_volt_small.png |  |
+| OK | `portrait_volt` |  | portrait/portrait_volt.png |  |
+| OK | `portrait_volt_small` |  | portrait/portrait_volt_small.png |  |
+| OK | `boss_toad_idle` | ● | boss/boss_toad_idle.png |  |
+| OK | `boss_toad_croak` | ● | boss/boss_toad_croak.png |  |
+| OK | `boss_toad_tongue` | ● | boss/boss_toad_tongue.png |  |
+| OK | `boss_toad_overheat_top` | ● | boss/boss_toad_overheat_top.png |  |
+| OK | `boss_toad_overheat_mouth` | ● | boss/boss_toad_overheat_mouth.png |  |
+| OK | `boss_toad_hurt` |  | boss/boss_toad_hurt.png |  |
+| OK | `boss_toad_down` | ● | boss/boss_toad_down.png |  |
+| OK | `portrait_toad` |  | portrait/portrait_toad.png |  |
+| OK | `npc_radio_jam` | ● | npc/npc_radio_jam.png |  |
+| OK | `npc_radio_reborn_idle` | ● | npc/npc_radio_reborn_idle.png |  |
+| OK | `npc_radio_reborn_talk` |  | npc/npc_radio_reborn_talk.png |  |
+| OK | `npc_radio_reborn_dance` |  | npc/npc_radio_reborn_dance.png |  |
+| OK | `npc_radio_reborn_broadcast` | ● | npc/npc_radio_reborn_broadcast.png |  |
+| OK | `portrait_radio_reborn` |  | portrait/portrait_radio_reborn.png |  |
+| OK | `bg_gate_arena` | ● | road/bg_gate_arena.png |  |
+| OK | `bg_volt_arena` | ● | road/bg_volt_arena.png |  |
+| OK | `road_platform_metal` | ● | road/road_platform_metal.png |  |
+| OK | `fx_lightning` |  | fx/fx_lightning.png |  |
+| OK | `fx_spark_floor` |  | fx/fx_spark_floor.png |  |
+| OK | `fx_magnet_wave` |  | fx/fx_magnet_wave.png |  |
+| OK | `fx_coolant` |  | fx/fx_coolant.png |  |
+| OK | `prop_battery_bomb` | ● | props/prop_battery_bomb.png |  |
+| OK | `prop_plug` | ● | props/prop_plug.png |  |
+| OK | `prop_breaker` | ● | props/prop_breaker.png |  |
+| OK | `fx_recall_thread` |  | fx/fx_recall_thread.png |  |
+| OK | `wind_bogle_back` | ● | wind/wind_bogle_back.png |  |
+| OK | `story_30_gramo_unwind` |  | story/story_30_gramo_unwind.png |  |
+| OK | `story_32_battery_montage` |  | story/story_32_battery_montage.png |  |
+| OK | `story_33_recall_night` |  | story/story_33_recall_night.png |  |
+| OK | `story_34_radio_confess` |  | story/story_34_radio_confess.png |  |
+| OK | `story_35_gramo_key` |  | story/story_35_gramo_key.png |  |
+| OK | `story_36_departure` |  | story/story_36_departure.png |  |
+| OK | `story_37_toad_gate` |  | story/story_37_toad_gate.png |  |
+| OK | `story_38_volt_reveal` |  | story/story_38_volt_reveal.png |  |
+| OK | `story_39_radio_collapse` |  | story/story_39_radio_collapse.png |  |
+| OK | `story_40_key_insert` |  | story/story_40_key_insert.png |  |
+| OK | `story_41_radio_reborn` |  | story/story_41_radio_reborn.png |  |
+| OK | `story_42_volt_small` |  | story/story_42_volt_small.png |  |
+| OK | `story_43_home` |  | story/story_43_home.png |  |
+| OK | `story_44_shadow_hall` |  | story/story_44_shadow_hall.png |  |
+| OK | `story_45_shadow_plan` |  | story/story_45_shadow_plan.png |  |
