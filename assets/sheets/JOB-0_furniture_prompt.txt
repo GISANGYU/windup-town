@@ -1,0 +1,35 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Each item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.
+Characters face the viewer at a slight high 3/4 angle unless a direction is given. "Side" always means facing RIGHT.
+
+BOGLE: a small round porcelain TEAPOT whose whole body IS the teapot (no human torso, no head sitting on a body).
+Cream-white body #FBF6EA with one blue band #3E6DB5 around the middle and a row of small blue dots on the band.
+Red #D2463C lid knob on top like a tiny hat. Short spout on the front-right, curved handle on the back.
+Face on the front of the teapot: two big pie-cut eyes, rosy cheeks, wide friendly smile.
+Two short rubber hose legs with big red round shoes, two rubber hose arms with white gloves coming out of the sides.
+Proportions: teapot body 70% of total height, legs 30%.
+
+GRAMO: an old wooden gramophone, grandfather character.
+Square cabinet body in reddish-brown wood #8B4A2F with cream #F4E6C8 trim; the cabinet front is his face with pie-cut eyes and a white bushy moustache.
+A big brass flower-shaped horn #F2C14E rises from the top like a hat. A wind-up crank handle sticks out of his right side.
+Short rubber hose legs with black round shoes, rubber hose arms with white gloves.
+
+PIP: a cheerful young red mailbox #D2463C with a rounded top, standing on one short post that splits into two rubber hose legs with blue #3E6DB5 round shoes.
+The mail slot is the mouth, pie-cut eyes above it, a small blue flag on the right side, rubber hose arms with white gloves.
+
+JOB-0: Create a wide horizontal original game style anchor sheet. Exactly seven separate full-figure items in ONE row, left to right, with generous empty spacing: BOGLE front, BOGLE side facing RIGHT, GRAMO sleepy, GRAMO awake, PIP awake, round tree, brass wind-up key. Underneath, ONE row of exactly ten small flat palette circles, no labels: #3D3346 #D2463C #3E6DB5 #F2C14E #F4E6C8 #CFAC8D #D7BE97 #4E546E #8A9A6B #907F77. Solid pure #FF00FF background. No floor or shadows. Only borrow the hand-inked line quality from the viewed references, never characters, logos, words, cup-headed designs or scenes. This is a shared style-reference sheet, all seven complete silhouettes must fit with breathing room.
+BOGLE standing idle, facing the viewer, relaxed pose, hands on hips
+BOGLE standing idle, side profile facing RIGHT, spout pointing right
+GRAMO the old gramophone, run-down and sleepy: brass horn drooping down like a wilted flower, half-closed heavy eyelids, mouth hanging open, arms dangling, slumped on short legs
+GRAMO the old gramophone, fully wound up and joyful: brass horn standing tall and wide open, big pie-cut eyes wide open, huge grin, one white-gloved arm waving, dancing on one leg
+PIP the red mailbox, cheerful: flag raised high, pie-cut eyes wide open, big smile in the mail slot, holding up a letter with a white-gloved hand
+round cartoon tree with a thick bendy trunk and a puffy cloud-like crown, sleepy face on the trunk optional
+a brass wind-up key, butterfly-shaped handle, standing upright, small sparkle, toy-like

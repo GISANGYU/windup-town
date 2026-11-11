@@ -1,0 +1,71 @@
+{
+  "source": "JOB-5_b.png",
+  "method": "slice_sheet.remove_background(tol=70), explicit group regions, alpha trim",
+  "regions": [
+    {
+      "id": "fx_note_01",
+      "source_box": [
+        0,
+        0,
+        348,
+        724
+      ],
+      "size": [
+        252,
+        273
+      ]
+    },
+    {
+      "id": "fx_note_02",
+      "source_box": [
+        348,
+        0,
+        760,
+        724
+      ],
+      "size": [
+        311,
+        285
+      ]
+    },
+    {
+      "id": "fx_zzz",
+      "source_box": [
+        760,
+        0,
+        1249,
+        724
+      ],
+      "size": [
+        379,
+        241
+      ]
+    },
+    {
+      "id": "fx_sparkle",
+      "source_box": [
+        1249,
+        0,
+        1618,
+        724
+      ],
+      "size": [
+        267,
+        255
+      ]
+    },
+    {
+      "id": "fx_dust",
+      "source_box": [
+        1618,
+        0,
+        2172,
+        724
+      ],
+      "size": [
+        451,
+        197
+      ]
+    }
+  ]
+}

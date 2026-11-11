@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-11",
+  "tool": "built-in image_gen",
+  "authorization": "User instructed JOB-2 to proceed after notification that current anchor was pending approval.",
+  "reference_images": [
+    "refs/style_anchor.png",
+    "refs/ref_02_character.jpg",
+    "refs/ref_01_carnival.jpg"
+  ],
+  "sheets": [
+    {
+      "sheet": "a",
+      "assets": [
+        {
+          "id": "npc_gramo_sleepy",
+          "file": "npc/npc_gramo_sleepy.png",
+          "group": "npc",
+          "req": true,
+          "fit": "bottom",
+          "h": 160,
+          "view": "front34",
+          "desc": "그라모 영감 — 태엽 풀림. 처진 나팔, 반쯤 감은 눈",
+          "prompt": "GRAMO the old gramophone, run-down and sleepy: brass horn drooping down like a wilted flower, half-closed heavy eyelids, mouth hanging open, arms dangling, slumped on short legs"
+        },
+        {
+          "id": "npc_gramo_awake",
+          "file": "npc/npc_gramo_awake.png",
+          "group": "npc",
+          "req": true,
+          "fit": "bottom",
+          "h": 160,
+          "view": "front34",
+          "desc": "그라모 영감 — 태엽 감김. 나팔 활짝, 파이 눈 크게",
+          "prompt": "GRAMO the old gramophone, fully wound up and joyful: brass horn standing tall and wide open, big pie-cut eyes wide open, huge grin, one white-gloved arm waving, dancing on one leg"
+        },
+        {
+          "id": "npc_gramo_awake_02",
+          "file": "npc/npc_gramo_awake_02.png",
+          "group": "npc",
+          "req": false,
+          "fit": "bottom",
+          "h": 160,
+          "view": "front34",
+          "desc": "그라모 춤 2번째 동작",
+          "prompt": "GRAMO dancing, mirrored pose of the awake pose: other arm up, other leg kicked out, horn tilted the other way"
+        }
+      ],
+      "prompt": "STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.\nThick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.\nFlat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.\nCharacters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.\nCharacter colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.\nBackgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.\nSoft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.\nDo not copy any existing cartoon or game character, logo, or scene.\n\nEach item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.\nCharacters face the viewer at a slight high 3/4 angle unless a direction is given. \"Side\" always means facing RIGHT.\n\nGRAMO: an old wooden gramophone, grandfather character.\nSquare cabinet body in reddish-brown wood #8B4A2F with cream #F4E6C8 trim; the cabinet front is his face with pie-cut eyes and a white bushy moustache.\nA big brass flower-shaped horn #F2C14E rises from the top like a hat. A wind-up crank handle sticks out of his right side.\nShort rubber hose legs with black round shoes, rubber hose arms with white gloves.\n\nUse the supplied style_anchor.png as the PRIMARY original character design and line/color reference. The other two supplied images are SUPPORTING inking and vintage-cartoon style references only: do not copy their characters, logos or scenes.\nCreate one clean production sprite sheet. Pure flat #FF00FF magenta background across the entire sheet, including gaps enclosed by limbs. Do not use magenta anywhere inside the character. Flat cel fills with one restrained shade, no gradients or paper grain. Exactly the requested full-body poses, in one horizontal row, evenly spaced in separate equal-width invisible cells. Wide blank margins on all four sides, at least 100px clear gaps between silhouettes. Baseline aligned. Character artwork at least 500px tall. No labels, no title, no palette circles, no border, no floor, no cast shadows, no extra particles. All poses must depict the SAME character with identical facial structure, proportions and equipment; only expression and pose change.\n\nWide landscape 3:2 sheet with THREE poses. Match the two gramophone characters in the anchor. Left: exhausted with visibly drooping flower horn, heavy half-closed eyes, dangling hands and slumped stance. Center: awake, horn fully raised/open, waving the hand on viewer's left, kicking the foot on viewer's right. Right: a second awake dance beat, wave the hand on viewer's right and kick the foot on viewer's left, tilt horn the opposite direction. Keep cabinet design and crank on its same physical side rather than literally mirroring the cabinet. Clear white bushy moustache on all three. Both awake poses have pie-cut eyes and broad smiles.\n\nManifest pose prompts, left to right:\n1. GRAMO the old gramophone, run-down and sleepy: brass horn drooping down like a wilted flower, half-closed heavy eyelids, mouth hanging open, arms dangling, slumped on short legs\n2. GRAMO the old gramophone, fully wound up and joyful: brass horn standing tall and wide open, big pie-cut eyes wide open, huge grin, one white-gloved arm waving, dancing on one leg\n3. GRAMO dancing, mirrored pose of the awake pose: other arm up, other leg kicked out, horn tilted the other way"
+    },
+    {
+      "sheet": "b",
+      "assets": [
+        {
+          "id": "npc_pip_sleepy",
+          "file": "npc/npc_pip_sleepy.png",
+          "group": "npc",
+          "req": true,
+          "fit": "bottom",
+          "h": 120,
+          "view": "front34",
+          "desc": "피프(우체통) — 졸림. 깃발 내려감",
+          "prompt": "PIP the red mailbox, drowsy: little flag lowered, half-closed eyes, mail slot mouth yawning, leaning against nothing"
+        },
+        {
+          "id": "npc_pip_awake",
+          "file": "npc/npc_pip_awake.png",
+          "group": "npc",
+          "req": true,
+          "fit": "bottom",
+          "h": 120,
+          "view": "front34",
+          "desc": "피프 — 활기. 깃발 올라감",
+          "prompt": "PIP the red mailbox, cheerful: flag raised high, pie-cut eyes wide open, big smile in the mail slot, holding up a letter with a white-gloved hand"
+        },
+        {
+          "id": "npc_pip_awake_02",
+          "file": "npc/npc_pip_awake_02.png",
+          "group": "npc",
+          "req": false,
+          "fit": "bottom",
+          "h": 120,
+          "view": "front34",
+          "desc": "피프 춤 2번째 동작",
+          "prompt": "PIP dancing, hopping on one leg, flag waving the other way"
+        }
+      ],
+      "prompt": "STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.\nThick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.\nFlat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.\nCharacters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.\nCharacter colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.\nBackgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.\nSoft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.\nDo not copy any existing cartoon or game character, logo, or scene.\n\nEach item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.\nCharacters face the viewer at a slight high 3/4 angle unless a direction is given. \"Side\" always means facing RIGHT.\n\nPIP: a cheerful young red mailbox #D2463C with a rounded top, standing on one short post that splits into two rubber hose legs with blue #3E6DB5 round shoes.\nThe mail slot is the mouth, pie-cut eyes above it, a small blue flag on the right side, rubber hose arms with white gloves.\n\nUse the supplied style_anchor.png as the PRIMARY original character design and line/color reference. The other two supplied images are SUPPORTING inking and vintage-cartoon style references only: do not copy their characters, logos or scenes.\nCreate one clean production sprite sheet. Pure flat #FF00FF magenta background across the entire sheet, including gaps enclosed by limbs. Do not use magenta anywhere inside the character. Flat cel fills with one restrained shade, no gradients or paper grain. Exactly the requested full-body poses, in one horizontal row, evenly spaced in separate equal-width invisible cells. Wide blank margins on all four sides, at least 100px clear gaps between silhouettes. Baseline aligned. Character artwork at least 500px tall. No labels, no title, no palette circles, no border, no floor, no cast shadows, no extra particles. All poses must depict the SAME character with identical facial structure, proportions and equipment; only expression and pose change.\n\nWide landscape 3:2 sheet with THREE poses of the red mailbox from the anchor, retaining rounded red body, rivet detail, blue shoes and small blue flag. Left: sleepy, flag hanging down, half-closed eyelids, mail-slot yawning mouth, loose arms and slouched pose. Center: awake cheerful with flag upright, pie-cut eyes wide open, mail-slot smile, holding a small cream envelope up with a white-gloved hand. Right: second upbeat dance pose, hopping on the opposite leg with flag waving the other way, still the same mailbox and cream envelope. Exactly two arms, two gloved hands and two short rubber-hose legs each. No text or symbols on the mailbox or envelope. One short central post branches into two legs, not a humanoid torso.\n\nManifest pose prompts, left to right:\n1. PIP the red mailbox, drowsy: little flag lowered, half-closed eyes, mail slot mouth yawning, leaning against nothing\n2. PIP the red mailbox, cheerful: flag raised high, pie-cut eyes wide open, big smile in the mail slot, holding up a letter with a white-gloved hand\n3. PIP dancing, hopping on one leg, flag waving the other way"
+    },
+    {
+      "sheet": "c",
+      "assets": [
+        {
+          "id": "npc_lamp_off",
+          "file": "npc/npc_lamp_off.png",
+          "group": "npc",
+          "req": false,
+          "fit": "bottom",
+          "h": 200,
+          "view": "front34",
+          "desc": "가로등 — 꺼짐(선택 NPC)",
+          "prompt": "an old street lamp character, light off, head bowed, sleepy eyes on the lamp glass"
+        },
+        {
+          "id": "npc_lamp_on",
+          "file": "npc/npc_lamp_on.png",
+          "group": "npc",
+          "req": false,
+          "fit": "bottom",
+          "h": 200,
+          "view": "front34",
+          "desc": "가로등 — 켜짐",
+          "prompt": "the same street lamp character, glowing warm yellow, standing straight, smiling"
+        }
+      ],
+      "prompt": "STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.\nThick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.\nFlat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.\nCharacters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.\nCharacter colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.\nBackgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.\nSoft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.\nDo not copy any existing cartoon or game character, logo, or scene.\n\nEach item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.\nCharacters face the viewer at a slight high 3/4 angle unless a direction is given. \"Side\" always means facing RIGHT.\n\nLAMP: a thin dark plum iron street lamp with a curved neck; the glass lantern is the head with two pie-cut eyes. When on, the glass glows warm yellow #F2C14E.\n\nUse the supplied style_anchor.png as the PRIMARY original character design and line/color reference. The other two supplied images are SUPPORTING inking and vintage-cartoon style references only: do not copy their characters, logos or scenes.\nCreate one clean production sprite sheet. Pure flat #FF00FF magenta background across the entire sheet, including gaps enclosed by limbs. Do not use magenta anywhere inside the character. Flat cel fills with one restrained shade, no gradients or paper grain. Exactly the requested full-body poses, in one horizontal row, evenly spaced in separate equal-width invisible cells. Wide blank margins on all four sides, at least 100px clear gaps between silhouettes. Baseline aligned. Character artwork at least 500px tall. No labels, no title, no palette circles, no border, no floor, no cast shadows, no extra particles. All poses must depict the SAME character with identical facial structure, proportions and equipment; only expression and pose change.\n\nLandscape 3:2 sheet with TWO poses of ONE same original street-lamp character. A slender dark plum cast-iron pole with a gently curving rubber-hose neck, a small old-fashioned glass lantern as its expressive head, and a compact round pedestal/base. No separate humanoid body or arms. The small lantern has expressive pie-cut eyes and a simple mouth, matching the anchor's eye/line style. Left: lamp off, neck/head drooped forward, dim cream glass, half-closed sleepy eyes. Right: lamp on, neck upright, head lifted, cheerful smile, warm golden-yellow glass shown with a flat fill and one lighter cream inset, without an external glow or halo. Keep pedestal, pole thickness, lantern frame and overall scale consistent between states.\n\nManifest pose prompts, left to right:\n1. an old street lamp character, light off, head bowed, sleepy eyes on the lamp glass\n2. the same street lamp character, glowing warm yellow, standing straight, smiling"
+    }
+  ]
+}

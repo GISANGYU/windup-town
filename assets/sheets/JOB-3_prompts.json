@@ -1,0 +1,41 @@
+{
+  "job": "JOB-3",
+  "status": "complete; five transparent RGBA PNGs saved and passed check_assets.py; contact sheet visually reviewed",
+  "mode": "built-in image_gen",
+  "reference_paths": [
+    "assets/refs/style_anchor.png",
+    "assets/refs/ref_02_character.jpg",
+    "assets/sheets/JOB-2_a.png",
+    "assets/sheets/JOB-2_b.png",
+    "assets/player/player_idle_down.png"
+  ],
+  "sheet_path": "assets/sheets/JOB-3_a.png",
+  "output_paths": [
+    "assets/portrait/portrait_gramo_sleepy.png",
+    "assets/portrait/portrait_gramo_awake.png",
+    "assets/portrait/portrait_pip_sleepy.png",
+    "assets/portrait/portrait_pip_awake.png",
+    "assets/portrait/portrait_bogle.png"
+  ],
+  "prompt": "STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.\nThick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.\nFlat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.\nCharacters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.\nCharacter colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.\nBackgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.\nSoft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.\nDo not copy any existing cartoon or game character, logo, or scene.\n\nEach item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.\nCharacters face the viewer at a slight high 3/4 angle unless a direction is given. \"Side\" always means facing RIGHT.\n\nGRAMO: an old wooden gramophone, grandfather character.\nSquare cabinet body in reddish-brown wood #8B4A2F with cream #F4E6C8 trim; the cabinet front is his face with pie-cut eyes and a white bushy moustache.\nA big brass flower-shaped horn #F2C14E rises from the top like a hat. A wind-up crank handle sticks out of his right side.\nShort rubber hose legs with black round shoes, rubber hose arms with white gloves.\n\nPIP: a cheerful young red mailbox #D2463C with a rounded top, standing on one short post that splits into two rubber hose legs with blue #3E6DB5 round shoes.\nThe mail slot is the mouth, pie-cut eyes above it, a small blue flag on the right side, rubber hose arms with white gloves.\n\nBOGLE: a small round porcelain TEAPOT whose whole body IS the teapot (no human torso, no head sitting on a body).\nCream-white body #FBF6EA with one blue band #3E6DB5 around the middle and a row of small blue dots on the band.\nRed #D2463C lid knob on top like a tiny hat. Short spout on the front-right, curved handle on the back.\nFace on the front of the teapot: two big pie-cut eyes, rosy cheeks, wide friendly smile.\nTwo short rubber hose legs with big red round shoes, two rubber hose arms with white gloves coming out of the sides.\nProportions: teapot body 70% of total height, legs 30%.\n\nSHEET COMPOSITION: Five separate close-up bust portraits in exactly one horizontal row, reading left to right: GRAMO sleepy, GRAMO awake, PIP sleepy, PIP awake, BOGLE smiling. Use a wide canvas with five evenly spaced portrait regions and generous pure #FF00FF magenta separation. Each portrait should be at least 300 pixels tall. Keep all five portraits fully within the canvas. No labels, palette swatches, frames, ground, or shadows.\nThese are dialogue portraits: show the complete face-bearing object body and defining upper features, without legs or shoes. GRAMO must include his complete cabinet face, moustache, horn and crank; PIP must include his rounded mailbox face and flag; BOGLE must include the complete teapot, lid, spout and handle. Full figure visible means the entire requested bust silhouette remains visible and uncut.\nMatch GRAMO and PIP to the completed JOB-2 reference images precisely. Use style_anchor for the shared design and BOGLE identity; use ref_02 only for drawing technique, never its character or lettering. Sleepy portraits have half-lidded tired eyes and lowered horn or flag; awake portraits have open pie-cut eyes and friendly energetic expressions. Maintain the same object proportions and outline thickness across each character's two expressions.\n\nclose-up bust of GRAMO sleepy, inside nothing, head and horn only\nclose-up bust of GRAMO awake and grinning\nclose-up bust of PIP sleepy\nclose-up bust of PIP cheerful\nclose-up bust of BOGLE smiling\n\nREFERENCE ADAPTATION: Transform the supplied completed character sprites into the requested five bust portraits. Reference 3 is the completed GRAMO sheet (sleepy, awake, dance); reference 4 is the completed PIP sheet (sleepy, awake, dance). Use the first two characters in each sheet. Reference 5 defines final BOGLE identity. Reference 1 is the common style anchor and reference 2 is drawing-technique-only. Retain the full face-bearing object silhouettes, but OMIT ALL ARMS, HANDS, LEGS, SHOES, AND LETTER ENVELOPES so each bust is a single connected isolated shape. Do not invent human shoulders or necks. For BOGLE preserve the existing cream body with blue decorative rings and dots. Pure flat #FF00FF background. Wide 3:1 canvas, preferably 3000x1000, one horizontal row of five equally spaced portraits with matching visual scale and aligned vertical centers. No portrait touches another or the canvas edge.",
+  "slice_command": "python tools/slice_sheet.py assets/sheets/JOB-3_a.png --names portrait_gramo_sleepy,portrait_gramo_awake,portrait_pip_sleepy,portrait_pip_awake,portrait_bogle",
+  "verification_commands": [
+    "python tools/check_assets.py",
+    "python tools/contact_sheet.py"
+  ],
+  "generated_source": "C:/Users/yu505/.codex/generated_images/01a1c821-5a97-73b2-a7aa-b76eeade807b/exec-023f64c6-e344-4100-9ff1-e96f1b44a8b2.png",
+  "validation": {
+    "portraits": 5,
+    "minimum_height_px": 328,
+    "maximum_height_px": 558,
+    "remaining_magenta_pixels": 0,
+    "checks": [
+      "PNG RGBA",
+      "alpha channel",
+      "manifest paths",
+      "visual identity comparison",
+      "check_assets.py",
+      "contact_sheet.py"
+    ]
+  }
+}

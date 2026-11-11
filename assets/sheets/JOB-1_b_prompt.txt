@@ -1,0 +1,27 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Each item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.
+Characters face the viewer at a slight high 3/4 angle unless a direction is given. "Side" always means facing RIGHT.
+
+BOGLE: a small round porcelain TEAPOT whose whole body IS the teapot (no human torso, no head sitting on a body).
+Cream-white body #FBF6EA with one blue band #3E6DB5 around the middle and a row of small blue dots on the band.
+Red #D2463C lid knob on top like a tiny hat. Short spout on the front-right, curved handle on the back.
+Face on the front of the teapot: two big pie-cut eyes, rosy cheeks, wide friendly smile.
+Two short rubber hose legs with big red round shoes, two rubber hose arms with white gloves coming out of the sides.
+Proportions: teapot body 70% of total height, legs 30%.
+
+JOB-1_b sprite sheet composition: derive SIX walking animation sprites of the same BOGLE teapot from the attached design references. Image 1 is the primary style anchor; image 2 is ONLY a historical ink-line style reference, never copy its character, text, costume or cup head. Image 3 is the already completed BOGLE pose sheet: EXACTLY match its body design, blue stripe-and-dots decoration, red lid knob, red shoes, dark plum outline and body proportions. Replace the poses with walking poses, retaining identity. Do not include palette circles, trees, other characters or objects.
+Use a 2-column by 3-row grid with exactly SIX isolated full-body sprites. First row: front walk left foot forward, then front walk RIGHT foot forward. Second row: back walk left foot forward, then back walk RIGHT foot forward. Third row: right-facing side walk wide stride contact, then right-facing side walk passing pose with legs passing and body slightly raised. The two poses in each row MUST differ in foot placement and arm swing. Back view has NO face, eyes, cheek or mouth; show rear handle and hide spout. Side views face RIGHT. Keep body size and limb lengths identical in all six sprites, at least 350px tall per sprite. Wide clean pure #FF00FF margins and gutters between cells. Pure magenta also in enclosed holes. Keep silhouettes fully contained within their cells. Clean flat opaque cel colors, NO gradients, NO soft airbrush, NO grain, NO drop shadow or ground line. No floating movement marks, no text or labels, no grid lines.
+BOGLE walking toward the viewer, left foot forward, arms swinging in rubber hose curves
+BOGLE walking toward the viewer, right foot forward, arms swinging in rubber hose curves
+BOGLE walking away from the viewer, back view, left foot forward
+BOGLE walking away from the viewer, back view, right foot forward
+BOGLE walking to the RIGHT in side profile, legs in wide rubber hose stride, contact pose
+BOGLE walking to the RIGHT in side profile, legs passing each other, body slightly raised, passing pose

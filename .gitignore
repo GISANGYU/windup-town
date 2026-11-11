@@ -1,0 +1,11 @@
+# 이미지 생성 원본 시트(약 70MB). 프롬프트 기록(.txt/.json)만 올린다.
+assets/sheets/*.png
+assets/sheets/*.jpg
+
+# 레퍼런스 게임 스크린샷(저작권). 직접 만든 style_anchor.png 만 올린다.
+assets/refs/ref_*.jpg
+
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

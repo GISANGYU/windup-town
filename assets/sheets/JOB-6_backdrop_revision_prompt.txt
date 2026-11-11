@@ -1,0 +1,16 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Fill the whole 16:9 canvas edge to edge, no border, no vignette (the game adds its own), no characters, no text.
+
+Create ONE ultrawide panoramic game backdrop strip, not a sheet. Asset-specific exception to generic 16:9 rule: final aspect 1280:200 = 6.4:1. Compose naturally at that ratio; do not squeeze a tall scene. A few low rolling hills behind rounded distant tree silhouettes, simplified theatre set shapes in desaturated dusty navy, warm sepia and muted olive. No actual curtains, frame, stage floor, scenery props, people, faces, buildings or text. Fill the strip horizontally edge to edge, upper sky area softly painted warm cream. Upper and side edges remain filled. ONLY the bottom edge gently dissolves into actual alpha transparency, final bottom row fully transparent. Preserve true alpha, no white or checkerboard painted into the image. Reference 1 authoritative style/palette, reference 2 ink only, references 3 and 4 flat theatrical watercolor layers only.
+
+theatre stage backdrop painted in faded watercolor, distant rolling hills and round tree silhouettes, dusty navy and sepia tones, flat painted flat like a stage set, wide horizontal strip, bottom edge fades to transparent
+
+CRITICAL OUTPUT FORMAT: 2560 pixels wide and 400 pixels high (6.4:1). It must be a very shallow panoramic strip, less than one sixth as high as it is wide, NOT a 3:1 composition. Do not let the aspect ratio of the reference images determine output framing. Scenery is DISTANT only: small low rounded forest silhouettes and broad low hills. NO large foreground trees, no big trunks at the sides, no giant outlined clouds. Bottom 15% softly fades into clean true alpha, with no colored specks, fringe, white fog band, dark halo, yellow/red pixels or stray detached fragments. Quiet olive foreground hill wash merges into transparency. Clean game-ready PNG.

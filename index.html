@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>태엽 마을</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gowun+Dodum&display=swap">
+<style>
+  :root { --outline:#3d3346; --cream:#f4e6c8; --red:#d2463c; --plum:#2b2230; --scale:1; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:#140f13; overflow:hidden; font-family:"Gowun Dodum", sans-serif; color:var(--cream); }
+  #stage { position:absolute; left:50%; top:50%; width:1280px; height:720px; transform:translate(-50%,-50%) scale(var(--scale)); transform-origin:center; }
+  #game { display:block; width:1280px; height:720px; border-radius:6px;
+          filter: sepia(.45) saturate(.75) contrast(1.02); transition: filter 2.4s ease; touch-action:none; }
+  body.music #game { filter: sepia(.15) saturate(1.05) contrast(1.03); }
+  body[data-scene="house"] #game { cursor: crosshair; }
+
+  #flash { position:absolute; inset:0; background:#fff7e4; opacity:0; pointer-events:none; border-radius:6px; }
+  #flash.go { animation: flash .9s ease-out; }
+  @keyframes flash { 0% { opacity:.85; } 100% { opacity:0; } }
+
+  /* 집 꾸미기 툴바 */
+  #toolbar { position:absolute; left:0; right:0; bottom:0; display:none; align-items:center; gap:12px; padding:12px 18px;
+             background:rgba(43,34,48,.92); border-top:4px solid var(--cream); }
+  body[data-scene="house"] #toolbar { display:flex; }
+  #furnBtns { display:flex; gap:10px; }
+  #toolbar button { font-family:"Do Hyeon", sans-serif; font-size:18px; color:var(--outline); background:var(--cream);
+                    border:3px solid var(--outline); border-radius:12px; padding:6px 12px; cursor:pointer; }
+  #toolbar button:disabled { opacity:.4; cursor:default; }
+  #toolbar button.on { background:#f2c14e; transform:translateY(-3px); box-shadow:0 3px 0 var(--outline); }
+  button.furn { display:flex; flex-direction:column; align-items:center; padding:4px 8px !important; }
+  button.furn canvas { width:72px; height:64px; }
+  button.furn.locked canvas { filter: grayscale(1) brightness(.6); }
+  #houseMsg { flex:1; font-family:"Do Hyeon", sans-serif; font-size:20px; text-align:center; }
+
+  /* 태엽 감기 모달 */
+  #wind { position:absolute; inset:0; z-index:5; display:none; place-items:center; background:rgba(20,14,18,.72); backdrop-filter: blur(2px); }
+  #wind.open { display:grid; animation: windIn .35s ease-out; }
+  @keyframes windIn { from { opacity:0; transform:scale(1.04); } }
+  .windBox { width:760px; padding:22px 30px 18px; background:var(--plum); border:4px solid var(--cream); border-radius:12px; text-align:center;
+             box-shadow:0 0 0 6px var(--plum), 0 0 0 9px var(--cream), 0 24px 60px rgba(0,0,0,.6); }
+  #windTitle { font-family:"Do Hyeon", sans-serif; font-size:40px; color:#f2c14e; letter-spacing:.08em; }
+  #windCanvas { width:640px; height:440px; cursor:grab; touch-action:none; }
+  #windCanvas:active { cursor:grabbing; }
+  .windGauge { position:relative; height:22px; margin:6px 40px 12px; border:3px solid var(--cream); border-radius:12px; overflow:hidden; background:#3a2d36; }
+  #windBar { height:100%; width:0; background:linear-gradient(90deg,#e0a93a,#f2c14e); transition: width .08s linear; }
+  .windGauge i { position:absolute; top:0; bottom:0; width:3px; background:var(--cream); opacity:.5; }
+  #windN1 { left:33.33%; } #windN2 { left:66.66%; } #windN3 { right:0; }
+  .windGauge i.on { background:#fff; opacity:1; box-shadow:0 0 8px #f2c14e; }
+  #windGuide { font-size:17px; opacity:.85; }
+  .windKeys { margin-top:8px; font-size:15px; opacity:.7; }
+  .windKeys span { display:inline-block; min-width:30px; padding:2px 8px; margin:0 2px; border:2px solid var(--cream); border-radius:6px; font-family:"Do Hyeon", sans-serif; }
+  #windMsg { min-height:34px; margin-top:6px; font-family:"Do Hyeon", sans-serif; font-size:28px; color:#f2c14e; }
+  #hint { position:absolute; right:14px; top:14px; font-size:14px; padding:6px 12px; border-radius:99px;
+          background:rgba(43,34,48,.75); color:var(--cream); }
+  body[data-scene="house"] #hint { top:14px; }
+  body[data-scene="arena"] #hint { top:auto; bottom:14px; right:14px; opacity:.8; }
+  #debug { position:absolute; right:14px; top:54px; font:13px/1.5 monospace; background:rgba(0,0,0,.75); color:#cfc; padding:10px 12px; border-radius:8px; max-width:280px; }
+  #debug .warn { color:#fc6; }
+  #selftest { position:fixed; left:0; top:0; z-index:9; background:#000; color:#9f9; font:12px monospace; margin:0; padding:8px; }
+</style>
+<link rel="stylesheet" href="styles/dialogue.css">
+</head>
+<body>
+<div id="stage">
+  <canvas id="game" aria-label="태엽 마을 게임 화면"></canvas>
+  <div id="flash"></div>
+  <div id="card" data-mood="sleepy" role="dialog" aria-labelledby="cardName" aria-describedby="cardText" aria-hidden="true">
+    <span class="cardOrnament cardOrnamentTop" aria-hidden="true"></span>
+    <span class="cardOrnament cardOrnamentBottom" aria-hidden="true"></span>
+    <div class="cardCameo"><canvas id="cardPortrait" width="340" height="408" aria-hidden="true"></canvas></div>
+    <div class="cardCopy">
+      <div class="cardHeading"><div id="cardName"></div><span class="cardRule" aria-hidden="true"></span><span id="cardProgress"></span></div>
+      <div id="cardText"><span id="cardTyped"></span></div>
+      <div class="cardFooter"><span class="cardDismiss">Esc <span>닫기</span></span><span class="cardAdvance"><kbd>E</kbd><span id="cardAction">계속</span><span class="cardClick">· 클릭</span><span id="cardMore" aria-hidden="true">◆</span></span></div>
+    </div>
+  </div>
+  <div id="toolbar">
+    <div id="furnBtns"></div>
+    <div id="houseMsg"></div>
+    <button id="btnFlip" title="R">뒤집기</button>
+    <button id="btnDel" title="Delete">삭제</button>
+    <button id="btnSnap" title="G">격자</button>
+    <button id="btnExit" title="Esc">나가기</button>
+  </div>
+  <div id="wind" role="dialog" aria-label="태엽 감기">
+    <div class="windBox">
+      <div id="windTitle"></div>
+      <canvas id="windCanvas" width="640" height="440"></canvas>
+      <div class="windGauge"><div id="windBar"></div><i id="windN1"></i><i id="windN2"></i><i id="windN3"></i></div>
+      <div id="windGuide"></div>
+      <div class="windKeys"><span>A</span><span>D</span> 번갈아 · 또는 마우스로 원 그리기</div>
+      <div id="windMsg"></div>
+    </div>
+  </div>
+  <div id="hint"></div>
+  <div id="debug" hidden></div>
+</div>
+
+<script src="assets/manifest.js"></script>
+<script src="src/config.js"></script>
+<script src="src/world.js"></script>
+<script src="src/dialogue.js"></script>
+<script src="src/assets.js"></script>
+<script src="src/game.js"></script>
+<script src="src/story.js"></script>
+<script src="src/wind.js"></script>
+<script src="src/boss.js"></script>
+<script src="src/render.js"></script>
+<script src="src/ui.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>

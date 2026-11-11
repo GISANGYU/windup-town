@@ -1,0 +1,62 @@
+// 태엽 마을 — 사운드 리소스 목록. 생성: python tools/gen_audio.py (절차 합성, 외부 음원 없음)
+// vol = 권장 기본 볼륨(0~1). loop = 반복 재생. when = 연결할 곳(src 함수 기준).
+// 상태 규칙: musicOn=false면 bgm_town_sleepy, true면 bgm_town_awake. 두 곡 전환은 0.8초 크로스페이드 권장.
+// 브라우저 자동재생 제한 때문에 첫 키 입력·클릭 뒤에 AudioContext를 resume 해야 소리가 난다.
+window.AUDIO_MANIFEST = {
+  "version": 1,
+  "bgm": [
+    {"id":"bgm_town_sleepy","file":"audio/bgm/bgm_town_sleepy.wav","loop":true,"vol":0.45,"when":"마을, musicOn=false. 태엽 풀린 오르골, A단조 66BPM"},
+    {"id":"bgm_town_awake","file":"audio/bgm/bgm_town_awake.wav","loop":true,"vol":0.5,"when":"마을, musicOn=true(finishWind 이후). 래그타임 스윙 138BPM"},
+    {"id":"bgm_house","file":"audio/bgm/bgm_house.wav","loop":true,"vol":0.45,"when":"scene='house'. 왈츠 108BPM. musicOn=false면 playbackRate 0.92 권장"},
+    {"id":"bgm_story","file":"audio/bgm/bgm_story.wav","loop":true,"vol":0.45,"when":"Story.play 중(오프닝). 무성영화 반주 피아노"},
+    {"id":"bgm_boss","file":"audio/bgm/bgm_boss.wav","loop":true,"vol":0.5,"when":"보스전(boss.state != intro/defeated). 갤럽 168BPM + 째깍"},
+    {"id":"jingle_quest_clear","file":"audio/bgm/jingle_quest_clear.wav","loop":false,"vol":0.7,"when":"finishWind() 직후. 끝나면 bgm_town_awake 시작"},
+    {"id":"jingle_act_end","file":"audio/bgm/jingle_act_end.wav","loop":false,"vol":0.6,"when":"「제1막 끝」 카드"},
+    {"id":"jingle_tease","file":"audio/bgm/jingle_tease.wav","loop":false,"vol":0.6,"when":"제2막 예고 카드(시계탑 실루엣)"},
+    {"id":"jingle_boss_clear","file":"audio/bgm/jingle_boss_clear.wav","loop":false,"vol":0.7,"when":"boss.state='defeated'(뻐꾸기시계)"}
+  ],
+  "sfx": [
+    {"id":"amb_projector","file":"audio/sfx/amb_projector.wav","loop":true,"vol":0.15,"when":"컷신 동안 깔리는 영사기 소리(선택)"},
+    {"id":"sfx_ui_click","file":"audio/sfx/sfx_ui_click.wav","vol":0.5,"when":"버튼 클릭(나가기, 툴바)"},
+    {"id":"sfx_ui_toggle","file":"audio/sfx/sfx_ui_toggle.wav","vol":0.5,"when":"G 격자 맞춤 켜기/끄기"},
+    {"id":"sfx_toast","file":"audio/sfx/sfx_toast.wav","vol":0.35,"when":"G.toast()"},
+    {"id":"sfx_dialog_open","file":"audio/sfx/sfx_dialog_open.wav","vol":0.5,"when":"UI.dialog() 카드 열림"},
+    {"id":"sfx_dialog_next","file":"audio/sfx/sfx_dialog_next.wav","vol":0.4,"when":"UI.advance() 다음 줄"},
+    {"id":"sfx_text_blip_awake","file":"audio/sfx/sfx_text_blip_awake.wav","vol":0.25,"when":"글자 출력(mood=awake). 2글자마다 1번, rate 0.9~1.1 랜덤"},
+    {"id":"sfx_text_blip_sleepy","file":"audio/sfx/sfx_text_blip_sleepy.wav","vol":0.25,"when":"글자 출력(mood=sleepy). 3글자마다 1번"},
+    {"id":"sfx_step_01","file":"audio/sfx/sfx_step_01.wav","vol":0.25,"when":"걷기 발소리(번갈아). 걷기 0.32초, Shift 0.22초 간격"},
+    {"id":"sfx_step_02","file":"audio/sfx/sfx_step_02.wav","vol":0.25,"when":"걷기 발소리(번갈아)"},
+    {"id":"sfx_jump","file":"audio/sfx/sfx_jump.wav","vol":0.5,"when":"G.jump()"},
+    {"id":"sfx_land","file":"audio/sfx/sfx_land.wav","vol":0.45,"when":"착지(z가 0으로 돌아옴)"},
+    {"id":"sfx_bump","file":"audio/sfx/sfx_bump.wav","vol":0.3,"when":"장애물에 막힘(선택, 0.5초 쿨다운)"},
+    {"id":"sfx_quest_start","file":"audio/sfx/sfx_quest_start.wav","vol":0.55,"when":"G.startQuest()"},
+    {"id":"sfx_key_appear","file":"audio/sfx/sfx_key_appear.wav","vol":0.45,"when":"G.startQuest() 열쇠 반짝임(quest_start와 0.4초 차이)"},
+    {"id":"sfx_key_pickup","file":"audio/sfx/sfx_key_pickup.wav","vol":0.6,"when":"G.pickKey()"},
+    {"id":"sfx_keys_complete","file":"audio/sfx/sfx_keys_complete.wav","vol":0.6,"when":"keys===3 → stage='ready'"},
+    {"id":"sfx_wind_ratchet","file":"audio/sfx/sfx_wind_ratchet.wav","vol":0.45,"when":"Wind.add(v>0): 진행 0.02마다 1번 또는 A·D 탭마다"},
+    {"id":"sfx_wind_notch","file":"audio/sfx/sfx_wind_notch.wav","vol":0.7,"when":"Wind 1/3, 2/3 고정 '딸깍!'"},
+    {"id":"sfx_wind_unwind","file":"audio/sfx/sfx_wind_unwind.wav","loop":true,"vol":0.3,"when":"Wind에서 idle>0.5로 풀리는 동안(루프, 멈추면 정지)"},
+    {"id":"sfx_wind_complete","file":"audio/sfx/sfx_wind_complete.wav","vol":0.7,"when":"Wind p>=1 '끝까지 감았다!'"},
+    {"id":"sfx_gramo_wake","file":"audio/sfx/sfx_gramo_wake.wav","vol":0.7,"when":"cutscene type='wind'(덜컹 → 바늘 → 회전). 끝에 jingle_quest_clear"},
+    {"id":"sfx_iris_close","file":"audio/sfx/sfx_iris_close.wav","vol":0.5,"when":"iris() 시작(원이 닫힘)"},
+    {"id":"sfx_iris_open","file":"audio/sfx/sfx_iris_open.wav","vol":0.45,"when":"iris mid 이후(원이 열림)"},
+    {"id":"sfx_door","file":"audio/sfx/sfx_door.wav","vol":0.5,"when":"G.enterHouse() 문 열기"},
+    {"id":"sfx_furn_select","file":"audio/sfx/sfx_furn_select.wav","vol":0.45,"when":"selectPlacing / 가구 클릭 선택"},
+    {"id":"sfx_furn_place","file":"audio/sfx/sfx_furn_place.wav","vol":0.55,"when":"placeAt(), 드래그 놓기(pointerUp)"},
+    {"id":"sfx_furn_flip","file":"audio/sfx/sfx_furn_flip.wav","vol":0.45,"when":"flipSelected() R"},
+    {"id":"sfx_furn_delete","file":"audio/sfx/sfx_furn_delete.wav","vol":0.5,"when":"deleteSelected()"},
+    {"id":"sfx_reward_unlock","file":"audio/sfx/sfx_reward_unlock.wav","vol":0.6,"when":"G.deliverReward()"},
+    {"id":"sfx_story_next","file":"audio/sfx/sfx_story_next.wav","vol":0.45,"when":"Story.next() 카드 넘김"},
+    {"id":"sfx_round_card","file":"audio/sfx/sfx_round_card.wav","vol":0.6,"when":"보스 라운드 카드(b.state='card')"},
+    {"id":"sfx_boss_tele","file":"audio/sfx/sfx_boss_tele.wav","vol":0.45,"when":"공격 예고(atk.phase='tele' 시작)"},
+    {"id":"sfx_boss_slam","file":"audio/sfx/sfx_boss_slam.wav","vol":0.7,"when":"충격파 링 생성마다(ar.rings.push)"},
+    {"id":"sfx_gear_warn","file":"audio/sfx/sfx_gear_warn.wav","vol":0.45,"when":"톱니 경고(gear.warn 시작)"},
+    {"id":"sfx_gear_roll","file":"audio/sfx/sfx_gear_roll.wav","loop":true,"vol":0.3,"when":"화면에 톱니가 있는 동안(루프)"},
+    {"id":"sfx_boss_bell","file":"audio/sfx/sfx_boss_bell.wav","vol":0.65,"when":"졸음 종소리(bell phase='go')"},
+    {"id":"sfx_player_hit","file":"audio/sfx/sfx_player_hit.wav","vol":0.6,"when":"보글 피격(ar.hp--)"},
+    {"id":"sfx_player_faint","file":"audio/sfx/sfx_player_faint.wav","vol":0.6,"when":"ar.hp<=0 잠듦"},
+    {"id":"sfx_boss_tired","file":"audio/sfx/sfx_boss_tired.wav","vol":0.55,"when":"b.state='tired'"},
+    {"id":"sfx_spring_pop","file":"audio/sfx/sfx_spring_pop.wav","vol":0.7,"when":"과감기 성공(b.springs--)"},
+    {"id":"sfx_boss_cuckoo","file":"audio/sfx/sfx_boss_cuckoo.wav","vol":0.65,"when":"b.pose='cuckoo'(defeated)"}
+  ]
+};

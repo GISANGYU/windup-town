@@ -1,0 +1,16 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Fill the whole 16:9 canvas edge to edge, no border, no vignette (the game adds its own), no characters, no text.
+
+Create ONE empty room game background, not a sprite sheet. Landscape 16:9, ideally 1280x720. The wall-to-floor baseboard runs horizontally at exactly one-third canvas height. Upper third only: warm beige plaster back wall, ONE round window and ONE small empty picture frame, both fully inside the wall region. Bottom two-thirds: completely empty warm wood plank floor, subtle high-angle perspective and sparse grain. No side wall intrusion into usable floor, no ceiling, no rugs, no furniture, no plants, no characters. Gentle wobbly hand-inked dark plum outlines, subdued watercolor palette matching the anchor. No window light cast shadows or vignette. Reference 1 is authoritative style/palette, reference 2 ink style only, references 3 and 4 painted paper texture only. Do not copy any subjects or text from references.
+
+interior of a small cozy cartoon cottage room seen from the front at a slight high angle, back wall on the top third with one round window and an empty picture frame, warm wooden plank floor on the bottom two thirds, faded watercolor, NO furniture, NO characters, empty floor for placing furniture
+
+EDIT TARGET: the supplied room image. Preserve its watercolor, colors, plum outlines and plank style. Correct only the composition: REDUCE the wall area from current approximately 49% to exactly 33% of total image height, including baseboard. Move the floor's top boundary up to y=240 of a 720px high canvas (or y=314 of 941px). Enlarge the EMPTY plank floor to fill the bottom 67%. Shrink the round window and empty frame to fit comfortably inside the shallower wall; keep the window circular, no vertical squashing. The room must have much more visible floor than wall. Deliver the corrected full 16:9 room image, not a diagram.

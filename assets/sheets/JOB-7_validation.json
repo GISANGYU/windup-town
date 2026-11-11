@@ -1,0 +1,107 @@
+[
+  {
+    "id": "story_01_town",
+    "file": "story/story_01_town.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "alpha_extrema": [
+      255,
+      255
+    ]
+  },
+  {
+    "id": "story_02_thief",
+    "file": "story/story_02_thief.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "alpha_extrema": [
+      255,
+      255
+    ]
+  },
+  {
+    "id": "story_03_sleep",
+    "file": "story/story_03_sleep.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "alpha_extrema": [
+      255,
+      255
+    ]
+  },
+  {
+    "id": "story_04_arrival",
+    "file": "story/story_04_arrival.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "alpha_extrema": [
+      255,
+      255
+    ]
+  },
+  {
+    "id": "story_05_teaser",
+    "file": "story/story_05_teaser.png",
+    "size": [
+      1280,
+      720
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "alpha_extrema": [
+      255,
+      255
+    ]
+  },
+  {
+    "id": "wind_gramo_back",
+    "file": "wind/wind_gramo_back.png",
+    "size": [
+      843,
+      783
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "alpha_extrema": [
+      0,
+      255
+    ]
+  },
+  {
+    "id": "wind_key",
+    "file": "wind/wind_key.png",
+    "size": [
+      544,
+      709
+    ],
+    "mode": "RGBA",
+    "status": "OK",
+    "issues": [],
+    "alpha_extrema": [
+      0,
+      255
+    ]
+  }
+]

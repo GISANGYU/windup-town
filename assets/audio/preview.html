@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>태엽 마을 사운드</title>
+<style>
+  :root { --bg:#efe4cf; --ink:#3d3346; --line:#c9b896; --card:#f8f1e2; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 system-ui, sans-serif; padding:24px 16px; }
+  h1 { font-size:20px; margin:0 0 4px; } h2 { font-size:15px; margin:28px 0 8px; }
+  p { margin:0 0 12px; opacity:.75; }
+  .row { display:grid; grid-template-columns: 200px 1fr 260px; gap:12px; align-items:center;
+         background:var(--card); border:1px solid var(--line); border-radius:6px; padding:8px 12px; margin-bottom:6px; }
+  .id { font-family:ui-monospace, monospace; font-weight:600; font-size:13px; }
+  .when { font-size:12.5px; opacity:.8; }
+  audio { width:100%; height:32px; }
+  @media (max-width: 720px) { .row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<h1>태엽 마을 사운드 미리듣기</h1>
+<p>tools/gen_audio.py로 합성. 루프 표시가 있는 파일은 반복 재생으로 이음새를 확인할 수 있다. vol은 권장 볼륨.</p>
+<div id="list"></div>
+<script src="audio_manifest.js"></script>
+<script>
+  const list = document.getElementById('list');
+  for (const [title, arr] of [['배경음악 · 징글', AUDIO_MANIFEST.bgm], ['효과음', AUDIO_MANIFEST.sfx]]) {
+    const h = document.createElement('h2'); h.textContent = `${title} (${arr.length})`; list.appendChild(h);
+    for (const a of arr) {
+      const row = document.createElement('div'); row.className = 'row';
+      row.innerHTML = `<div class="id">${a.id}${a.loop ? ' ↻' : ''}</div><div class="when">${a.when} · vol ${a.vol}</div>`;
+      const au = document.createElement('audio'); au.controls = true; au.loop = !!a.loop; au.preload = 'none';
+      au.src = a.file.replace(/^audio\//, ''); au.volume = a.vol;
+      row.appendChild(au); list.appendChild(row);
+    }
+  }
+</script>
+</body>
+</html>

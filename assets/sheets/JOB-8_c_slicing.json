@@ -1,0 +1,58 @@
+{
+  "source": "JOB-8_c.png",
+  "method": "slice_sheet.remove_background(tol=70), explicit visual group regions, alpha trim",
+  "regions": [
+    {
+      "id": "fx_gear",
+      "source_box": [
+        0,
+        0,
+        532,
+        724
+      ],
+      "size": [
+        414,
+        416
+      ]
+    },
+    {
+      "id": "fx_spring",
+      "source_box": [
+        532,
+        0,
+        1097,
+        724
+      ],
+      "size": [
+        474,
+        363
+      ]
+    },
+    {
+      "id": "fx_steam",
+      "source_box": [
+        1097,
+        0,
+        1564,
+        724
+      ],
+      "size": [
+        390,
+        416
+      ]
+    },
+    {
+      "id": "fx_bell_wave",
+      "source_box": [
+        1564,
+        0,
+        2172,
+        724
+      ],
+      "size": [
+        520,
+        323
+      ]
+    }
+  ]
+}
