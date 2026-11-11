@@ -51,6 +51,19 @@ def main():
             if os.path.normcase(p) not in keep:
                 os.remove(p)
     print(f"{n}개  {total_in / 1e6:.1f}MB → {total_out / 1e6:.1f}MB  ({OUT})")
+    stamp_index()
+
+
+def stamp_index():
+    """index.html 의 src/*.js, styles/*.css, manifest 주소에 ?v=시각 을 붙여 배포 후 브라우저 캐시를 피한다."""
+    import re
+    import time
+    p = os.path.join(ROOT, "index.html")
+    html = open(p, encoding="utf-8").read()
+    v = time.strftime("%Y%m%d%H%M")
+    html2 = re.sub(r'((?:src|href)="(?:src/[^"?]+\.js|styles/[^"?]+\.css|assets/manifest\.js|assets/audio/audio_manifest\.js))(?:\?v=\d+)?"', rf'\1?v={v}"', html)
+    open(p, "w", encoding="utf-8", newline="\n").write(html2)
+    print(f"index.html 버전 표시: v={v}")
 
 
 if __name__ == "__main__":
