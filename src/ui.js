@@ -96,6 +96,7 @@
     document.body.dataset.scene = scene;
     $('#hint').innerHTML = scene === 'town'
       ? '<b>WASD</b> 이동 · <b>Shift</b> 빨리 · <b>Space</b> 점프 · <b>E</b> 상호작용 · <b>M</b> 소리'
+      : scene === 'intro' ? ''
       : scene === 'arena' ? '<b>WASD</b> 이동 · <b>Space</b> 점프(링·작은 톱니 회피) · <b>E</b> 과감기'
       : '<b>클릭</b> 놓기·선택 · <b>드래그</b> 옮기기 · <b>R</b> 뒤집기 · <b>Delete</b> 삭제 · <b>G</b> 격자 · <b>Esc</b> 취소/나가기';
     UI.refreshToolbar();

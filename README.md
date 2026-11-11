@@ -13,7 +13,7 @@ https://gisangyu.github.io/windup-town/
 python tools/serve.py
 ```
 브라우저에서 `http://localhost:5500`
-주소 옵션: `?nointro` 오프닝 건너뛰기 · `?act2` 바로 제2막 · `?debug` 충돌 박스·리소스 현황 · `?selftest` 자동 점검
+주소 옵션: `?nointro` 시작 화면·오프닝 건너뛰기 · `?act2` 바로 제2막 · `?debug` 충돌 박스·리소스 현황 · `?selftest` 자동 점검
 
 ## 조작
 | 키 | 동작 |
@@ -28,6 +28,7 @@ python tools/serve.py
 | M | 소리 켜기/끄기 |
 
 ## 구성
+- 시작 화면: 시작 / 게임설명(모달)
 - 제1막 · 멈춘 음악 (튜토리얼): 오프닝 컷신 → 열쇠 3개 → 태엽 감기 → 집 꾸미기
 - 제2막 · 째깍 백작의 습격 (보스전): 충격파·톱니·종소리 패턴, 과열 때 과감기로 스프링 3개 제거
 

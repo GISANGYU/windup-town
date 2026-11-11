@@ -336,7 +336,7 @@
     ctx.clearRect(0, 0, WT.W, WT.H);
     ctx.save();
     if (R.shakeT > 0) { R.shakeT -= 1 / 60; const k = R.shakeT * 30; ctx.translate((Math.random() - 0.5) * k, (Math.random() - 0.5) * k); }
-    if (s.scene === 'town') town(t); else if (s.scene === 'arena') { WT.Boss.draw(ctx, t, R); drawTip(t); } else house(t);
+    if (s.scene === 'intro') WT.Intro.draw(ctx, t); else if (s.scene === 'town') town(t); else if (s.scene === 'arena') { WT.Boss.draw(ctx, t, R); drawTip(t); } else house(t);
     ctx.restore();
     WT.Story.draw(ctx, t);
     drawFilm(t);

@@ -27,6 +27,7 @@
     if (e.repeat) { held.add(c); return; }
     held.add(c);
     if (isKey(c, 'debug')) { s.ui.debug = !s.ui.debug; return; }
+    if (s.scene === 'intro' && !s.ui.transition) { if (WT.Intro.key(e)) return; }
     if (isKey(c, 'reload')) { WT.Assets.reloadAll(); WT.Game.toast('이미지 다시 불러오기'); return; }
     if (s.ui.story) {
       if (isKey(c, 'act') || isKey(c, 'jump') || c === 'Enter') WT.Story.next();
@@ -65,6 +66,7 @@
   WT.Render.init(canvas);
   WT.UI.init();
   WT.Wind.init();
+  WT.Intro.init();
   // ───────── 소리 연출 (매 프레임) ─────────
   const D = WT.DIALOGUE;
   let lastPanel = null;
@@ -83,9 +85,11 @@
         else if (p.art === 'teaser') A.jingle('jingle_tease');
       }
       want = (st.panels === D.opening || st.panels === D.act2open) ? 'bgm_story' : null;
+      if (st.panels === D.act2open) rate = 0.9;
     } else {
       lastPanel = null;
-      if (s.scene === 'arena') want = s.boss && s.boss.state !== 'intro' && s.boss.state !== 'defeated' ? 'bgm_boss' : null;
+      if (s.scene === 'intro') want = 'bgm_house';
+      else if (s.scene === 'arena') want = s.boss && s.boss.state !== 'intro' && s.boss.state !== 'defeated' ? 'bgm_boss' : null;
       else if (s.scene === 'house') { want = 'bgm_house'; rate = s.world.musicOn ? 1 : 0.92; }
       else want = s.world.musicOn ? 'bgm_town_awake' : 'bgm_town_sleepy';
     }
@@ -102,7 +106,7 @@
     const s = WT.Game.state; s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true;
     ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone');
     WT.Game.startAct2();
-  } else if (!/[?&](nointro|selftest)/.test(location.search)) WT.Story.play(WT.DIALOGUE.opening);
+  } else if (!/[?&](nointro|selftest)/.test(location.search)) WT.Intro.show();
 
   let last = performance.now(), seenVersion = -1, wasMusic = false;
   function loop(now) {
@@ -113,6 +117,7 @@
     if (WT.Assets.version !== seenVersion) { seenVersion = WT.Assets.version; if (s.scene === 'house') WT.UI.refreshToolbar(); }
     if (s.world.musicOn !== wasMusic) { wasMusic = s.world.musicOn; document.body.classList.toggle('music', wasMusic); }
     WT.UI.debug();
+    if (WT.Intro.active) WT.Intro.update();
     audioTick(now / 1000);
     requestAnimationFrame(loop);
   }
@@ -223,6 +228,16 @@
       // 오디오: manifest 51개 불러오기 시도, 실패해도 에러 없음
       ok(`오디오 manifest ${Object.keys(WT.Audio.defs).length}개 로드 시도`, (() => { WT.Audio.load(); const n = Object.keys(WT.Audio.defs).length; return n >= 51 && WT.Audio.attempted() === (WT.Audio.ready ? n : 0); })());
       ok('오디오 실패해도 에러 없음', (() => { try { WT.Audio.play('없는_소리'); WT.Audio.play('sfx_jump'); WT.Audio.loop('sfx_gear_roll'); WT.Audio.stop('sfx_gear_roll'); WT.Audio.bgm('bgm_boss'); WT.Audio.bgm(null); WT.Audio.jingle('jingle_tease'); return true; } catch (e) { return false; } })());
+      // 시작 화면
+      step(80); WT.Intro.show(); step(2);
+      ok('시작 화면 표시', s.scene === 'intro' && getComputedStyle(document.getElementById('intro')).display !== 'none');
+      key('KeyD'); step(10); ok('시작 화면에서는 이동 안 함', s.scene === 'intro');
+      document.getElementById('btnHelp').click(); ok('게임설명 모달 열림', WT.Intro.helpOpen && getComputedStyle(document.getElementById('help')).display !== 'none');
+      key('Space'); ok('모달 열린 동안 시작 안 됨', s.scene === 'intro' && !WT.Intro.helpOpen);
+      document.getElementById('btnHelp').click(); key('Escape'); ok('Esc로 모달 닫힘', !WT.Intro.helpOpen && document.activeElement === document.getElementById('btnHelp'));
+      document.getElementById('btnStart').click(); step(40);
+      ok('시작 → 오프닝 컷신', !!s.ui.story && s.ui.story.panels === WT.DIALOGUE.opening && s.scene === 'town' && !WT.Intro.active);
+      WT.Story.skip(); step(70);
       ok('과감기 시간 초과 처리', (() => { let failed = false; WT.Wind.open(() => {}, { timeLimit: 0.2, onFail: () => { failed = true; } }); step(30); return failed && !WT.Wind.active; })());
     } catch (e) { out.push('ERROR ' + e.message + '\n' + e.stack); }
     const pre = document.createElement('pre'); pre.id = 'selftest'; pre.textContent = out.join('\n'); document.body.appendChild(pre);

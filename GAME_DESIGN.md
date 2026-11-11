@@ -163,6 +163,7 @@ windup-town/
 │  ├─ world.js           맵 배치, 충돌 박스
 │  ├─ dialogue.js        대사
 │  ├─ game.js            상태와 규칙, 튜토리얼 안내
+│  ├─ intro.js           시작 화면(시작·게임설명 버튼, 설명 모달)
 │  ├─ story.js           오프닝·막 끝·예고 컷신
 │  ├─ wind.js            태엽 감기 모달(미니게임, 보스전 과감기 겸용)
 │  ├─ boss.js            제2막 보스전
@@ -185,7 +186,7 @@ python tools/serve.py
 ```
 브라우저에서 `http://localhost:5500` 접속. 캐시를 끈 서버라 코드·이미지를 바꾸면 새로고침만으로 반영된다.
 `index.html`을 직접 열어도 실행되지만 이미지 자동 자르기와 배경 지우기는 꺼진다.
-주소 옵션: `?nointro` 오프닝 건너뛰기 · `?act2` 바로 제2막 · `?debug` 충돌 박스·리소스 현황 · `?selftest` 자동 점검(44항목)
+주소 옵션: `?nointro` 시작 화면·오프닝 건너뛰기 · `?act2` 바로 제2막 · `?debug` 충돌 박스·리소스 현황 · `?selftest` 자동 점검(44항목)
 
 ---
 
@@ -304,3 +305,10 @@ python tools/serve.py
 - 글자 출력음: 깨어 있으면 2글자, 졸리면 3글자, 백작은 2글자마다(재생 속도 0.9~1.1 무작위)
 - 발소리: step_01·02를 번갈아, 걷기 0.32초 / Shift 0.22초 간격
 - 반복음은 조건이 끝나면 멈춘다: 태엽 풀림(sfx_wind_unwind), 톱니 구르기(sfx_gear_roll), 영사기(amb_projector, 컷신 동안), 졸음(sfx_drowsy_loop, 볼륨 = 졸음 게이지)
+
+## 16. 시작 화면
+- 게임을 열면 시작 화면부터 나온다(배치·문구 기준: `assets/sheets/INTRO_layout.json`, 이미지: bg_intro, ui_button_start, ui_button_help, ui_help_modal).
+- 제목·부제는 캔버스, 버튼과 모달은 HTML 버튼이라 마우스·키보드·Tab 초점이 모두 된다. 이미지가 없으면 CSS 대체 모양.
+- **시작**(Enter·Space·E): 아이리스 → 오프닝 컷신 → 마을.
+- **게임설명**(H 또는 ?): 모달. 목표, 조작, 태엽 감기, 제2막 요령. Esc·Enter·닫기 버튼·바깥 클릭으로 닫히고 초점은 게임설명 버튼으로 돌아간다. 열린 동안 게임 입력은 막힌다.
+- BGM: bgm_house (따뜻한 왈츠). 첫 클릭이나 키 입력에서 소리가 켜진다.

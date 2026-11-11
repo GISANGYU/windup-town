@@ -52,6 +52,40 @@
   .windKeys { margin-top:8px; font-size:15px; opacity:.7; }
   .windKeys span { display:inline-block; min-width:30px; padding:2px 8px; margin:0 2px; border:2px solid var(--cream); border-radius:6px; font-family:"Do Hyeon", sans-serif; }
   #windMsg { min-height:34px; margin-top:6px; font-family:"Do Hyeon", sans-serif; font-size:28px; color:#f2c14e; }
+  /* 시작 화면 */
+  #intro { position:absolute; inset:0; display:none; }
+  body[data-scene="intro"] #intro { display:block; }
+  body[data-scene="intro"] #hint { display:none; }
+  .introBtn { position:absolute; left:440px; width:400px; height:112px; padding:0 0 6px 80px; border:4px solid var(--outline); border-radius:30px;
+              font-family:"Do Hyeon", sans-serif; cursor:pointer; background-size:100% 100%; background-repeat:no-repeat;
+              transition: transform .12s ease-out, filter .12s; }
+  .introBtn.img { border:none; background-color:transparent; }
+  #btnStart { top:355px; font-size:38px; color:#fbf6ea; background-color:#d2463c; text-shadow:0 3px 0 rgba(61,51,70,.55); }
+  #btnHelp { top:485px; font-size:32px; color:#3d3346; background-color:#f4e6c8; }
+  .introBtn:hover, .introBtn:focus-visible { transform:translateY(-4px) scale(1.03); filter:brightness(1.06); }
+  .introBtn:active { transform:translateY(2px) scaleX(1.06) scaleY(.92); }
+  .introBtn:focus-visible { outline:none; filter:brightness(1.08) drop-shadow(0 0 10px #f2c14e); }
+  /* 게임설명 모달 */
+  #help { position:absolute; inset:0; z-index:6; display:none; background:rgba(20,15,19,.68); }
+  #help.open { display:block; animation: helpIn .28s ease-out; }
+  @keyframes helpIn { from { opacity:0; } }
+  #helpPanel { position:absolute; left:180px; top:48px; width:920px; height:600px; background-size:100% 100%; background-repeat:no-repeat;
+               background-color:#f4e6c8; border:5px solid var(--outline); border-radius:34px; color:#3d3346; animation: panelIn .32s cubic-bezier(.3,1.5,.5,1); }
+  #helpPanel.img { background-color:transparent; border:none; }
+  @keyframes panelIn { from { transform:translateY(24px) scale(.94); } }
+  #helpBody { position:absolute; left:85px; top:112px; width:750px; height:440px; display:flex; flex-direction:column; gap:12px; font-size:19px; line-height:1.45; }
+  #helpBody h2 { margin:0; font-family:"Do Hyeon", sans-serif; font-weight:400; font-size:38px; text-align:center; color:#d2463c; letter-spacing:.06em; }
+  #helpBody .goal { margin:0; text-align:center; font-size:20px; }
+  #helpBody .keys { display:grid; grid-template-columns:200px 1fr; gap:6px 16px; margin:0; }
+  #helpBody .keys dt { font-family:"Do Hyeon", sans-serif; font-size:19px; text-align:right; }
+  #helpBody .keys dt span { display:inline-block; padding:0 8px; border:2px solid #3d3346; border-radius:7px; background:#fbf6ea; }
+  #helpBody .keys dd { margin:0; }
+  #helpBody .box { margin:0; padding:8px 14px; border:2px dashed rgba(61,51,70,.45); border-radius:12px; }
+  #helpBody .box b { font-family:"Do Hyeon", sans-serif; font-weight:400; font-size:21px; color:#d2463c; margin-right:8px; }
+  #helpBody .foot { margin:0; text-align:center; font-size:17px; opacity:.85; }
+  #helpClose { position:absolute; left:800px; top:97px; width:64px; height:48px; font-family:"Do Hyeon", sans-serif; font-size:20px; color:#fbf6ea;
+               background:#3d3346; border:3px solid #f2c14e; border-radius:12px; cursor:pointer; }
+  #helpClose:hover, #helpClose:focus-visible { background:#d2463c; outline:none; }
   #hint { position:absolute; right:14px; top:14px; font-size:14px; padding:6px 12px; border-radius:99px;
           background:rgba(43,34,48,.75); color:var(--cream); }
   body[data-scene="house"] #hint { top:14px; }
@@ -60,7 +94,7 @@
   #debug .warn { color:#fc6; }
   #selftest { position:fixed; left:0; top:0; z-index:9; background:#000; color:#9f9; font:12px monospace; margin:0; padding:8px; }
 </style>
-<link rel="stylesheet" href="styles/dialogue.css?v=202611111117">
+<link rel="stylesheet" href="styles/dialogue.css?v=202611111128">
 </head>
 <body>
 <div id="stage">
@@ -94,23 +128,47 @@
       <div id="windMsg"></div>
     </div>
   </div>
+  <div id="intro">
+    <button id="btnStart" class="introBtn" type="button">시작</button>
+    <button id="btnHelp" class="introBtn" type="button" aria-haspopup="dialog">게임설명</button>
+  </div>
+  <div id="help" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div id="helpPanel">
+      <button id="helpClose" type="button" aria-label="닫기 (Esc)">닫기</button>
+      <div id="helpBody">
+        <h2 id="helpTitle">게임설명</h2>
+        <p class="goal">흩어진 태엽 열쇠 3개를 찾아, 그라모에게 음악을 되찾아 주세요.</p>
+        <dl class="keys">
+          <dt><span>W A S D</span> / 방향키</dt><dd>이동</dd>
+          <dt><span>Shift</span></dt><dd>누른 채 이동하면 빨리 걷기</dd>
+          <dt><span>Space</span></dt><dd>점프 · 덤불과 돌 넘기</dd>
+          <dt><span>E</span></dt><dd>말 걸기 · 열쇠 줍기 · 문 들어가기</dd>
+          <dt><span>M</span></dt><dd>소리 켜기 / 끄기</dd>
+        </dl>
+        <p class="box"><b>태엽 감기</b>마우스로 열쇠 둘레에 원을 그리거나 A · D를 번갈아 누르세요.</p>
+        <p class="box"><b>제2막</b>째깍 백작의 충격파와 작은 톱니는 Space로 넘고, 지친 백작 등의 열쇠에 E로 과감기!</p>
+        <p class="foot">보상을 받으면 집에 들어가 가구를 꾸밀 수 있어요.</p>
+      </div>
+    </div>
+  </div>
   <div id="hint"></div>
   <div id="debug" hidden></div>
 </div>
 
-<script src="assets/manifest.js?v=202611111117"></script>
-<script src="assets/audio/audio_manifest.js?v=202611111117"></script>
-<script src="src/audio.js?v=202611111117"></script>
-<script src="src/config.js?v=202611111117"></script>
-<script src="src/world.js?v=202611111117"></script>
-<script src="src/dialogue.js?v=202611111117"></script>
-<script src="src/assets.js?v=202611111117"></script>
-<script src="src/game.js?v=202611111117"></script>
-<script src="src/story.js?v=202611111117"></script>
-<script src="src/wind.js?v=202611111117"></script>
-<script src="src/boss.js?v=202611111117"></script>
-<script src="src/render.js?v=202611111117"></script>
-<script src="src/ui.js?v=202611111117"></script>
-<script src="src/main.js?v=202611111117"></script>
+<script src="assets/manifest.js?v=202611111128"></script>
+<script src="assets/audio/audio_manifest.js?v=202611111128"></script>
+<script src="src/audio.js?v=202611111128"></script>
+<script src="src/config.js?v=202611111128"></script>
+<script src="src/world.js?v=202611111128"></script>
+<script src="src/dialogue.js?v=202611111128"></script>
+<script src="src/assets.js?v=202611111128"></script>
+<script src="src/game.js?v=202611111128"></script>
+<script src="src/story.js?v=202611111128"></script>
+<script src="src/wind.js?v=202611111128"></script>
+<script src="src/boss.js?v=202611111128"></script>
+<script src="src/intro.js?v=202611111128"></script>
+<script src="src/render.js?v=202611111128"></script>
+<script src="src/ui.js?v=202611111128"></script>
+<script src="src/main.js?v=202611111128"></script>
 </body>
 </html>

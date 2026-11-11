@@ -1,0 +1,42 @@
+{
+  "passed": 4,
+  "total": 4,
+  "assets": [
+    {
+      "id": "bg_intro",
+      "file": "bg/bg_intro.png",
+      "size": [
+        1280,
+        720
+      ],
+      "status": "OK"
+    },
+    {
+      "id": "ui_help_modal",
+      "file": "ui/ui_help_modal.png",
+      "size": [
+        1493,
+        953
+      ],
+      "status": "OK"
+    },
+    {
+      "id": "ui_button_start",
+      "file": "ui/ui_button_start.png",
+      "size": [
+        1082,
+        320
+      ],
+      "status": "OK"
+    },
+    {
+      "id": "ui_button_help",
+      "file": "ui/ui_button_help.png",
+      "size": [
+        1082,
+        319
+      ],
+      "status": "OK"
+    }
+  ]
+}

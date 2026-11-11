@@ -249,6 +249,7 @@
     h.selected = f.id; h.placing = null;
     G.burst('dust', cx, cy, 1);
     WT.Audio.play('sfx_furn_place');
+    if (f.type === 'cuckoo') WT.Audio.play('sfx_boss_cuckoo', { vol: 0.3, delay: 0.15 }); // reuse: 뻐꾸기시계 놓을 때
     WT.UI.refreshToolbar();
     return f;
   };
