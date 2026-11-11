@@ -163,6 +163,8 @@
       ok('퀘스트 completed', s.quest.stage === 'completed');
       ok('음악 켜짐', s.world.musicOn);
       ok('그라모 awake', s.npcs.gramo.mood === 'awake');
+      ok('깨어난 장면 동안 말풍선 없음', !s.ui.dialog && s.ui.cutscene && s.ui.cutscene.type === 'party');
+      step(150); ok('2초 뒤 그라모 말풍선', !!s.ui.dialog && s.ui.dialog.who === 'gramo');
       closeAll();
       step(70); ok('제1막 끝 컷신(아이리스 후)', !!s.ui.story && s.ui.story.panels === WT.DIALOGUE.ending);
       WT.Story.skip(); step(70);

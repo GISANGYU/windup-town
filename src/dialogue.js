@@ -9,11 +9,9 @@ WT.DIALOGUE = {
     { art: 'sleep', asset: 'story_03_sleep',   text: '열쇠는 마을 곳곳에 흩어졌고, 음악이 멈췄다.\n태엽이 풀린 사물들은 하나둘 잠들기 시작했다.' },
     { art: 'arrive', asset: 'story_04_arrival', text: '바로 그날 아침, 찻주전자 보글이 이 마을로 이사 왔다.\n방금 감은 태엽으로 쌩쌩한, 마을에서 유일하게 깨어 있는 이웃이었다.' }
   ],
-  // 제1막 끝 + 제2막 예고
+  // 제1막 뒤 제2막 예고
   ending: [
-    { art: 'curtain', title: '제1막 끝', sub: '마을에 음악이 돌아왔다' },
-    { art: 'teaser', asset: 'story_05_teaser', text: '그날 밤, 시계탑 꼭대기에서 커다란 그림자가 마을을 내려다보았다.\n"째깍… 시끄러워. 다시 멈춰 주마."' },
-    { art: 'title', title: '다음 · 제2막 째깍 백작의 습격', sub: '준비가 되면 그라모 영감에게 말을 걸자' }
+    { art: 'teaser', asset: 'story_05_teaser', text: '그날 밤, 시계탑 꼭대기에서 커다란 그림자가 마을을 내려다보았다.\n"째깍… 시끄러워. 다시 멈춰 주마."' }
   ],
 
   gramo: {

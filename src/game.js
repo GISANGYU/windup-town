@@ -150,11 +150,17 @@
     s.npcs.pip.mood = 'awake';
     s.npcs.lamp.mood = 'awake';
     WT.Audio.play('sfx_lamp_on', { delay: 0.6 });
-    s.player.action = 'happy'; s.player.actionT = 1.2;
+    s.player.action = 'happy'; s.player.actionT = PARTY;
     const g = W.npcs.gramo;
     G.burst('note', g.x, g.y - 170, 10);
     G.burst('sparkle', g.x, g.y - 90, 10);
     WT.UI.flash();
+    // 말풍선 전에 다 같이 신나게 움직이는 장면을 잠깐 보여 준다
+    s.ui.cutscene = { type: 'party', t: 0, dur: PARTY, then: gramoThanks };
+  }
+  const PARTY = 2.2;
+  function gramoThanks() {
+    const s = G.state, g = W.npcs.gramo;
     WT.UI.dialog({ who: 'gramo', name: g.name, mood: 'awake', lines: D.gramo.completed,
       onClose: () => { const p = s.player; G.irisThen(p.x, p.y - 50, () => WT.Story.play(D.ending, () => { s.act1Done = true; G.toast('피프가 할 말이 있는 것 같다'); })); } });
   }
@@ -353,9 +359,18 @@
     if (u.cutscene) {
       const c = u.cutscene;
       c.t += dt;
-      s.npcs.gramo.wind = 1 + c.t * 3;
-      if (Math.random() < dt * 10) G.burst('sparkle', W.npcs.gramo.x + 40, W.npcs.gramo.y - 70, 1);
-      if (c.t >= c.dur) { u.cutscene = null; finishWind(); }
+      if (c.type === 'party') {
+        // 깨어난 셋에게서 음표·반짝이가 계속 튀어 오름
+        Object.values(W.npcs).forEach((n) => {
+          if (Math.random() < dt * 5) G.burst('note', n.x + (Math.random() - 0.5) * 60, n.y - n.h, 1);
+          if (Math.random() < dt * 4) G.burst('sparkle', n.x + (Math.random() - 0.5) * 80, n.y - n.h * 0.6, 1);
+        });
+        if (c.t >= c.dur) { u.cutscene = null; c.then(); }
+      } else {
+        s.npcs.gramo.wind = 1 + c.t * 3;
+        if (Math.random() < dt * 10) G.burst('sparkle', W.npcs.gramo.x + 40, W.npcs.gramo.y - 70, 1);
+        if (c.t >= c.dur) { u.cutscene = null; finishWind(); }
+      }
     }
 
     if (s.scene === 'town' || s.scene === 'arena') {

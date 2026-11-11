@@ -113,10 +113,11 @@
     else if (id === 'pip') { ph = PH.pip; ids = awake ? (A.has('npc_pip_awake_02') && Math.floor(t * CFG.bpm / 60) % 2 ? ['npc_pip_awake_02', 'npc_pip_awake'] : ['npc_pip_awake']) : ['npc_pip_sleepy']; }
     else { ph = PH.lamp; ids = [awake ? 'npc_lamp_on' : 'npc_lamp_off']; }
     let sx = 1, sy = 1, rot = 0, bob = 0;
-    if (awake) { const b = beat(t, id === 'pip' ? 0.5 : 0); sy = 1 + b * 0.06; sx = 1 - b * 0.04; bob = b * 8; rot = Math.sin(t * CFG.bpm / 60 * Math.PI) * 0.05; }
-    else { rot = 0.06 + Math.sin(t * 1.2 + n.x) * 0.03; sy = 0.97 + Math.sin(t * 1.6) * 0.015; }
     const c = s.ui.cutscene;
-    if (id === 'gramo' && c) { rot = Math.sin(c.t * 40) * 0.05; sy = 1 + Math.sin(c.t * 20) * 0.04; }
+    const party = c && c.type === 'party' ? 1 + 1.5 * Math.min(1, c.t / 0.3) : 1; // 깨어난 직후 2초: 동작을 크게
+    if (awake) { const b = beat(t, id === 'pip' ? 0.5 : 0); sy = 1 + b * 0.06 * party; sx = 1 - b * 0.04 * party; bob = b * 8 * party; rot = Math.sin(t * CFG.bpm / 60 * Math.PI) * 0.05 * party; }
+    else { rot = 0.06 + Math.sin(t * 1.2 + n.x) * 0.03; sy = 0.97 + Math.sin(t * 1.6) * 0.015; }
+    if (id === 'gramo' && c && c.type === 'wind') { rot = Math.sin(c.t * 40) * 0.05; sy = 1 + Math.sin(c.t * 20) * 0.04; }
     shadow(n.x, n.y, n.foot[0] * 1.15);
     WT.drawThing(ctx, ids, ph, n.x, n.y - bob, { h: n.h, sx, sy, rot, mood: st.mood, t, wind: st.wind });
   }

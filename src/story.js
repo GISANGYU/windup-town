@@ -174,6 +174,11 @@
       ctx.beginPath(); ctx.roundRect(110, WT.H - h - 30, WT.W - 220, h, 10); ctx.fill(); ctx.stroke();
       ctx.fillStyle = C.cream; ctx.font = '32px "Do Hyeon", sans-serif';
       lines.forEach((l, i) => ctx.fillText(l, WT.W / 2, WT.H - h - 30 + 52 + i * 46));
+      // 넘기는 방법 안내 (상자 오른쪽 아래, 깜빡임)
+      ctx.save(); ctx.globalAlpha = fade * (0.55 + 0.45 * Math.abs(Math.sin(time * 2.5)));
+      ctx.textAlign = 'right'; ctx.font = '19px "Gowun Dodum", sans-serif'; ctx.fillStyle = C.yellow;
+      ctx.fillText('Space ▶ 다음', WT.W - 134, WT.H - 48);
+      ctx.restore();
     }
     ctx.globalAlpha = 0.65; ctx.font = '17px "Gowun Dodum", sans-serif'; ctx.fillStyle = C.cream; ctx.textAlign = 'right';
     ctx.fillText(`${st.i + 1} / ${st.panels.length}   E · Space 다음   Esc 건너뛰기`, WT.W - 26, 28);
@@ -187,6 +192,5 @@
       ctx.strokeStyle = C.cream; ctx.globalAlpha = 0.5; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(WT.W / 2, WT.H / 2, Math.max(0, r), 0, Math.PI * 2); ctx.stroke();
       ctx.restore();
     }
-    void time;
   };
 })();
