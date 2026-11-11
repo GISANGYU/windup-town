@@ -5,35 +5,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>태엽 마을 사운드</title>
 <style>
-  :root { --bg:#efe4cf; --ink:#3d3346; --line:#c9b896; --card:#f8f1e2; }
+  :root { --bg:#efe4cf; --ink:#3d3346; --line:#c9b896; --card:#f8f1e2; --on:#f2c14e; }
   body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 system-ui, sans-serif; padding:24px 16px; }
-  h1 { font-size:20px; margin:0 0 4px; } h2 { font-size:15px; margin:28px 0 8px; }
+  h1 { font-size:20px; margin:0 0 4px; } h2 { font-size:15px; margin:28px 0 8px; } h3 { font-size:13px; margin:14px 0 6px; opacity:.7; }
   p { margin:0 0 12px; opacity:.75; }
-  .row { display:grid; grid-template-columns: 200px 1fr 260px; gap:12px; align-items:center;
+  .bar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:12px 0; }
+  .bar button { font:inherit; border:1px solid var(--ink); background:var(--card); color:var(--ink); border-radius:6px; padding:4px 10px; cursor:pointer; }
+  .bar button.on { background:var(--on); }
+  .bar input { font:inherit; padding:4px 8px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink); min-width:180px; }
+  .row { display:grid; grid-template-columns: 210px 1fr 260px; gap:12px; align-items:center;
          background:var(--card); border:1px solid var(--line); border-radius:6px; padding:8px 12px; margin-bottom:6px; }
-  .id { font-family:ui-monospace, monospace; font-weight:600; font-size:13px; }
+  .id { font-family:ui-monospace, monospace; font-weight:600; font-size:13px; word-break:break-all; }
   .when { font-size:12.5px; opacity:.8; }
   audio { width:100%; height:32px; }
+  .stems { background:var(--card); border:2px solid var(--ink); border-radius:8px; padding:12px; margin:8px 0 16px; }
+  .stems label { margin-right:14px; white-space:nowrap; }
   @media (max-width: 720px) { .row { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <h1>태엽 마을 사운드 미리듣기</h1>
-<p>tools/gen_audio.py로 합성. 루프 표시가 있는 파일은 반복 재생으로 이음새를 확인할 수 있다. vol은 권장 볼륨.</p>
+<p>1·2막은 tools/gen_audio.py, 3~5막은 tools/gen_audio_act3_5.py로 합성했다. ↻ 표시가 있는 파일은 반복 재생되므로 이음새를 확인할 수 있다. 볼륨은 vol 권장값으로 맞춰 둠.</p>
+<div class="bar" id="acts"></div>
+<div class="bar"><input id="q" type="search" placeholder="id·장면 검색"></div>
+<div id="stemBox"></div>
 <div id="list"></div>
 <script src="audio_manifest.js"></script>
 <script>
-  const list = document.getElementById('list');
-  for (const [title, arr] of [['배경음악 · 징글', AUDIO_MANIFEST.bgm], ['효과음', AUDIO_MANIFEST.sfx]]) {
-    const h = document.createElement('h2'); h.textContent = `${title} (${arr.length})`; list.appendChild(h);
-    for (const a of arr) {
-      const row = document.createElement('div'); row.className = 'row';
-      row.innerHTML = `<div class="id">${a.id}${a.loop ? ' ↻' : ''}</div><div class="when">${a.when} · vol ${a.vol}</div>`;
-      const au = document.createElement('audio'); au.controls = true; au.loop = !!a.loop; au.preload = 'none';
-      au.src = a.file.replace(/^audio\//, ''); au.volume = a.vol;
-      row.appendChild(au); list.appendChild(row);
-    }
+  const M = window.AUDIO_MANIFEST;
+  const all = [...M.bgm.map((a) => ({ ...a, kind: 'bgm' })), ...M.sfx.map((a) => ({ ...a, kind: 'sfx' }))];
+  const actOf = (a) => a.act || 12;
+  const ACTS = [[0, '전체'], [12, '1·2막'], [3, '3막'], [4, '4막'], [5, '5막']].filter(([k]) => k === 0 || all.some((a) => actOf(a) === k));
+  let cur = 0;
+  const $ = (id) => document.getElementById(id);
+
+  ACTS.forEach(([k, label]) => {
+    const b = document.createElement('button'); b.textContent = label; b.dataset.k = k;
+    b.onclick = () => { cur = k; draw(); }; $('acts').appendChild(b);
+  });
+  $('q').oninput = draw;
+
+  // 3막 마을 스템: 세 개를 동시에 재생하고 피프·가로등 파트를 켜고 끄며 확인
+  function stemPlayer() {
+    const ids = ['bgm_town_awake_base', 'bgm_town_awake_pip', 'bgm_town_awake_lamp'];
+    const items = ids.map((id) => M.bgm.find((a) => a.id === id)).filter(Boolean);
+    if (items.length < 3) return '';
+    return `<div class="stems"><b>3막 마을 스템 동시 재생</b> — 주민이 건전지로 바뀌면 그 악기가 빠진다<br>
+      <button id="stemPlay">재생 / 정지</button>
+      <label><input type="checkbox" checked disabled> 그라모(base)</label>
+      <label><input type="checkbox" id="stemPip" checked> 피프(클라리넷)</label>
+      <label><input type="checkbox" id="stemLamp" checked> 가로등(밴조·오르골)</label></div>`;
   }
+  let ctx = null, srcs = [], gains = {}, buffers = null;
+  async function toggleStems() {
+    if (srcs.length) { srcs.forEach((s) => s.stop()); srcs = []; return; }
+    ctx = ctx || new AudioContext();
+    if (!buffers) buffers = await Promise.all(['base', 'pip', 'lamp'].map((k) =>
+      fetch(`bgm/bgm_town_awake_${k}.wav`).then((r) => r.arrayBuffer()).then((b) => ctx.decodeAudioData(b))));
+    const t0 = ctx.currentTime + 0.1;
+    srcs = ['base', 'pip', 'lamp'].map((k, i) => {
+      const s = ctx.createBufferSource(); s.buffer = buffers[i]; s.loop = true;
+      const g = ctx.createGain(); g.gain.value = 0.5; gains[k] = g;
+      s.connect(g).connect(ctx.destination); s.start(t0); return s;
+    });
+    syncStems();
+  }
+  function syncStems() {
+    if (gains.pip) gains.pip.gain.setTargetAtTime($('stemPip').checked ? 0.5 : 0, ctx.currentTime, 0.15);
+    if (gains.lamp) gains.lamp.gain.setTargetAtTime($('stemLamp').checked ? 0.5 : 0, ctx.currentTime, 0.15);
+  }
+
+  function draw() {
+    document.querySelectorAll('#acts button').forEach((b) => b.classList.toggle('on', +b.dataset.k === cur));
+    const q = $('q').value.trim().toLowerCase();
+    const showStems = cur === 0 || cur === 3;
+    if (!showStems && srcs.length) toggleStems();
+    $('stemBox').innerHTML = showStems ? stemPlayer() : '';
+    if (showStems && $('stemPlay')) {
+      $('stemPlay').onclick = toggleStems; $('stemPip').onchange = syncStems; $('stemLamp').onchange = syncStems;
+    }
+    const list = $('list'); list.innerHTML = '';
+    ACTS.filter(([k]) => k !== 0 && (cur === 0 || cur === k)).forEach(([k, label]) => {
+      const sec = all.filter((a) => actOf(a) === k && (!q || (a.id + a.when).toLowerCase().includes(q)));
+      if (!sec.length) return;
+      const h = document.createElement('h2'); h.textContent = `${label} (${sec.length})`; list.appendChild(h);
+      [['bgm', '배경음악 · 징글'], ['sfx', '효과음']].forEach(([kind, title]) => {
+        const rows = sec.filter((a) => a.kind === kind);
+        if (!rows.length) return;
+        const h3 = document.createElement('h3'); h3.textContent = `${title} ${rows.length}`; list.appendChild(h3);
+        rows.forEach((a) => {
+          const row = document.createElement('div'); row.className = 'row';
+          const id = document.createElement('div'); id.className = 'id'; id.textContent = a.id + (a.loop ? ' ↻' : '');
+          const when = document.createElement('div'); when.className = 'when'; when.textContent = `${a.when} · vol ${a.vol}`;
+          const au = document.createElement('audio'); au.controls = true; au.loop = !!a.loop; au.preload = 'none';
+          au.src = a.file.replace(/^audio\//, ''); au.volume = a.vol;
+          row.append(id, when, au); list.appendChild(row);
+        });
+      });
+    });
+  }
+  draw();
 </script>
 </body>
 </html>

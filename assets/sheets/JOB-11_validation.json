@@ -1,0 +1,111 @@
+{
+  "job": 11,
+  "files": [
+    {
+      "id": "story_08_festival",
+      "file": "assets\\story\\story_08_festival.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 0,
+      "opaque_pixels": 921600,
+      "residual_magenta_pixels": 0,
+      "sha256": "7bf8dd91d5f4afc94934e9cf40ebc91da1a68f57e79168d60d3b08bffcab6307"
+    },
+    {
+      "id": "story_09_radio_arrive",
+      "file": "assets\\story\\story_09_radio_arrive.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 0,
+      "opaque_pixels": 921600,
+      "residual_magenta_pixels": 0,
+      "sha256": "fa1ab3bf7263b19860714030fb1a8441a7d1f256f459a5571b42505040effdcb"
+    },
+    {
+      "id": "story_10_radio_down",
+      "file": "assets\\story\\story_10_radio_down.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 0,
+      "opaque_pixels": 921600,
+      "residual_magenta_pixels": 0,
+      "sha256": "5aa0a4473885d3de0cc98553b37fb6a31a89a3706c67a389736d62af90c6b33f"
+    },
+    {
+      "id": "story_11_broadcast",
+      "file": "assets\\story\\story_11_broadcast.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 0,
+      "opaque_pixels": 921600,
+      "residual_magenta_pixels": 0,
+      "sha256": "46fb04ce70329d18980bde0381ba1d6edf78e06b6ec6048ce9fe3600ca96288f"
+    },
+    {
+      "id": "story_12_city_signal",
+      "file": "assets\\story\\story_12_city_signal.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 0,
+      "opaque_pixels": 921600,
+      "residual_magenta_pixels": 0,
+      "sha256": "f822dba3d5b9be1509e776d70dd2d0bda8298b15417ea11d22c96894ae38b538"
+    },
+    {
+      "id": "wind_radio_back",
+      "file": "assets\\wind\\wind_radio_back.png",
+      "size": [
+        637,
+        631
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 38619,
+      "opaque_pixels": 363328,
+      "residual_magenta_pixels": 0,
+      "sha256": "3e04d4786586823e19b3b0820c016499a796acdbae81e79ffb9c7e292b6cb11a"
+    },
+    {
+      "id": "wind_crank",
+      "file": "assets\\wind\\wind_crank.png",
+      "size": [
+        607,
+        603
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 169358,
+      "opaque_pixels": 196663,
+      "residual_magenta_pixels": 0,
+      "sha256": "026f96393c3f3a5ec4f77179072a50340c9aba5f0133901cf9a5ddae75cc4e46"
+    }
+  ],
+  "visual_review": "Character identities, radio state transition, subtitle face clearance, no lettering and cutscene shadows reviewed. Modal center corrected by image_gen; raw sheet split using slice_sheet.py."
+}

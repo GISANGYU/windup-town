@@ -349,6 +349,120 @@
   };
 
   PH.cuckoo = function (ctx, h, o) { PH.boss(ctx, h * 1.75, Object.assign({}, o, { pose: 'cuckoo' })); };
+
+  // ───────── 제3막~ 임시 도형 ─────────
+  const GREY = '#9ba3ae', STEEL = '#6e7884', SIGNAL = '#e07a3a', HONEY = '#b9824f';
+  // 불빛 점 눈 (건전지로 움직이는 것)
+  function dotEyes(ctx, x1, x2, y, r, on) {
+    [x1, x2].forEach((x) => { ell(ctx, x, y, r * 1.9, r * 1.9, '#3a3f48', 2.5); if (on) { ctx.fillStyle = '#f6f2c8'; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill(); } });
+  }
+  // 라디오 씨: o.power 'battery'|'wind', o.off, o.t
+  PH.radio = function (ctx, h, o) {
+    const k = h / 130; ctx.scale(k, k);
+    const wind = o.power === 'wind' && !o.off, t = o.t || 0, sw = wind ? Math.sin(t * 6) : 0;
+    // 다리(짧고 뻣뻣)
+    style(ctx, C.outline, 7); ctx.beginPath(); ctx.moveTo(-14, -24); ctx.lineTo(-16 + sw * 4, -4); ctx.moveTo(14, -24); ctx.lineTo(16 - sw * 4, -4); ctx.stroke();
+    shoe(ctx, -18 + sw * 4, 0, 10, '#7d8590'); shoe(ctx, 18 - sw * 4, 0, 10, '#7d8590');
+    // 팔
+    hose(ctx, -38, -70, o.off ? -44 : -54, o.off ? -34 : -90 + sw * 6, -6, 5); glove(ctx, o.off ? -44 : -54, o.off ? -34 : -90 + sw * 6, 7);
+    hose(ctx, 38, -70, o.off ? 44 : 50, o.off ? -34 : -52, 6, 5); glove(ctx, o.off ? 44 : 50, o.off ? -34 : -52, 7);
+    // 안테나
+    style(ctx, C.outline, 4); ctx.beginPath(); ctx.moveTo(18, -122); ctx.lineTo(o.off ? 40 : 30, o.off ? -140 : -154); ctx.stroke();
+    ell(ctx, o.off ? 40 : 30, o.off ? -140 : -154, 5, 5, o.off ? '#555' : SIGNAL, 2.5);
+    // 몸통(둥근 지붕 나무 상자)
+    style(ctx, HONEY); ctx.beginPath(); ctx.moveTo(-42, -24); ctx.lineTo(-42, -96); ctx.quadraticCurveTo(-42, -124, 0, -124); ctx.quadraticCurveTo(42, -124, 42, -96); ctx.lineTo(42, -24); ctx.closePath(); ctx.fill(); ctx.stroke();
+    // 스피커 그릴(입)
+    rr(ctx, -26, -58, 52, 26, 8, C.cream, 3);
+    ctx.strokeStyle = 'rgba(61,51,70,.45)'; ctx.lineWidth = 2; for (let x = -18; x <= 18; x += 9) { ctx.beginPath(); ctx.moveTo(x, -54); ctx.lineTo(x, -36); ctx.stroke(); }
+    // 다이얼 눈
+    ell(ctx, -16, -90, 13, 13, C.yellow, 3); ell(ctx, 16, -90, 13, 13, C.yellow, 3);
+    if (wind) { pieEye(ctx, -16, -90, 9, 1); pieEye(ctx, 16, -90, 9, 1); }
+    else dotEyes(ctx, -16, 16, -90, 3.2, !o.off);
+    // 크랭크(태엽 라디오)
+    if (o.crank) { style(ctx, C.yellow, 3); ctx.beginPath(); ctx.arc(48, -66, 12, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.save(); ctx.translate(48, -66); ctx.rotate(t * 3); rr(ctx, -3, -22, 6, 22, 3, C.yellow, 2.5); ell(ctx, 0, -24, 6, 6, C.wood, 2.5); ctx.restore(); }
+  };
+  PH.battery = function (ctx, h) {
+    const k = h / 40; ctx.scale(k, k);
+    rr(ctx, -12, -36, 24, 36, 5, GREY, 3); rr(ctx, -12, -14, 24, 8, 2, '#4a505a', 2.5); rr(ctx, -5, -42, 10, 6, 2, '#d8dde3', 2.5);
+    ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fillRect(-7, -32, 4, 14);
+  };
+  PH.batteryPack = function (ctx, h) {
+    const k = h / 46; ctx.scale(k, k);
+    rr(ctx, -16, -22, 32, 44, 6, GREY, 3); rr(ctx, -10, -16, 20, 6, 2, '#4a505a', 2); ell(ctx, 0, 12, 4, 4, SIGNAL, 2);
+  };
+  PH.sheet = function (ctx, h) {
+    const k = h / 40; ctx.scale(k, k);
+    style(ctx, C.cream, 3); ctx.beginPath(); ctx.moveTo(-16, 0); ctx.lineTo(-18, -38); ctx.lineTo(10, -40); ctx.lineTo(18, -30); ctx.lineTo(14, -2); ctx.lineTo(4, 2); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.strokeStyle = 'rgba(61,51,70,.5)'; ctx.lineWidth = 1.5; for (let y = -32; y <= -12; y += 5) { ctx.beginPath(); ctx.moveTo(-14, y); ctx.lineTo(13, y - 1); ctx.stroke(); }
+    ctx.fillStyle = C.outline; ctx.beginPath(); ctx.ellipse(-5, -18, 3.5, 2.6, -0.3, 0, 7); ctx.ellipse(6, -24, 3.5, 2.6, -0.3, 0, 7); ctx.fill();
+  };
+  PH.ribbon = function (ctx, h) {
+    const k = h / 36; ctx.scale(k, k);
+    style(ctx, C.red, 3); ctx.beginPath(); ctx.moveTo(0, -16); ctx.quadraticCurveTo(-26, -34, -22, -10); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, -16); ctx.quadraticCurveTo(26, -34, 22, -10); ctx.closePath(); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-3, -14); ctx.lineTo(-12, 0); ctx.lineTo(-6, -2); ctx.moveTo(3, -14); ctx.lineTo(12, 0); ctx.lineTo(6, -2); ctx.stroke();
+    ell(ctx, 0, -16, 5, 5, C.red, 3);
+  };
+  PH.bunting = function (ctx, h) {
+    const k = h / 110; ctx.scale(k, k);
+    rr(ctx, -74, -100, 8, 100, 3, C.wood, 3); rr(ctx, 66, -100, 8, 100, 3, C.wood, 3);
+    style(ctx, 'transparent', 3); ctx.beginPath(); ctx.moveTo(-70, -94); ctx.quadraticCurveTo(0, -60, 70, -94); ctx.stroke();
+    [C.red, C.blue, C.yellow, C.red, C.blue].forEach((col, i) => { const x = -52 + i * 26, y = -86 + Math.sin((i + 0.5) / 5 * Math.PI) * 14; style(ctx, col, 2.5); ctx.beginPath(); ctx.moveTo(x - 9, y); ctx.lineTo(x + 9, y); ctx.lineTo(x, y + 22); ctx.closePath(); ctx.fill(); ctx.stroke(); });
+  };
+  PH.lantern = function (ctx, h) {
+    const k = h / 120; ctx.scale(k, k);
+    style(ctx, C.wood, 5); ctx.beginPath(); ctx.moveTo(-8, 0); ctx.lineTo(-8, -100); ctx.quadraticCurveTo(-8, -116, 14, -112); ctx.stroke();
+    style(ctx, C.outline, 2); ctx.beginPath(); ctx.moveTo(14, -112); ctx.lineTo(14, -98); ctx.stroke();
+    ell(ctx, 14, -76, 20, 24, C.yellow, 3); ctx.strokeStyle = 'rgba(61,51,70,.35)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(14, -76, 9, 24, 0, 0, 7); ctx.stroke();
+  };
+  PH.banner = function (ctx, h, o) {
+    const k = h / 130; ctx.scale(k, k); const w = Math.sin((o.t || performance.now() / 1000) * 3) * 4;
+    rr(ctx, -4, -126, 8, 126, 3, C.wood, 3); ell(ctx, 0, -128, 6, 6, C.yellow, 2.5);
+    style(ctx, C.cream, 3); ctx.beginPath(); ctx.moveTo(4, -120); ctx.quadraticCurveTo(24, -126 + w, 48, -118); ctx.lineTo(48, -84); ctx.quadraticCurveTo(24, -92 - w, 4, -86); ctx.closePath(); ctx.fill(); ctx.stroke();
+    style(ctx, C.red, 0); ctx.fillRect(6, -108, 40, 8);
+  };
+  PH.static = function (ctx, h) {
+    const k = h / 50; ctx.scale(k, k); ctx.strokeStyle = '#e8edf2'; ctx.lineWidth = 3; ctx.lineJoin = 'miter';
+    ctx.beginPath(); ctx.moveTo(-16, -10); ctx.lineTo(-6, -2); ctx.lineTo(-10, 4); ctx.lineTo(2, 12); ctx.moveTo(6, -14); ctx.lineTo(12, -4); ctx.lineTo(8, 0); ctx.lineTo(16, 8); ctx.stroke();
+  };
+  // 측량기: 삼각대 직선 다리, 회색 상자 머리, 렌즈 + 불빛 점 눈. o.state: walk|hammer|stun|stopped|flee
+  PH.surveyor = function (ctx, h, o) {
+    const k = h / 130; ctx.scale(k, k);
+    const t = o.t || 0, mv = o.state === 'walk' || o.state === 'flee' ? Math.sin(t * (o.state === 'flee' ? 20 : 8)) : 0;
+    const dead = o.state === 'stopped';
+    // 곧은 다리 3개
+    style(ctx, STEEL, 0); ctx.strokeStyle = C.outline; ctx.lineWidth = 9; ctx.lineCap = 'butt';
+    ctx.beginPath(); ctx.moveTo(-6, -58); ctx.lineTo(-30 + mv * 10, 0); ctx.moveTo(6, -58); ctx.lineTo(30 - mv * 10, 0); ctx.moveTo(0, -58); ctx.lineTo(0, -2); ctx.stroke();
+    ctx.strokeStyle = STEEL; ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.moveTo(-6, -58); ctx.lineTo(-30 + mv * 10, 0); ctx.moveTo(6, -58); ctx.lineTo(30 - mv * 10, 0); ctx.moveTo(0, -58); ctx.lineTo(0, -2); ctx.stroke();
+    // 집게 팔 (망치)
+    style(ctx, STEEL, 3); ctx.beginPath(); ctx.moveTo(28, -84); ctx.lineTo(50, o.state === 'hammer' ? -60 + Math.abs(Math.sin(t * 14)) * -30 : -70); ctx.stroke();
+    if (o.state === 'hammer') { rr(ctx, 42, -72 - Math.abs(Math.sin(t * 14)) * 30, 18, 12, 2, C.wood, 2.5); }
+    // 머리 상자
+    rr(ctx, -34, -116, 68, 58, 6, GREY, 4);
+    ell(ctx, 0, -96, 15, 15, '#cfe0ea', 3); ell(ctx, 0, -96, 7, 7, '#4a5664', 2);
+    if (o.state === 'stun') { style(ctx, 'transparent', 2.5); ctx.beginPath(); for (let a = 0; a < 12; a += 0.4) ctx.lineTo(Math.cos(a + t * 8) * a * 1.1, -96 + Math.sin(a + t * 8) * a * 1.1); ctx.stroke(); }
+    dotEyes(ctx, -14, 14, -70, 2.6, !dead);
+    // 안테나
+    style(ctx, C.outline, 3); ctx.beginPath(); ctx.moveTo(22, -116); ctx.lineTo(26, -138); ctx.stroke();
+    ell(ctx, 26, -140, 4, 4, dead ? '#555' : Math.sin(t * 6) > 0 ? SIGNAL : '#a0522d', 2);
+  };
+  PH.stake = function (ctx, h, o) {
+    const k = h / 60; ctx.scale(k, k);
+    style(ctx, '#c9a477', 3); ctx.beginPath(); ctx.moveTo(-6, -50); ctx.lineTo(6, -50); ctx.lineTo(5, -8); ctx.lineTo(0, 0); ctx.lineTo(-5, -8); ctx.closePath(); ctx.fill(); ctx.stroke();
+    rr(ctx, -12, -46, 14, 12, 2, SIGNAL, 2.5);
+    style(ctx, C.outline, 2); ctx.beginPath(); ctx.moveTo(4, -50); ctx.lineTo(10, -62); ctx.stroke();
+    ell(ctx, 10, -63, 3, 3, Math.sin((o && o.t || 0) * 6) > 0 ? SIGNAL : '#a0522d', 1.5);
+  };
+  PH.stakePulled = function (ctx, h) { const k = h / 30; ctx.scale(k, k); ctx.rotate(Math.PI / 2 - 0.1); ctx.translate(-14, 25); PH.stake(ctx, 60, {}); };
+  PH.cityMap = function (ctx, h) {
+    const k = h / 40; ctx.scale(k, k);
+    rr(ctx, -22, -22, 44, 18, 9, '#a8c4dc', 3); rr(ctx, 12, -26, 14, 26, 7, '#8fb0cc', 3);
+    ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1.5; for (let x = -16; x < 10; x += 7) { ctx.beginPath(); ctx.moveTo(x, -20); ctx.lineTo(x, -6); ctx.stroke(); }
+    style(ctx, 'transparent', 2); ctx.strokeStyle = '#6e7884'; ctx.beginPath(); ctx.moveTo(-4, -22); ctx.lineTo(-4, -4); ctx.stroke();
+  };
+  WT.PH_COLORS = { GREY, STEEL, SIGNAL, HONEY };
+  WT.dotEyes = dotEyes;
   WT.PH = PH;
   WT.pieEye = pieEye;
 })();

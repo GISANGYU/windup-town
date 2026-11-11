@@ -54,7 +54,7 @@
     const s = [];
     P.forEach((p) => s.push(Object.assign(WT.footRect(p.x, p.y, p.foot[0], p.foot[1]), { low: !!p.low, src: p.kind })));
     WT.WORLD.ground.forEach((g) => g.solid && s.push(Object.assign({}, g.solid, { low: false, src: g.kind })));
-    Object.entries(WT.WORLD.npcs).forEach(([id, n]) => s.push(Object.assign(WT.footRect(n.x, n.y, n.foot[0], n.foot[1]), { low: false, src: id })));
+    Object.entries(WT.WORLD.npcs).filter(([id]) => !WT.npcVisible || WT.npcVisible(id)).forEach(([id, n]) => s.push(Object.assign(WT.footRect(n.x, n.y, n.foot[0], n.foot[1]), { low: false, src: id })));
     return s;
   };
 })();

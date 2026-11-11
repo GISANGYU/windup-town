@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-11",
+  "file_checks": [
+    {
+      "id": "story_18_road_start",
+      "file": "story/story_18_road_start.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "alpha_extrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "story_19_factory",
+      "file": "story/story_19_factory.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "alpha_extrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "story_20_city_gate",
+      "file": "story/story_20_city_gate.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "alpha_extrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "story_21_tower_top",
+      "file": "story/story_21_tower_top.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "alpha_extrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "story_22_music_spreads",
+      "file": "story/story_22_music_spreads.png",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "alpha_extrema": [
+        255,
+        255
+      ]
+    },
+    {
+      "id": "ui_icon_wind",
+      "file": "ui/ui_icon_wind.png",
+      "size": [
+        621,
+        633
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "id": "ui_icon_battery",
+      "file": "ui/ui_icon_battery.png",
+      "size": [
+        622,
+        633
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "alpha_extrema": [
+        0,
+        255
+      ]
+    }
+  ],
+  "visual_review": {
+    "caption_safe_area": "All important faces and actions above bottom 30%",
+    "icon_size": "Both icon crops 633px high; widths 621/622px",
+    "remaining_issue": "story_20_city_gate: small grey contact shadow remains below BOGLE after repeated imagegen revisions; needs visual review."
+  }
+}

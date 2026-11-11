@@ -22,6 +22,7 @@
     card.classList.remove('closing');
     card.classList.add('open');
     WT.Audio.play('sfx_dialog_open');
+    if (opt.who === 'radio') WT.Audio.play('sfx_radio_static', { delay: 0.05 }); // 라디오 씨는 말 시작마다 지지직
     card.setAttribute('aria-hidden', 'false');
     card.dataset.mood = opt.mood || 'sleepy';
     $('#cardName').textContent = opt.name;
@@ -38,10 +39,20 @@
       WT.drawThing(c, opt.mood === 'cuckoo' ? 'boss_cuckoo' : 'boss_idle', WT.PH.boss, cv.width / 2, cv.height * 0.98, { h: cv.height * 0.95, pose: opt.mood === 'cuckoo' ? 'cuckoo' : 'idle', t: 0 });
       return;
     }
-    const npcId = { gramo: `npc_gramo_${opt.mood}`, pip: `npc_pip_${opt.mood}`, lamp: opt.mood === 'awake' ? 'npc_lamp_on' : 'npc_lamp_off' }[opt.who];
-    const ph = (ctx, h, o) => WT.PH.portrait(ctx, h, Object.assign({ who: opt.who }, o));
-    if (WT.Assets.has(id)) WT.drawThing(c, id, null, cv.width / 2, cv.height / 2, { h: cv.height * 0.9, anchor: 'center' });
-    else WT.drawThing(c, npcId, ph, cv.width / 2, cv.height * 0.95, { h: cv.height * 0.85, mood: opt.mood, t: 0 });
+    const S = WT.Game.state, bat = opt.mood === 'battery';
+    const rp = S.npcs.radio || {};
+    const pid = { bogle: ['portrait_bogle'], radio: [rp.power === 'wind' ? 'portrait_radio_crank' : 'portrait_radio'],
+      lamp: opt.mood === 'shy' ? ['portrait_lamp_shy', 'portrait_lamp_awake'] : S.act3 && S.act3.named ? ['portrait_lamp_awake'] : [] }[opt.who] || [id];
+    const mood = bat || opt.mood === 'shy' ? 'awake' : opt.mood;
+    const npcId = { gramo: `npc_gramo_${mood}`, pip: `npc_pip_${mood}`, lamp: mood === 'awake' ? 'npc_lamp_on' : 'npc_lamp_off',
+      radio: rp.power === 'wind' ? 'npc_radio_crank' : 'npc_radio_idle', bogle: 'player_idle_down', surveyor: 'npc_surveyor_idle' }[opt.who];
+    const ph = (ctx, h, o) => WT.PH.portrait(ctx, h, Object.assign({ who: opt.who === 'surveyor' ? 'surveyor' : opt.who, power: opt.who === 'radio' ? rp.power : undefined, crank: opt.who === 'radio' && rp.power === 'wind' }, o));
+    c.save();
+    if (bat) c.filter = 'grayscale(1) contrast(1.05)';
+    const have = pid.find((q) => WT.Assets.has(q));
+    if (have) WT.drawThing(c, have, null, cv.width / 2, cv.height / 2, { h: cv.height * 0.9, anchor: 'center' });
+    else WT.drawThing(c, npcId, ph, cv.width / 2, cv.height * 0.95, { h: cv.height * 0.85, mood, t: 0 });
+    c.restore();
   }
   function showLine() {
     const d = WT.Game.state.ui.dialog;
@@ -53,12 +64,17 @@
     $('#cardProgress').textContent = String(d.i + 1).padStart(2, '0') + ' / ' + String(d.lines.length).padStart(2, '0');
     el.textContent = '';
     clearInterval(typing && typing.timer);
-    const speed = d.mood === 'awake' ? WT.CFG.typeAwake : WT.CFG.typeSleepy;
+    const speed = d.mood === 'sleepy' ? WT.CFG.typeSleepy : WT.CFG.typeAwake;
+    if (d.flat) { // 건전지 말투: 한 번에 다 나오고 글자 소리가 없다
+      el.textContent = text; typing = { text, n: text.length, timer: null }; lineReady();
+      $('#cardMore').textContent = d.i < d.lines.length - 1 ? '◆' : '■';
+      return;
+    }
     typing = { text, n: 0, timer: setInterval(() => {
       typing.n++;
       // 글자 출력음: 깨어 있으면 2글자, 졸리면 3글자마다. 공백은 건너뜀
       const sleepy = d.mood === 'sleepy', every = sleepy ? 3 : 2, ch = text[typing.n - 1];
-      const blip = d.who === 'boss' ? 'sfx_text_blip_boss' : sleepy ? 'sfx_text_blip_sleepy' : 'sfx_text_blip_awake';
+      const blip = d.who === 'boss' ? 'sfx_text_blip_boss' : d.who === 'radio' ? (WT.Audio.defs.sfx_text_blip_radio ? 'sfx_text_blip_radio' : 'sfx_text_blip_awake') : sleepy ? 'sfx_text_blip_sleepy' : 'sfx_text_blip_awake';
       if (typing.n % every === 1 && ch && ch.trim()) WT.Audio.play(blip, { rate: 0.9 + Math.random() * 0.2 });
       el.textContent = text.slice(0, typing.n);
       if (typing.n >= text.length) { clearInterval(typing.timer); typing.timer = null; lineReady(); }
@@ -98,6 +114,7 @@
       ? '<b>WASD</b> 이동 · <b>Shift</b> 빨리 · <b>Space</b> 점프 · <b>E</b> 상호작용 · <b>M</b> 소리'
       : scene === 'intro' ? ''
       : scene === 'arena' ? '<b>WASD</b> 이동 · <b>Space</b> 점프(링·작은 톱니 회피) · <b>E</b> 과감기'
+      : scene === 'road' ? '<b>A D</b> 이동 · <b>Space</b> 점프(길게: 높이) · <b>Q</b> 태엽 ↔ 건전지 · <b>E</b> 장치 · <b>M</b> 소리'
       : '<b>클릭</b> 놓기·선택 · <b>드래그</b> 옮기기 · <b>R</b> 뒤집기 · <b>Delete</b> 삭제 · <b>G</b> 격자 · <b>Esc</b> 취소/나가기';
     UI.refreshToolbar();
   };

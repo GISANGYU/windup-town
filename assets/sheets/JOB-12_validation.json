@@ -1,0 +1,150 @@
+{
+  "job": "JOB-12",
+  "date": "2026-11-11",
+  "tool": "built-in image_gen",
+  "passed": 10,
+  "assets": [
+    {
+      "id": "npc_surveyor_idle",
+      "file": "npc/npc_surveyor_idle.png",
+      "size": [
+        284,
+        517
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 88070,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "npc_surveyor_walk_01",
+      "file": "npc/npc_surveyor_walk_01.png",
+      "size": [
+        318,
+        513
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 106537,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "npc_surveyor_walk_02",
+      "file": "npc/npc_surveyor_walk_02.png",
+      "size": [
+        324,
+        513
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 108998,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "npc_surveyor_hammer",
+      "file": "npc/npc_surveyor_hammer.png",
+      "size": [
+        404,
+        526
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 137766,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "npc_surveyor_stun",
+      "file": "npc/npc_surveyor_stun.png",
+      "size": [
+        381,
+        508
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 128166,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "portrait_surveyor",
+      "file": "portrait/portrait_surveyor.png",
+      "size": [
+        320,
+        397
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 48388,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "prop_stake",
+      "file": "props/prop_stake.png",
+      "size": [
+        206,
+        420
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 50116,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "prop_stake_pulled",
+      "file": "props/prop_stake_pulled.png",
+      "size": [
+        410,
+        211
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 51671,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "prop_city_map",
+      "file": "props/prop_city_map.png",
+      "size": [
+        422,
+        298
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 48632,
+      "residual_magenta_pixels": 0
+    },
+    {
+      "id": "fx_static",
+      "file": "fx/fx_static.png",
+      "size": [
+        316,
+        303
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "issues": [],
+      "transparent_pixels": 62244,
+      "residual_magenta_pixels": 0
+    }
+  ],
+  "slicing": {
+    "a": {
+      "merge": 70,
+      "count": 5
+    },
+    "b": {
+      "merge": 40,
+      "count": 5
+    }
+  },
+  "reference_note": "prop_battery unavailable at generation start; used guide #9BA3AE and #6E7884; prop_battery became available during work and was visually compared at final review",
+  "visual_review": "All ten sprites reviewed on checkerboard and compared against full project contact sheet."
+}

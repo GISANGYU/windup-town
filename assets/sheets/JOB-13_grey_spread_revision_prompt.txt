@@ -1,0 +1,23 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Fill the whole 16:9 canvas edge to edge, no border, no vignette (the game adds its own), no characters, no text.
+
+SURVEYOR: a battery-powered surveying robot shaped like a tripod surveying instrument.
+A boxy cool grey #9BA3AE metal head with one big round glass lens on the front and two small round glowing dot eyes below it, a short antenna with a tiny orange #E07A3A light.
+Three thin perfectly STRAIGHT steel #6E7884 tripod legs (NOT rubber hose, rigid straight lines), one small mechanical claw arm.
+Emotionless and precise. Still outlined in dark plum #3D3346 like everything else.
+
+Use case: illustration-story. Create ONE finished landscape cutscene, exact 16:9 1280x720 canvas, not a collage or sheet. The BACKGROUND RULES 'no characters' clause applies only to unlisted background inhabitants; this STORY cutscene explicitly requires the named characters below. Keep ALL main characters, faces, action props and narrative details in the UPPER 68% of the canvas. Bottom 30% must be quiet low-detail continuous ground/floor for an in-game subtitle overlay; do not draw any subtitle box, panel, lettering or border. No cast ground shadows. References: 1 is primary style and original character anchor; 2 is a reference board (upper left character drawing technique, upper right and lower left watercolor stage technique, lower right village ground palette); never copy its existing game characters, scenes, text or logos. 3 is RADIO cabinet design; 4 is SURVEYOR exact design; 5 is battery pack exact design. Only draw characters explicitly named in the scene. Do not reproduce magenta sheet backgrounds. Background watercolor subtle; character silhouettes clean with plum outlines.
+
+Wide elevated close view of a single survey stake with a small blank orange tag and antenna. Clearly bounded circular ink-stain-like GREYSCALE region on grass in the upper-middle of the picture; inside the circle every blade, flower and soil is mathematically neutral grey (R=G=B), completely zero saturation. Plants inside are rigid perfectly straight stalks, angular geometric flowers, no curves. Outside, curved organic stems and colored petals in warm village grass. One surveyor recedes at upper-right. This is a loss-of-color zone, NOT a shadow.
+
+a survey stake driven into colorful village grass, a circle of grey color spreading out from it like an ink stain, flowers and grass inside the circle turned colorless and straight, a SURVEYOR walking away in the background
+
+CRITICAL FINAL OVERRIDE: The desaturated circle contains exclusively neutral grayscale ground, neutral grayscale outlines and strictly straight vertical blades of grass with straight-edged angular flowers. No curved tufts at all anywhere within the circle. Outline colors within the grey area also have RGB equal channels. Only the planted transmitter's orange indicator and orange tag remain colored. The departing surveyor MUST visibly show ALL THREE separated straight legs, not two legs. Keep the whole desaturated circle above the bottom 30% safe area. Otherwise follow the complete specification above.

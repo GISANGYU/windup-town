@@ -5,6 +5,11 @@
 - **Claude: 게임 로직 담당.** `src/`, `index.html`, `GAME_DESIGN.md`는 Claude가 관리한다. Codex는 이 파일들을 수정하지 않는다.
 - 기준 문서: `ASSET_GUIDE.md` (스타일·네이밍·작업 분배), `assets/manifest.js` (리소스 목록), `GAME_DESIGN.md` (세계관·캐릭터 역할)
 
+## 명령 규칙: "JOBn 진행해"
+- 사람이 **"JOB9 진행해"**처럼 번호만 말하면 `jobs/JOB-09.md`(두 자리)를 열고 그 지시서만 처음부터 끝까지 수행한다.
+- 지시서에 적힌 "먼저 끝나 있어야 하는 JOB"의 결과 이미지가 없으면 시작하지 말고 사람에게 알린다.
+- 전체 순서와 의존 관계: `jobs/README.md`. JOB-0~8은 이 문서 아래와 ASSET_GUIDE 1-4절 기준.
+
 ## 작업 전에 반드시
 1. `ASSET_GUIDE.md`를 처음부터 끝까지 읽는다.
 2. `assets/refs/` 이미지를 열어 본다. `style_anchor.png`가 있으면 그것이 최우선 기준이다.
@@ -29,3 +34,7 @@ python tools/contact_sheet.py     # assets/sheets/_contact.png 로 전체 비교
 ## 추가 작업 (2026-11-11)
 - **JOB-7**: 오프닝·예고 컷신 5장(`story/`)과 태엽 감기 모달 2개(`wind/`). 규칙은 ASSET_GUIDE 1-4 표 아래.
 - **JOB-8**: 제2막 보스 째깍 백작 18개(`boss/` 외). 캐릭터 블록은 ASSET_GUIDE 5절 COUNT TICK-TOCK. 필수(req)부터: boss_idle, boss_slam, boss_throw, boss_bell, boss_tired, boss_cuckoo, bg_arena, fx_gear, fx_spring.
+
+## 추가 작업 (제3~5막)
+- **JOB-9 ~ JOB-17**: 지시서 `jobs/JOB-09.md` ~ `jobs/JOB-17.md`. 새 캐릭터 블록은 ASSET_GUIDE 5절 RADIO·SURVEYOR, 제5막은 SIDE-SCROLL RULES.
+- 건전지로 움직이는 것은 파이 눈 대신 불빛 점 눈(ASSET_GUIDE 5절 눈 규칙 예외).

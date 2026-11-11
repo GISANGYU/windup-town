@@ -1,0 +1,29 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Each item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.
+Characters face the viewer at a slight high 3/4 angle unless a direction is given. "Side" always means facing RIGHT.
+
+RADIO: a boxy old wooden TABLE RADIO, the whole body IS the radio (no human torso).
+Rounded-top cabinet in honey wood #B9824F with a cream #F4E6C8 cloth speaker grille on the lower front; the grille is his mouth.
+Two round brass tuning DIALS on the upper front are his eyes. One thin metal antenna on top, slightly bent.
+Short stiff legs with grey round shoes, rubber hose arms with white gloves, but he holds himself straighter and stiffer than the village characters.
+Friendly, eager, a little pushy salesman. About the same height as PIP.
+
+Create one wide landscape sprite sheet with EXACTLY FOUR full-body versions of the SAME original RADIO character in ONE horizontal row, left to right: npc_radio_idle, npc_radio_talk, npc_radio_off, npc_radio_crank. Use pure flat #FF00FF background. Wide clear gaps between all poses; antennas, hands and shoes fully visible. Each figure at least 300 pixels tall. Same cabinet, dial and shoe design across poses. Reference 1 is the primary style anchor; reference 2 is linework inspiration ONLY, do not copy its character or text; reference 3 is PIP for proportion/style comparison only, do not draw PIP. No labels, swatches or additional figures. The first TWO poses have dark dial interiors with exactly one small round warm light per dial, NO pie-cut eyes. Third pose has completely dark unlit dials and a drooping antenna. ONLY fourth pose has cream dial interiors and black oval pie-cut pupils, a warm elastic bouncing pose and a visible brass crank WHEEL with a knob on the right side. Make the side carrying the crank clearly visible. Keep all other poses crank-free. The speaker grille itself acts as the smiling mouth; no extra mouth below it.
+
+npc_radio_idle: RADIO standing upright and stiff, friendly salesman smile, one white glove raised palm-up as if presenting a product, antenna perfectly straight, dial eyes showing two small glowing dot lights
+
+npc_radio_talk: RADIO talking excitedly like a TV salesman, speaker-grille mouth wide open, both arms spread wide, leaning forward, dial eyes as two glowing dots, three small curved sound lines near the speaker
+
+npc_radio_off: RADIO switched off and slumped forward, dial eyes dark and empty with no lights, antenna drooping down, arms hanging limp, colors slightly faded, sad and lifeless but still cartoonish
+
+npc_radio_crank: RADIO after getting a wind-up crank: a brass crank wheel with a knob attached to his right side, his two dial eyes now show pie-cut pupils for the first time, warm grateful smile, body bouncing in a rubber hose curve, antenna wiggling
+
+TARGETED REVISION of the attached RADIO sheet (reference 4). Preserve the four poses and all established character designs, composition, palette, eyes and proportions. Correct ONLY these details: on pose 2 replace the three triangular sound rays with three small CURVED sound lines immediately beside the speaker mouth; on pose 4 add the missing second rubber-hose arm and white four-finger glove emerging from the cabinet's right side below the crank and curving down into the empty space beside the body. Keep the brass crank wheel fully visible above that arm, and keep the existing raised fist on the other side. Make the lower cabinet silhouette of pose 4 slightly squash-and-stretch curved to express an elastic happy bounce. All full figures must have two arms and two legs. Keep poses 1 and 3 unchanged. Flat solid #FF00FF background, no ground shadow.

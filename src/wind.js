@@ -50,19 +50,20 @@
   W.add = function (v) {
     if (!st || st.done) return;
     if (v > 0) {
+      v *= st.opts.speed || 1; // 작은 감기(주민 되돌리기)는 빨리 끝남
       st.p = Math.min(1, st.p + v); st.idle = 0;
       // 래칫 '드륵': 진행 0.02마다 1번 (A·D 탭은 W.key 에서 매번)
       st.ratchet = (st.ratchet || 0) + v;
-      if (st.ratchet >= 0.02) { st.ratchet = 0; WT.Audio.play('sfx_wind_ratchet', { rate: 0.9 + st.p * 0.3 }); }
+      if (st.ratchet >= 0.02) { st.ratchet = 0; WT.Audio.play(ratchetId(), { rate: 0.9 + st.p * 0.3 }); }
     }
     else st.p = Math.max(st.lock, st.p + v * 0.5);
     const notch = Math.floor(st.p * 3 + 1e-6);
     if (notch > Math.round(st.lock * 3) && notch < 3) {
-      st.lock = notch / 3; st.shake = 0.35; pop(D.notch[notch - 1]);
+      st.lock = notch / 3; st.shake = 0.35; pop((st.opts.notch || D.notch)[notch - 1]);
       WT.Audio.play('sfx_wind_notch', { rate: 1 + (notch - 1) * 0.06 });
     }
     if (st.p >= 1) {
-      st.p = 1; st.lock = 1; st.done = 0.01; st.shake = 0.6; pop(D.notch[2]); setMsg(D.done);
+      st.p = 1; st.lock = 1; st.done = 0.01; st.shake = 0.6; pop((st.opts.notch || D.notch)[2]); setMsg(D.done);
       WT.Audio.play('sfx_wind_complete');
     }
   };
@@ -70,13 +71,14 @@
     if (!st) return false;
     const side = ['KeyA', 'ArrowLeft'].includes(code) ? 'L' : ['KeyD', 'ArrowRight'].includes(code) ? 'R' : null;
     if (!side) return false;
-    if (st.lastKey && st.lastKey !== side) { st.ratchet = -1; W.add(PER_TAP); WT.Audio.play('sfx_wind_ratchet', { rate: 0.9 + st.p * 0.3 }); }
+    if (st.lastKey && st.lastKey !== side) { st.ratchet = -1; W.add(PER_TAP); WT.Audio.play(ratchetId(), { rate: 0.9 + st.p * 0.3 }); }
     st.lastKey = side;
     st.hand = side === 'L' ? -1 : 1;
     return true;
   };
   W.finishNow = function () { if (st) { W.add(1); st.done = 2; } };
 
+  function ratchetId() { const r = st.opts.ratchet; return r && WT.Audio.defs[r] ? r : 'sfx_wind_ratchet'; }
   function pop(text) { st.pops.push({ text, t: 0 }); }
   function setMsg(t) { document.getElementById('windMsg').textContent = t; }
 
@@ -111,8 +113,8 @@
     ctx.clearRect(0, 0, w, h);
     ctx.save();
     if (st.shake > 0) ctx.translate((Math.random() - 0.5) * 10 * st.shake, (Math.random() - 0.5) * 10 * st.shake);
-    const back = st.opts.back || 'wind_gramo_back';
-    if (WT.Assets.has(back)) {
+    const back = st.opts.back || (!st.opts.variant || st.opts.variant === 'gramo' ? 'wind_gramo_back' : null);
+    if (back && WT.Assets.has(back)) {
       WT.drawThing(ctx, back, null, cx, h, { h: h * 0.98 });
     } else if (st.opts.variant === 'boss') {
       // 백작의 등: 남색 자명종 뒷면, 종 두 개, 버둥거림
@@ -124,6 +126,20 @@
       ctx.fillStyle = '#c99a3a'; ctx.strokeStyle = C.outline; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(0, 0, 40, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.restore();
       if (p > 0.66) for (let i = 0; i < 2; i++) WT.drawThing(ctx, 'fx_steam', PH.steam, cx + (i ? 150 : -150), cy - 170 - Math.sin(t * 8 + i) * 10, { h: 50, anchor: 'center' });
+    } else if (['pip', 'lamp', 'radio', 'self'].includes(st.opts.variant)) {
+      // 주민·라디오·보글 등: 색 상자 + 가운데 축
+      const col = { pip: C.red, lamp: '#5a5266', radio: '#b9824f', self: C.white }[st.opts.variant];
+      const g = p < 1 ? 1 - p : 0;
+      ctx.save(); ctx.translate(cx, cy);
+      if (st.opts.variant !== 'radio') { ctx.filter = `grayscale(${g.toFixed(2)})`; }
+      ctx.fillStyle = col; ctx.strokeStyle = C.outline; ctx.lineWidth = 6;
+      ctx.beginPath(); ctx.roundRect(-170, -150, 340, 290, st.opts.variant === 'radio' ? [90, 90, 24, 24] : 30); ctx.fill(); ctx.stroke();
+      if (st.opts.variant === 'radio') { ctx.fillStyle = C.cream; ctx.beginPath(); ctx.roundRect(-150, 70, 300, 50, 12); ctx.fill(); ctx.stroke(); }
+      ctx.fillStyle = '#c99a3a'; ctx.beginPath(); ctx.arc(0, 0, 40, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.restore();
+      if (st.opts.variant !== 'radio' && p < 0.95) { // 빠지는 건전지
+        WT.drawThing(ctx, 'prop_battery', PH.battery, cx + 210 + p * 40, cy + 40 - p * 80, { h: 70, rot: 0.4 + p, alpha: 1 - p });
+      }
     } else {
       // 나팔: 처져 있다가 진행도에 따라 일어섬
       ctx.save(); ctx.translate(cx, cy - 130); ctx.rotate(1.2 * (1 - p) + Math.sin(t * 6) * 0.03 * p);
@@ -150,9 +166,12 @@
     // 열쇠 (진행도만큼 회전)
     const rot = p * TURNS * Math.PI * 2 + (st.hand ? st.hand * 0.05 : 0);
     ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot);
-    if (!WT.drawThing(ctx, 'wind_key', null, 0, 0, { h: 200, anchor: 'center' })) {
-      ctx.translate(0, 90);
-      PH.key(ctx, 190, {});
+    if (!WT.drawThing(ctx, st.opts.keyImg || 'wind_key', null, 0, 0, { h: 200, anchor: 'center' })) {
+      if (st.opts.keyImg === 'wind_crank') { // 임시 크랭크: 바퀴 + 손잡이
+        ctx.fillStyle = C.yellow; ctx.strokeStyle = C.outline; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(0, 0, 80, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        for (let i = 0; i < 4; i++) { ctx.save(); ctx.rotate(i * Math.PI / 2); ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, -74); ctx.stroke(); ctx.restore(); }
+        ctx.fillStyle = C.wood; ctx.beginPath(); ctx.arc(0, -80, 18, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      } else { ctx.translate(0, 90); PH.key(ctx, 190, {}); }
     }
     ctx.restore();
     // 처음 안내: 원을 그리는 화살표

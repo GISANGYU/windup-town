@@ -36,16 +36,20 @@
       tut: { moved: 0, done: {}, jumped: false, ranT: 0 },
       episode: 1, act1Done: false, boss: null, arena: null
     };
+    if (WT.Act3) WT.Act3.initState(G.state);
+    if (WT.Act4) WT.Act4.initState(G.state);
+    if (WT.Road) WT.Road.initState(G.state);
   };
 
   G.locked = function () {
     const u = G.state.ui;
-    return !!(u.dialog || u.transition || u.cutscene || u.story || (WT.Wind && WT.Wind.active));
+    return !!(u.dialog || u.transition || u.cutscene || u.story || (WT.Wind && WT.Wind.active) || (WT.Act3 && WT.Act3.busy()) || (WT.Act4 && WT.Act4.busy()));
   };
 
   // ───────── 목표 문구 (HUD) ─────────
   G.objective = function () {
     const s = G.state, st = s.quest.stage;
+    if (s.episode >= 3) { const o = (WT.Act4 && WT.Act4.objective()) || (WT.Act3 && WT.Act3.objective()); if (o) return o; }
     if (st === 'none') return '광장의 축음기에게 말을 걸어 보자';
     if (st === 'started') return `태엽 열쇠를 모으자  ${s.inventory.keys} / 3`;
     if (st === 'ready') return '그라모 영감에게 열쇠를 가져가자';
@@ -60,7 +64,9 @@
     if (s.scene !== 'town' || p.z > 4) return null;
     let best = null, bd = 1e9;
     const consider = (t, d, range) => { if (d <= range && d < bd) { best = t; bd = d; } };
-    Object.entries(W.npcs).forEach(([id, n]) => consider({ type: 'npc', id, x: n.x, y: n.y, h: n.h }, dist(p, n), CFG.talkRange));
+    Object.entries(W.npcs).forEach(([id, n]) => WT.npcVisible(id) && consider({ type: 'npc', id, x: n.x, y: n.y, h: n.h }, dist(p, n), CFG.talkRange));
+    if (WT.Act3) WT.Act3.targets(consider, p);
+    if (WT.Act4) WT.Act4.targets(consider, p);
     if (s.quest.stage === 'started') s.world.keys.forEach((k) => !k.taken && consider({ type: 'key', id: k.id, x: k.x, y: k.y, h: 44 }, dist(p, k), CFG.pickRange));
     consider({ type: 'door', x: W.door.x, y: W.door.y - 30, h: 80 }, dist(p, W.door), CFG.doorRange);
     return best;
@@ -76,6 +82,8 @@
     if (t.type === 'boss') return WT.Boss.overwind();
     if (t.type === 'key') return G.pickKey(t.id);
     if (t.type === 'door') return G.enterHouse();
+    if (WT.Act3 && WT.Act3.interact(t)) return;
+    if (WT.Act4 && WT.Act4.interact(t)) return;
     if (t.type === 'npc') {
       p.dir = Math.abs(t.x - p.x) > Math.abs(t.y - p.y) ? 'side' : (t.y < p.y ? 'up' : 'down');
       if (p.dir === 'side') p.facing = t.x > p.x ? 1 : -1;
@@ -86,6 +94,7 @@
   // ───────── 대화와 퀘스트 ─────────
   G.talk = function (id) {
     const s = G.state, st = s.quest.stage, n = W.npcs[id];
+    if (WT.Act3 && WT.Act3.talk(id)) return;
     if (id === 'gramo') {
       if (st === 'none') return WT.UI.dialog({ who: 'gramo', name: n.name, mood: 'sleepy', lines: D.gramo.none, onClose: G.startQuest });
       if (st === 'started') return WT.UI.dialog({ who: 'gramo', name: n.name, mood: 'sleepy', lines: D.gramo.started });
@@ -107,7 +116,7 @@
     }
     if (id === 'lamp') {
       const mood = s.npcs.lamp.mood;
-      return WT.UI.dialog({ who: 'lamp', name: n.name, mood, lines: D.lamp[mood] });
+      return WT.UI.dialog({ who: 'lamp', name: WT.npcName('lamp'), mood, lines: D.lamp[mood] });
     }
   };
 
@@ -361,7 +370,7 @@
       c.t += dt;
       if (c.type === 'party') {
         // 깨어난 셋에게서 음표·반짝이가 계속 튀어 오름
-        Object.values(W.npcs).forEach((n) => {
+        Object.entries(W.npcs).filter(([id]) => WT.npcVisible(id)).forEach(([, n]) => {
           if (Math.random() < dt * 5) G.burst('note', n.x + (Math.random() - 0.5) * 60, n.y - n.h, 1);
           if (Math.random() < dt * 4) G.burst('sparkle', n.x + (Math.random() - 0.5) * 80, n.y - n.h * 0.6, 1);
         });
@@ -384,7 +393,8 @@
       if (!p.moving) p.stepT = 0;
       p.run = input.held('run');
       if (p.moving) {
-        const len = Math.hypot(mx, my), sp = CFG.speed * (p.run ? CFG.runMul : 1) * dt;
+        const bm = p.power === 'battery' ? (WT.Act3 ? WT.Act3.speedMul() : 1.6) : null;
+        const len = Math.hypot(mx, my), sp = CFG.speed * (bm || (p.run ? CFG.runMul : 1)) * dt;
         const nx = p.x + mx / len * sp, ny = p.y + my / len * sp;
         const ox = p.x, oy = p.y;
         if (!blocked(nx, p.y, p.z)) p.x = nx;
@@ -393,7 +403,11 @@
         s.tut.moved += moved;
         if (p.z === 0 && moved > 0.1) {
           p.stepT = (p.stepT || 0) - dt;
-          if (p.stepT <= 0) { p.stepAlt = !p.stepAlt; WT.Audio.play(p.stepAlt ? 'sfx_step_01' : 'sfx_step_02', { rate: 0.95 + Math.random() * 0.1 }); p.stepT = p.run ? 0.22 : 0.32; }
+          if (p.stepT <= 0) {
+            p.stepAlt = !p.stepAlt;
+            if (p.power === 'battery') { WT.Audio.play('sfx_dash_step', { rate: 1 }); p.stepT = 0.2; } // 건전지: 매번 같은 소리, 같은 간격
+            else { WT.Audio.play(p.stepAlt ? 'sfx_step_01' : 'sfx_step_02', { rate: 0.95 + Math.random() * 0.1 }); p.stepT = p.run ? 0.22 : 0.32; }
+          }
         }
         p.bumpCd = Math.max(0, (p.bumpCd || 0) - dt);
         if (moved <= 0.01 && p.z === 0 && !p.bumpCd) { WT.Audio.play('sfx_bump'); p.bumpCd = 0.5; }
@@ -408,7 +422,7 @@
       }
       if (s.scene === 'arena') WT.Boss.update(dt);
       // 졸음 / 음표
-      if (s.scene === 'town') Object.entries(W.npcs).forEach(([id, n]) => {
+      if (s.scene === 'town') Object.entries(W.npcs).filter(([id]) => WT.npcVisible(id)).forEach(([id, n]) => {
         const mood = s.npcs[id].mood;
         if (mood === 'sleepy' && Math.random() < dt * 0.5) G.particles.push({ type: 'zzz', x: n.x + 20, y: n.y - n.h, vx: 14, vy: -26, life: 0, max: 1.8, rot: 0, size: 1 });
       });
@@ -418,6 +432,9 @@
       }
     }
 
+    if (WT.Act3) WT.Act3.update(dt);
+    if (WT.Act4) WT.Act4.update(dt);
+    if (s.scene === 'road' && WT.Road) WT.Road.update(dt, input);
     // 입자
     G.particles.forEach((q) => { q.life += dt; q.x += q.vx * dt; q.y += q.vy * dt; if (q.type === 'sparkle') q.vy += 80 * dt; if (q.type === 'spring') { q.vy += 900 * dt; q.rot += dt * 12; } if (q.type === 'steam') { q.vy = -60; q.vx *= 0.95; } });
     G.particles = G.particles.filter((q) => q.life < q.max);
@@ -427,6 +444,7 @@
     const p = G.state.player;
     if (G.locked() || (G.state.scene !== 'town' && G.state.scene !== 'arena') || p.z > 0) return;
     if (G.state.arena && G.state.arena.sleepT > 0) return;
+    if (p.power === 'battery') { if (WT.Act3) WT.Act3.jumpBlocked(); return; } // 건전지: 점프 봉인
     p.vz = CFG.jumpV; p.z = 0.01;
     G.state.tut.jumped = true;
     WT.Audio.play('sfx_jump');
@@ -437,6 +455,8 @@
   G.tip = function () {
     const s = G.state, T = D.tips, tut = s.tut, st = s.quest.stage, p = s.player;
     if (s.scene === 'arena') return G.locked() ? null : WT.Boss.tip();
+    if (s.scene === 'road') return WT.Road ? WT.Road.tip() : null;
+    if (s.episode >= 3 && s.scene === 'town') return (WT.Act4 && WT.Act4.tip()) || (WT.Act3 ? WT.Act3.tip() : null);
     if (s.episode !== 1 || s.scene !== 'town' || G.locked()) return null;
     if (tut.moved < 120) return T.move;
     const t = G.nearestTarget();

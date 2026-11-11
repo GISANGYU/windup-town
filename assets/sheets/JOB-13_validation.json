@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-11",
+  "job": "JOB-13",
+  "checks": [
+    {
+      "id": "story_13_surveyors",
+      "file": "story/story_13_surveyors.png",
+      "original_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "format": "PNG",
+      "status": "OK"
+    },
+    {
+      "id": "story_14_grey_spread",
+      "file": "story/story_14_grey_spread.png",
+      "original_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "format": "PNG",
+      "status": "OK"
+    },
+    {
+      "id": "story_15_chase",
+      "file": "story/story_15_chase.png",
+      "original_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "format": "PNG",
+      "status": "OK"
+    },
+    {
+      "id": "story_16_radio_past",
+      "file": "story/story_16_radio_past.png",
+      "original_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "format": "PNG",
+      "status": "OK"
+    },
+    {
+      "id": "story_17_road_open",
+      "file": "story/story_17_road_open.png",
+      "original_size": [
+        1672,
+        941
+      ],
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "format": "PNG",
+      "status": "OK"
+    }
+  ],
+  "regenerated": [
+    "story_14_grey_spread",
+    "story_15_chase",
+    "story_16_radio_past"
+  ],
+  "rendering": "built-in image_gen; only output sizing and RGBA encoding performed after generation"
+}

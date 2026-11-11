@@ -1,0 +1,149 @@
+{
+  "job": "JOB-14",
+  "date": "2026-11-11",
+  "passed": 11,
+  "total": 11,
+  "checks": [
+    "PNG integrity",
+    "manifest path",
+    "RGBA",
+    "transparent corners",
+    "character height >= 300px",
+    "no residual magenta"
+  ],
+  "battery_reference": "assets/props/prop_battery_pack.png",
+  "assets": [
+    {
+      "id": "player_run_side_01",
+      "file": "player/player_run_side_01.png",
+      "size": [
+        384,
+        308
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "2d04e3d80db9d59dfc69d642ea513903072964fc37d8c93827e4876650f56828"
+    },
+    {
+      "id": "player_run_side_02",
+      "file": "player/player_run_side_02.png",
+      "size": [
+        345,
+        436
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "31b6b6f497ee73fe67cf83ce40940fa42d0d25c75f296795d9f4cbfdb334b984"
+    },
+    {
+      "id": "player_run_side_03",
+      "file": "player/player_run_side_03.png",
+      "size": [
+        428,
+        305
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "f9001950885ddf5e6ee580c6406ace5217e724ec413976cc50dc61bf850b01df"
+    },
+    {
+      "id": "player_run_side_04",
+      "file": "player/player_run_side_04.png",
+      "size": [
+        404,
+        436
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "0488cc78b92de89b7e4fb00b7d055bd5119be03b1dc250dee4f96c5a493a7a38"
+    },
+    {
+      "id": "player_dash_side_01",
+      "file": "player/player_dash_side_01.png",
+      "size": [
+        445,
+        318
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "c5acc7cfc957e84f70ba26b4104988c76d7a778b660e9900db28f6edf441b4a9"
+    },
+    {
+      "id": "player_dash_side_02",
+      "file": "player/player_dash_side_02.png",
+      "size": [
+        446,
+        318
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "df4b88daec25d4bc0a9faa7b42f6231acf84fbc6a594eb9530c5b1057d6264bb"
+    },
+    {
+      "id": "player_swap",
+      "file": "player/player_swap.png",
+      "size": [
+        396,
+        392
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "b29c45fec05a7e24ceb35acf506be9969219ead63dcbab8820f1bc04dbac7e16"
+    },
+    {
+      "id": "player_wind_self",
+      "file": "player/player_wind_self.png",
+      "size": [
+        358,
+        406
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "e1c329b5bc8c0b7bf502bd1e4104624d26045f6e9d1a7aa7fb086c7cea9f5891"
+    },
+    {
+      "id": "player_charge",
+      "file": "player/player_charge.png",
+      "size": [
+        394,
+        391
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "c8ea9b7288b76117ac58518aa6adb0bd95a6b5fa51855e84b79369bddd204004"
+    },
+    {
+      "id": "player_short",
+      "file": "player/player_short.png",
+      "size": [
+        422,
+        475
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "5fbfb7bff90abd9eefd4ae2ddb520dd4767219efd57a224aa1565efb9f807947"
+    },
+    {
+      "id": "player_hurt_side",
+      "file": "player/player_hurt_side.png",
+      "size": [
+        380,
+        472
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "residual_magenta_pixels": 0,
+      "sha256": "175dec296583fbd172f2b3b51649f3707ea8a491471006fa31489d52a71ae361"
+    }
+  ]
+}

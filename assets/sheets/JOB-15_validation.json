@@ -1,0 +1,98 @@
+{
+  "date": "2026-11-11",
+  "assets": [
+    {
+      "id": "bg_road1_far",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "magenta_pixels": 0,
+      "alpha_min": 255,
+      "edge_mean_rgba_difference": 3.706,
+      "edge_max_rgba_difference": 67,
+      "pixel_exact_repeat_edges": false,
+      "sha256": "abdf81b1a32fe5d074f7ca2e0b7d77de3560f9cfb8476ec0451905855f38cf1e"
+    },
+    {
+      "id": "bg_road1_mid",
+      "size": [
+        2172,
+        555
+      ],
+      "mode": "RGBA",
+      "magenta_pixels": 0,
+      "alpha_min": 0,
+      "edge_mean_rgba_difference": 1.138,
+      "edge_max_rgba_difference": 100,
+      "pixel_exact_repeat_edges": false,
+      "sha256": "e33ceb5dd488bf742f18806bce12ae37c4e91ac02abc55ca23b27b10806e7dda"
+    },
+    {
+      "id": "bg_road2_far",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "magenta_pixels": 0,
+      "alpha_min": 255,
+      "edge_mean_rgba_difference": 6.084,
+      "edge_max_rgba_difference": 119,
+      "pixel_exact_repeat_edges": false,
+      "sha256": "33ea3b00b374a0422feee06aa3a9e61e9e4e9a439ff1302b135c4f577f66ad85"
+    },
+    {
+      "id": "bg_road2_mid",
+      "size": [
+        2172,
+        463
+      ],
+      "mode": "RGBA",
+      "magenta_pixels": 0,
+      "alpha_min": 0,
+      "edge_mean_rgba_difference": 8.664,
+      "edge_max_rgba_difference": 255,
+      "pixel_exact_repeat_edges": false,
+      "sha256": "0e6a4965eabe0a2e1439556bd4668528c2385bfccfad38b11799fb9c7ebacf49"
+    },
+    {
+      "id": "bg_road3_far",
+      "size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "magenta_pixels": 0,
+      "alpha_min": 255,
+      "edge_mean_rgba_difference": 2.715,
+      "edge_max_rgba_difference": 25,
+      "pixel_exact_repeat_edges": false,
+      "sha256": "5c25326324308267aa6d894f7c705b34cb81dc609a07c28212e62c92bd665772"
+    },
+    {
+      "id": "bg_road3_mid",
+      "size": [
+        2172,
+        462
+      ],
+      "mode": "RGBA",
+      "magenta_pixels": 0,
+      "alpha_min": 0,
+      "edge_mean_rgba_difference": 1.029,
+      "edge_max_rgba_difference": 53,
+      "pixel_exact_repeat_edges": false,
+      "sha256": "d5070e7e3162e433c51e37f3802a4ef017ae9b131ed26654a617bcef4d6031eb"
+    }
+  ],
+  "slice_options": {
+    "mid1": "defaults",
+    "mid2": "defaults",
+    "mid3": "BIG_RATIO=0.5 runtime override, merge=40; two touching architecture groups merged; source tool unchanged"
+  },
+  "visual_review": "Six assets inspected individually and as repeated/composited layers. Palette progression, subject and transparency pass. Repeat joins visually continuous at preview scale; raw edge pixels are not identical.",
+  "limitations": [
+    "Generated watercolor edge texture is not pixel-exact seamless."
+  ]
+}

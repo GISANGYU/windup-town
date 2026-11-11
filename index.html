@@ -14,6 +14,10 @@
   #game { display:block; width:1280px; height:720px; border-radius:6px;
           filter: sepia(.45) saturate(.75) contrast(1.02); transition: filter 2.4s ease; touch-action:none; }
   body.music #game { filter: sepia(.15) saturate(1.05) contrast(1.03); }
+  /* 제3막~ 기계화: 건전지로 움직이는 것이 늘수록 화면 채도가 빠진다 */
+  body.music[data-mech="1"] #game { filter: sepia(.12) saturate(.82) contrast(1.04); }
+  body.music[data-mech="2"] #game { filter: sepia(.1) saturate(.62) contrast(1.06); }
+  body.music[data-mech="3"] #game { filter: sepia(.06) saturate(.42) contrast(1.08); }
   body[data-scene="house"] #game { cursor: crosshair; }
 
   #flash { position:absolute; inset:0; background:#fff7e4; opacity:0; pointer-events:none; border-radius:6px; }
@@ -94,7 +98,7 @@
   #debug .warn { color:#fc6; }
   #selftest { position:fixed; left:0; top:0; z-index:9; background:#000; color:#9f9; font:12px monospace; margin:0; padding:8px; }
 </style>
-<link rel="stylesheet" href="styles/dialogue.css?v=202611111530">
+<link rel="stylesheet" href="styles/dialogue.css?v=202611112303">
 </head>
 <body>
 <div id="stage">
@@ -155,20 +159,24 @@
   <div id="debug" hidden></div>
 </div>
 
-<script src="assets/manifest.js?v=202611111530"></script>
-<script src="assets/audio/audio_manifest.js?v=202611111530"></script>
-<script src="src/audio.js?v=202611111530"></script>
-<script src="src/config.js?v=202611111530"></script>
-<script src="src/world.js?v=202611111530"></script>
-<script src="src/dialogue.js?v=202611111530"></script>
-<script src="src/assets.js?v=202611111530"></script>
-<script src="src/game.js?v=202611111530"></script>
-<script src="src/story.js?v=202611111530"></script>
-<script src="src/wind.js?v=202611111530"></script>
-<script src="src/boss.js?v=202611111530"></script>
-<script src="src/intro.js?v=202611111530"></script>
-<script src="src/render.js?v=202611111530"></script>
-<script src="src/ui.js?v=202611111530"></script>
-<script src="src/main.js?v=202611111530"></script>
+<script src="assets/manifest.js?v=202611112303"></script>
+<script src="assets/audio/audio_manifest.js?v=202611112303"></script>
+<script src="src/audio.js?v=202611112303"></script>
+<script src="src/config.js?v=202611112303"></script>
+<script src="src/world.js?v=202611112303"></script>
+<script src="src/dialogue.js?v=202611112303"></script>
+<script src="src/assets.js?v=202611112303"></script>
+<script src="src/game.js?v=202611112303"></script>
+<script src="src/act3.js?v=202611112303"></script>
+<script src="src/act4.js?v=202611112303"></script>
+<script src="src/road_levels.js?v=202611112303"></script>
+<script src="src/road.js?v=202611112303"></script>
+<script src="src/story.js?v=202611112303"></script>
+<script src="src/wind.js?v=202611112303"></script>
+<script src="src/boss.js?v=202611112303"></script>
+<script src="src/intro.js?v=202611112303"></script>
+<script src="src/render.js?v=202611112303"></script>
+<script src="src/ui.js?v=202611112303"></script>
+<script src="src/main.js?v=202611112303"></script>
 </body>
 </html>

@@ -1,0 +1,115 @@
+{
+  "date": "2026-11-11",
+  "job": "JOB-10",
+  "passed": 9,
+  "assets": [
+    {
+      "id": "prop_battery",
+      "file": "assets\\props\\prop_battery.png",
+      "size": [
+        244,
+        475
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 10107,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "prop_battery_pack",
+      "file": "assets\\props\\prop_battery_pack.png",
+      "size": [
+        318,
+        493
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 36213,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "prop_sheet_music",
+      "file": "assets\\props\\prop_sheet_music.png",
+      "size": [
+        449,
+        433
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 44530,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "prop_ribbon",
+      "file": "assets\\props\\prop_ribbon.png",
+      "size": [
+        613,
+        366
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 109005,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "furn_bunting",
+      "file": "assets\\furniture\\furn_bunting.png",
+      "size": [
+        989,
+        371
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 237144,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "furn_lantern",
+      "file": "assets\\furniture\\furn_lantern.png",
+      "size": [
+        372,
+        479
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 89275,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "furn_banner",
+      "file": "assets\\furniture\\furn_banner.png",
+      "size": [
+        424,
+        621
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 158563,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "portrait_lamp_awake",
+      "file": "assets\\portrait\\portrait_lamp_awake.png",
+      "size": [
+        557,
+        683
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 200725,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    },
+    {
+      "id": "portrait_lamp_shy",
+      "file": "assets\\portrait\\portrait_lamp_shy.png",
+      "size": [
+        559,
+        685
+      ],
+      "mode": "RGBA",
+      "transparent_pixels": 202041,
+      "remaining_magenta_pixels": 0,
+      "passed": true
+    }
+  ]
+}

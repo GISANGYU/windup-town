@@ -7,13 +7,17 @@ window.WT = window.WT || {};
   const defs = {};
   [...(M.bgm || []), ...(M.sfx || [])].forEach((d) => { defs[d.id] = d; });
 
-  let ctx = null, master = null, bgmBus = null, sfxBus = null;
+  let ctx = null, master = null, bgmBus = null, sfxBus = null, thinF = null, thinG = null;
   try {
     const AC = window.AudioContext || window.webkitAudioContext;
     if (AC) {
       ctx = new AC();
       master = ctx.createGain(); master.connect(ctx.destination);
-      bgmBus = ctx.createGain(); bgmBus.connect(master);
+      // BGM → (얇아지는 필터) → master. 건전지가 늘수록 고음이 깎이고 작아진다(기계화).
+      bgmBus = ctx.createGain();
+      thinF = ctx.createBiquadFilter(); thinF.type = 'lowpass'; thinF.frequency.value = 20000; thinF.Q.value = 0.5;
+      thinG = ctx.createGain();
+      bgmBus.connect(thinF); thinF.connect(thinG); thinG.connect(master);
       sfxBus = ctx.createGain(); sfxBus.connect(master);
     }
   } catch (e) { ctx = null; }
@@ -22,6 +26,7 @@ window.WT = window.WT || {};
   const state = {};         // id → 'loading' | 'ok' | 'fail'
   const loops = {};         // id → { src, gain }
   let cur = null;           // 현재 BGM { id, src, gain, rate }
+  let lay = null;           // 스템 묶음 { key, parts: { id: { src, g } } }
   let want = null;          // 원하는 BGM (버퍼가 늦게 오면 도착할 때 시작)
   let muted = false;
   try { muted = localStorage.getItem('wt-muted') === '1'; } catch (e) { /* 저장 불가 */ }
@@ -141,6 +146,37 @@ window.WT = window.WT || {};
     },
     held() { return performance.now() / 1000 < A.holdUntil; },
 
+    // 0 = 원래 소리, 1 = 거의 안 들림(고음 없음)
+    thinK: 0,
+    thin(k) {
+      k = Math.max(0, Math.min(1, k || 0));
+      if (Math.abs(k - A.thinK) < 0.005 || !thinF) { A.thinK = k; return; }
+      A.thinK = k;
+      const t = now();
+      try { thinF.frequency.setTargetAtTime(20000 * Math.pow(500 / 20000, k), t, 0.4); thinG.gain.setTargetAtTime(1 - k * 0.55, t, 0.4); } catch (e) { /* 무시 */ }
+    },
+    // 스템(같은 길이 BGM 여러 개)을 동시에 시작해 볼륨만 따로 조절. 하나라도 없으면 false.
+    layers(ids, gains) {
+      if (!ctx) return false;
+      const key = ids ? ids.join('|') : null;
+      if (!key) { if (lay) { const t = now(); Object.values(lay.parts).forEach((q) => { try { q.g.gain.setTargetAtTime(0, t, 0.2); q.src.stop(t + 1); } catch (e) { /* 무시 */ } }); lay = null; } return true; }
+      if (!ids.every((id) => buffers[id])) { ids.forEach(loadOne); return false; }
+      if (!lay || lay.key !== key) {
+        A.layers(null);
+        A.bgm(null);
+        const t = now() + 0.05, parts = {};
+        ids.forEach((id) => {
+          const src = ctx.createBufferSource(); src.buffer = buffers[id]; src.loop = true;
+          const g = ctx.createGain(); g.gain.setValueAtTime(0, t);
+          src.connect(g); g.connect(bgmBus); src.start(t); parts[id] = { src, g };
+        });
+        lay = { key, parts };
+      }
+      const t = now();
+      ids.forEach((id, i) => { const v = (defs[id].vol ?? 0.5) * (gains ? gains[i] : 1); try { lay.parts[id].g.gain.setTargetAtTime(v, t, 0.5); } catch (e) { /* 무시 */ } });
+      return true;
+    },
+    layering() { return !!lay; },
     toggleMute() {
       muted = !muted;
       try { localStorage.setItem('wt-muted', muted ? '1' : '0'); } catch (e) { /* 무시 */ }

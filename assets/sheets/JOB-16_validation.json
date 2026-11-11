@@ -1,0 +1,253 @@
+{
+  "date": "2026-11-11",
+  "assets": [
+    {
+      "id": "road_ground_grass",
+      "file": "assets\\road\\road_ground_grass.png",
+      "size": [
+        644,
+        644
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "94a2366c7fedf030331506aee8cee9ca73e06ed8a24255f4988647d345f9a354",
+      "edge_mean_rgba_difference": 2.284,
+      "pixel_exact_repeat_edges": false
+    },
+    {
+      "id": "road_platform_wood",
+      "file": "assets\\road\\road_platform_wood.png",
+      "size": [
+        534,
+        117
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "e1f7ca41ac614e59387244ef0558d618ddb63a93a456d63ab55f580acd80d330"
+    },
+    {
+      "id": "road_bush_tall",
+      "file": "assets\\road\\road_bush_tall.png",
+      "size": [
+        376,
+        257
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "98c57b009f66e2a59259e1620fdd796a032300a7bc1154797ff62491fbd0805e"
+    },
+    {
+      "id": "road_puddle",
+      "file": "assets\\road\\road_puddle.png",
+      "size": [
+        412,
+        57
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "a74fd419468cac76d4b82de001243f3473c9537056d9b18a985f61926d618482"
+    },
+    {
+      "id": "road_wind_lift",
+      "file": "assets\\road\\road_wind_lift.png",
+      "size": [
+        348,
+        301
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "5e0d6df18f2a6ac6043656fdf4a2689ec3d7395ac2714919374f773ca41e76e8"
+    },
+    {
+      "id": "road_drawbridge",
+      "file": "assets\\road\\road_drawbridge.png",
+      "size": [
+        786,
+        167
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "eaa21629e7a12a084e0fd29ad54d18f6d2f02e770de9da2654ce4c0577cb2213"
+    },
+    {
+      "id": "road_wind_post",
+      "file": "assets\\road\\road_wind_post.png",
+      "size": [
+        173,
+        338
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "9c4a7db3de55987781e4fd39dd8bdf38efc7f0eccc9bc33d4690eb0862fab6a6"
+    },
+    {
+      "id": "road_ground_metal",
+      "file": "assets\\road\\road_ground_metal.png",
+      "size": [
+        644,
+        644
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "45e1297faf4066bfab42435461fc281e27f79e80b5766a83174dab43569a13e5",
+      "edge_mean_rgba_difference": 1.779,
+      "pixel_exact_repeat_edges": false
+    },
+    {
+      "id": "road_shutter_closed",
+      "file": "assets\\road\\road_shutter_closed.png",
+      "size": [
+        284,
+        349
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "68d81ba1f664e3c24f83bab6ebc67279f04ac8a24d392d216bcae9e177b01dfc"
+    },
+    {
+      "id": "road_shutter_open",
+      "file": "assets\\road\\road_shutter_open.png",
+      "size": [
+        284,
+        349
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "3556075819a90ca2edf4b8132c3f13e39392acbac9ab08a101989e5ddcab0b5e"
+    },
+    {
+      "id": "road_conveyor",
+      "file": "assets\\road\\road_conveyor.png",
+      "size": [
+        271,
+        133
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "81dbf8b92aec5762086ff003b86504bb34ac2e31a98084fb27acdbb4d8684770",
+      "edge_mean_rgba_difference": 4.38,
+      "pixel_exact_repeat_edges": false
+    },
+    {
+      "id": "road_door_closed",
+      "file": "assets\\road\\road_door_closed.png",
+      "size": [
+        284,
+        371
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "9608fd89a0341c92eee3456ce9266750200ddb83ccb33dce5fc8f2424a330888"
+    },
+    {
+      "id": "road_door_open",
+      "file": "assets\\road\\road_door_open.png",
+      "size": [
+        284,
+        371
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "370b68c48677787dd34493a011f8f3c22352679a33cec88e55a2e0853df66eb1"
+    },
+    {
+      "id": "road_elevator",
+      "file": "assets\\road\\road_elevator.png",
+      "size": [
+        308,
+        358
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "c3a96a30b38c1b7f08a2d2092282600468324a9a7dcb2bc3d20d33eaa2c7ee9c"
+    },
+    {
+      "id": "road_charger",
+      "file": "assets\\road\\road_charger.png",
+      "size": [
+        268,
+        360
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "13beaa687e46f92f3ba72075b1b57ed4316257708e812ea1220b783023b13c57"
+    },
+    {
+      "id": "road_spark_wire",
+      "file": "assets\\road\\road_spark_wire.png",
+      "size": [
+        437,
+        175
+      ],
+      "mode": "RGBA",
+      "status": "OK",
+      "visible_magenta_pixels": 0,
+      "sha256": "f97d273feeea50d89eb4aeb143d6589ad69ae991505ba807668d8b127015f7d0"
+    }
+  ],
+  "pairs": [
+    {
+      "pair": "shutter",
+      "same_canvas": true,
+      "same_alpha_bounds": true,
+      "bounds": [
+        [
+          2,
+          2,
+          282,
+          347
+        ],
+        [
+          2,
+          2,
+          282,
+          347
+        ]
+      ]
+    },
+    {
+      "pair": "door",
+      "same_canvas": true,
+      "same_alpha_bounds": true,
+      "bounds": [
+        [
+          2,
+          2,
+          282,
+          369
+        ],
+        [
+          2,
+          2,
+          282,
+          369
+        ]
+      ]
+    }
+  ],
+  "slice_options": {
+    "a": "defaults",
+    "b": "BIG_RATIO=0.08 runtime override, merge=50; source tool unchanged",
+    "tiles": "defaults"
+  },
+  "export_adjustments": "Shutter pair: artwork 280x345, door pair: 280x367. Ground artwork 640x640. Trim 3px horizontal keying fringe on repeating pieces. Add transparent 2px export margins. Reapply slicer spill threshold after resize. Conveyor: select repeating interior columns 38..304 inclusive (267x129 artwork).",
+  "visual_review": "All 16 sprites reviewed on neutral contact sheet; warm wood/brass and cool steel/orange palettes match references. No text or cast shadows. Open/closed pairs share canvas and alpha bounds.",
+  "limitations": [
+    "Repeat previews are visually continuous at gameplay scale, but generated edge shading/detail is not pixel-identical."
+  ]
+}

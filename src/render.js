@@ -101,8 +101,17 @@
     if (air) { sy = 1.08; sx = 0.93; }
     if (p.landT > 0) { const k = p.landT / 0.18; sy = 1 - 0.18 * k; sx = 1 + 0.18 * k; }
     if (pose === 'happy') { bob += Math.abs(Math.sin(t * 14)) * 10; }
+    const bat = p.power === 'battery';
+    if (bat) { bob = 0; sx = 1; sy = 1; rot = p.moving ? 0.03 * (p.facing || 1) : 0; if (p.landT > 0) { sy = 0.94; sx = 1.04; } } // 튀지 않음
     shadow(p.x, p.y, 54 * (1 - Math.min(0.5, p.z / 200)), 0.3 - Math.min(0.15, p.z / 600));
+    if (bat) { ctx.save(); ctx.filter = 'grayscale(1) contrast(1.05) brightness(1.04)'; }
     WT.drawThing(ctx, ids, PH.bogle, p.x, p.y - p.z - bob, { h: 110, flip: side && p.facing < 0, sx, sy, rot, pose, dir, t });
+    if (bat) {
+      const bx = p.x + (side ? -(p.facing || 1) * 40 : 0), by = p.y - 62;
+      if (dir !== 'down') WT.drawThing(ctx, 'prop_battery_pack', PH.batteryPack, bx, by, { h: 40, anchor: 'center' });
+      ctx.restore();
+      if (dir === 'down') WT.drawThing(ctx, 'prop_battery_pack', PH.batteryPack, p.x + 44, p.y - 70, { h: 30, anchor: 'center', alpha: 0.9 });
+    }
   }
 
   function drawNpc(id, t) {
@@ -110,16 +119,26 @@
     const awake = st.mood === 'awake';
     let ids, ph;
     if (id === 'gramo') { ph = PH.gramo; ids = awake ? (A.has('npc_gramo_awake_02') && beat(t / 2 + 0.25) > 0.5 && Math.floor(t * CFG.bpm / 60) % 2 ? ['npc_gramo_awake_02', 'npc_gramo_awake'] : ['npc_gramo_awake']) : ['npc_gramo_sleepy']; }
+    else if (id === 'radio') { ph = PH.radio; ids = st.off ? ['npc_radio_off', 'npc_radio_idle'] : st.power === 'wind' ? ['npc_radio_crank', 'npc_radio_idle'] : (WT.Game.state.ui.dialog && WT.Game.state.ui.dialog.who === 'radio' && Math.floor(t * 4) % 2 ? ['npc_radio_talk', 'npc_radio_idle'] : ['npc_radio_idle']); }
+    else if (id === 'cuckoo') { ph = PH.cuckoo; ids = ['boss_cuckoo']; }
     else if (id === 'pip') { ph = PH.pip; ids = awake ? (A.has('npc_pip_awake_02') && Math.floor(t * CFG.bpm / 60) % 2 ? ['npc_pip_awake_02', 'npc_pip_awake'] : ['npc_pip_awake']) : ['npc_pip_sleepy']; }
-    else { ph = PH.lamp; ids = [awake ? 'npc_lamp_on' : 'npc_lamp_off']; }
+    else { ph = PH.lamp; const lit = WT.Act3 && WT.Act3.lampLit(); ids = [(lit != null ? lit : awake) ? 'npc_lamp_on' : 'npc_lamp_off']; }
+    const bat = st.power === 'battery' || (id === 'radio' && st.off);
     let sx = 1, sy = 1, rot = 0, bob = 0;
     const c = s.ui.cutscene;
     const party = c && c.type === 'party' ? 1 + 1.5 * Math.min(1, c.t / 0.3) : 1; // 깨어난 직후 2초: 동작을 크게
     if (awake) { const b = beat(t, id === 'pip' ? 0.5 : 0); sy = 1 + b * 0.06 * party; sx = 1 - b * 0.04 * party; bob = b * 8 * party; rot = Math.sin(t * CFG.bpm / 60 * Math.PI) * 0.05 * party; }
     else { rot = 0.06 + Math.sin(t * 1.2 + n.x) * 0.03; sy = 0.97 + Math.sin(t * 1.6) * 0.015; }
     if (id === 'gramo' && c && c.type === 'wind') { rot = Math.sin(c.t * 40) * 0.05; sy = 1 + Math.sin(c.t * 20) * 0.04; }
+    if (id === 'cuckoo') { const b = s.world.musicOn ? beat(t, 0.25) : 0; sy = 1 + b * 0.05; sx = 1 - b * 0.03; bob = b * 5; rot = Math.sin(t * 2) * 0.04; }
+    if (bat) { sx = 1; sy = 1; bob = 0; rot = st.off ? 0.18 : 0; } // 건전지: 튀지 않음, 꺼지면 고꾸라짐
+    const lampOn = id === 'lamp' && st.power === 'battery'; // 건전지 가로등: 깜빡이지 않고 하얗게 켜져 있음
+    if (lampOn) ids = ['npc_lamp_on'];
     shadow(n.x, n.y, n.foot[0] * 1.15);
-    WT.drawThing(ctx, ids, ph, n.x, n.y - bob, { h: n.h, sx, sy, rot, mood: st.mood, t, wind: st.wind });
+    if (bat) { ctx.save(); ctx.filter = st.off ? 'grayscale(1) brightness(.8)' : 'grayscale(1) contrast(1.05) brightness(1.04)'; }
+    WT.drawThing(ctx, ids, ph, n.x, n.y - bob, { h: n.h, sx, sy, rot, mood: id === 'cuckoo' ? 'cuckoo' : st.mood, pose: id === 'cuckoo' ? 'cuckoo' : undefined, t, wind: st.wind, power: st.power, off: st.off, crank: id === 'radio' && st.power === 'wind' });
+    if (bat) ctx.restore();
+    if (lampOn) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = 'rgba(235,240,255,.22)'; ctx.beginPath(); ctx.arc(n.x + 30, n.y - n.h * 0.82, 44, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
   }
 
   function drawProp(p, t) {
@@ -145,7 +164,7 @@
       const k = q.life / q.max, a = k < 0.15 ? k / 0.15 : 1 - Math.max(0, (k - 0.6) / 0.4);
       const map = { note: [['fx_note_01', 'fx_note_02'][(q.x | 0) % 2 ? 1 : 0], PH.note, 34, 'center'], sparkle: ['fx_sparkle', PH.sparkle, 30, 'center'],
         spring: ['fx_spring', PH.spring, 60, 'center'], steam: ['fx_steam', PH.steam, 40 + k * 30, 'center'],
-        dust: ['fx_dust', PH.dust, 30, 'bottom'], zzz: ['fx_zzz', PH.zzz, 26 + k * 14, 'center'] }[q.type];
+        dust: ['fx_dust', PH.dust, 30, 'bottom'], zzz: ['fx_zzz', PH.zzz, 26 + k * 14, 'center'], static: ['fx_static', PH.static, 26, 'center'] }[q.type];
       if (!map) return;
       const ids = q.type === 'note' ? [map[0], 'fx_note_01', 'fx_note_02'] : [map[0]];
       WT.drawThing(ctx, ids, map[1], q.x, q.y, { h: map[2] * (q.type === 'dust' ? 1 + k : 1), anchor: map[3], alpha: a, rot: q.rot + (q.type === 'note' ? Math.sin(q.life * 6) * 0.3 : 0) });
@@ -154,7 +173,7 @@
 
   function drawPrompt(target, t) {
     if (!target) return;
-    const label = { npc: '대화하기', key: '줍기', door: '들어가기', boss: '과감기!' }[target.type];
+    const label = { npc: '대화하기', key: '줍기', door: '들어가기', boss: '과감기!', deco: '장식 놓기', sheet: '줍기', ribbon: '줍기', stake: '길게: 뽑기', surveyor: target.label || '잡음 방송' }[target.type] || '살펴보기';
     const x = target.x, y = target.y - target.h - 26 - Math.abs(Math.sin(t * 4)) * 5;
     ctx.save();
     ctx.font = '22px "Do Hyeon", sans-serif';
@@ -282,7 +301,9 @@
     });
     const list = [];
     W.props.forEach((p) => list.push({ y: p.y, f: () => drawProp(p, t) }));
-    Object.keys(W.npcs).forEach((id) => list.push({ y: W.npcs[id].y, f: () => drawNpc(id, t) }));
+    Object.keys(W.npcs).forEach((id) => WT.npcVisible(id) && list.push({ y: W.npcs[id].y, f: () => drawNpc(id, t) }));
+    if (WT.Act3) WT.Act3.drawList(list, t, ctx, R);
+    if (WT.Act4) WT.Act4.drawList(list, t, ctx, R);
     if (s.quest.stage === 'started') s.world.keys.forEach((k) => !k.taken && list.push({ y: k.y, f: () => drawKey(k, t) }));
     list.push({ y: s.player.y, f: () => drawPlayer(t) });
     list.sort((a, b) => a.y - b.y).forEach((d) => d.f());
@@ -291,6 +312,8 @@
     drawPrompt(target, t);
     drawDebug(target);
     drawHud(t);
+    if (WT.Act3) WT.Act3.drawOverlay(ctx, t);
+    if (WT.Act4) WT.Act4.drawOverlay(ctx, t);
     drawTip(t);
   }
 
@@ -337,7 +360,7 @@
     ctx.clearRect(0, 0, WT.W, WT.H);
     ctx.save();
     if (R.shakeT > 0) { R.shakeT -= 1 / 60; const k = R.shakeT * 30; ctx.translate((Math.random() - 0.5) * k, (Math.random() - 0.5) * k); }
-    if (s.scene === 'intro') WT.Intro.draw(ctx, t); else if (s.scene === 'town') town(t); else if (s.scene === 'arena') { WT.Boss.draw(ctx, t, R); drawTip(t); } else house(t);
+    if (s.scene === 'intro') WT.Intro.draw(ctx, t); else if (s.scene === 'town') town(t); else if (s.scene === 'arena') { WT.Boss.draw(ctx, t, R); drawTip(t); } else if (s.scene === 'road') { WT.Road.draw(ctx, t, R); drawTip(t); } else house(t);
     ctx.restore();
     WT.Story.draw(ctx, t);
     drawFilm(t);

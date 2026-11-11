@@ -38,6 +38,9 @@ WT.FURN = {
   table:      { asset: 'furn_table',           h: 95,  foot: 100, label: '테이블',     key: '2' },
   plant:      { asset: 'furn_plant',           h: 115, foot: 54,  label: '화분',       key: '3' },
   gramophone: { asset: 'furn_gramophone_mini', h: 120, foot: 70,  label: '미니 축음기', key: '4' },
-  cuckoo:     { asset: 'furn_cuckoo',          h: 130, foot: 64,  label: '뻐꾸기시계', key: '5' }
+  cuckoo:     { asset: 'furn_cuckoo',          h: 130, foot: 64,  label: '뻐꾸기시계', key: '5' },
+  bunting:    { asset: 'furn_bunting',         h: 110, foot: 110, label: '깃발 줄',    key: '6' },
+  lantern:    { asset: 'furn_lantern',         h: 120, foot: 40,  label: '등불',       key: '7' },
+  banner:     { asset: 'furn_banner',          h: 130, foot: 40,  label: '깃대',       key: '8' }
 };
 WT.ROOM = { x1: 150, x2: 1130, y1: 330, y2: 690, grid: 20 };

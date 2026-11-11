@@ -58,6 +58,7 @@
 | JOB-5 | 가구 + 이펙트 + UI | a: 가구 4개 / b: 이펙트 5개 / c: UI 2개 | anchor, ref_02 |
 | JOB-6 | 배경 | 3장 각각 따로 (시트 아님) | anchor, ref_04, ref_03 |
 | JOB-8 | 제2막 보스 (추가) | a: 백작 포즈 6개(idle, slam, throw, bell, tired, hurt) 한 장 / b: 뻐꾸기시계 + 초상화 2 + 가구 뻐꾸기시계 / c: 이펙트 4개(톱니, 스프링, 김, 종소리) / 배경·컷신·감기 모달은 각각 따로 | anchor, ref_02, ref_01, 완성된 npc_gramo_awake |
+| JOB-9 ~ JOB-17 | 제3~5막 (추가) | JOB별 지시서 `jobs/JOB-09.md` ~ `jobs/JOB-17.md`. 순서·의존은 `jobs/README.md` | 각 지시서에 적힘 |
 | JOB-7 | 컷신 + 감기 모달 (추가) | 컷신 5장 각각 따로(16:9, BACKGROUND RULES) / 감기 모달 2개는 마젠타 시트 1장 | anchor, ref_01, ref_03, 완성된 bg_town_ground |
 
 - 초상화(JOB-3)는 NPC(JOB-2) 결과를 레퍼런스로 써야 해서 JOB-2가 끝난 뒤 시작한다. 나머지 5개는 동시에 돌려도 된다.
@@ -112,6 +113,9 @@ Fill the whole 16:9 canvas edge to edge, no border, no vignette (the game adds i
 | 배경 남색 | `#4E546E` |
 | 배경 올리브 | `#8A9A6B` |
 | 배경 웜그레이 | `#907F77` |
+| 건전지 회색 (3막~) | `#9BA3AE` |
+| 강철 (3막~) | `#6E7884` |
+| 신호 주황 (4막~) | `#E07A3A` |
 | 마젠타 (지울 배경) | `#FF00FF` — 그림 안에서는 절대 쓰지 않음 |
 
 ## 5. CHARACTER BLOCK (그대로 붙일 것)
@@ -146,6 +150,30 @@ Tall and lanky, about twice BOGLE's height. Menacing but funny, never scary-gory
 **LAMP (가로등, 선택)**
 ```
 LAMP: a thin dark plum iron street lamp with a curved neck; the glass lantern is the head with two pie-cut eyes. When on, the glass glows warm yellow #F2C14E.
+```
+
+**RADIO (라디오 씨, 제3막~)**
+```
+RADIO: a boxy old wooden TABLE RADIO, the whole body IS the radio (no human torso).
+Rounded-top cabinet in honey wood #B9824F with a cream #F4E6C8 cloth speaker grille on the lower front; the grille is his mouth.
+Two round brass tuning DIALS on the upper front are his eyes. One thin metal antenna on top, slightly bent.
+Short stiff legs with grey round shoes, rubber hose arms with white gloves, but he holds himself straighter and stiffer than the village characters.
+Friendly, eager, a little pushy salesman. About the same height as PIP.
+```
+**SURVEYOR (측량기, 제4막)**
+```
+SURVEYOR: a battery-powered surveying robot shaped like a tripod surveying instrument.
+A boxy cool grey #9BA3AE metal head with one big round glass lens on the front and two small round glowing dot eyes below it, a short antenna with a tiny orange #E07A3A light.
+Three thin perfectly STRAIGHT steel #6E7884 tripod legs (NOT rubber hose, rigid straight lines), one small mechanical claw arm.
+Emotionless and precise. Still outlined in dark plum #3D3346 like everything else.
+```
+**눈 규칙 예외 (제3막~)**: 건전지로 움직이는 것(건전지 상태의 라디오 씨, 측량기, 건전지 대시 중인 보글, 5막의 건전지 사물들)은 파이 눈 대신 **작은 둥근 불빛 점 두 개**로 그린다. 기계화를 보여 주는 의도된 차이다. 태엽으로 돌아오면 다시 파이 눈이다.
+
+**SIDE-SCROLL RULES** (제5막 `view: side`: 보글 횡스크롤 포즈, `road/` 전부)
+```
+Strict side view for a 2D side-scrolling game, the camera is level with the ground (not from above). Characters face RIGHT.
+Tiles and background layers marked "connect seamlessly" must match exactly at the LEFT and RIGHT edges so they can repeat.
+Mid layers: draw only the lower part, leave the upper part empty flat #FF00FF magenta.
 ```
 
 ---
@@ -253,5 +281,86 @@ LAMP: a thin dark plum iron street lamp with a curved neck; the glass lantern is
 | 가구 | `furniture/furn_cuckoo.png` | 선택 | 높이 130px | front34 | 제2막 보상 가구: 뻐꾸기시계(얼굴 없는 가구 버전) |
 | UI | `ui/ui_card_frame.png` | 선택 | 1100×240 | front34 | 무성영화 자막 카드 테두리. 가운데는 비워 둠 |
 | UI | `ui/ui_key_e.png` | 선택 | 높이 48px | front34 | E 키 아이콘(상호작용 안내). 글자 E만 허용 |
+| 배경 | `bg/bg_intro.png` | 선택 | 1280×720 | front34 | 시작 메뉴 배경. 중앙 제목·버튼 영역 비움 |
+| UI | `ui/ui_button_start.png` | 선택 | 400×112 | front34 | 시작 버튼 바탕. 붉은 면·황동 테두리·태엽 열쇠 문양, 글자 없음 |
+| UI | `ui/ui_button_help.png` | 선택 | 400×112 | front34 | 게임설명 버튼 바탕. 크림 면·황동 테두리·책 문양, 글자 없음 |
+| UI | `ui/ui_help_modal.png` | 선택 | 920×600 | front34 | 게임설명 모달 패널. 넓은 크림 본문·황동 모서리, 글자 없음 |
+| NPC | `npc/npc_radio_idle.png` | 필수 | 높이 130px | front34 | 라디오 씨 대기(건전지 상태). 영업용 미소, 한 손을 내밀어 소개하는 자세 |
+| NPC | `npc/npc_radio_talk.png` | 선택 | 높이 130px | front34 | 라디오 씨 말하기. 두 팔 벌림, 스피커 입 크게 |
+| NPC | `npc/npc_radio_off.png` | 필수 | 높이 130px | front34 | 건전지가 다 닳아 꺼진 라디오 씨. 앞으로 고꾸라짐, 다이얼 눈이 비어 있음 |
+| NPC | `npc/npc_radio_crank.png` | 필수 | 높이 130px | front34 | 크랭크를 단 태엽 라디오 씨. 다이얼 눈 안에 처음으로 파이 눈이 생김, 몸이 출렁임 |
+| 초상화 | `portrait/portrait_radio.png` | 선택 | 높이 200px | front34 | 대화 카드용 라디오 씨(건전지, 영업 미소) |
+| 초상화 | `portrait/portrait_radio_crank.png` | 선택 | 높이 200px | front34 | 대화 카드용 태엽 라디오 씨(따뜻한 미소) |
+| 소품 | `props/prop_battery.png` | 필수 | 높이 40px | front34 | 건전지(아이템·HUD). 마을과 어울리지 않는 차가운 회색, 로고·글자 없음 |
+| 소품 | `props/prop_battery_pack.png` | 선택 | 높이 46px | front34 | 보글 등에 붙는 건전지 팩(4·5막 오버레이). 옆에서 본 모습 |
+| 소품 | `props/prop_sheet_music.png` | 필수 | 높이 40px | front34 | 피프의 악보 조각(줍는 아이템). 찢어진 크림색 종이에 음표 모양 |
+| 소품 | `props/prop_ribbon.png` | 선택 | 높이 36px | front34 | 보글 이사 상자의 빨간 리본(건전지 체험 때 덤불 너머에 보임) |
+| 가구 | `furniture/furn_bunting.png` | 선택 | 높이 110px | front34 | 축제 깃발 줄(무대 꾸미기). 양쪽 작은 기둥 사이 삼각 깃발 |
+| 가구 | `furniture/furn_lantern.png` | 선택 | 높이 120px | front34 | 축제 종이 등불(기둥형) |
+| 가구 | `furniture/furn_banner.png` | 선택 | 높이 130px | front34 | 축제 깃발 기둥 |
+| 초상화 | `portrait/portrait_lamp_awake.png` | 선택 | 높이 200px | front34 | 대화 카드용 가로등(이름을 얻은 뒤, 밝게 깜빡임) |
+| 초상화 | `portrait/portrait_lamp_shy.png` | 선택 | 높이 200px | front34 | 대화 카드용 가로등(처음 말할 때, 수줍음) |
+| 컷신 | `story/story_08_festival.png` | 선택 | 1280×720 | front34 | 3막 1: 깃발·등불로 꾸민 광장 축제. 모두 춤추고, 무대 위 그라모는 조금 지쳐 이마를 닦음 |
+| 컷신 | `story/story_09_radio_arrive.png` | 선택 | 1280×720 | front34 | 3막 2: 건전지를 잔뜩 실은 수레를 밀고 축제에 들어오는 라디오 씨 |
+| 컷신 | `story/story_10_radio_down.png` | 선택 | 1280×720 | front34 | 3막 3: 해 질 녘, 광장 한가운데 꺼진 채 쓰러진 라디오 씨와 걱정스레 모인 주민들 |
+| 컷신 | `story/story_11_broadcast.png` | 선택 | 1280×720 | front34 | 3막 4: 크랭크를 단 라디오 씨가 무대에서 그라모 곁에 서서 음악을 마을 전체로 방송 |
+| 컷신 | `story/story_12_city_signal.png` | 선택 | 1280×720 | front34 | 3막 끝: 빛나는 라디오 다이얼 너머, 먼 지평선의 회색 도시와 송신탑에서 들쭉날쭉한 잡음 파동이 밀려옴 |
+| 감기 모달 | `wind/wind_radio_back.png` | 선택 | 높이 430px | front34 | 크랭크 감기 모달 배경: 라디오 씨 옆면 클로즈업, 가운데 둥근 크랭크 축 자리(크랭크 없음) |
+| 감기 모달 | `wind/wind_crank.png` | 선택 | 높이 200px | front34 | 크랭크 감기 모달의 크랭크. 화면에서 회전하므로 둥근 바퀴 + 가장자리 손잡이, 정면 |
+| NPC | `npc/npc_surveyor_idle.png` | 필수 | 높이 130px | front34 | 측량기 대기. 삼각대 다리, 뻣뻣하게 서 있음 |
+| NPC | `npc/npc_surveyor_walk_01.png` | 선택 | 높이 130px | front34 | 측량기 걷기 1(오른쪽). 다리 하나를 직선으로 뻗음 |
+| NPC | `npc/npc_surveyor_walk_02.png` | 선택 | 높이 130px | front34 | 측량기 걷기 2(오른쪽) |
+| NPC | `npc/npc_surveyor_hammer.png` | 필수 | 높이 130px | front34 | 측량기가 말뚝을 땅에 박는 동작 |
+| NPC | `npc/npc_surveyor_stun.png` | 필수 | 높이 130px | front34 | 측량기 멈춤(합선). 렌즈가 빙글, 회색 지지직 |
+| 초상화 | `portrait/portrait_surveyor.png` | 선택 | 높이 200px | front34 | 대화 카드용 측량기 |
+| 소품 | `props/prop_stake.png` | 필수 | 높이 60px | front34 | 측량 말뚝(뽑는 대상). 주황 꼬리표와 작은 안테나 |
+| 소품 | `props/prop_stake_pulled.png` | 선택 | 높이 30px | front34 | 뽑혀 쓰러진 말뚝 |
+| 소품 | `props/prop_city_map.png` | 필수 | 높이 40px | front34 | 측량기가 떨어뜨린 도시 지도(돌돌 만 청사진) |
+| 이펙트 | `fx/fx_static.png` | 선택 | 높이 50px | front34 | 회색 잡음 불꽃(건전지·측량기 이펙트) |
+| 컷신 | `story/story_13_surveyors.png` | 선택 | 1280×720 | front34 | 4막 1: 아침, 말뚝을 등에 진 측량기 셋이 줄 맞춰 마을로 들어옴 |
+| 컷신 | `story/story_14_grey_spread.png` | 선택 | 1280×720 | front34 | 4막 2: 박힌 말뚝에서 회색이 얼룩처럼 번져 마을 바닥과 꽃이 색을 잃음 |
+| 컷신 | `story/story_15_chase.png` | 선택 | 1280×720 | front34 | 4막 3: 등에 건전지 팩을 단 보글이 속도선을 그리며 마을 출구로 달아나는 측량기를 쫓음 |
+| 컷신 | `story/story_16_radio_past.png` | 선택 | 1280×720 | front34 | 4막 4: 회상(회색 톤). 도시 방송국 선반 위 라디오 씨가 반짝이는 새 기계들 사이에서 고물 상자로 던져짐 |
+| 컷신 | `story/story_17_road_open.png` | 선택 | 1280×720 | front34 | 4막 끝: 마을 끝에서 먼 회색 도시와 송신탑으로 이어진 긴 길을 바라보는 보글과 라디오 씨 |
+| 주인공 | `player/player_run_side_01.png` | 필수 | 높이 120px | side | 5막 태엽 달리기 1(오른쪽). 출렁이는 러버호스 보폭 |
+| 주인공 | `player/player_run_side_02.png` | 선택 | 높이 120px | side | 5막 태엽 달리기 2 |
+| 주인공 | `player/player_run_side_03.png` | 선택 | 높이 120px | side | 5막 태엽 달리기 3 |
+| 주인공 | `player/player_run_side_04.png` | 선택 | 높이 120px | side | 5막 태엽 달리기 4 |
+| 주인공 | `player/player_dash_side_01.png` | 필수 | 높이 120px | side | 5막 건전지 대시 1. 뻣뻣하게 앞으로 기울어짐, 등에 건전지 팩, 튐 없음 |
+| 주인공 | `player/player_dash_side_02.png` | 선택 | 높이 120px | side | 5막 건전지 대시 2 |
+| 주인공 | `player/player_swap.png` | 필수 | 높이 120px | side | 5막 갈아끼우기: 등 덮개를 열고 한 손엔 건전지, 한 손엔 태엽 열쇠 |
+| 주인공 | `player/player_wind_self.png` | 선택 | 높이 120px | side | 5막 스스로 태엽 감기(게이지 회복) |
+| 주인공 | `player/player_charge.png` | 선택 | 높이 120px | side | 5막 충전소에서 충전 중. 등에 플러그, 눈 감고 편안 |
+| 주인공 | `player/player_short.png` | 선택 | 높이 120px | side | 5막 물에 닿아 합선. 지지직, 몸이 굳음 |
+| 주인공 | `player/player_hurt_side.png` | 선택 | 높이 120px | side | 5막 피격(뒤로 밀림) |
+| 길(5막) | `road/bg_road1_far.png` | 필수 | 1280×720 | side | 5막 구간1(마을 외곽 들판) 먼 배경. 좌우가 이어지는 반복 배경 |
+| 길(5막) | `road/bg_road1_mid.png` | 필수 | 1280×360 | side | 5막 구간1 중간 레이어(위쪽 투명). 덤불·나무·울타리 실루엣 띠 |
+| 길(5막) | `road/bg_road2_far.png` | 필수 | 1280×720 | side | 5막 구간2(공장 지대) 먼 배경. 회색 굴뚝·톱니 공장, 색이 바래기 시작 |
+| 길(5막) | `road/bg_road2_mid.png` | 필수 | 1280×360 | side | 5막 구간2 중간 레이어. 파이프·철골·전선주 띠 |
+| 길(5막) | `road/bg_road3_far.png` | 필수 | 1280×720 | side | 5막 구간3(도시) 먼 배경. 직선 빌딩 숲과 붉은 불빛 송신탑, 거의 무채색 |
+| 길(5막) | `road/bg_road3_mid.png` | 필수 | 1280×360 | side | 5막 구간3 중간 레이어. 가로등·표지판(글자 없음)·셔터 상점 띠 |
+| 길(5막) | `road/road_ground_grass.png` | 필수 | 높이 128px | side | 5막 땅 타일(들판). 정사각, 좌우 반복, 윗면 잔디 |
+| 길(5막) | `road/road_platform_wood.png` | 필수 | 높이 40px | side | 5막 떠 있는 나무 발판 |
+| 길(5막) | `road/road_bush_tall.png` | 필수 | 높이 90px | side | 5막 높은 덤불(점프 필요, 태엽 구간) |
+| 길(5막) | `road/road_puddle.png` | 필수 | 높이 24px | side | 5막 물웅덩이(건전지 합선 위험) |
+| 길(5막) | `road/road_wind_lift.png` | 필수 | 높이 120px | side | 5막 태엽 승강 발판. 감으면 위로 올라감 |
+| 길(5막) | `road/road_drawbridge.png` | 선택 | 높이 36px | side | 5막 태엽 도개교 다리판(감으면 내려옴) |
+| 길(5막) | `road/road_wind_post.png` | 필수 | 높이 110px | side | 5막 체크포인트: 작은 축음기 나팔이 달린 기둥(여기서 태엽 감기) |
+| 길(5막) | `road/road_ground_metal.png` | 필수 | 높이 128px | side | 5막 땅 타일(도시). 정사각, 좌우 반복, 리벳 철판 |
+| 길(5막) | `road/road_shutter_closed.png` | 필수 | 높이 160px | side | 5막 셔터(닫힘) |
+| 길(5막) | `road/road_shutter_open.png` | 선택 | 높이 160px | side | 5막 셔터(열림, 위로 말림) |
+| 길(5막) | `road/road_conveyor.png` | 필수 | 높이 40px | side | 5막 컨베이어 벨트 한 칸(좌우 반복) |
+| 길(5막) | `road/road_door_closed.png` | 필수 | 높이 160px | side | 5막 자동문(닫힘, 건전지로 열림) |
+| 길(5막) | `road/road_door_open.png` | 선택 | 높이 160px | side | 5막 자동문(열림) |
+| 길(5막) | `road/road_elevator.png` | 선택 | 높이 140px | side | 5막 전기 승강기 발판(레일 포함) |
+| 길(5막) | `road/road_charger.png` | 필수 | 높이 130px | side | 5막 충전소 기둥. 케이블과 플러그, 주황 불빛 |
+| 길(5막) | `road/road_spark_wire.png` | 선택 | 높이 40px | side | 5막 감전 전선(위험) |
+| 컷신 | `story/story_18_road_start.png` | 선택 | 1280×720 | front34 | 5막 1: 새벽, 작은 배낭에 건전지와 열쇠를 꽂고 긴 길을 떠나는 보글 |
+| 컷신 | `story/story_19_factory.png` | 선택 | 1280×720 | front34 | 5막 2: 회색 공장 지대에서 건전지 사물들이 줄지어 뻣뻣하게 행진, 상자 뒤에 숨은 보글 |
+| 컷신 | `story/story_20_city_gate.png` | 선택 | 1280×720 | front34 | 5막 3: 거대한 회색 도시 성문과 붉은 불빛 송신탑, 아래에 조그맣게 선 색 있는 보글 |
+| 컷신 | `story/story_21_tower_top.png` | 선택 | 1280×720 | front34 | 5막 4: 송신탑 꼭대기에서 보글이 라디오 씨 안테나를 송신기에 연결 |
+| 컷신 | `story/story_22_music_spreads.png` | 선택 | 1280×720 | front34 | 5막 끝(후보): 송신탑에서 음표와 색이 퍼져 회색 도시의 사물들이 박자에 맞춰 튀기 시작 |
+| UI | `ui/ui_icon_wind.png` | 필수 | 높이 56px | front34 | 5막 HUD 태엽 모드 아이콘(둥근 배지 + 황동 열쇠) |
+| UI | `ui/ui_icon_battery.png` | 필수 | 높이 56px | front34 | 5막 HUD 건전지 모드 아이콘(둥근 배지 + 회색 건전지) |
 
 각 ID의 개별 프롬프트(⑤)는 `assets/manifest.js`의 `prompt` 값을 그대로 쓴다.

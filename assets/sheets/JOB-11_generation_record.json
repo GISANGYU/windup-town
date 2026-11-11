@@ -1,0 +1,24 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-11-11",
+  "outputs": {
+    "edit_festival": {
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cabe-e4cf-7103-82ba-72a4ab361387\\exec-1e36e3fb-7ef2-4069-b21c-85b629b820fa.png"
+    },
+    "edit_arrive": {
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cabe-e4cf-7103-82ba-72a4ab361387\\exec-a031760e-2e49-40bb-b90e-397d46a86585.png"
+    },
+    "story_10_radio_down": {
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cabe-e4cf-7103-82ba-72a4ab361387\\exec-1eb45056-c7f9-4d42-925a-0be40307a6c3.png"
+    },
+    "story_11_broadcast": {
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cabe-e4cf-7103-82ba-72a4ab361387\\exec-cccb83dc-6b22-4825-a5c4-397020783bc5.png"
+    },
+    "edit_city": {
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cabe-e4cf-7103-82ba-72a4ab361387\\exec-2006d6f6-d4da-4a33-89a7-7eb9077deafc.png"
+    },
+    "edit_modal": {
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cabe-e4cf-7103-82ba-72a4ab361387\\exec-777359ff-accd-4658-836f-9fe3d3fcbdb1.png"
+    }
+  }
+}

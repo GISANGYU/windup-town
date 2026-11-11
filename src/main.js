@@ -35,6 +35,12 @@
       return;
     }
     if (WT.Wind.active) { WT.Wind.key(c); return; }
+    if (WT.Act3 && WT.Act3.blinkActive() && !s.ui.dialog) {
+      if (isKey(c, 'act') || isKey(c, 'jump')) WT.Act3.blinkDown(); else if (isKey(c, 'cancel')) WT.Act3.blinkCancel();
+      return;
+    }
+    if (WT.Act4 && WT.Act4.key && WT.Act4.key(c, true)) return;
+    if (s.scene === 'road' && !s.ui.dialog) { if (isKey(c, 'cancel')) return; WT.Road.key(c, true); return; }
     if (s.ui.dialog) {
       if (isKey(c, 'act') || isKey(c, 'jump') || c === 'Enter') WT.UI.advance();
       else if (isKey(c, 'cancel')) WT.UI.closeDialog();
@@ -52,7 +58,13 @@
       else if (isKey(c, 'snap')) { WT.Game.toggleSnap(); WT.UI.refreshToolbar(); }
     }
   });
-  window.addEventListener('keyup', (e) => held.delete(e.code));
+  window.addEventListener('keyup', (e) => {
+    held.delete(e.code);
+    const s = WT.Game.state;
+    if (WT.Act3 && WT.Act3.blinkActive() && (isKey(e.code, 'act') || isKey(e.code, 'jump'))) WT.Act3.blinkUp();
+    if (WT.Act4 && WT.Act4.key) WT.Act4.key(e.code, false);
+    if (s.scene === 'road') WT.Road.key(e.code, false);
+  });
   window.addEventListener('blur', () => held.clear());
 
   window.addEventListener('pointerdown', () => WT.Audio.unlock());
@@ -70,6 +82,19 @@
   // ───────── 소리 연출 (매 프레임) ─────────
   const D = WT.DIALOGUE;
   let lastPanel = null;
+  const STORIES = () => [D.opening, D.ending, D.act2open, D.act2end, D.act3open, D.radioDown, D.act3end, D.act4open, D.act4chase, D.act4past, D.act4end, D.act5open, D.act5zone2, D.act5zone3, D.act5end].filter(Boolean);
+  // 컷신별 BGM (제3막~)
+  function storyBgm(panels) {
+    if (panels === D.act3open) return 'bgm_festival';
+    if (panels === D.act3end) return 'bgm_town_awake';
+    if (panels === D.act4open) return 'bgm_act4_tension';
+    if (panels === D.act4past) return 'bgm_flashback';
+    if (panels === D.act4end || panels === D.act5open) return 'bgm_story';
+    if (panels === D.act5end) return 'bgm_finale';
+    return null;
+  }
+  // 막 스크립트가 켜고 끄는 반복음
+  const LOOP_IDS = ['sfx_battery_hum', 'amb_radio_static', 'sfx_stake_pull', 'sfx_jump_charge', 'sfx_charge', 'sfx_elevator', 'sfx_conveyor'];
   function audioTick(t) {
     const A = WT.Audio, s = WT.Game.state, st = s.ui.story;
     // 불러오기: 로컬은 바로, 배포 사이트는 이미지가 80% 들어오거나 6초가 지나면 (이미지 먼저)
@@ -77,14 +102,16 @@
     let want = null, rate = 1;
     if (st) {
       const p = st.panels[st.i];
-      const key = p ? [D.opening, D.ending, D.act2open, D.act2end].indexOf(st.panels) + ':' + st.i : null;
+      const key = p ? STORIES().indexOf(st.panels) + ':' + st.i : null;
       if (p && key !== lastPanel) {
         lastPanel = key;
         if (p.art === 'curtain') A.jingle('jingle_act_end');
         if (st.panels === D.act2open && st.i === 1) A.play('sfx_clock_midnight'); // 자정 종 12번
         else if (p.art === 'teaser') A.jingle('jingle_tease');
+        else if (p.art === 'citySignal') { A.play('sfx_broadcast_chime'); A.jingle('jingle_city_signal'); }
+        else if (p.art === 'radioDown') A.play('sfx_radio_off');
       }
-      want = (st.panels === D.opening || st.panels === D.act2open) ? 'bgm_story' : null;
+      want = (st.panels === D.opening || st.panels === D.act2open) ? 'bgm_story' : storyBgm(st.panels);
       if (st.panels === D.act2open) rate = 0.9;
     } else {
       lastPanel = null;
@@ -93,8 +120,18 @@
       else if (s.scene === 'house') { want = 'bgm_house'; rate = s.world.musicOn ? 1 : 0.92; }
       else want = s.world.musicOn ? 'bgm_town_awake' : 'bgm_town_sleepy';
     }
-    if (s.ui.cutscene || A.held()) want = null; // 그라모 깨어남·징글 동안은 BGM 비움
+    // 제3막 이후: 막별 음악 결정(스템, 얇아짐)
+    let mus = null;
+    if (!st) mus = (WT.Road && WT.Road.music && WT.Road.music(s)) || (WT.Act4 && WT.Act4.music && WT.Act4.music(s)) || (WT.Act3 && WT.Act3.music && WT.Act3.music(s));
+    if (mus && mus.want !== undefined) want = mus.want;
+    if (want && !A.defs[want]) want = mus && mus.fallback !== undefined ? mus.fallback : 'bgm_town_awake'; // 아직 없는 곡이면 대신
+    if (s.ui.cutscene || A.held()) { want = null; A.layers(null); } // 그라모 깨어남·징글 동안은 BGM 비움
+    else if (mus && mus.layers && A.layers(mus.layers, mus.gains)) want = null;
+    else A.layers(null);
     A.bgm(want, { rate });
+    A.thin(mus ? mus.thin || 0 : 0);
+    (mus && mus.loops ? Object.entries(mus.loops) : []).forEach(([id, v]) => A.loopIf(id, v > 0.01, { vol: (A.defs[id] ? A.defs[id].vol : 0.3) * Math.min(1, v) }));
+    LOOP_IDS.forEach((id) => { if (!mus || !mus.loops || !(id in mus.loops)) A.loopIf(id, false); });
     A.loopIf('amb_projector', !!st);
     A.loopIf('sfx_gear_roll', s.scene === 'arena' && !!s.arena && s.arena.gears.some((g) => g.warn <= 0));
     A.loopIf('sfx_wind_unwind', WT.Wind.unwinding());
@@ -106,16 +143,41 @@
     const s = WT.Game.state; s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true;
     ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone');
     WT.Game.startAct2();
+  } else if (/[?&]act[345]/.test(location.search)) { // 바로 제3·4·5막 (점검용)
+    const s = WT.Game.state, n = +location.search.match(/act([345])/)[1];
+    s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true; s.episode = 3;
+    ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone', 'cuckoo');
+    if (n >= 4) { s.act3.stage = 'done'; s.act3.pipDone = s.act3.lampDone = s.act3.named = true; s.npcs.radio.power = 'wind'; s.inventory.battery = 1; s.house.unlocked.push('bunting', 'lantern', 'banner'); }
+    if (n >= 5 && WT.Act4) WT.Act4.skipToEnd();
+    s.player.x = 640; s.player.y = 470; WT.Game.setScene('town'); WT.UI.setScene('town');
+    if (n === 5 && WT.Road) { // ?act5&zone=2&x=3000&power=battery (점검용)
+      const q = (k) => (location.search.match(new RegExp(k + '=([a-z0-9]+)')) || [])[1];
+      WT.Road.enter(+(q('zone') || 1));
+      const r = s.road; if (q('x')) { r.p.x = +q('x'); r.camX = Math.max(0, r.p.x - 420); } if (q('power')) { r.p.power = q('power'); r.battery = 100; }
+      r.after = [];
+    }
+    // 점검용: ?act3&shot=trial|persuade|radioDown — 그 단계 화면으로 바로
+    const shot = (location.search.match(/shot=(\w+)/) || [])[1];
+    if (n === 4 && shot === 'stakes') WT.Act4.debugStakes();
+    if (n === 3 && shot) {
+      const a = s.act3; a.stage = shot === 'festival' ? 'festival' : shot;
+      if (['trial', 'persuade', 'radioDown'].includes(shot)) { s.npcs.pip.power = shot === 'trial' ? 'battery' : 'wind'; s.npcs.lamp.power = 'battery'; }
+      if (shot === 'trial') { s.player.power = 'battery'; s.player.x = 1000; s.player.y = 600; }
+      if (shot === 'radioDown') { s.npcs.radio.off = true; s.npcs.lamp.power = 'wind'; }
+      WT.Act3.refresh();
+    }
   } else if (!/[?&](nointro|selftest)/.test(location.search)) WT.Intro.show();
 
   let last = performance.now(), seenVersion = -1, wasMusic = false;
   function loop(now) {
-    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const dt = Math.max(0, Math.min(0.05, (now - last) / 1000)); last = now; // 첫 프레임 rAF 시각이 앞설 수 있어 음수 방지
     WT.Game.update(dt, input);
     WT.Render.frame(now / 1000);
     const s = WT.Game.state;
     if (WT.Assets.version !== seenVersion) { seenVersion = WT.Assets.version; if (s.scene === 'house') WT.UI.refreshToolbar(); }
     if (s.world.musicOn !== wasMusic) { wasMusic = s.world.musicOn; document.body.classList.toggle('music', wasMusic); }
+    const mech = s.scene === 'town' && s.act3 ? ['pip', 'lamp'].filter((k) => s.npcs[k].power === 'battery').length + (s.player.power === 'battery' ? 1 : 0) + (s.act4 && WT.Act4 ? WT.Act4.mech() : 0) : 0;
+    if (String(Math.min(3, mech)) !== document.body.dataset.mech) document.body.dataset.mech = String(Math.min(3, mech));
     WT.UI.debug();
     if (WT.Intro.active) WT.Intro.update();
     audioTick(now / 1000);
@@ -226,6 +288,112 @@
       ok('제2막 끝 컷신', !!s.ui.story && s.ui.story.panels === WT.DIALOGUE.act2end);
       WT.Story.skip(); step(10);
       ok('마을 복귀 · 뻐꾸기시계 해금', s.scene === 'town' && s.house.unlocked.includes('cuckoo'));
+      // ───── 제3막 ─────
+      { const A3 = WT.Act3, L3 = WT.WORLD.act3, D3 = WT.DIALOGUE;
+        closeAll(); step(80);
+        p.x = 640; p.y = 400; G.interact(); ok('3막: 그라모 축제 제안', !!s.ui.dialog && s.ui.dialog.who === 'gramo'); closeAll();
+        ok('3막: 축제 준비 시작', s.act3.stage === 'festival');
+        L3.deco.forEach((d) => { p.x = d.x; p.y = d.y + 30; p.z = 0; s.player.action = null; G.interact(); });
+        ok('축제 장식 3개', s.act3.deco.every(Boolean));
+        step(150); ok('3막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D3.act3open);
+        WT.Story.skip(); step(130);
+        ok('라디오 씨 등장', WT.npcVisible('radio') && !!s.ui.dialog && s.ui.dialog.who === 'radio');
+        closeAll(); step(90);
+        ok('다음 날: 피프·가로등 건전지', s.act3.stage === 'morning' && s.npcs.pip.power === 'battery' && s.npcs.lamp.power === 'battery');
+        p.x = 420; p.y = 520; G.interact();
+        ok('건전지 말투: 한 번에 출력', !!s.ui.dialog && s.ui.dialog.flat && document.getElementById('cardTyped').textContent === '배달 완료. 다음.'); closeAll();
+        const R3 = WT.WORLD.npcs.radio; p.x = R3.x; p.y = R3.y + 50; G.interact(); closeAll();
+        ok('보글 건전지 체험 시작', s.act3.stage === 'trial' && p.power === 'battery');
+        p.x = 640; p.y = 520; { const x0 = p.x; G.update(1 / 60, { held: (k) => k === 'left' }); ok('건전지: 1.6배 빠름', Math.abs((x0 - p.x) - WT.CFG.speed * 1.6 / 60) < 0.3); }
+        p.z = 0; p.vz = 0; G.jump(); ok('건전지: 점프 봉인', p.vz === 0 && p.z === 0);
+        p.x = 1000; p.y = 600; G.jump(); step(70);
+        ok('덤불 앞 점프 실패 → 체험 끝', !!s.ui.dialog && s.ui.dialog.who === 'bogle'); closeAll();
+        ok('건전지를 빼고 1개 보관', s.act3.stage === 'persuade' && p.power === 'wind' && s.inventory.battery === 1);
+        L3.sheets.forEach((q, i) => A3.interact({ type: 'sheet', id: i }));
+        ok('악보 조각 3개', s.act3.sheets.every(Boolean));
+        p.x = 420; p.y = 520; G.interact(); closeAll(); ok('피프 감기 모달', WT.Wind.active);
+        WT.Wind.finishNow(); step(100); closeAll();
+        ok('피프가 태엽으로', s.npcs.pip.power === 'wind' && s.act3.pipDone);
+        p.x = 845; p.y = 350; G.interact(); closeAll(); ok('힌트 전 가로등은 반응 없음', !A3.blinkActive());
+        p.x = 292; p.y = 600; G.interact(); closeAll(); ok('뻐꾸기 백작 힌트', s.act3.hint);
+        p.x = 845; p.y = 350; G.interact(); closeAll(); ok('깜빡임 미니게임 시작', A3.blinkActive() && G.locked());
+        step(220); ok('따라 하기 차례', s.act3.blink && s.act3.blink.phase === 'input');
+        const press = (d) => { A3.blinkDown(); step(Math.round(d * 60)); A3.blinkUp(); step(4); };
+        press(0.6); ok('틀리면 다시 보여 줌', s.act3.blink.phase === 'show');
+        step(260); press(0.1); press(0.6); press(0.1); step(60);
+        ok('깜빡임 성공 → 감기 모달', WT.Wind.active); WT.Wind.finishNow(); step(100); closeAll();
+        ok('가로등 이름 「반디」', s.act3.named && WT.npcName('lamp') === '반디' && s.npcs.lamp.power === 'wind');
+        step(160); ok('라디오 씨 멈춤 컷신', !!s.ui.story && s.ui.story.panels === D3.radioDown && s.npcs.radio.off);
+        WT.Story.skip(); step(130); closeAll(); ok('크랭크 감기 모달', WT.Wind.active);
+        WT.Wind.finishNow(); step(240); closeAll(); step(80);
+        ok('3막 끝 컷신 · 태엽 라디오', !!s.ui.story && s.ui.story.panels === D3.act3end && s.npcs.radio.power === 'wind');
+        WT.Story.skip(); step(130); closeAll();
+        ok('3막 완료 · 축제 장식 해금', s.act3.stage === 'done' && s.house.unlocked.includes('banner'));
+      }
+      // ───── 제4막 ─────
+      { const A4 = WT.Act4, D4 = WT.DIALOGUE, a = s.act4;
+        const R4 = WT.WORLD.npcs.radio; p.x = R4.x; p.y = R4.y + 50; p.z = 0; G.interact(); closeAll(); step(80);
+        ok('4막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D4.act4open);
+        WT.Story.skip(); step(130); closeAll();
+        ok('4막: 측량기 3대 · 라디오 씨 동행', a.stage === 'stakes' && a.surveyors.length === 3 && A4.following() && !WT.npcVisible('radio'));
+        step(150); ok('말뚝 둘레가 회색으로 번짐', A4.greyAt(560, 300) > 0.3);
+        const sv = a.surveyors;
+        A4.interact({ type: 'surveyor', id: 0 }); ok('잡음 방송 → 측량기 멈춤', sv[0].state === 'stun');
+        A4.interact({ type: 'surveyor', id: 1 }); ok('잡음 쿨다운 중엔 안 됨', sv[1].state !== 'stun');
+        A4.interact({ type: 'surveyor', id: 0 }); ok('멈춘 동안 건전지 빼기 → 정지', sv[0].state === 'stopped');
+        step(370); A4.interact({ type: 'surveyor', id: 1 }); A4.interact({ type: 'surveyor', id: 1 }); ok('두 번째 측량기 정지', sv[1].state === 'stopped');
+        { const k = a.stakes[0]; p.x = k.x; p.y = k.y + 24; p.z = 0; ok('E 길게 누르기 시작', A4.key('KeyE', true) && !!a.hold); step(30); A4.key('KeyE', false); ok('중간에 떼면 안 뽑힘', !k.pulled && !a.hold); }
+        for (let n = 0; n < 12 && a.stakes.some((k) => !k.pulled); n++) { const i = a.stakes.findIndex((k) => !k.pulled), k = a.stakes[i]; p.x = k.x; p.y = k.y + 24; a.hold = { i, t: 0 }; step(70); }
+        ok('말뚝 모두 뽑음', a.stakes.every((k) => k.pulled));
+        step(150); ok('추격 컷신', !!s.ui.story && s.ui.story.panels === D4.act4chase);
+        WT.Story.skip(); step(130);
+        ok('추격: 보글이 건전지로', a.stage === 'chase' && p.power === 'battery');
+        { const f = sv.find((q) => q.state === 'flee'); p.x = f.x + 30; p.y = f.y; step(2); }
+        ok('잡으면 건전지가 닳고 지도 떨어짐', a.stage === 'map' && p.power === 'wind' && s.inventory.batteryEmpty && !!a.map);
+        p.x = a.map.x; p.y = a.map.y + 20; G.interact(); ok('도시 지도 획득', s.inventory.map === true);
+        step(110); ok('라디오 씨 회상 컷신', !!s.ui.story && s.ui.story.panels === D4.act4past);
+        WT.Story.skip(); step(130); closeAll(); step(80);
+        ok('4막 끝 컷신', !!s.ui.story && s.ui.story.panels === D4.act4end);
+        WT.Story.skip(); step(130);
+        ok('4막 완료 · 라디오 씨 제자리', a.stage === 'done' && WT.npcVisible('radio'));
+      }
+      // ───── 제5막 (횡스크롤) ─────
+      { const RD = WT.Road, P5 = RD.P, GY = WT.ROAD_GY, D5 = WT.DIALOGUE;
+        const stepH = (n, keys) => { for (let i = 0; i < n; i++) G.update(1 / 60, { held: (k) => keys.includes(k) }); };
+        const r = () => s.road, it = (type, n) => r().items.filter((q) => q.type === type)[n || 0];
+        const place = (x, power) => { const q = r().p; q.x = x; q.y = GY; q.vy = 0; q.onGround = true; q.shortT = 0; q.hurtT = 0; q.swapT = 0; q.inv = 0; if (power) q.power = power; return q; };
+        ok('4막 끝 → 라디오 씨 대사가 바로 나옴', !!s.ui.dialog && s.ui.dialog.who === 'radio'); closeAll(); step(80);
+        ok('5막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D5.act5open);
+        WT.Story.skip(); step(130); closeAll();
+        ok('5막: 횡스크롤 구간 1 · 건전지는 빈 채로', s.scene === 'road' && r().zone === 1 && r().p.power === 'wind' && r().battery === 0);
+        { const q = place(300), x0 = q.x; stepH(1, ['right']); ok('태엽: 기본 속도', Math.abs((q.x - x0) - P5.walk / 60) < 0.5); }
+        key('KeyQ'); ok('빈 건전지로는 못 갈아끼움', r().p.swapT <= 0 && r().p.power === 'wind');
+        place(it('charger').x); key('KeyE'); step(100); ok('충전소에서 E → 건전지 100', r().battery === 100);
+        place(300); key('Space'); ok('태엽: Space 점프', r().p.vy < 0); step(60);
+        { const q = place(300); key('KeyQ'); ok('갈아끼우는 동안 멈춤', q.swapT > 0); const x0 = q.x; stepH(30, ['right']); ok('0.6초 동안 못 움직임', q.x === x0); stepH(10, []); ok('건전지 모드로', q.power === 'battery'); }
+        { const q = place(300), x0 = q.x; stepH(1, ['right']); ok('건전지: 1.6배 빠름', Math.abs((q.x - x0) - P5.walk * 1.6 / 60) < 0.5); key('Space'); ok('건전지: 점프 봉인', q.vy === 0); }
+        { const g = it('gate'), q = place(g.x - 30, 'battery'); r().battery = 100; stepH(80, ['right']); ok('건전지 속도로 셔터 통과', q.x > g.x + g.w + 10);
+          g.state = 0; g.t = 0; g.snd = 0; place(g.x - 30, 'wind'); stepH(150, ['right']); ok('태엽 속도면 셔터에 막힘', r().p.x < g.x + g.w); }
+        { const l = it('lift'); place(l.x + 50, 'wind'); key('KeyE'); ok('태엽 발판: 감기 모달', WT.Wind.active); WT.Wind.finishNow(); step(100); step(200); ok('발판이 끝까지 올라감', l.state === 2); }
+        { const q = place(1570); q.y = GY + 10; q.onGround = false; step(40); step(90); closeAll(); ok('구덩이에 빠지면 체크포인트에서 다시', Math.abs(r().p.x - r().checkpoint) < 2); }
+        RD.clearNow(); step(5); ok('구간 1 통과', r().cleared); step(110); step(80);
+        ok('구간 2 컷신', !!s.ui.story && s.ui.story.panels === D5.act5zone2); WT.Story.skip(); step(130); closeAll();
+        ok('구간 2 공장 지대', r().zone === 2);
+        { const c = it('conveyor'), q = place(c.x + 100, 'wind'), x0 = q.x; stepH(30, ['right']); ok('태엽: 컨베이어에 밀려남', q.x < x0);
+          place(c.x + 100, 'battery'); r().battery = 100; const x1 = r().p.x; stepH(30, ['right']); ok('건전지: 컨베이어 통과', r().p.x > x1); }
+        { const w = it('puddle'), q = place(w.x + 20, 'battery'); r().battery = 100; r().hp = 3; stepH(2, ['right']); ok('건전지로 물웅덩이 → 합선', q.shortT > 0 && r().hp === 2);
+          const q2 = place(w.x + 20, 'wind'); stepH(2, ['right']); ok('태엽은 물웅덩이 괜찮음', q2.shortT <= 0 && r().hp === 2); }
+        { const b = it('bridge'); place(b.post, 'wind'); key('KeyE'); WT.Wind.finishNow(); step(100); step(60); ok('도개교 감기 → 다리 내려옴', b.state === 2); }
+        RD.clearNow(); step(5); step(110); step(80); WT.Story.skip(); step(130); closeAll();
+        ok('구간 3 도시', r().zone === 3);
+        { const d = it('door'); place(d.x - 60, 'wind'); stepH(40, ['right']); ok('태엽: 자동문 안 열림', r().p.x < d.x);
+          r().p.power = 'battery'; r().battery = 100; stepH(40, ['right']); ok('건전지: 자동문 열림', r().p.x > d.x); }
+        { const e = it('elevator'); place(e.x + 60, 'battery'); r().battery = 100; stepH(150, []); ok('건전지로 승강기 올라감', e.y > 200); }
+        { const q = place(400, 'wind'); r().wind = 0.01; stepH(5, ['right']); ok('태엽이 다 풀리면 잠듦', q.sleepT > 0); step(220); closeAll(); ok('체크포인트에서 태엽 다시 가득', r().wind > 98); }
+        RD.clearNow(); step(5); step(110); step(80);
+        ok('5막 끝 컷신', !!s.ui.story && s.ui.story.panels === D5.act5end); WT.Story.skip(); step(80);
+        ok('엔딩 → 마을로 돌아옴', s.scene === 'town' && s.episode === 4 && !s.road);
+      }
       // 과감기 실패
       // 오디오: manifest 51개 불러오기 시도, 실패해도 에러 없음
       ok(`오디오 manifest ${Object.keys(WT.Audio.defs).length}개 로드 시도`, (() => { WT.Audio.load(); const n = Object.keys(WT.Audio.defs).length; return n >= 51 && WT.Audio.attempted() === (WT.Audio.ready ? n : 0); })());

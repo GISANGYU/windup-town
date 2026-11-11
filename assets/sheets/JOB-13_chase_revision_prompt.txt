@@ -1,0 +1,30 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Fill the whole 16:9 canvas edge to edge, no border, no vignette (the game adds its own), no characters, no text.
+
+BOGLE: a small round porcelain TEAPOT whose whole body IS the teapot (no human torso, no head sitting on a body).
+Cream-white body #FBF6EA with one blue band #3E6DB5 around the middle and a row of small blue dots on the band.
+Red #D2463C lid knob on top like a tiny hat. Short spout on the front-right, curved handle on the back.
+Face on the front of the teapot: two big pie-cut eyes, rosy cheeks, wide friendly smile.
+Two short rubber hose legs with big red round shoes, two rubber hose arms with white gloves coming out of the sides.
+Proportions: teapot body 70% of total height, legs 30%.
+
+SURVEYOR: a battery-powered surveying robot shaped like a tripod surveying instrument.
+A boxy cool grey #9BA3AE metal head with one big round glass lens on the front and two small round glowing dot eyes below it, a short antenna with a tiny orange #E07A3A light.
+Three thin perfectly STRAIGHT steel #6E7884 tripod legs (NOT rubber hose, rigid straight lines), one small mechanical claw arm.
+Emotionless and precise. Still outlined in dark plum #3D3346 like everything else.
+
+Use case: illustration-story. Create ONE finished landscape cutscene, exact 16:9 1280x720 canvas, not a collage or sheet. The BACKGROUND RULES 'no characters' clause applies only to unlisted background inhabitants; this STORY cutscene explicitly requires the named characters below. Keep ALL main characters, faces, action props and narrative details in the UPPER 68% of the canvas. Bottom 30% must be quiet low-detail continuous ground/floor for an in-game subtitle overlay; do not draw any subtitle box, panel, lettering or border. No cast ground shadows. References: 1 is primary style and original character anchor; 2 is a reference board (upper left character drawing technique, upper right and lower left watercolor stage technique, lower right village ground palette); never copy its existing game characters, scenes, text or logos. 3 is RADIO cabinet design; 4 is SURVEYOR exact design; 5 is battery pack exact design. Only draw characters explicitly named in the scene. Do not reproduce magenta sheet backgrounds. Background watercolor subtle; character silhouettes clean with plum outlines.
+
+Side-on rightward chase with Bogle on the left and a surveyor ahead on the right heading through a village exit gate. Battery pack visibly strapped to Bogle's BACK with grey casing and tiny orange lamp, match reference 5. Bogle is desaturated, stiff, leaning forward with straight tense extended limbs, NO elastic bounce, no airborne happy hopping. Specific battery-state exception: replace Bogle's usual pie pupils with exactly two small round luminous dot eyes. Keep teapot silhouette, blue dotted band, red lid knob and shoes recognizable. Thin straight horizontal speed lines behind him. Surveyor retains THREE rigid straight legs.
+
+BOGLE with a grey battery pack on his back dashing very fast with straight speed lines, chasing a SURVEYOR robot that runs toward the village exit gate, BOGLE's body stiff and greyish, no bounce
+
+CRITICAL COMPOSITION: The bottom 35% is ONLY uninterrupted light grass/road texture, no feet or props. Reduce the characters' height so both full bodies, speed lines and all feet fit entirely within y=20%-64% of canvas. Bogle has a rigid forward lean, straight stiff arms and legs and small luminous dot eyes. ABSOLUTELY NO SHADOWS UNDER EITHER CHARACTER: no dark patches, no ellipses, no grounding shadows, no contact shadows, no horizontal dark streaks beneath feet. Ground color remains uniform beneath feet. Three surveyor legs clearly separated. Speed streaks only behind Bogle at mid-body height, never under his feet.

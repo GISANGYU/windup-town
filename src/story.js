@@ -137,6 +137,159 @@
       WT.drawThing(ctx, 'player_happy', PH.bogle, 940, 610, { h: 180, pose: 'happy', t });
       for (let i = 0; i < 5; i++) WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 420 + i * 110, 200 - ((t * 50 + i * 40) % 160), { h: 40, anchor: 'center' });
     },
+    festival(ctx, t) {
+      bg(ctx, '#f2d9a6', '#dcc39a'); ground(ctx, '#a3a578');
+      PH.stage && WT.drawThing(ctx, 'prop_stage', PH.stage, 640, 560, { h: 150, anchor: 'center' });
+      const b = Math.abs(Math.sin(t * 3.5));
+      WT.drawThing(ctx, 'furn_bunting', PH.bunting, 640, 300, { h: 200, sx: 3.2 });
+      WT.drawThing(ctx, 'furn_lantern', PH.lantern, 230, 600, { h: 200 }); WT.drawThing(ctx, 'furn_lantern', PH.lantern, 1060, 600, { h: 200, flip: true });
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 640, 545 - b * 6, { h: 240, mood: 'awake', t, rot: Math.sin(t) * 0.04 });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 400, 620 - b * 10, { h: 160, mood: 'awake', t });
+      WT.drawThing(ctx, 'player_happy', PH.bogle, 880, 630 - b * 12, { h: 170, pose: 'happy', t });
+      for (let i = 0; i < 5; i++) WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 520 + i * 60, 260 - ((t * 50 + i * 40) % 160), { h: 40, anchor: 'center' });
+    },
+    radioArrive(ctx, t) {
+      bg(ctx, '#e8cf9e', '#cdb48c'); ground(ctx, '#9a9c74');
+      const x = Math.min(700, -120 + t * 200);
+      ctx.save(); ctx.filter = 'grayscale(1)';
+      ctx.fillStyle = '#7d8590'; ctx.strokeStyle = C.outline; ctx.lineWidth = 5; ctx.beginPath(); ctx.roundRect(x - 230, 520, 170, 70, 10); ctx.fill(); ctx.stroke();
+      for (let i = 0; i < 6; i++) WT.drawThing(ctx, 'prop_battery', PH.battery, x - 215 + (i % 3) * 52, 525 - Math.floor(i / 3) * 40, { h: 44 });
+      [[x - 200, 600], [x - 90, 600]].forEach(([cx, cy]) => { ctx.fillStyle = '#4a505a'; ctx.beginPath(); ctx.arc(cx, cy, 18, 0, 7); ctx.fill(); ctx.stroke(); });
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, x, 610, { h: 230, power: 'battery', t });
+      ctx.restore();
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 1060, 600, { h: 210, mood: 'awake', t });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 920, 630, { h: 150, mood: 'awake', t });
+    },
+    radioDown(ctx, t) {
+      bg(ctx, '#c79a7a', '#8a6f66'); ground(ctx, '#7f7d66');
+      ctx.save(); ctx.filter = 'grayscale(1) brightness(.85)';
+      WT.drawThing(ctx, 'npc_radio_off', PH.radio, 640, 600, { h: 230, power: 'battery', off: true, t, rot: 0.2 });
+      ctx.restore();
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 330, 600, { h: 220, mood: 'awake', t });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 960, 620, { h: 150, mood: 'awake', t });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 820, 630, { h: 160, dir: 'side', t, flip: true });
+    },
+    broadcast(ctx, t) {
+      bg(ctx, '#f6dcae', '#e9c08a'); ground(ctx, '#a3a578');
+      const b = Math.abs(Math.sin(t * 3.5));
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 520, 560 - b * 8, { h: 230, mood: 'awake', t });
+      WT.drawThing(ctx, 'npc_radio_crank', PH.radio, 760, 570 - b * 10, { h: 220, power: 'wind', crank: true, t });
+      for (let i = 0; i < 9; i++) { const k = (t * 0.3 + i / 9) % 1; WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 780 + k * 520, 380 - Math.sin(k * 6 + i) * 60 - k * 120, { h: 40, anchor: 'center', alpha: 1 - k }); }
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 230, 630 - b * 10, { h: 150, mood: 'awake', t });
+    },
+    citySignal(ctx, t) {
+      const g = ctx.createLinearGradient(0, 0, WT.W, 0); g.addColorStop(0, '#e9c08a'); g.addColorStop(0.55, '#a39a90'); g.addColorStop(1, '#5f636c');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, WT.W, WT.H);
+      ctx.fillStyle = '#4a4e57'; for (let i = 0; i < 9; i++) ctx.fillRect(820 + i * 50, 380 - (i * 37 % 120), 40, 400);
+      ctx.fillRect(1050, 150, 16, 300); ctx.beginPath(); ctx.moveTo(1030, 450); ctx.lineTo(1058, 150); ctx.lineTo(1086, 450); ctx.fill();
+      ctx.fillStyle = Math.sin(t * 4) > 0 ? '#e0473c' : '#7a2a25'; ctx.beginPath(); ctx.arc(1058, 146, 9, 0, 7); ctx.fill();
+      ctx.strokeStyle = 'rgba(232,237,242,.7)'; ctx.lineWidth = 4;
+      for (let i = 0; i < 4; i++) { const x0 = 1000 - ((t * 120 + i * 140) % 560); ctx.beginPath(); for (let y = 200; y < 460; y += 26) ctx.lineTo(x0 + ((y / 26) % 2 ? 14 : -14), y); ctx.stroke(); }
+      ctx.fillStyle = '#1a1418'; ctx.fillRect(0, 470, WT.W, 250);
+      WT.drawThing(ctx, 'npc_radio_crank', PH.radio, 300, 640, { h: 260, power: 'wind', crank: true, t });
+    },
+    surveyors(ctx, t) {
+      bg(ctx, '#ead6ad', '#cbb593'); ground(ctx, '#a3a578');
+      ctx.fillStyle = 'rgba(215,190,151,.8)'; ctx.fillRect(0, 560, WT.W, 60);
+      for (let i = 0; i < 3; i++) { const x = Math.min(380 + i * 190, -200 + t * 120 + i * 190); WT.drawThing(ctx, ['npc_surveyor_walk_01', 'npc_surveyor_idle'], PH.surveyor, x, 610, { h: 210, state: 'walk', t: t + i * 0.3 }); }
+      WT.drawThing(ctx, 'prop_tree_round', PH.tree, 1060, 600, { h: 260 });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 1000, 620, { h: 130, mood: 'awake', t, alpha: 0.9 });
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 1160, 610, { h: 190, mood: 'awake', t });
+    },
+    greySpread(ctx, t) {
+      bg(ctx, '#e9d6ad', '#d7be97'); ground(ctx, '#9fae6a');
+      for (let i = 0; i < 40; i++) { const x = (i * 97) % WT.W, y = 500 + (i * 53) % 200; ctx.fillStyle = [C.red, C.yellow, C.blue][i % 3]; ctx.beginPath(); ctx.arc(x, y, 7, 0, 7); ctx.fill(); }
+      WT.drawThing(ctx, 'prop_stake', PH.stake, 640, 600, { h: 150, t });
+      const r = Math.min(380, t * 90);
+      ctx.save(); ctx.globalCompositeOperation = 'saturation'; ctx.fillStyle = '#808080'; ctx.beginPath(); ctx.ellipse(640, 590, r, r * 0.45, 0, 0, 7); ctx.fill(); ctx.restore();
+      ctx.strokeStyle = 'rgba(240,240,240,.5)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(640 - r, 590); ctx.lineTo(640 + r, 590); ctx.moveTo(640, 590 - r * 0.45); ctx.lineTo(640, 590 + r * 0.45); ctx.stroke();
+      WT.drawThing(ctx, ['npc_surveyor_walk_01', 'npc_surveyor_idle'], PH.surveyor, 1050, 560, { h: 160, state: 'walk', t, alpha: 0.85 });
+    },
+    chase(ctx, t) {
+      bg(ctx, '#ead6ad', '#cbb593'); ground(ctx, '#a3a578');
+      const sx = 900 + Math.sin(t) * 10;
+      WT.drawThing(ctx, ['npc_surveyor_walk_02', 'npc_surveyor_idle'], PH.surveyor, sx, 620, { h: 200, state: 'flee', t });
+      WT.drawThing(ctx, 'prop_city_map', PH.cityMap, sx + 40, 520, { h: 60 });
+      ctx.save(); ctx.filter = 'grayscale(1)';
+      WT.drawThing(ctx, ['player_walk_side_01', 'player_idle_side'], PH.bogle, 420, 630, { h: 190, pose: 'walk', dir: 'side', t });
+      WT.drawThing(ctx, 'prop_battery_pack', PH.batteryPack, 350, 540, { h: 60, anchor: 'center' });
+      ctx.restore();
+      ctx.strokeStyle = 'rgba(61,51,70,.5)'; ctx.lineWidth = 4; for (let i = 0; i < 5; i++) { const y = 470 + i * 34; ctx.beginPath(); ctx.moveTo(80 + (t * 400 + i * 90) % 200, y); ctx.lineTo(260 + (t * 400 + i * 90) % 200, y); ctx.stroke(); }
+    },
+    radioPast(ctx, t) {
+      bg(ctx, '#8d8a86', '#5e5c5a');
+      ctx.fillStyle = '#4a4846'; ctx.fillRect(140, 330, 1000, 26);
+      for (let i = 0; i < 5; i++) { ctx.fillStyle = '#9ea4ab'; ctx.strokeStyle = C.outline; ctx.lineWidth = 4; ctx.beginPath(); ctx.roundRect(200 + i * 190, 210, 120, 120, 8); ctx.fill(); ctx.stroke(); WT.dotEyes && WT.dotEyes(ctx, 240 + i * 190, 280 + i * 190, 260, 4, true); }
+      const drop = Math.min(1, t / 2.5);
+      ctx.save(); ctx.filter = 'grayscale(1) sepia(.4)';
+      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, 640, 330 + drop * 260, { h: 170, power: 'battery', t, rot: drop * 0.5 });
+      ctx.restore();
+      ctx.fillStyle = '#3a3836'; ctx.strokeStyle = C.outline; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(520, 620); ctx.lineTo(760, 620); ctx.lineTo(740, 720); ctx.lineTo(540, 720); ctx.closePath(); ctx.fill(); ctx.stroke();
+    },
+    roadOpen(ctx, t) {
+      const g = ctx.createLinearGradient(0, 0, WT.W, 0); g.addColorStop(0, '#f2c98a'); g.addColorStop(0.6, '#cdbca0'); g.addColorStop(1, '#7c7f86');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, WT.W, WT.H);
+      ctx.fillStyle = '#5f636c'; for (let i = 0; i < 7; i++) ctx.fillRect(980 + i * 40, 300 - (i * 31 % 90), 30, 200); ctx.fillRect(1120, 130, 10, 220);
+      ctx.fillStyle = Math.sin(t * 4) > 0 ? '#e0473c' : '#7a2a25'; ctx.beginPath(); ctx.arc(1125, 126, 7, 0, 7); ctx.fill();
+      ground(ctx, '#a3a578');
+      ctx.fillStyle = C.sand; ctx.beginPath(); ctx.moveTo(560, WT.H); ctx.quadraticCurveTo(820, 520, 1120, 460); ctx.lineTo(1140, 470); ctx.quadraticCurveTo(880, 560, 760, WT.H); ctx.fill();
+      WT.drawThing(ctx, 'player_idle_up', PH.bogle, 600, 650, { h: 170, dir: 'up', t });
+      WT.drawThing(ctx, ['npc_radio_crank', 'npc_radio_idle'], PH.radio, 760, 640, { h: 150, power: 'wind', crank: true, t });
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 200, 620, { h: 200, mood: 'awake', t });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 330, 650, { h: 130, mood: 'awake', t });
+    },
+    roadStart(ctx, t) {
+      bg(ctx, '#f6c98e', '#e9b47a');
+      ctx.fillStyle = '#f2c14e'; ctx.beginPath(); ctx.arc(1000, 470, 110, Math.PI, 0); ctx.fill();
+      ground(ctx, '#a3a578');
+      ctx.fillStyle = C.sand; ctx.beginPath(); ctx.moveTo(200, WT.H); ctx.quadraticCurveTo(700, 520, 1280, 470); ctx.lineTo(1280, 500); ctx.quadraticCurveTo(760, 560, 420, WT.H); ctx.fill();
+      WT.drawThing(ctx, 'prop_house', PH.house, 140, 520, { h: 200 });
+      const x = Math.min(560, 300 + t * 60);
+      WT.drawThing(ctx, ['player_walk_side_01', 'player_idle_side'], PH.bogle, x, 640 - Math.abs(Math.sin(t * 10)) * 8, { h: 180, pose: 'walk', dir: 'side', t });
+      WT.drawThing(ctx, 'prop_battery', PH.battery, x - 70, 560, { h: 50 });
+      WT.drawThing(ctx, ['npc_radio_crank', 'npc_radio_idle'], PH.radio, x - 150, 640, { h: 140, power: 'wind', crank: true, t });
+    },
+    factory(ctx, t) {
+      bg(ctx, '#b6aa98', '#8d877e');
+      ctx.fillStyle = '#6e6a66'; for (let i = 0; i < 6; i++) { ctx.fillRect(80 + i * 200, 180 + (i % 2) * 60, 130, 400); ctx.fillRect(120 + i * 200, 90 + (i % 2) * 60, 26, 100); }
+      ground(ctx, '#7a7f88');
+      ctx.save(); ctx.filter = 'grayscale(1)';
+      for (let i = 0; i < 6; i++) { const x = ((t * 40 + i * 180) % 1300) - 60; WT.drawThing(ctx, i % 2 ? 'boss_cuckoo' : 'npc_lamp_on', i % 2 ? PH.cuckoo : PH.lamp, x, 620, { h: i % 2 ? 110 : 150, pose: 'cuckoo', t: 0 }); }
+      ctx.restore();
+      ctx.fillStyle = '#8b6a4a'; ctx.strokeStyle = C.outline; ctx.lineWidth = 5; ctx.beginPath(); ctx.roundRect(980, 560, 140, 100, 8); ctx.fill(); ctx.stroke();
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 1060, 570, { h: 120, dir: 'side', flip: true, t });
+    },
+    cityGate(ctx, t) {
+      bg(ctx, '#8d9198', '#5f636c');
+      ctx.fillStyle = '#4a4e57'; for (let i = 0; i < 12; i++) ctx.fillRect(i * 110, 160 + (i * 47 % 140), 90, 600);
+      ctx.fillStyle = '#3a3e46'; ctx.fillRect(620, 40, 40, 500); ctx.beginPath(); ctx.moveTo(560, 540); ctx.lineTo(640, 40); ctx.lineTo(720, 540); ctx.fill();
+      ctx.fillStyle = Math.sin(t * 4) > 0 ? '#e0473c' : '#7a2a25'; ctx.beginPath(); ctx.arc(640, 36, 12, 0, 7); ctx.fill();
+      ctx.fillStyle = '#6e7884'; ctx.strokeStyle = C.outline; ctx.lineWidth = 6; ctx.fillRect(360, 360, 560, 360); ctx.strokeRect(360, 360, 560, 360);
+      ctx.fillStyle = '#2a2e36'; ctx.fillRect(520, 470, 240, 250);
+      WT.drawThing(ctx, 'player_idle_up', PH.bogle, 640, 700, { h: 120, dir: 'up', t });
+    },
+    towerTop(ctx, t) {
+      bg(ctx, '#2a2c44', '#14141f');
+      for (let i = 0; i < 40; i++) { ctx.fillStyle = `rgba(242,193,78,${0.3 + (i % 3) * 0.2})`; ctx.fillRect((i * 131) % WT.W, 560 + (i * 37) % 140, 6, 6); }
+      ctx.fillStyle = '#4a4e57'; ctx.strokeStyle = C.outline; ctx.lineWidth = 6; ctx.fillRect(700, 260, 300, 260); ctx.strokeRect(700, 260, 300, 260);
+      for (let i = 0; i < 6; i++) { ctx.fillStyle = '#9ba3ae'; ctx.beginPath(); ctx.arc(750 + (i % 3) * 100, 320 + Math.floor(i / 3) * 80, 26, 0, 7); ctx.fill(); ctx.stroke(); }
+      WT.drawThing(ctx, ['npc_radio_crank', 'npc_radio_idle'], PH.radio, 520, 540, { h: 200, power: 'wind', crank: true, t });
+      ctx.strokeStyle = C.yellow; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(540, 330); ctx.quadraticCurveTo(620, 240, 700, 300); ctx.stroke();
+      WT.drawThing(ctx, 'player_happy', PH.bogle, 340, 550, { h: 160, pose: 'happy', t });
+      for (let i = 0; i < 6; i++) { const k = (t * 0.4 + i / 6) % 1; WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 850 + Math.sin(k * 6 + i) * 80, 250 - k * 220, { h: 40, anchor: 'center', alpha: 1 - k }); }
+    },
+    musicSpreads(ctx, t) {
+      bg(ctx, '#9ea3aa', '#7d8189');
+      const r = 200 + (t * 160) % 900;
+      ctx.save(); ctx.beginPath(); ctx.arc(640, 160, r, 0, 7); ctx.clip();
+      bg(ctx, '#f6dcae', '#e9c08a'); ctx.restore();
+      ctx.fillStyle = '#3a3e46'; ctx.fillRect(624, 40, 32, 300);
+      for (let i = 0; i < 7; i++) { const x = 120 + i * 170, inR = Math.hypot(x - 640, 600 - 160) < r, b = inR ? Math.abs(Math.sin(t * 6 + i)) : 0;
+        ctx.save(); if (!inR) ctx.filter = 'grayscale(1)';
+        WT.drawThing(ctx, i % 3 === 0 ? 'npc_lamp_on' : i % 3 === 1 ? 'boss_cuckoo' : 'npc_pip_awake', i % 3 === 0 ? PH.lamp : i % 3 === 1 ? PH.cuckoo : PH.pip, x, 640 - b * 20, { h: 130, mood: 'awake', pose: 'cuckoo', t, sy: 1 + b * 0.08, rot: inR ? Math.sin(t * 6 + i) * 0.08 : 0 });
+        ctx.restore(); }
+      for (let i = 0; i < 10; i++) { const a = i / 10 * Math.PI * 2 + t; WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 640 + Math.cos(a) * r * 0.8, 160 + Math.sin(a) * r * 0.5, { h: 40, anchor: 'center' }); }
+    },
     teaser(ctx, t) {
       bg(ctx, '#1f1a2a', '#0e0b12');
       ctx.fillStyle = '#1d1720'; ctx.fillRect(520, 260, 240, 460);

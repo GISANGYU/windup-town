@@ -16,7 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _manifest import ASSETS, ROOT, asset_path, load_manifest  # noqa: E402
 
 GROUP_KO = {"bg": "배경", "player": "주인공", "npc": "NPC", "portrait": "초상화", "props": "소품",
-            "furniture": "가구", "fx": "이펙트", "ui": "UI", "story": "컷신", "wind": "감기 모달", "boss": "보스"}
+            "furniture": "가구", "fx": "이펙트", "ui": "UI", "story": "컷신", "wind": "감기 모달", "boss": "보스", "road": "길(5막)"}
 
 
 def check(a):

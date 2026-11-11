@@ -1,0 +1,56 @@
+{
+  "a": {
+    "prompt": "STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.\nThick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.\nFlat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.\nCharacters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.\nCharacter colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.\nBackgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.\nSoft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.\nDo not copy any existing cartoon or game character, logo, or scene.\n\nEach item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.\nCharacters face the viewer at a slight high 3/4 angle unless a direction is given. \"Side\" always means facing RIGHT.\n\nOne wide landscape sprite sheet with exactly FOUR isolated objects in ONE horizontal row, left to right: battery, battery pack, sheet music, ribbon. Give each object equal visual importance and at least 300 pixels height with wide magenta gaps between objects. Center all objects at the same vertical midpoint. Paper has exactly five staff lines with a few note SHAPES, no clef, no lettering. No faces on any of these four objects. Ribbon lies loosely but do not draw any ground or shadow.\n\n1. a single cartoon dry-cell battery standing upright, smooth cool grey metal body #9BA3AE with a silver top cap and a dark band, plain with NO logo, NO plus or minus signs, NO face, slightly too clean and shiny compared to the village\n2. a small grey battery pack with a strap clip, seen from the side, cool grey #9BA3AE with one tiny orange indicator light, plain with NO logo or text\n3. a torn scrap of cream sheet-music paper standing slightly curled, a few music note SHAPES and staff lines drawn on it, no letters, one corner ripped\n4. a red #D2463C ribbon bow lying on the ground, slightly crumpled, two loose tails\n\nReference roles: style_anchor.png is the primary line/color/style reference. ref_02_character.jpg is only a rendering-technique reference; do not reproduce its character or lettering. npc_lamp_on.png is the existing LAMP identity reference, used only for the portraits. Flat pure #FF00FF background everywhere outside the requested objects. No labels, no palette swatches, no additional objects.",
+    "names": [
+      "prop_battery",
+      "prop_battery_pack",
+      "prop_sheet_music",
+      "prop_ribbon"
+    ],
+    "files": [
+      "props/prop_battery.png",
+      "props/prop_battery_pack.png",
+      "props/prop_sheet_music.png",
+      "props/prop_ribbon.png"
+    ],
+    "references": [
+      "assets/refs/style_anchor.png",
+      "assets/refs/ref_02_character.jpg",
+      "assets/npc/npc_lamp_on.png"
+    ]
+  },
+  "b": {
+    "prompt": "STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.\nThick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.\nFlat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.\nCharacters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.\nCharacter colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.\nBackgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.\nSoft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.\nDo not copy any existing cartoon or game character, logo, or scene.\n\nEach item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.\nCharacters face the viewer at a slight high 3/4 angle unless a direction is given. \"Side\" always means facing RIGHT.\n\nOne wide landscape sprite sheet with exactly THREE isolated furniture objects in ONE horizontal row, left to right: bunting between two short wooden posts, paper lantern on a curved wooden pole, blank flag on a tall wooden pole. The first object is wide and horizontal; allocate it more width. All three objects vertically centered with wide magenta gaps and empty margin on all sides. Posts end cleanly without ground patches or cast shadows. Paper lantern glow stays inside the paper shape, no halo in the magenta background.\n\n1. a string of triangle pennant flags in red, blue and yellow hanging in a gentle curve between two short wooden posts, wide and horizontal\n2. a round paper festival lantern glowing warm yellow hanging from a short curved wooden pole\n3. a tall wooden pole with a wavy cream and red flag on top, the flag blank with no symbols\n\nReference roles: style_anchor.png is the primary line/color/style reference. ref_02_character.jpg is only a rendering-technique reference; do not reproduce its character or lettering. npc_lamp_on.png is the existing LAMP identity reference, used only for the portraits. Flat pure #FF00FF background everywhere outside the requested objects. No labels, no palette swatches, no additional objects.",
+    "names": [
+      "furn_bunting",
+      "furn_lantern",
+      "furn_banner"
+    ],
+    "files": [
+      "furniture/furn_bunting.png",
+      "furniture/furn_lantern.png",
+      "furniture/furn_banner.png"
+    ],
+    "references": [
+      "assets/refs/style_anchor.png",
+      "assets/refs/ref_02_character.jpg",
+      "assets/npc/npc_lamp_on.png"
+    ]
+  },
+  "c": {
+    "prompt": "STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.\nThick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.\nFlat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.\nCharacters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.\nCharacter colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.\nBackgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.\nSoft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.\nDo not copy any existing cartoon or game character, logo, or scene.\n\nEach item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.\nCharacters face the viewer at a slight high 3/4 angle unless a direction is given. \"Side\" always means facing RIGHT.\n\nLAMP: a thin dark plum iron street lamp with a curved neck; the glass lantern is the head with two pie-cut eyes. When on, the glass glows warm yellow #F2C14E.\n\nOne landscape sprite sheet with exactly TWO isolated close-up head portraits in ONE horizontal row, left to right: awake winking LAMP, shy LAMP looking down. Keep the exact existing npc_lamp_on lantern head identity: blue-grey domed cap with curled brim ends, cream round finial above, dark plum frame, tapered warm yellow glass, cream lower rim and small cream drop finial. Show complete head silhouette and a small curved neck hook only, NOT the long street pole or pedestal. Equal size heads, at least 500 pixels tall, wide magenta separation. First portrait has one pie-cut eye open and the other closed in a happy blink; second has downward pie-cut eyes and a small soft blush. No detached glow rays, no floating decorations.\n\n1. close-up of LAMP's glass lantern head glowing warm yellow, pie-cut eyes bright and happy, mid-blink with one eye closed\n2. close-up of LAMP's glass lantern head glowing softly, looking down shyly, small blush, pie-cut eyes\n\nReference roles: style_anchor.png is the primary line/color/style reference. ref_02_character.jpg is only a rendering-technique reference; do not reproduce its character or lettering. npc_lamp_on.png is the existing LAMP identity reference, used only for the portraits. Flat pure #FF00FF background everywhere outside the requested objects. No labels, no palette swatches, no additional objects.",
+    "names": [
+      "portrait_lamp_awake",
+      "portrait_lamp_shy"
+    ],
+    "files": [
+      "portrait/portrait_lamp_awake.png",
+      "portrait/portrait_lamp_shy.png"
+    ],
+    "references": [
+      "assets/refs/style_anchor.png",
+      "assets/refs/ref_02_character.jpg",
+      "assets/npc/npc_lamp_on.png"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+STYLE: 1930s rubber hose cartoon, hand-inked cel animation look, original characters.
+Thick uniform outline in dark plum #3D3346 on every shape, clean confident lines, no sketchy strokes.
+Flat cel colors with at most one soft shade tone per color, no gradients on characters, no 3D rendering, no glossy plastic look; one small white highlight dot is allowed.
+Characters: bendy rubber hose arms and legs with no elbows or knees, white four-finger cartoon gloves, big round shoes, pie-cut eyes (black ovals with a small wedge cut out), simple wide mouth, big head-to-body ratio.
+Character colors are saturated: red #D2463C, blue #3E6DB5, yellow #F2C14E, cream #F4E6C8, glove white #FBF6EA.
+Backgrounds and large props look like faded watercolor on paper in beige #CFAC8D, sand #D7BE97, dusty navy #4E546E, muted olive #8A9A6B, warm grey #907F77, and are LESS saturated than the characters.
+Soft light from the top-left. No cast shadow on the ground. No text, letters or numbers anywhere.
+Do not copy any existing cartoon or game character, logo, or scene.
+
+Each item isolated on a flat solid #FF00FF magenta background (or transparent), full figure visible, nothing cropped, wide empty margin around every item, no ground line, no floor, no frame, no border, no shadow under the item.
+Characters face the viewer at a slight high 3/4 angle unless a direction is given. "Side" always means facing RIGHT.
+
+RADIO: a boxy old wooden TABLE RADIO, the whole body IS the radio (no human torso).
+Rounded-top cabinet in honey wood #B9824F with a cream #F4E6C8 cloth speaker grille on the lower front; the grille is his mouth.
+Two round brass tuning DIALS on the upper front are his eyes. One thin metal antenna on top, slightly bent.
+Short stiff legs with grey round shoes, rubber hose arms with white gloves, but he holds himself straighter and stiffer than the village characters.
+Friendly, eager, a little pushy salesman. About the same height as PIP.
+
+References: image 1 approved original character/style anchor; images 2-4 are technique references only, never copy their characters, letters, logos or scenes. Image 5 is a labeled REFERENCE contact sheet only: top row town ground, RADIO battery idle and talking; middle row RADIO off, RADIO wind-up crank, festival bunting; bottom row festival lantern, LAMP, old GRAMO winding panel composition. Use the characters and decorations in image 5 to maintain identity. Do NOT reproduce labels or the contact-sheet layout.
+
+Use case: illustration-story. Generate one landscape sprite sheet, exactly TWO isolated items arranged left to right in a single row, wide empty pure #FF00FF magenta gutters. Left: large right SIDE PANEL of the referenced RADIO cabinet, viewed almost square-on, minimal front speaker grille edge, no face, no limbs. Empty brass socket centered at exactly the center of the entire isolated asset bounding box (including the short antenna). The silhouette should have equal padding above/below the socket. No crank attached. Right: separate perfectly circular front-on brass crank wheel with symmetrical spokes, knob at twelve o'clock entirely inside the rim silhouette so center of bounding box equals wheel axis. No perspective ellipse. Both objects comparable in displayed size, at least 450px tall; no additional objects, no motion strokes, no shadows, no text. Magenta must show through spaces between spokes.
+
+close-up of the right side of RADIO's wooden radio cabinet filling the frame, warm wood with a speaker grille edge visible, a round brass crank socket exactly in the CENTER (empty, NO crank), his antenna peeking at the top edge
+
+a single brass crank wheel seen straight from the front, perfectly round disc with spokes, a small round wooden knob on the rim at the top, toy-like, no sparkle
+
+GEOMETRY CORRECTION: Use a SQUARE silhouette for the LEFT cabinet close-up, with antenna only barely peeking (maximum 3% of asset height), not a tall full antenna. Socket MUST be at 50% width AND 50% height of full silhouette. No legs, arms or face. RIGHT wheel: the wooden knob is mounted ON the FRONT of the brass rim at 12 o'clock, INSIDE the outer circle. It must NOT stick up above the circle. Outer silhouette must be a perfect CIRCLE with its hub at its exact bounding-box center. Both isolated assets have at least 5% magenta canvas margin at top and bottom. Do not change the existing style.

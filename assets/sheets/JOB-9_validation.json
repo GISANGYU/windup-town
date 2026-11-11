@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-11",
+  "job": "JOB-9",
+  "results": [
+    {
+      "id": "npc_radio_idle",
+      "file": "assets\\npc\\npc_radio_idle.png",
+      "size": [
+        465,
+        608
+      ],
+      "mode": "RGBA",
+      "transparent": true,
+      "residual_magenta_pixels": 0,
+      "minimum_height_ok": true,
+      "passed": true
+    },
+    {
+      "id": "npc_radio_talk",
+      "file": "assets\\npc\\npc_radio_talk.png",
+      "size": [
+        560,
+        605
+      ],
+      "mode": "RGBA",
+      "transparent": true,
+      "residual_magenta_pixels": 0,
+      "minimum_height_ok": true,
+      "passed": true
+    },
+    {
+      "id": "npc_radio_off",
+      "file": "assets\\npc\\npc_radio_off.png",
+      "size": [
+        354,
+        496
+      ],
+      "mode": "RGBA",
+      "transparent": true,
+      "residual_magenta_pixels": 0,
+      "minimum_height_ok": true,
+      "passed": true
+    },
+    {
+      "id": "npc_radio_crank",
+      "file": "assets\\npc\\npc_radio_crank.png",
+      "size": [
+        489,
+        621
+      ],
+      "mode": "RGBA",
+      "transparent": true,
+      "residual_magenta_pixels": 0,
+      "minimum_height_ok": true,
+      "passed": true
+    },
+    {
+      "id": "portrait_radio",
+      "file": "assets\\portrait\\portrait_radio.png",
+      "size": [
+        668,
+        669
+      ],
+      "mode": "RGBA",
+      "transparent": true,
+      "residual_magenta_pixels": 0,
+      "minimum_height_ok": true,
+      "passed": true
+    },
+    {
+      "id": "portrait_radio_crank",
+      "file": "assets\\portrait\\portrait_radio_crank.png",
+      "size": [
+        635,
+        685
+      ],
+      "mode": "RGBA",
+      "transparent": true,
+      "residual_magenta_pixels": 0,
+      "minimum_height_ok": true,
+      "passed": true
+    }
+  ],
+  "passed": true
+}

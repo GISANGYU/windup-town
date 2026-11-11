@@ -1,6 +1,6 @@
 # 리소스 현황
 
-OK 78 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 78
+OK 155 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 155
 
 | 상태 | ID | 필수 | 파일 | 메모 |
 |---|---|---|---|---|
@@ -82,3 +82,80 @@ OK 78 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 78
 | OK | `ui_button_start` |  | ui/ui_button_start.png |  |
 | OK | `ui_button_help` |  | ui/ui_button_help.png |  |
 | OK | `ui_help_modal` |  | ui/ui_help_modal.png |  |
+| OK | `npc_radio_idle` | ● | npc/npc_radio_idle.png |  |
+| OK | `npc_radio_talk` |  | npc/npc_radio_talk.png |  |
+| OK | `npc_radio_off` | ● | npc/npc_radio_off.png |  |
+| OK | `npc_radio_crank` | ● | npc/npc_radio_crank.png |  |
+| OK | `portrait_radio` |  | portrait/portrait_radio.png |  |
+| OK | `portrait_radio_crank` |  | portrait/portrait_radio_crank.png |  |
+| OK | `prop_battery` | ● | props/prop_battery.png |  |
+| OK | `prop_battery_pack` |  | props/prop_battery_pack.png |  |
+| OK | `prop_sheet_music` | ● | props/prop_sheet_music.png |  |
+| OK | `prop_ribbon` |  | props/prop_ribbon.png |  |
+| OK | `furn_bunting` |  | furniture/furn_bunting.png |  |
+| OK | `furn_lantern` |  | furniture/furn_lantern.png |  |
+| OK | `furn_banner` |  | furniture/furn_banner.png |  |
+| OK | `portrait_lamp_awake` |  | portrait/portrait_lamp_awake.png |  |
+| OK | `portrait_lamp_shy` |  | portrait/portrait_lamp_shy.png |  |
+| OK | `story_08_festival` |  | story/story_08_festival.png |  |
+| OK | `story_09_radio_arrive` |  | story/story_09_radio_arrive.png |  |
+| OK | `story_10_radio_down` |  | story/story_10_radio_down.png |  |
+| OK | `story_11_broadcast` |  | story/story_11_broadcast.png |  |
+| OK | `story_12_city_signal` |  | story/story_12_city_signal.png |  |
+| OK | `wind_radio_back` |  | wind/wind_radio_back.png |  |
+| OK | `wind_crank` |  | wind/wind_crank.png |  |
+| OK | `npc_surveyor_idle` | ● | npc/npc_surveyor_idle.png |  |
+| OK | `npc_surveyor_walk_01` |  | npc/npc_surveyor_walk_01.png |  |
+| OK | `npc_surveyor_walk_02` |  | npc/npc_surveyor_walk_02.png |  |
+| OK | `npc_surveyor_hammer` | ● | npc/npc_surveyor_hammer.png |  |
+| OK | `npc_surveyor_stun` | ● | npc/npc_surveyor_stun.png |  |
+| OK | `portrait_surveyor` |  | portrait/portrait_surveyor.png |  |
+| OK | `prop_stake` | ● | props/prop_stake.png |  |
+| OK | `prop_stake_pulled` |  | props/prop_stake_pulled.png |  |
+| OK | `prop_city_map` | ● | props/prop_city_map.png |  |
+| OK | `fx_static` |  | fx/fx_static.png |  |
+| OK | `story_13_surveyors` |  | story/story_13_surveyors.png |  |
+| OK | `story_14_grey_spread` |  | story/story_14_grey_spread.png |  |
+| OK | `story_15_chase` |  | story/story_15_chase.png |  |
+| OK | `story_16_radio_past` |  | story/story_16_radio_past.png |  |
+| OK | `story_17_road_open` |  | story/story_17_road_open.png |  |
+| OK | `player_run_side_01` | ● | player/player_run_side_01.png |  |
+| OK | `player_run_side_02` |  | player/player_run_side_02.png |  |
+| OK | `player_run_side_03` |  | player/player_run_side_03.png |  |
+| OK | `player_run_side_04` |  | player/player_run_side_04.png |  |
+| OK | `player_dash_side_01` | ● | player/player_dash_side_01.png |  |
+| OK | `player_dash_side_02` |  | player/player_dash_side_02.png |  |
+| OK | `player_swap` | ● | player/player_swap.png |  |
+| OK | `player_wind_self` |  | player/player_wind_self.png |  |
+| OK | `player_charge` |  | player/player_charge.png |  |
+| OK | `player_short` |  | player/player_short.png |  |
+| OK | `player_hurt_side` |  | player/player_hurt_side.png |  |
+| OK | `bg_road1_far` | ● | road/bg_road1_far.png |  |
+| OK | `bg_road1_mid` | ● | road/bg_road1_mid.png |  |
+| OK | `bg_road2_far` | ● | road/bg_road2_far.png |  |
+| OK | `bg_road2_mid` | ● | road/bg_road2_mid.png |  |
+| OK | `bg_road3_far` | ● | road/bg_road3_far.png |  |
+| OK | `bg_road3_mid` | ● | road/bg_road3_mid.png |  |
+| OK | `road_ground_grass` | ● | road/road_ground_grass.png |  |
+| OK | `road_platform_wood` | ● | road/road_platform_wood.png |  |
+| OK | `road_bush_tall` | ● | road/road_bush_tall.png |  |
+| OK | `road_puddle` | ● | road/road_puddle.png |  |
+| OK | `road_wind_lift` | ● | road/road_wind_lift.png |  |
+| OK | `road_drawbridge` |  | road/road_drawbridge.png |  |
+| OK | `road_wind_post` | ● | road/road_wind_post.png |  |
+| OK | `road_ground_metal` | ● | road/road_ground_metal.png |  |
+| OK | `road_shutter_closed` | ● | road/road_shutter_closed.png |  |
+| OK | `road_shutter_open` |  | road/road_shutter_open.png |  |
+| OK | `road_conveyor` | ● | road/road_conveyor.png |  |
+| OK | `road_door_closed` | ● | road/road_door_closed.png |  |
+| OK | `road_door_open` |  | road/road_door_open.png |  |
+| OK | `road_elevator` |  | road/road_elevator.png |  |
+| OK | `road_charger` | ● | road/road_charger.png |  |
+| OK | `road_spark_wire` |  | road/road_spark_wire.png |  |
+| OK | `story_18_road_start` |  | story/story_18_road_start.png |  |
+| OK | `story_19_factory` |  | story/story_19_factory.png |  |
+| OK | `story_20_city_gate` |  | story/story_20_city_gate.png |  |
+| OK | `story_21_tower_top` |  | story/story_21_tower_top.png |  |
+| OK | `story_22_music_spreads` |  | story/story_22_music_spreads.png |  |
+| OK | `ui_icon_wind` | ● | ui/ui_icon_wind.png |  |
+| OK | `ui_icon_battery` | ● | ui/ui_icon_battery.png |  |

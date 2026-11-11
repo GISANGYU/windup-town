@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-11",
+  "tool": "built-in image_gen",
+  "prompts": "JOB-16_submitted_prompts.json",
+  "outputs": [
+    {
+      "source": "exec-f641842e-438e-4b75-a396-f5bc830e15ca.png",
+      "saved": "JOB-16_a.png"
+    },
+    {
+      "source": "exec-35111fb2-35ca-44bf-a60f-6c21706a1f21.png",
+      "saved": "JOB-16_b.png"
+    },
+    {
+      "source": "exec-fe7acdc6-0172-41c6-8f03-127054aa9c9a.png",
+      "saved": "JOB-16_tiles.png",
+      "reason": "grass/metal tile proportions and repeat edges"
+    }
+  ]
+}

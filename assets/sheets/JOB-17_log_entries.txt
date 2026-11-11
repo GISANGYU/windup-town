@@ -1,0 +1,23 @@
+| 2026-11-11 | JOB-17 | 생성 JOB-17_a | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 합격: 동일 높이 배지 2개, 마젠타 시트에서 투명 PNG로 분리 |
+| 2026-11-11 | JOB-17 | 생성 story_18_road_start | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 자막 영역과 겹치는 발 및 바닥 그림자 |
+| 2026-11-11 | JOB-17 | 생성 story_18_road_start_revision1 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 길과 보글 발 위치 연결 및 잔여 그림자 |
+| 2026-11-11 | JOB-17 | 생성 story_19_factory | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 따뜻한 창문색과 바닥 그림자, 행진 다리 형태 |
+| 2026-11-11 | JOB-17 | 생성 story_20_city_gate | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 곡선 성문과 하단 자막 영역 침범 |
+| 2026-11-11 | JOB-17 | 생성 story_21_tower_top | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 라디오 안테나와 송신기 연결 끊김, 라디오 및 구조물 채도 과다 |
+| 2026-11-11 | JOB-17 | 생성 story_22_music_spreads | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 합격: 음악과 따뜻한 색 확산, 회색 사물의 첫 러버호스 춤 |
+| 2026-11-11 | JOB-17 | 생성 story_18_road_start_revision2 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 합격: 길을 따라 출발하는 보글, 배낭의 건전지와 열쇠, 자막 여백 |
+| 2026-11-11 | JOB-17 | 생성 story_19_factory_revision1 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 곧은 다리가 정지 자세로 바뀌어 행진 보폭 복원 |
+| 2026-11-11 | JOB-17 | 생성 story_20_city_gate_revision1 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 직선 성문과 여백 수정 완료, 발밑 그림자 잔존 |
+| 2026-11-11 | JOB-17 | 생성 story_21_tower_top_revision1 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 합격: 라디오 안테나→보글 손→송신기 연결, 보글만 본래 채도 |
+| 2026-11-11 | JOB-17 | 생성 story_20_city_gate_revision2 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성: 작은 회색 발밑 그림자 제거 실패 |
+| 2026-11-11 | JOB-17 | 생성 story_19_factory_revision2 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 합격: 회색 사물의 점 불빛 눈과 직선 행진, 숨은 보글 |
+| 2026-11-11 | JOB-17 | 생성 story_20_city_gate_revision3 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성/검토 필요: 저장 후보로 선택, 자막 여백과 무채색 대비는 충족하나 작은 발밑 그림자 잔존 |
+| 2026-11-11 | JOB-17 | 생성 story_20_city_gate_revision4 | 내장 image_gen; 고정 스타일 블록과 레퍼런스 아틀라스; 전체 프롬프트: sheets/JOB-17_generation_record.json | 재생성/미채택: 새 구도에서도 발밑 그림자 및 하단 여백 미충족 |
+| 2026-11-11 | JOB-17 | story/story_18_road_start.png | 최종 저장; PNG RGBA; 생성 원본 1672×941, 게임 1280×720 표시, 비율 허용오차 통과 | 합격 |
+| 2026-11-11 | JOB-17 | story/story_19_factory.png | 최종 저장; PNG RGBA; 생성 원본 1672×941, 게임 1280×720 표시, 비율 허용오차 통과 | 합격 |
+| 2026-11-11 | JOB-17 | story/story_20_city_gate.png | 최종 저장; PNG RGBA; 생성 원본 1672×941, 게임 1280×720 표시, 비율 허용오차 통과 | 시각 검토 필요: 작은 발밑 그림자 잔존 |
+| 2026-11-11 | JOB-17 | story/story_21_tower_top.png | 최종 저장; PNG RGBA; 생성 원본 1672×941, 게임 1280×720 표시, 비율 허용오차 통과 | 합격 |
+| 2026-11-11 | JOB-17 | story/story_22_music_spreads.png | 최종 저장; PNG RGBA; 생성 원본 1672×941, 게임 1280×720 표시, 비율 허용오차 통과 | 합격 |
+| 2026-11-11 | JOB-17 | ui/ui_icon_wind.png | 최종 저장; PNG RGBA; slice_sheet로 투명 분리 | 합격 |
+| 2026-11-11 | JOB-17 | ui/ui_icon_battery.png | 최종 저장; PNG RGBA; slice_sheet로 투명 분리 | 합격 |
+| 2026-11-11 | JOB-17 / 검수 | sheets/JOB-17_contact.png; sheets/JOB-17_validation.json | check_assets 및 contact_sheet 실행 | JOB17 파일 검사 7/7 OK; 전체 155/155 OK, 누락 0, 오류 0. 시각 미해결: story_20_city_gate 발밑 그림자 |
