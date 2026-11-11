@@ -41,3 +41,8 @@
 | 2026-11-11 | JOB-8c | sheets/JOB-8_c.png; fx/ 신규 4종 | 정면 원형 10개 이빨 톱니·황동 스프링·김·상향 3개 음파 곡선 | ○ 합격 | 내장 image_gen. slice_sheet.remove_background 후 빈 간격 기준 그룹 분리로 곡선·동세 보존. 좌표: sheets/JOB-8_c_slicing.json |
 | 2026-11-11 | JOB-8 / 전투 배경 | sheets/JOB-8_arena.png; bg/bg_arena.png | 고정 STYLE·BACKGROUND + manifest, 밤 광장·상단 시계탑·하단 빈 무대 | ○ 합격 | 내장 image_gen, 기본 4개 참조 및 story_01_town 참조. 1280×720 RGBA 규격화 |
 | 2026-11-11 | JOB-8 / 감기 모달 시안 1 | sheets/JOB-8_wind_draft.png | 백작 등 정면·대칭 팔·열쇠 없는 황동 구멍 | △ 위치 보정 | 전체 실루엣 중심보다 열쇠 구멍이 약 74px 낮아 위로 이동 편집 |
+| 2026-11-11 | JOB-8 / 감기 모달 최종 | sheets/JOB-8_wind.png; wind/wind_boss_back.png | 기존 시안의 황동 구멍판을 위로 이동, 백작 뒤태 유지 | ○ 합격 | 내장 image_gen 편집 + slice_sheet.py. 회전 열쇠가 놓이는 중앙 영역의 빈 구멍 확인. 실제 수정 프롬프트: sheets/JOB-8_generation_record.json |
+| 2026-11-11 | JOB-8 / 등장 컷신 | sheets/JOB-8_arrive.png; story/story_06_boss_arrive.png | 확정된 백작의 자정 광장 등장, 보글 대치·그라모·숨어 있는 피프, 얼굴은 하단 자막 영역 밖 | ○ 합격 | 내장 image_gen, 기본 4장 및 JOB-8_a 참조. 1280×720 RGBA |
+| 2026-11-11 | JOB-8 / 엔딩 시안 | sheets/JOB-8_defeat_draft.png | 아침 광장 축제, 보글·그라모·피프와 기둥의 뻐꾸기시계 | △ 얼굴 수정 | 시계가 얼굴 없는 가구 버전으로 생성되어 변신한 백작의 파이 눈·미소로 수정 |
+| 2026-11-11 | JOB-8 / 엔딩 최종 | sheets/JOB-8_defeat.png; story/story_07_boss_defeat.png | 뻐꾸기시계 시계판만 파이 눈과 온순한 미소로 교체, 다른 요소 유지 | ○ 합격 | 내장 image_gen 편집. JOB-8_b의 캐릭터 디자인 참조, 1280×720 RGBA |
+| 2026-11-11 | JOB-8 / 최종 검수 | 18종 전체; sheets/JOB-8_contact.png | PNG 무결성·RGBA·manifest 경로·스프라이트 투명도·잔류 마젠타·캐릭터 최소 높이·16:9 배경·원형 톱니 검사 | ○ 18/18 합격 | check_assets: 전체 74/74 OK, contact_sheet 및 JOB-8 비교 시트 육안 확인. 검사: sheets/JOB-8_validation.json, 실제 생성·수정 프롬프트: sheets/JOB-8_generation_record.json |

@@ -62,7 +62,13 @@
     return { tex: out, processed: true };
   }
 
-  function load(id, bust) {
+  // 배포 사이트에서는 압축본(assets_web/*.webp, tools/build_web_assets.py)을 먼저 쓴다.
+  // 로컬에서는 Codex가 바꾼 원본 PNG가 바로 보이도록 원본만 쓴다. (?web 으로 로컬에서도 압축본 시험 가능)
+  const LOCAL = location.protocol === 'file:' || ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+  const USE_WEB = !LOCAL || /[?&]web/.test(location.search);
+  const webPath = (file) => 'assets_web/' + file.replace(/\.png$/i, '.webp');
+
+  function load(id, bust, tryWeb) {
     const e = byId[id];
     if (!e || e.loading) return;
     e.loading = true;
@@ -72,15 +78,25 @@
       e.tex = r.tex; e.processed = r.processed; e.ok = true; e.loading = false;
       WT.Assets.version++;
     };
-    img.onerror = () => { e.loading = false; e.tries++; if (bust) { e.ok = false; e.tex = null; } };
-    img.src = 'assets/' + e.def.file + (bust ? '?v=' + Date.now() : '');
+    img.onerror = () => {
+      e.loading = false;
+      if (tryWeb) return load(id, bust, false); // 압축본이 없으면 원본으로
+      e.tries++; if (bust) { e.ok = false; e.tex = null; }
+    };
+    img.src = (tryWeb ? webPath(e.def.file) : 'assets/' + e.def.file) + (bust ? '?v=' + Date.now() : '');
   }
+
+  // 먼저 보이는 것부터: 오프닝 컷신 → 마을 → 캐릭터 → 나머지 → 보스·후반 컷신
+  const PRIORITY = { story: 0, bg: 1, player: 2, npc: 2, props: 2, ui: 3, fx: 3, portrait: 4, furniture: 4, wind: 4, boss: 5 };
+  const rank = (a) => (a.group === 'story' && /0[5-9]/.test(a.id) ? 6 : PRIORITY[a.group] ?? 5);
 
   WT.Assets = {
     version: 0,
+    useWeb: USE_WEB,
     init() {
-      list.forEach((a) => load(a.id, false));
-      setInterval(() => { list.forEach((a) => { if (!byId[a.id].ok) load(a.id, true); }); }, WT.CFG.assetRetryMs);
+      list.slice().sort((a, b) => rank(a) - rank(b)).forEach((a) => load(a.id, false, USE_WEB));
+      // 없는 파일 다시 시도(로컬: Codex가 새로 넣는 파일을 2초 안에 반영). 배포 사이트는 바뀔 일이 없어 더 드물게.
+      setInterval(() => { list.forEach((a) => { const e = byId[a.id]; if (!e.ok && (LOCAL || e.tries < 3)) load(a.id, true, false); }); }, LOCAL ? WT.CFG.assetRetryMs : 15000);
     },
     reloadAll() { list.forEach((a) => { byId[a.id].loading = false; load(a.id, true); }); },
     has(id) { return !!(byId[id] && byId[id].ok); },

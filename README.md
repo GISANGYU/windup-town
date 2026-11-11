@@ -5,7 +5,10 @@
 
 인터렉션웹 11주차 · 3 HOURS AI CODING CHALLENGE
 
-## 실행
+## 플레이
+https://gisangyu.github.io/windup-town/
+
+## 로컬 실행
 ```
 python tools/serve.py
 ```
@@ -31,3 +34,10 @@ python tools/serve.py
 - `GAME_DESIGN.md` 기획·로직 기준
 - `ASSET_GUIDE.md`, `AGENTS.md` 이미지 리소스 제작 기준
 - `assets/manifest.js` 이미지 목록, `assets/audio/audio_manifest.js` 소리 목록
+
+## 배포 (GitHub Pages)
+이미지를 바꾼 뒤 푸시하기 전에 웹용 압축본을 다시 만든다.
+```
+python tools/build_web_assets.py   # assets/*.png → assets_web/*.webp (약 30MB → 2.5MB)
+```
+배포 사이트는 `assets_web/`를, 로컬 서버는 원본 `assets/`를 읽는다.

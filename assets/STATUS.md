@@ -1,8 +1,6 @@
 # 리소스 현황
 
-OK 56 · 확인 필요 0 · 없음 18 · 오류 0 / 전체 74
-
-**필수인데 없는 것 (9)**: `boss_idle`, `boss_slam`, `boss_throw`, `boss_bell`, `boss_tired`, `boss_cuckoo`, `bg_arena`, `fx_gear`, `fx_spring`
+OK 74 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 74
 
 | 상태 | ID | 필수 | 파일 | 메모 |
 |---|---|---|---|---|
@@ -60,23 +58,23 @@ OK 56 · 확인 필요 0 · 없음 18 · 오류 0 / 전체 74
 | OK | `story_05_teaser` |  | story/story_05_teaser.png |  |
 | OK | `wind_gramo_back` |  | wind/wind_gramo_back.png |  |
 | OK | `wind_key` |  | wind/wind_key.png |  |
-| 없음 | `boss_idle` | ● | boss/boss_idle.png |  |
-| 없음 | `boss_slam` | ● | boss/boss_slam.png |  |
-| 없음 | `boss_throw` | ● | boss/boss_throw.png |  |
-| 없음 | `boss_bell` | ● | boss/boss_bell.png |  |
-| 없음 | `boss_tired` | ● | boss/boss_tired.png |  |
-| 없음 | `boss_hurt` |  | boss/boss_hurt.png |  |
-| 없음 | `boss_cuckoo` | ● | boss/boss_cuckoo.png |  |
-| 없음 | `portrait_boss_angry` |  | portrait/portrait_boss_angry.png |  |
-| 없음 | `portrait_boss_cuckoo` |  | portrait/portrait_boss_cuckoo.png |  |
-| 없음 | `bg_arena` | ● | bg/bg_arena.png |  |
-| 없음 | `fx_gear` | ● | fx/fx_gear.png |  |
-| 없음 | `fx_spring` | ● | fx/fx_spring.png |  |
-| 없음 | `fx_steam` |  | fx/fx_steam.png |  |
-| 없음 | `fx_bell_wave` |  | fx/fx_bell_wave.png |  |
-| 없음 | `wind_boss_back` |  | wind/wind_boss_back.png |  |
-| 없음 | `story_06_boss_arrive` |  | story/story_06_boss_arrive.png |  |
-| 없음 | `story_07_boss_defeat` |  | story/story_07_boss_defeat.png |  |
-| 없음 | `furn_cuckoo` |  | furniture/furn_cuckoo.png |  |
+| OK | `boss_idle` | ● | boss/boss_idle.png |  |
+| OK | `boss_slam` | ● | boss/boss_slam.png |  |
+| OK | `boss_throw` | ● | boss/boss_throw.png |  |
+| OK | `boss_bell` | ● | boss/boss_bell.png |  |
+| OK | `boss_tired` | ● | boss/boss_tired.png |  |
+| OK | `boss_hurt` |  | boss/boss_hurt.png |  |
+| OK | `boss_cuckoo` | ● | boss/boss_cuckoo.png |  |
+| OK | `portrait_boss_angry` |  | portrait/portrait_boss_angry.png |  |
+| OK | `portrait_boss_cuckoo` |  | portrait/portrait_boss_cuckoo.png |  |
+| OK | `bg_arena` | ● | bg/bg_arena.png |  |
+| OK | `fx_gear` | ● | fx/fx_gear.png |  |
+| OK | `fx_spring` | ● | fx/fx_spring.png |  |
+| OK | `fx_steam` |  | fx/fx_steam.png |  |
+| OK | `fx_bell_wave` |  | fx/fx_bell_wave.png |  |
+| OK | `wind_boss_back` |  | wind/wind_boss_back.png |  |
+| OK | `story_06_boss_arrive` |  | story/story_06_boss_arrive.png |  |
+| OK | `story_07_boss_defeat` |  | story/story_07_boss_defeat.png |  |
+| OK | `furn_cuckoo` |  | furniture/furn_cuckoo.png |  |
 | OK | `ui_card_frame` |  | ui/ui_card_frame.png |  |
 | OK | `ui_key_e` |  | ui/ui_key_e.png |  |

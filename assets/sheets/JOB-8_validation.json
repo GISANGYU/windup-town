@@ -1,0 +1,196 @@
+{
+  "passed": 18,
+  "total": 18,
+  "checks": [
+    "PNG integrity",
+    "RGBA",
+    "manifest path",
+    "transparent sprites",
+    "no opaque magenta",
+    "character height >= 300",
+    "backgrounds 1280x720",
+    "gear near-square bounding box"
+  ],
+  "assets": [
+    {
+      "id": "boss_idle",
+      "file": "boss/boss_idle.png",
+      "size": [
+        270,
+        440
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "boss_slam",
+      "file": "boss/boss_slam.png",
+      "size": [
+        355,
+        454
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "boss_throw",
+      "file": "boss/boss_throw.png",
+      "size": [
+        561,
+        410
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "boss_bell",
+      "file": "boss/boss_bell.png",
+      "size": [
+        340,
+        501
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "boss_tired",
+      "file": "boss/boss_tired.png",
+      "size": [
+        455,
+        482
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "boss_hurt",
+      "file": "boss/boss_hurt.png",
+      "size": [
+        554,
+        486
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "boss_cuckoo",
+      "file": "boss/boss_cuckoo.png",
+      "size": [
+        406,
+        458
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "portrait_boss_angry",
+      "file": "portrait/portrait_boss_angry.png",
+      "size": [
+        433,
+        437
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "portrait_boss_cuckoo",
+      "file": "portrait/portrait_boss_cuckoo.png",
+      "size": [
+        449,
+        480
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "furn_cuckoo",
+      "file": "furniture/furn_cuckoo.png",
+      "size": [
+        354,
+        525
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "fx_gear",
+      "file": "fx/fx_gear.png",
+      "size": [
+        414,
+        416
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "fx_spring",
+      "file": "fx/fx_spring.png",
+      "size": [
+        474,
+        363
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "fx_steam",
+      "file": "fx/fx_steam.png",
+      "size": [
+        390,
+        416
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "fx_bell_wave",
+      "file": "fx/fx_bell_wave.png",
+      "size": [
+        520,
+        323
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "bg_arena",
+      "file": "bg/bg_arena.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "wind_boss_back",
+      "file": "wind/wind_boss_back.png",
+      "size": [
+        1513,
+        976
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "story_06_boss_arrive",
+      "file": "story/story_06_boss_arrive.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    },
+    {
+      "id": "story_07_boss_defeat",
+      "file": "story/story_07_boss_defeat.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "status": "OK"
+    }
+  ]
+}
