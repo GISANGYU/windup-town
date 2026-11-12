@@ -24,17 +24,48 @@ WT.ROAD_LEVELS = [
   {type:'gate', x:1000, w:260, tip:'gate'}, {type:'pit', x:1560, w:140, tip:'pit'},
   {type:'checkpoint', x:1850}, {type:'puddle', x:2100, w:150, tip:'puddle'}, {type:'end', x:2800}
  ]},
- { kind: 'metal', len: 3400, bg: 'bg_road3', bgm: 'bgm_road3', ground: [[0, 3400]], items: [
+ { kind: 'metal', len: 3400, bg: 'bg_road3', bgm: 'bgm_road3', storyBefore: 'act4zone2', ground: [[0, 3400]], items: [
   {type:'checkpoint', x:140}, {type:'charger', x:300, tip:'charger'}, {type:'door', x:500, tip:'door'}, {type:'wire', x:930, tip:'wire'},
   {type:'checkpoint', x:1250}, {type:'charger', x:1330, tip:'charger'}, {type:'gate', x:1450, w:260, tip:'gate'},
   {type:'wire', x:2000, tip:'wire'}, {type:'end', x:2350}
  ]},
  // 구간 3 · 발전소 정문: 두꺼비집 문지기 (한 화면 아레나)
- { kind: 'metal', len: 1280, bg: 'bg_gate_arena', bgm: 'bgm_toad_boss', boss: 'toad', ground: [[0, 1280]], items: [
+ { kind: 'metal', len: 1280, bg: 'bg_gate_arena', bgm: 'bgm_toad_boss', boss: 'toad', storyBefore: 'act4gate', ground: [[0, 1280]], items: [
   {type:'checkpoint', x:200}, {type:'charger', x:320, tip:'charger'}, {type:'platform', x:430, w:140, h:100}, {type:'platform', x:790, w:130, h:170}
  ]},
  // 구간 4 · 발전소 중심 홀: 볼트 남작 (한 화면 아레나)
  { kind: 'metal', len: 1280, bg: 'bg_volt_arena', bgm: 'bgm_volt_boss', boss: 'volt', ground: [[0, 1280]], items: [
   {type:'checkpoint', x:220}, {type:'charger', x:490, tip:'charger'}, {type:'platform', x:300, w:140, h:110}, {type:'platform', x:540, w:140, h:190}, {type:'platform', x:760, w:140, h:260}
+ ]},
+ // ═══ 제7막 「멈추지 않는 무도회」 ═══
+ // speaker {x, r}: 켜져 있으면 둘레 r 안에서 태엽 보글이 춤 상태. E로 풀어 끔
+ // dancer {x, kind: tin|bird|top}: 춤추는 동안 길을 막음. E로 풀어 주면 앉아 쉼
+ // comb {x, w, off}: 빗살 원통. bgm_ballroom 박자에 맞춰 1.428초(4박)마다 0.45초 빗살이 솟음, off 0.714 = 엇박
+ // 구간 5 · 오르골 거리
+ { kind: 'orgel', len: 3200, bg: 'bg_orgel', bgm: 'bgm_orgel_town', ground: [[0, 1880], [2020, 3200]], items: [
+  {type:'checkpoint', x:140}, {type:'charger', x:320, tip:'charger'},
+  {type:'dancer', x:700, kind:'tin', tip:'dancer'},
+  {type:'speaker', x:1150, r:240, tip:'speaker'},
+  {type:'dancer', x:1420, kind:'bird', tip:'dancer'},
+  {type:'checkpoint', x:1560},
+  {type:'speaker', x:1760, r:300, tip:'speaker'}, {type:'pit', x:1880, w:140, tip:'pit'},
+  {type:'dancer', x:2400, kind:'top', tip:'dancer'}, {type:'charger', x:2560, tip:'charger'},
+  {type:'speaker', x:2850, r:200, tip:'speaker'},
+  {type:'end', x:3060}
+ ]},
+ // 구간 6 · 무도회장 계단
+ { kind: 'orgel', len: 3400, bg: 'bg_ballroom', bgm: 'bgm_ballroom', storyBefore: 'act7stairs', ground: [[0, 3400]], items: [
+  {type:'checkpoint', x:140}, {type:'charger', x:300, tip:'charger'},
+  {type:'comb', x:520, w:180, tip:'comb'},
+  {type:'speaker', x:980, r:260, tip:'speaker'}, {type:'comb', x:1080, w:180, off:0.714, tip:'comb'},
+  {type:'dancer', x:1500, kind:'tin', tip:'dancer'},
+  {type:'checkpoint', x:1700}, {type:'charger', x:1820, tip:'charger'},
+  {type:'speaker', x:2200, r:320, tip:'speaker'}, {type:'dancer', x:2330, kind:'top', tip:'dancer'},
+  {type:'comb', x:2700, w:240, off:0.714, tip:'comb'},
+  {type:'end', x:3200}
+ ]},
+ // 구간 7 · 오르골 무대: 멜로디 여왕 (한 화면 아레나)
+ { kind: 'orgel', len: 1280, bg: 'bg_melody_arena', bgm: 'bgm_melody_boss', boss: 'melody', storyBefore: 'act7ballroom', ground: [[0, 1280]], items: [
+  {type:'checkpoint', x:220}, {type:'charger', x:440, tip:'charger'}, {type:'platform', x:300, w:140, h:110}, {type:'platform', x:600, w:150, h:170}
  ]}
 ];

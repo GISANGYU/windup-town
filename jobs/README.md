@@ -2,7 +2,7 @@
 
 Codex 창마다 **"JOB18 진행해"** 처럼 번호만 말하면 된다. Codex는 `jobs/JOB-NN.md`를 읽고 그 JOB만 한다.
 
-## 지금 할 작업 — 새 이야기(볼트 남작, GAME_DESIGN.md 17~21절)
+## 작업 목록 — 3~5막(JOB-18~23) · 6~7막 오르골 여왕(JOB-24~27)
 
 | JOB | 막 | 내용 | 파일 수 | 먼저 끝나야 하는 JOB | 지시서 |
 |---|---|---|---|---|---|
@@ -12,8 +12,13 @@ Codex 창마다 **"JOB18 진행해"** 처럼 번호만 말하면 된다. Codex�
 | JOB-21 | 4·5막 | 보스 아레나 배경 + 공격 이펙트 + 건전지 모달 | 12 | 없음 | [JOB-21.md](JOB-21.md) |
 | JOB-22 | 3·4·5막 | 3~5막 컷신 13장 | 13 | JOB-18, JOB-19, JOB-20 | [JOB-22.md](JOB-22.md) |
 | JOB-23 | 3막 | 흑막 암시 컷신 2장 (볼트 남작·문지기 실루엣) | 2 | JOB-18, JOB-19 | [JOB-23.md](JOB-23.md) |
+| JOB-24 | 6·7막 | 멜로디 여왕 (7막 보스) | 10 | 없음 | [JOB-24.md](JOB-24.md) |
+| JOB-25 | 7막 | 오르골 마을 주민 3종 (춤 2프레임 + 쉼) | 9 | 없음 | [JOB-25.md](JOB-25.md) |
+| JOB-26 | 6·7막 | 오르골 마을 배경·무대 + 소품·이펙트 + 풀기 모달 | 16 | 없음 | [JOB-26.md](JOB-26.md) |
+| JOB-27 | 6·7막 | 6·7막 컷신 12장 | 12 | JOB-24, JOB-25 | [JOB-27.md](JOB-27.md) |
 
 순서: **1차(동시에)** JOB-18, JOB-19, JOB-20, JOB-21 → **2차** JOB-22(컷신, 18·19·20 뒤), JOB-23(흑막 실루엣 컷신, 18·19 뒤).
+6~7막: **1차(동시에)** JOB-24, JOB-25, JOB-26 → **2차** JOB-27(컷신, 24·25 뒤).
 
 ## 끝난 작업 (이전 이야기, JOB-9~17)
 
@@ -22,5 +27,5 @@ Codex 창마다 **"JOB18 진행해"** 처럼 번호만 말하면 된다. Codex�
 ## 공통
 
 - 기준: `ASSET_GUIDE.md`(스타일·블록), `assets/manifest.js`(ID·경로·크기·prompt, `job` 필드로 소속 JOB 표시)
-- 새 캐릭터 블록: ASSET_GUIDE 5절 **BARON VOLT**, **TOAD GATEKEEPER**, **RADIO REBORN**
-- 소리는 Codex 작업이 아니다. `jobs/AUDIO2.md` 참고(소리 담당 Claude 창).
+- 새 캐릭터 블록: ASSET_GUIDE 5절 **BARON VOLT**, **TOAD GATEKEEPER**, **RADIO REBORN**, **MELODY QUEEN**, **ORGEL DANCERS**, **YOUNG GRAMO**
+- 소리는 Codex 작업이 아니다. `jobs/AUDIO2.md`(3~5막), `jobs/AUDIO3.md`(6~7막) 참고(소리 담당 Claude 창).

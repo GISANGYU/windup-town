@@ -64,7 +64,7 @@ window.WT = window.WT || {};
     const src = ctx.createBufferSource(); src.buffer = buffers[id]; src.loop = d.loop !== false; src.playbackRate.value = rate || 1;
     const g = ctx.createGain(); g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(d.vol ?? 0.5, t + fade);
     src.connect(g); g.connect(bgmBus); src.start(t);
-    cur = { id, src, gain: g, rate: rate || 1 };
+    cur = { id, src, gain: g, rate: rate || 1, t0: t };
   }
 
   const A = WT.Audio = {
@@ -136,6 +136,8 @@ window.WT = window.WT || {};
       startBgm(id, rate, o.fade ?? 0.8);
     },
     currentBgm() { return cur ? cur.id : null; },
+    // 지금 BGM이 id면 곡 안의 재생 위치(초), 아니면 null (박자 맞춤용)
+    bgmPos(id) { if (!cur || cur.id !== id || !buffers[id]) return null; const d = buffers[id].duration; return (((now() - cur.t0) * cur.rate) % d + d) % d; },
     // 징글: 1회 재생, 그동안 BGM 을 비워 둠
     holdUntil: 0,
     jingle(id) {

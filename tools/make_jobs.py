@@ -164,10 +164,58 @@ JOBS = {
                "남작 그림자는 크게, 문지기 그림자는 그 앞에 작게. 흑막이 둘이라는 게 한눈에 보이게.",
                "`story_44`: 빛나는 실(태엽 힘)이 그림자 가슴으로 빨려 드는 장면이 중심. `story_45`: 그림자가 건전지를 들어 보이고, 건전지에서 실이 빨려 나가는 모습 + 마을 지도의 건전지 표시.",
                "화면 아래 30%는 자막 카드가 덮는다. 글자·숫자 금지(지도에도)."]),
+    # ───── 2026-11-12 제6~7막 「오르골 여왕」 ─────
+    24: dict(
+        title="멜로디 여왕 (7막 보스)", act="6·7막", dep=[],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_02_character.jpg", "assets/boss/boss_volt_idle.png (보스 크기감)"],
+        blocks=["STYLE BLOCK", "SPRITE RULES", "SIDE-SCROLL RULES", "MELODY QUEEN"],
+        sheets=[("a", ["boss_melody_idle", "boss_melody_wave", "boss_melody_spin", "boss_melody_rain"], "공격 자세 4개 한 줄 (모두 왼쪽 보기)"),
+                ("b", ["boss_melody_creak", "boss_melody_unwind", "boss_melody_calm"], "삐걱·풀림·쉼 3개 한 줄"),
+                ("c", ["npc_melody", "portrait_melody_wild", "portrait_melody_calm"], "마을용 정면 1 + 초상화 2")],
+        rules=["보스 자세는 모두 **왼쪽**을 본다(아레나 오른쪽에 섬). `npc_melody`만 정면.",
+               "공격·삐걱 자세는 **너무 감긴 상태**: 나선 눈, 떨림 선, 억지 미소. `unwind`에서 풀려 가고, `calm`과 `npc_melody`에서 처음으로 **파이 눈**이 된다. 이 변화가 7막의 결말이다.",
+               "`boss_melody_creak`은 등의 **은색 큰 열쇠**가 오른쪽에 분명히 보여야 한다(플레이어가 풀어 주는 곳).",
+               "악당이 아니라 두려움에 사로잡힌 인물. 무섭지 않게, 안쓰럽고 우아하게."]),
+    25: dict(
+        title="오르골 마을 주민 3종 (춤 2프레임 + 쉼)", act="7막", dep=[],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_02_character.jpg", "assets/npc/npc_pip_awake.png (주민 크기감)"],
+        blocks=["STYLE BLOCK", "SPRITE RULES", "SIDE-SCROLL RULES", "ORGEL DANCERS"],
+        sheets=[("a", ["npc_tin_dance_01", "npc_tin_dance_02", "npc_tin_rest"], "양철 병정 3개"),
+                ("b", ["npc_bird_dance_01", "npc_bird_dance_02", "npc_bird_rest"], "태엽 새 3개"),
+                ("c", ["npc_top_dance_01", "npc_top_dance_02", "npc_top_rest"], "팽이 아가씨 3개")],
+        rules=["모두 **왼쪽**을 본다(보글이 왼쪽에서 다가옴).",
+               "춤 2프레임은 **너무 감긴** 모습(나선 눈, 쉬지 못함). 쉼은 털썩 앉거나 누워 **파이 눈**으로 안도.",
+               "세 종류가 실루엣만으로 구분되게."]),
+    26: dict(
+        title="오르골 마을 배경·무대 + 소품·이펙트 + 풀기 모달", act="6·7막", dep=[],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_03_stage_layers.jpg", "assets/refs/ref_04_watercolor_bg.jpg", "assets/road/bg_road1_far.png (길 배경 형식)"],
+        blocks=["STYLE BLOCK", "BACKGROUND RULES (far·아레나)", "SPRITE RULES (나머지)", "SIDE-SCROLL RULES"],
+        singles=["bg_orgel_far", "bg_ballroom_far", "bg_melody_arena"],
+        sheets=[("mid1", ["bg_orgel_mid"], "중간 레이어(위쪽 마젠타)"), ("mid2", ["bg_ballroom_mid"], "중간 레이어(위쪽 마젠타)"),
+                ("a", ["prop_parcel_closed", "prop_orgel_wild", "prop_orgel_calm"], "소포·오르골 3개"),
+                ("b", ["road_speaker", "road_speaker_off", "road_comb_drum"], "스피커 2 + 빗살 원통"),
+                ("c", ["fx_music_wave", "fx_note_tornado", "fx_comb_tooth"], "이펙트 3개"),
+                ("d", ["wind_orgel_back", "wind_melody_back"], "풀기 모달 배경 2개")],
+        rules=["오르골 마을은 지금까지의 마을·도시와 다른 **파스텔·분홍·금빛**. 다만 수채 질감과 외곽선은 같게.",
+               "far 배경은 좌우가 이어져야 한다(반복 스크롤). 아레나(`bg_melody_arena`)는 한 화면 고정, 아래 120px 바닥 띠 비우기, 발판은 그리지 않음.",
+               "`road_speaker`와 `road_speaker_off`는 같은 크기·위치(게임이 바꿔 끼움).",
+               "풀기 모달 배경 2개는 가운데 **빈 열쇠 구멍**(열쇠는 그리지 않음), 기존 `wind_gramo_back`과 같은 구도."]),
+    27: dict(
+        title="6·7막 컷신 12장", act="6·7막", dep=[24, 25],
+        refs=["assets/refs/style_anchor.png", "assets/refs/ref_01_carnival.jpg", "assets/story/story_43_home.png (마을 결말 톤)", "JOB-24·25 결과 (멜로디·주민 모습 고정)", "assets/npc/npc_radio_reborn_idle.png"],
+        blocks=["STYLE BLOCK", "BACKGROUND RULES", "등장하는 캐릭터 블록 전부 (회상은 YOUNG GRAMO)"],
+        singles=["story_50_parcel", "story_51_orgel_scream", "story_52_flashback_stage", "story_53_flashback_gift", "story_54_hidden_voice", "story_55_waltz_signal",
+                 "story_56_orgel_town", "story_57_ballroom", "story_58_memory_1", "story_59_memory_2", "story_60_melody_stops", "story_61_duet"],
+        rules=["화면 아래 30%는 자막 카드가 덮는다. 글자 금지.",
+               "**회상**(`story_52`·`53`·`58`·`59`)은 세피아 + 필름 질감 + 둥근 비네팅. 젊은 그라모는 YOUNG GRAMO 블록.",
+               "그라모는 3막 뒤라 **등 열쇠가 2개**(회상 속 젊은 그라모는 3개).",
+               "라디오 씨는 변신 후 모습(RADIO REBORN).",
+               "`story_60_melody_stops`가 7막의 하이라이트: 처음으로 쉬는 멜로디의 평온한 얼굴."]),
 }
 
 ACT = {"3막": "제3막 (GAME_DESIGN.md 18절)", "4막": "제4막 (GAME_DESIGN.md 19절)", "5막": "제5막 「볼트 남작」 (GAME_DESIGN.md 20절)",
-       "4·5막": "제4·5막 보스 아레나 (GAME_DESIGN.md 19·20절)", "3·4·5막": "제3~5막 (GAME_DESIGN.md 18~20절)"}
+       "4·5막": "제4·5막 보스 아레나 (GAME_DESIGN.md 19·20절)", "3·4·5막": "제3~5막 (GAME_DESIGN.md 18~20절)",
+       "6·7막": "제6·7막 「오르골 여왕」 (GAME_DESIGN.md 22~24절)", "7막": "제7막 「멈추지 않는 무도회」 (GAME_DESIGN.md 24절)"}
 NEW_FROM = 18   # 이 번호부터가 새 이야기 작업. 이전 JOB 지시서(9~17)는 다시 만들지 않는다.
 
 
@@ -224,17 +272,18 @@ for n, J in JOBS.items():
 # README
 R = ["# 이미지 작업 (Codex)", "",
      "Codex 창마다 **\"JOB18 진행해\"** 처럼 번호만 말하면 된다. Codex는 `jobs/JOB-NN.md`를 읽고 그 JOB만 한다.", "",
-     "## 지금 할 작업 — 새 이야기(볼트 남작, GAME_DESIGN.md 17~21절)", "",
+     "## 작업 목록 — 3~5막(JOB-18~23) · 6~7막 오르골 여왕(JOB-24~27)", "",
      "| JOB | 막 | 내용 | 파일 수 | 먼저 끝나야 하는 JOB | 지시서 |", "|---|---|---|---|---|---|"]
 for n, J in JOBS.items():
     if n >= NEW_FROM:
         R.append(f"| JOB-{n} | {J['act']} | {J['title']} | {len(by_job[f'JOB-{n}'])} | {', '.join(f'JOB-{d}' for d in J['dep']) or '없음'} | [JOB-{n:02d}.md](JOB-{n:02d}.md) |")
-R += ["", "순서: **1차(동시에)** JOB-18, JOB-19, JOB-20, JOB-21 → **2차** JOB-22(컷신, 18·19·20 뒤), JOB-23(흑막 실루엣 컷신, 18·19 뒤).", "",
+R += ["", "순서: **1차(동시에)** JOB-18, JOB-19, JOB-20, JOB-21 → **2차** JOB-22(컷신, 18·19·20 뒤), JOB-23(흑막 실루엣 컷신, 18·19 뒤).",
+      "6~7막: **1차(동시에)** JOB-24, JOB-25, JOB-26 → **2차** JOB-27(컷신, 24·25 뒤).", "",
       "## 끝난 작업 (이전 이야기, JOB-9~17)", "",
       "모두 완료. 그중 새 이야기에서도 쓰는 것: 라디오 씨 변신 전 모습(JOB-9), 건전지·축제 소품(JOB-10), 축제·라디오 등장 컷신 story_08·09(JOB-11), 보글 횡스크롤 포즈(JOB-14), 길 배경·장애물(JOB-15·16), HUD 아이콘(JOB-17). 측량기(JOB-12·13)와 나머지 이전 컷신은 쓰지 않는다.", "",
       "## 공통", "",
       "- 기준: `ASSET_GUIDE.md`(스타일·블록), `assets/manifest.js`(ID·경로·크기·prompt, `job` 필드로 소속 JOB 표시)",
-      "- 새 캐릭터 블록: ASSET_GUIDE 5절 **BARON VOLT**, **TOAD GATEKEEPER**, **RADIO REBORN**",
-      "- 소리는 Codex 작업이 아니다. `jobs/AUDIO2.md` 참고(소리 담당 Claude 창).", ""]
+      "- 새 캐릭터 블록: ASSET_GUIDE 5절 **BARON VOLT**, **TOAD GATEKEEPER**, **RADIO REBORN**, **MELODY QUEEN**, **ORGEL DANCERS**, **YOUNG GRAMO**",
+      "- 소리는 Codex 작업이 아니다. `jobs/AUDIO2.md`(3~5막), `jobs/AUDIO3.md`(6~7막) 참고(소리 담당 Claude 창).", ""]
 open(os.path.join(ROOT, "jobs", "README.md"), "w", encoding="utf-8", newline="\n").write("\n".join(R))
 print("ok")

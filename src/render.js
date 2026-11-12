@@ -122,6 +122,7 @@
     else if (id === 'radio' && st.reborn) { ph = PH.radio; ids = [WT.Game.state.ui.dialog && WT.Game.state.ui.dialog.who === 'radio' ? 'npc_radio_reborn_talk' : Math.floor(t * CFG.bpm / 60) % 2 ? 'npc_radio_reborn_dance' : 'npc_radio_reborn_idle', 'npc_radio_reborn_idle']; }
     else if (id === 'radio') { ph = PH.radio; ids = st.off ? ['npc_radio_off', 'npc_radio_idle'] : st.power === 'wind' ? ['npc_radio_crank', 'npc_radio_idle'] : (WT.Game.state.ui.dialog && WT.Game.state.ui.dialog.who === 'radio' && Math.floor(t * 4) % 2 ? ['npc_radio_talk', 'npc_radio_idle'] : ['npc_radio_idle']); }
     else if (id === 'cuckoo') { ph = PH.cuckoo; ids = ['boss_cuckoo']; }
+    else if (id === 'melody') { ph = PH.melody; ids = ['npc_melody', 'boss_melody_calm']; }
     else if (id === 'pip') { ph = PH.pip; ids = awake ? (A.has('npc_pip_awake_02') && Math.floor(t * CFG.bpm / 60) % 2 ? ['npc_pip_awake_02', 'npc_pip_awake'] : ['npc_pip_awake']) : ['npc_pip_sleepy']; }
     else { ph = PH.lamp; const lit = WT.Act3 && WT.Act3.lampLit(); ids = [(lit != null ? lit : awake) ? 'npc_lamp_on' : 'npc_lamp_off']; }
     const bat = st.power === 'battery' || (id === 'radio' && st.off);
@@ -306,6 +307,7 @@
     W.props.forEach((p) => list.push({ y: p.y, f: () => drawProp(p, t) }));
     Object.keys(W.npcs).forEach((id) => WT.npcVisible(id) && list.push({ y: W.npcs[id].y, f: () => drawNpc(id, t) }));
     if (WT.Act3) WT.Act3.drawList(list, t, ctx, R);
+    if (WT.Act6) WT.Act6.drawList(list, t, ctx, R);
     if (s.quest.stage === 'started') s.world.keys.forEach((k) => !k.taken && list.push({ y: k.y, f: () => drawKey(k, t) }));
     list.push({ y: s.player.y, f: () => drawPlayer(t) });
     list.sort((a, b) => a.y - b.y).forEach((d) => d.f());
@@ -365,6 +367,7 @@
     ctx.restore();
     WT.Story.draw(ctx, t);
     if (WT.BatteryModal) WT.BatteryModal.draw(ctx);
+    if (WT.Unwind) WT.Unwind.draw(ctx);
     drawFilm(t);
     drawIris();
   };

@@ -35,6 +35,9 @@ python tools/contact_sheet.py     # assets/sheets/_contact.png 로 전체 비교
 - **JOB-7**: 오프닝·예고 컷신 5장(`story/`)과 태엽 감기 모달 2개(`wind/`). 규칙은 ASSET_GUIDE 1-4 표 아래.
 - **JOB-8**: 제2막 보스 째깍 백작 18개(`boss/` 외). 캐릭터 블록은 ASSET_GUIDE 5절 COUNT TICK-TOCK. 필수(req)부터: boss_idle, boss_slam, boss_throw, boss_bell, boss_tired, boss_cuckoo, bg_arena, fx_gear, fx_spring.
 
+## 추가 작업 (6~7막 오르골 여왕, 2026-11-12)
+- **JOB-24 ~ JOB-27**: 멜로디 여왕, 오르골 마을 주민 3종, 배경·소품·풀기 모달, 컷신 12장. 지시서 `jobs/JOB-24.md` ~ `jobs/JOB-27.md`. 캐릭터 블록은 ASSET_GUIDE 5절 MELODY QUEEN · ORGEL DANCERS · YOUNG GRAMO.
+
 ## 추가 작업 (새 3~5막, 2026-11-12)
 - **JOB-18 ~ JOB-22**: 볼트 남작, 두꺼비집 문지기, 변신 후 라디오 씨, 보스 아레나·이펙트, 컷신 13장. 지시서 `jobs/JOB-18.md` ~ `jobs/JOB-22.md`. 캐릭터 블록은 ASSET_GUIDE 5절 BARON VOLT · TOAD GATEKEEPER · RADIO REBORN.
 - `src/`는 수정하지 않는다(게임 로직은 Claude 담당). 게임에 대한 의견은 사람에게 남긴다.

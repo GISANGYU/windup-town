@@ -1,0 +1,18 @@
+{
+  "tool": "built-in image_gen",
+  "date": "2026-11-12",
+  "prompt_set": "assets/sheets/JOB-25_prompts.json",
+  "references": [
+    "assets/refs/style_anchor.png",
+    "assets/refs/ref_02_character.jpg",
+    "assets/npc/npc_pip_awake.png"
+  ],
+  "sheets": {
+    "a": "exec-15ef1d57-19e1-43cb-aa90-4c1ba76dfea9.png",
+    "b": "exec-277486d9-ac32-4b6c-a39e-6a9102323e1a.png",
+    "c": "exec-38dada52-8888-48a4-b6c1-b6ca9cfeb92c.png"
+  },
+  "source_directory": "C:/Users/yu505/.codex/generated_images/01a1cbe8-8651-7771-8ad5-e4821c539340",
+  "slicing": "tools/slice_sheet.py --merge 90",
+  "regenerations": 0
+}

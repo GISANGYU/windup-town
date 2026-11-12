@@ -38,17 +38,18 @@
     };
     if (WT.Act3) WT.Act3.initState(G.state);
     if (WT.Road) WT.Road.initState(G.state);
+    if (WT.Act6) WT.Act6.initState(G.state);
   };
 
   G.locked = function () {
     const u = G.state.ui;
-    return !!(u.dialog || u.transition || u.cutscene || u.story || (WT.Wind && WT.Wind.active) || (WT.Act3 && WT.Act3.busy()) || (WT.BatteryModal && WT.BatteryModal.active));
+    return !!(u.dialog || u.transition || u.cutscene || u.story || (WT.Wind && WT.Wind.active) || (WT.Act3 && WT.Act3.busy()) || (WT.BatteryModal && WT.BatteryModal.active) || (WT.Unwind && WT.Unwind.active));
   };
 
   // ───────── 목표 문구 (HUD) ─────────
   G.objective = function () {
     const s = G.state, st = s.quest.stage;
-    if (s.episode >= 3) { const o = WT.Act3 && WT.Act3.objective(); if (o) return o; }
+    if (s.episode >= 3) { const o = (WT.Act6 && WT.Act6.objective()) || (WT.Act3 && WT.Act3.objective()); if (o) return o; }
     if (st === 'none') return '광장의 축음기에게 말을 걸어 보자';
     if (st === 'started') return `태엽 열쇠를 모으자  ${s.inventory.keys} / 3`;
     if (st === 'ready') return '그라모 영감에게 열쇠를 가져가자';
@@ -348,6 +349,7 @@
     WT.Story.update(dt);
     WT.Wind.update(dt);
     if (WT.BatteryModal) WT.BatteryModal.update(dt);
+    if (WT.Unwind) WT.Unwind.update(dt);
     if (u.toast) { u.toast.t -= dt; if (u.toast.t <= 0) u.toast = null; }
     if (p.actionT > 0) { p.actionT -= dt; if (p.actionT <= 0) p.action = null; }
     if (p.landT > 0) p.landT -= dt;
@@ -431,6 +433,7 @@
     }
 
     if (WT.Act3) WT.Act3.update(dt);
+    if (WT.Act6) WT.Act6.update(dt);
     if (s.scene === 'road' && WT.Road) WT.Road.update(dt, input);
     // 입자
     G.particles.forEach((q) => { q.life += dt; q.x += q.vx * dt; q.y += q.vy * dt; if (q.type === 'sparkle') q.vy += 80 * dt; if (q.type === 'spring') { q.vy += 900 * dt; q.rot += dt * 12; } if (q.type === 'steam') { q.vy = -60; q.vx *= 0.95; } });

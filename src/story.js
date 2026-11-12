@@ -429,6 +429,90 @@
       ctx.fillStyle = C.yellow; [[715, 210], [752, 210], [262, 405], [284, 405]].forEach(([x, y], i) => { ctx.beginPath(); ctx.ellipse(x, y, i < 2 ? 11 : 6, i < 2 ? 6 : 4, 0, 0, 7); ctx.fill(); });
       ctx.strokeStyle = C.yellow; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(733, 240, 26, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
     },
+    parcel(ctx, t) {
+      bg(ctx, '#f6dcae', '#e9c08a'); ground(ctx, '#a3a578');
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 640, 545, { h: 230, mood: 'awake', t });
+      WT.drawThing(ctx, ['npc_radio_reborn_idle'], PH.radio, 820, 560, { h: 200, reborn: true, t });
+      const x = Math.min(420, -100 + t * 260);
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, x, 640 - Math.abs(Math.sin(t * 12)) * 10, { h: 150, mood: 'awake', t });
+      WT.drawThing(ctx, 'prop_parcel_closed', (c) => { c.fillStyle = '#b98a5a'; c.strokeStyle = C.outline; c.lineWidth = 4; c.fillRect(-26, -40, 52, 40); c.strokeRect(-26, -40, 52, 40); }, x + 60, 520 + Math.sin(t * 40) * 3, { h: 50 });
+    },
+    orgelScream(ctx, t) {
+      bg(ctx, '#f0c8b0', '#d9a090'); ground(ctx, '#a3a578');
+      WT.drawThing(ctx, 'prop_orgel_wild', PH.orgel, 640 + (Math.random() - 0.5) * 6, 620, { h: 160, wild: true, t });
+      ctx.strokeStyle = '#e07a3a'; ctx.lineWidth = 4; for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2 + t * 4; ctx.beginPath(); ctx.moveTo(640 + Math.cos(a) * 120, 520 + Math.sin(a) * 80); ctx.lineTo(640 + Math.cos(a) * 170, 520 + Math.sin(a) * 110); ctx.stroke(); }
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 330, 640, { h: 140, mood: 'awake', t, rot: -0.15 });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 930, 650, { h: 150, dir: 'side', t, flip: true, rot: 0.1 });
+    },
+    flashStage(ctx, t) {
+      ctx.save(); ctx.filter = 'sepia(1) contrast(1.05)';
+      bg(ctx, '#3a2a20', '#1e1612');
+      ctx.fillStyle = '#8f2f2a'; ctx.fillRect(0, 0, 160, WT.H); ctx.fillRect(WT.W - 160, 0, 160, WT.H);
+      ctx.fillStyle = 'rgba(255,240,200,.25)'; ctx.beginPath(); ctx.moveTo(500, 0); ctx.lineTo(780, 0); ctx.lineTo(900, 640); ctx.lineTo(380, 640); ctx.fill();
+      ctx.fillStyle = '#6a4a30'; ctx.fillRect(200, 600, 880, 40);
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 520, 600, { h: 260, mood: 'awake', t, rot: Math.sin(t * 2) * 0.04 });
+      WT.drawThing(ctx, ['npc_melody', 'boss_melody_calm'], PH.melody, 780, 600, { h: 260, state: 'calm', t });
+      ctx.restore();
+    },
+    flashGift(ctx, t) {
+      ctx.save(); ctx.filter = 'sepia(1) contrast(1.05)';
+      bg(ctx, '#d9b08a', '#8a6a50'); ground(ctx, '#6a5a4a');
+      ctx.fillStyle = '#4a3a30'; ctx.fillRect(900, 300, 380, 320); ctx.fillRect(880, 280, 420, 30);
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 470, 620, { h: 260, mood: 'awake', t });
+      WT.drawThing(ctx, ['npc_melody', 'boss_melody_calm'], PH.melody, 740, 620, { h: 240, state: 'calm', t });
+      WT.drawThing(ctx, 'prop_orgel_calm', PH.orgel, 610, 470, { h: 70, t });
+      ctx.restore();
+    },
+    hiddenVoice(ctx, t) {
+      bg(ctx, '#3a2a30', '#2a1d22');
+      ctx.fillStyle = 'rgba(232,160,168,.18)'; ctx.beginPath(); ctx.arc(640, 360, 280, 0, 7); ctx.fill();
+      WT.drawThing(ctx, 'prop_orgel_calm', PH.orgel, 640, 560, { h: 150, t });
+      ctx.save(); ctx.globalAlpha = 0.35 + Math.sin(t * 2) * 0.1; WT.drawThing(ctx, ['portrait_melody_calm', 'npc_melody'], PH.melody, 640, 300, { h: 220, anchor: 'center', state: 'calm', t }); ctx.restore();
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 330, 640, { h: 220, mood: 'awake', t });
+    },
+    waltzSignal(ctx, t) {
+      bg(ctx, '#f3c6c8', '#d79aa8'); ground(ctx, '#a3a578');
+      ctx.fillStyle = '#c48296'; ctx.fillRect(1000, 260, 180, 220); ctx.beginPath(); ctx.moveTo(990, 260); ctx.lineTo(1090, 170); ctx.lineTo(1190, 260); ctx.fill();
+      for (let i = 0; i < 5; i++) { const k = (t * 0.6 + i / 5) % 1; ctx.strokeStyle = `rgba(232,160,168,${1 - k})`; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(1090, 300, 30 + k * 600, Math.PI * 0.7, Math.PI * 1.3); ctx.stroke(); }
+      WT.drawThing(ctx, ['npc_radio_reborn_broadcast', 'npc_radio_reborn_idle'], PH.radio, 520, 640, { h: 220, reborn: true, t });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 700, 650, { h: 150, dir: 'side', t });
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 260, 620, { h: 210, mood: 'awake', t });
+    },
+    orgelTown(ctx, t) {
+      bg(ctx, '#f3c6c8', '#e2a9b6'); ground(ctx, '#c48296');
+      for (let i = 0; i < 6; i++) { const k = ['tin', 'bird', 'top'][i % 3], b = Math.abs(Math.sin(t * 9 + i)); WT.drawThing(ctx, [`npc_${k}_dance_0${Math.floor(t * 6 + i) % 2 + 1}`], PH.dancer, 140 + i * 200, 640 - b * 16, { h: 140, kind: k, on: true, t: t + i, rot: Math.sin(t * 9 + i) * 0.15 }); }
+    },
+    ballroom(ctx, t) {
+      bg(ctx, '#5a2a3a', '#2a1420');
+      ctx.fillStyle = 'rgba(242,193,78,.2)'; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.arc(200 + i * 300, 80, 40, 0, 7); ctx.fill(); }
+      ground(ctx, '#8a5a6a');
+      WT.drawThing(ctx, 'boss_melody_idle', PH.melody, 760, 620, { h: 420, state: 'attack', t });
+      WT.drawThing(ctx, 'player_idle_side', PH.bogle, 300, 650, { h: 120, dir: 'side', t });
+    },
+    memory1(ctx, t) { ART.flashStage(ctx, t); },
+    memory2(ctx, t) {
+      ctx.save(); ctx.filter = 'sepia(1) brightness(.8)';
+      bg(ctx, '#1a1418', '#0e0a0c');
+      ctx.fillStyle = 'rgba(255,240,200,.12)'; ctx.beginPath(); ctx.arc(640, 420, 200, 0, 7); ctx.fill();
+      WT.drawThing(ctx, ['npc_melody', 'boss_melody_calm'], PH.melody, 640, 600, { h: 200, state: 'calm', t, rot: 0.08 });
+      ctx.restore();
+    },
+    melodyStops(ctx, t) {
+      bg(ctx, '#f3c6c8', '#e2a9b6'); ground(ctx, '#c48296');
+      WT.drawThing(ctx, ['boss_melody_calm', 'npc_melody'], PH.melody, 760, 620, { h: 340, state: 'calm', t });
+      WT.drawThing(ctx, ['npc_radio_reborn_broadcast', 'npc_radio_reborn_idle'], PH.radio, 360, 640, { h: 220, reborn: true, t });
+      for (let i = 0; i < 6; i++) { const k = (t * 0.25 + i / 6) % 1; WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, 420 + k * 300, 380 - Math.sin(k * 3 + i) * 40, { h: 34, anchor: 'center', alpha: 1 - k }); }
+      ['tin', 'bird', 'top'].forEach((k, i) => WT.drawThing(ctx, [`npc_${k}_rest`], PH.dancer, 120 + i * 90, 660, { h: 90, kind: k, on: false, t }));
+    },
+    duet(ctx, t) {
+      bg(ctx, '#e9b47a', '#c48a5a'); ground(ctx, '#a3a578');
+      PH.stage && WT.drawThing(ctx, 'prop_stage', PH.stage, 640, 560, { h: 150, anchor: 'center' });
+      const b = Math.abs(Math.sin(t * 2));
+      WT.drawThing(ctx, 'npc_gramo_awake', PH.gramo, 560, 545 - b * 4, { h: 230, mood: 'awake', t });
+      WT.drawThing(ctx, ['npc_melody', 'boss_melody_calm'], PH.melody, 740, 550, { h: 220, state: 'calm', t, rot: Math.sin(t) * 0.05 });
+      WT.drawThing(ctx, ['npc_radio_reborn_idle'], PH.radio, 960, 600, { h: 180, reborn: true, t });
+      WT.drawThing(ctx, 'npc_pip_awake', PH.pip, 250, 630, { h: 140, mood: 'awake', t });
+    },
     teaser(ctx, t) {
       bg(ctx, '#1f1a2a', '#0e0b12');
       ctx.fillStyle = '#1d1720'; ctx.fillRect(520, 260, 240, 460);

@@ -1,0 +1,172 @@
+{
+  "job": "JOB-25",
+  "date": "2026-11-12",
+  "files": [
+    {
+      "id": "npc_tin_dance_01",
+      "file": "assets\\npc\\npc_tin_dance_01.png",
+      "size": [
+        504,
+        661
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 185708,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_tin_dance_02",
+      "file": "assets\\npc\\npc_tin_dance_02.png",
+      "size": [
+        622,
+        651
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 251892,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_tin_rest",
+      "file": "assets\\npc\\npc_tin_rest.png",
+      "size": [
+        477,
+        595
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 135545,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_bird_dance_01",
+      "file": "assets\\npc\\npc_bird_dance_01.png",
+      "size": [
+        590,
+        595
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 186690,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_bird_dance_02",
+      "file": "assets\\npc\\npc_bird_dance_02.png",
+      "size": [
+        641,
+        612
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 216311,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_bird_rest",
+      "file": "assets\\npc\\npc_bird_rest.png",
+      "size": [
+        527,
+        492
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 103268,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_top_dance_01",
+      "file": "assets\\npc\\npc_top_dance_01.png",
+      "size": [
+        571,
+        640
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 213078,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_top_dance_02",
+      "file": "assets\\npc\\npc_top_dance_02.png",
+      "size": [
+        579,
+        642
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 208269,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    },
+    {
+      "id": "npc_top_rest",
+      "file": "assets\\npc\\npc_top_rest.png",
+      "size": [
+        514,
+        457
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 89533,
+      "remaining_magenta_pixels": 0,
+      "height_at_least_300": true
+    }
+  ],
+  "visual_review": {
+    "passed": true,
+    "checks": [
+      "Three distinct toy silhouettes",
+      "All poses face left",
+      "Two distinct dance poses with spiral eyes per character",
+      "Rest poses with relieved pie-cut eyes; bird half-lidded",
+      "No ground shadows, labels or cropped figures",
+      "Style anchor and extracted transparency contact sheet inspected"
+    ],
+    "regenerations": 0
+  },
+  "project_status_at_check": {
+    "ok": 227,
+    "missing": 28,
+    "needs_review": 0,
+    "errors": 0,
+    "remaining_jobs": [
+      "JOB-26",
+      "JOB-27"
+    ]
+  }
+}

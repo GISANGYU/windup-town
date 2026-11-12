@@ -1,6 +1,6 @@
 # 리소스 현황
 
-OK 208 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 208
+OK 255 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 255
 
 | 상태 | ID | 필수 | 파일 | 메모 |
 |---|---|---|---|---|
@@ -212,3 +212,50 @@ OK 208 · 확인 필요 0 · 없음 0 · 오류 0 / 전체 208
 | OK | `story_43_home` |  | story/story_43_home.png |  |
 | OK | `story_44_shadow_hall` |  | story/story_44_shadow_hall.png |  |
 | OK | `story_45_shadow_plan` |  | story/story_45_shadow_plan.png |  |
+| OK | `boss_melody_idle` | ● | boss/boss_melody_idle.png |  |
+| OK | `boss_melody_wave` | ● | boss/boss_melody_wave.png |  |
+| OK | `boss_melody_spin` | ● | boss/boss_melody_spin.png |  |
+| OK | `boss_melody_rain` | ● | boss/boss_melody_rain.png |  |
+| OK | `boss_melody_creak` | ● | boss/boss_melody_creak.png |  |
+| OK | `boss_melody_unwind` |  | boss/boss_melody_unwind.png |  |
+| OK | `boss_melody_calm` | ● | boss/boss_melody_calm.png |  |
+| OK | `npc_melody` |  | npc/npc_melody.png |  |
+| OK | `portrait_melody_wild` |  | portrait/portrait_melody_wild.png |  |
+| OK | `portrait_melody_calm` |  | portrait/portrait_melody_calm.png |  |
+| OK | `npc_tin_dance_01` | ● | npc/npc_tin_dance_01.png |  |
+| OK | `npc_tin_dance_02` |  | npc/npc_tin_dance_02.png |  |
+| OK | `npc_tin_rest` | ● | npc/npc_tin_rest.png |  |
+| OK | `npc_bird_dance_01` | ● | npc/npc_bird_dance_01.png |  |
+| OK | `npc_bird_dance_02` |  | npc/npc_bird_dance_02.png |  |
+| OK | `npc_bird_rest` | ● | npc/npc_bird_rest.png |  |
+| OK | `npc_top_dance_01` | ● | npc/npc_top_dance_01.png |  |
+| OK | `npc_top_dance_02` |  | npc/npc_top_dance_02.png |  |
+| OK | `npc_top_rest` | ● | npc/npc_top_rest.png |  |
+| OK | `bg_orgel_far` | ● | road/bg_orgel_far.png |  |
+| OK | `bg_orgel_mid` | ● | road/bg_orgel_mid.png |  |
+| OK | `bg_ballroom_far` | ● | road/bg_ballroom_far.png |  |
+| OK | `bg_ballroom_mid` | ● | road/bg_ballroom_mid.png |  |
+| OK | `bg_melody_arena` | ● | road/bg_melody_arena.png |  |
+| OK | `prop_parcel_closed` | ● | props/prop_parcel_closed.png |  |
+| OK | `prop_orgel_wild` | ● | props/prop_orgel_wild.png |  |
+| OK | `prop_orgel_calm` | ● | props/prop_orgel_calm.png |  |
+| OK | `road_speaker` | ● | road/road_speaker.png |  |
+| OK | `road_speaker_off` |  | road/road_speaker_off.png |  |
+| OK | `road_comb_drum` | ● | road/road_comb_drum.png |  |
+| OK | `fx_music_wave` |  | fx/fx_music_wave.png |  |
+| OK | `fx_note_tornado` |  | fx/fx_note_tornado.png |  |
+| OK | `fx_comb_tooth` |  | fx/fx_comb_tooth.png |  |
+| OK | `wind_orgel_back` | ● | wind/wind_orgel_back.png |  |
+| OK | `wind_melody_back` | ● | wind/wind_melody_back.png |  |
+| OK | `story_50_parcel` |  | story/story_50_parcel.png |  |
+| OK | `story_51_orgel_scream` |  | story/story_51_orgel_scream.png |  |
+| OK | `story_52_flashback_stage` |  | story/story_52_flashback_stage.png |  |
+| OK | `story_53_flashback_gift` |  | story/story_53_flashback_gift.png |  |
+| OK | `story_54_hidden_voice` |  | story/story_54_hidden_voice.png |  |
+| OK | `story_55_waltz_signal` |  | story/story_55_waltz_signal.png |  |
+| OK | `story_56_orgel_town` |  | story/story_56_orgel_town.png |  |
+| OK | `story_57_ballroom` |  | story/story_57_ballroom.png |  |
+| OK | `story_58_memory_1` |  | story/story_58_memory_1.png |  |
+| OK | `story_59_memory_2` |  | story/story_59_memory_2.png |  |
+| OK | `story_60_melody_stops` |  | story/story_60_melody_stops.png |  |
+| OK | `story_61_duet` |  | story/story_61_duet.png |  |

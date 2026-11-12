@@ -1,0 +1,289 @@
+{
+  "job": "JOB-27",
+  "date": "2026-11-12",
+  "count": 12,
+  "revised_files": [
+    "story_51_orgel_scream",
+    "story_52_flashback_stage",
+    "story_54_hidden_voice",
+    "story_56_orgel_town",
+    "story_57_ballroom",
+    "story_58_memory_1",
+    "story_60_melody_stops",
+    "story_61_duet"
+  ],
+  "checks": [
+    "PNG RGBA 1280x720",
+    "고정 스타일과 캐릭터 외형 대조",
+    "하단 30% 자막 구간의 주요 얼굴·서사 요소 확인",
+    "회상 4장 세피아·필름 질감·둥근 비네팅",
+    "현재 그라모 열쇠 2개 / 젊은 그라모 열쇠 3개",
+    "변신 후 라디오, 주민 3종, 평온한 멜로디"
+  ],
+  "assets": [
+    {
+      "id": "story_50_parcel",
+      "file": "assets/story/story_50_parcel.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": null,
+      "sha256": "53d4b28305fb910161f1eaafad07c4d1f2922e737283dd3ebe2762e1e74cac49"
+    },
+    {
+      "id": "story_51_orgel_scream",
+      "file": "assets/story/story_51_orgel_scream.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "오르골·포장지를 자막 위로 이동, 현재 그라모 열쇠 2개",
+      "sha256": "921a64985485ef18bd9861a8a271360bb7b6c4dce0167404d33b708c89f83c8c"
+    },
+    {
+      "id": "story_52_flashback_stage",
+      "file": "assets/story/story_52_flashback_stage.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1671,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "라디오 스피커 무늬 제거, 젊은 그라모 열쇠 3개, 바닥 그림자 제거",
+      "sha256": "0607599e002f6964260483bda67044fc0ff4a0c1b54590d5eff56dadcecd0a5f"
+    },
+    {
+      "id": "story_53_flashback_gift",
+      "file": "assets/story/story_53_flashback_gift.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": null,
+      "sha256": "b43d0263e606fba42949ad9fa021b1ae1289eea6e2657189af84bf1eaf27dbc1"
+    },
+    {
+      "id": "story_54_hidden_voice",
+      "file": "assets/story/story_54_hidden_voice.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1671,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "얼굴·오르골을 자막 위로 이동",
+      "sha256": "4ce32ecca279ef85a55a31947bef6ad61ceefedff0254790ba955bc54cc5eea8"
+    },
+    {
+      "id": "story_55_waltz_signal",
+      "file": "assets/story/story_55_waltz_signal.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": null,
+      "sha256": "231b6091a8073a8566d2291a3e18245ed968a8d7bc1717e80223fdecf8e19320"
+    },
+    {
+      "id": "story_56_orgel_town",
+      "file": "assets/story/story_56_orgel_town.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "중복 멜로디 제거, 오르골 마을 건축 표현",
+      "sha256": "39cecae19bd3e1f39cf4cb1892c92ee18e451829d1cc5e16e252c908c0b77d1d"
+    },
+    {
+      "id": "story_57_ballroom",
+      "file": "assets/story/story_57_ballroom.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1671,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "보글을 자막 위 계단으로 이동, 회전 표현, 바닥 반사·그림자 제거",
+      "sha256": "c79b3129ffe548f1237c51ddfac982accc7c0948e15111538003c50fea8e2ab2"
+    },
+    {
+      "id": "story_58_memory_1",
+      "file": "assets/story/story_58_memory_1.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1671,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "라디오 다이얼·스피커 무늬 제거, 젊은 그라모 열쇠 3개",
+      "sha256": "933707309ab5a06f7ea915cbcbb96f8d24fa3f441be9c6b2ee551ee47445a50b"
+    },
+    {
+      "id": "story_59_memory_2",
+      "file": "assets/story/story_59_memory_2.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": null,
+      "sha256": "ecf58cfe92e9622030b024ef998ecf394df9cff97558ddc8b8c76975cc91d00e"
+    },
+    {
+      "id": "story_60_melody_stops",
+      "file": "assets/story/story_60_melody_stops.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "쉬는 새·팽이 주민 얼굴을 자막 위로 이동",
+      "sha256": "00b9e3c2c179cabac059423f9c3b413b0143e1a96a03b688ea818145a14541dc"
+    },
+    {
+      "id": "story_61_duet",
+      "file": "assets/story/story_61_duet.png",
+      "size": [
+        1280,
+        720
+      ],
+      "original_generated_size": [
+        1672,
+        941
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        255,
+        255
+      ],
+      "status": "OK",
+      "issues": [],
+      "visual_review": "합격",
+      "revision_reason": "작은 주민 얼굴 자막 여백 확보, 불필요한 바이올린 제거",
+      "sha256": "5d2e268ca70dacac97bfe58d7a9a99ac5644374e9beac45a844c073bda570c22"
+    }
+  ]
+}

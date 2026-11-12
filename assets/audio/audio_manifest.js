@@ -1,4 +1,4 @@
-// 태엽 마을 — 사운드 리소스 목록. 생성: python tools/gen_audio.py (1·2막), python tools/gen_audio_act3_5.py (3~5막), python tools/gen_audio_act3_5b.py (새 3~5막 볼트 남작 이야기, jobs/AUDIO2.md). 절차 합성, 외부 음원 없음
+// 태엽 마을 — 사운드 리소스 목록. 생성: python tools/gen_audio.py (1·2막), python tools/gen_audio_act3_5.py (3~5막), python tools/gen_audio_act3_5b.py (새 3~5막 볼트 남작 이야기, jobs/AUDIO2.md), python tools/gen_audio_act6_7.py (6~7막 오르골 여왕, jobs/AUDIO3.md). 절차 합성, 외부 음원 없음
 // vol = 권장 기본 볼륨(0~1). loop = 반복 재생. when = 연결할 곳(src 함수 기준).
 // act = 소속 막(3~5막 항목에만 있음, 미리듣기 묶음용). 3막 마을은 bgm_town_awake 대신 스템 3개(_base·_pip·_lamp)를 동시에 재생.
 // 상태 규칙: musicOn=false면 bgm_town_sleepy, true면 bgm_town_awake. 두 곡 전환은 0.8초 크로스페이드 권장.
@@ -41,7 +41,17 @@ window.AUDIO_MANIFEST = {
     {"id":"bgm_volt_final","file":"audio/bgm/bgm_volt_final.wav","loop":true,"vol":0.55,"when":"5막 최종 라운드(라디오 씨 변신 후). 같은 168BPM, 마을 곡을 금관으로 + 보스 리듬 아래","act":5},
     {"id":"jingle_radio_reborn","file":"audio/bgm/jingle_radio_reborn.wav","loop":false,"vol":0.75,"when":"라디오 씨 변신 컷신(7.2초). 정적 → 래칫(1.3~3.2초) → 3.35초 팡파르","act":5},
     {"id":"jingle_volt_defeat","file":"audio/bgm/jingle_volt_defeat.wav","loop":false,"vol":0.7,"when":"남작이 작은 발전기가 됨(5.2초). 기계 화음이 쪼그라듦 → 2.4초부터 오르골 한 소절","act":5},
-    {"id":"bgm_ending","file":"audio/bgm/bgm_ending.wav","loop":true,"vol":0.5,"when":"결말·이후 마을. 마을 곡 피아노(그라모)·나팔(라디오 씨) 듀엣 126BPM","act":5}
+    {"id":"bgm_ending","file":"audio/bgm/bgm_ending.wav","loop":true,"vol":0.5,"when":"결말·이후 마을. 마을 곡 피아노(그라모)·나팔(라디오 씨) 듀엣 126BPM","act":5},
+    {"id":"bgm_flashback_duet","file":"audio/bgm/bgm_flashback_duet.wav","loop":true,"vol":0.4,"when":"6막 회상 컷신(세피아). 왈츠 96BPM, 피아노(그라모) + 오르골(멜로디 테마) 듀엣, 축음기 지글","act":6},
+    {"id":"bgm_parcel","file":"audio/bgm/bgm_parcel.wav","loop":true,"vol":0.4,"when":"6막 소포·풀기 연습 동안. 마을 곡 조용히 110BPM, 6·14마디 끝에 오르골 비명","act":6},
+    {"id":"jingle_unwind_done","file":"audio/bgm/jingle_unwind_done.wav","loop":false,"vol":0.65,"when":"풀기 성공(모달·주민). 내려가며 느려지는 오르골 아르페지오 2초","act":6},
+    {"id":"bgm_orgel_town","file":"audio/bgm/bgm_orgel_town.wav","loop":true,"vol":0.45,"when":"7막 구간1 오르골 거리. 쉬지 않는 오르골 왈츠 168BPM, 음정 18센트 뜸","act":7},
+    {"id":"bgm_ballroom","file":"audio/bgm/bgm_ballroom.wav","loop":true,"vol":0.45,"when":"7막 구간2 무도회장. 같은 왈츠 현악풍 168BPM, 빗살 원통 틱이 정확히 2박(0.714초)마다, 첫 틱 = 0초","act":7},
+    {"id":"bgm_melody_boss","file":"audio/bgm/bgm_melody_boss.wav","loop":true,"vol":0.5,"when":"보스 1~2라운드. 멜로디 테마 176BPM 3/4, 오르골 + 튜바, 8마디 끝마다 끼이익","act":7},
+    {"id":"bgm_melody_final","file":"audio/bgm/bgm_melody_final.wav","loop":true,"vol":0.5,"when":"보스 최종 라운드(라디오 씨의 느린 방송). 84BPM, 마을 곡 피아노 위에 멜로디 테마 오르골","act":7},
+    {"id":"bgm_duet_ending","file":"audio/bgm/bgm_duet_ending.wav","loop":true,"vol":0.5,"when":"7막 결말·이후 마을. 마을 곡을 피아노(그라모)·오르골(멜로디)·나팔(라디오 씨) 셋이서 120BPM","act":7},
+    {"id":"jingle_memory","file":"audio/bgm/jingle_memory.wav","loop":false,"vol":0.55,"when":"보스전 기억 컷. 세피아 지글 + 멜로디 테마 2마디 3초","act":7},
+    {"id":"jingle_melody_rest","file":"audio/bgm/jingle_melody_rest.wav","loop":false,"vol":0.7,"when":"멜로디가 처음으로 멈춤. 테마가 점점 느려지고 마지막 C음이 길게 6초","act":7}
   ],
   "sfx": [
     {"id":"amb_projector","file":"audio/sfx/amb_projector.wav","loop":true,"vol":0.15,"when":"컷신 동안 깔리는 영사기 소리(선택)"},
@@ -172,7 +182,26 @@ window.AUDIO_MANIFEST = {
     {"id":"sfx_volt_shrink","file":"audio/sfx/sfx_volt_shrink.wav","vol":0.6,"when":"남작이 작아짐. 뾰로롱 하강 + 작은 딸깍","act":5},
     {"id":"sfx_timestop","file":"audio/sfx/sfx_timestop.wav","vol":0.6,"when":"Q 갈아끼우기 순간 시간 정지. 정확히 0.6초(26460샘플)","act":5},
     {"id":"sfx_swap_wind","file":"audio/sfx/sfx_swap_wind.wav","vol":0.55,"when":"태엽으로 갈아끼울 때. 래칫 4번(0.5초)","act":5},
-    {"id":"sfx_threads_return","file":"audio/sfx/sfx_threads_return.wav","vol":0.6,"when":"결말: 빛줄기가 마을로 돌아옴. 상승 아르페지오","act":5}
+    {"id":"sfx_threads_return","file":"audio/sfx/sfx_threads_return.wav","vol":0.6,"when":"결말: 빛줄기가 마을로 돌아옴. 상승 아르페지오","act":5},
+    {"id":"sfx_parcel_shake","file":"audio/sfx/sfx_parcel_shake.wav","loop":true,"vol":0.35,"when":"소포가 덜덜 떨리는 동안. 1초 루프, 상자 덜그럭 + 안에서 끼익","act":6},
+    {"id":"sfx_parcel_open","file":"audio/sfx/sfx_parcel_open.wav","vol":0.5,"when":"소포 뜯기. 끈 툭 → 종이 찢김(0.22초부터)","act":6},
+    {"id":"amb_orgel_scream","file":"audio/sfx/amb_orgel_scream.wav","loop":true,"vol":0.45,"when":"너무 감긴 오르골 근처. 2초 루프, 2초마다 점점 빨라지는 빗살 + 끼이익 2번","act":6},
+    {"id":"sfx_unwind_tick","file":"audio/sfx/sfx_unwind_tick.wav","vol":0.4,"when":"풀기 진행할 때마다. 낮은 '톡'. 진행에 따라 playbackRate를 1.0 → 0.7쯤으로 내림","act":6},
+    {"id":"sfx_unwind_good","file":"audio/sfx/sfx_unwind_good.wav","loop":true,"vol":0.3,"when":"풀기 속도가 초록 띠 안에 있는 동안. 2초 루프 오르골 지속음, 볼륨은 게임이 조절","act":6},
+    {"id":"sfx_unwind_snap","file":"audio/sfx/sfx_unwind_snap.wav","vol":0.6,"when":"풀기 너무 빨라 튕김. 스프링 팅 + 금속 진동","act":6},
+    {"id":"sfx_unwind_creep","file":"audio/sfx/sfx_unwind_creep.wav","vol":0.35,"when":"풀기 너무 느려 다시 감김. 끼… 끼…(0, 0.5초)","act":6},
+    {"id":"sfx_orgel_voice","file":"audio/sfx/sfx_orgel_voice.wav","vol":0.55,"when":"6막 숨은 목소리 컷신. 멜로디 테마 첫 4음을 아주 느리게 떨리는 오르골로(6.5초, 말소리 없음)","act":6},
+    {"id":"sfx_dance_lock","file":"audio/sfx/sfx_dance_lock.wav","vol":0.4,"when":"춤 상태로 저절로 깡충(0.5초마다). 고무 보잉 0.25초, playbackRate 0.85~1.2 랜덤 권장","act":7},
+    {"id":"sfx_dancer_rest","file":"audio/sfx/sfx_dancer_rest.wav","vol":0.5,"when":"주민이 풀려 털썩 앉음. 털썩 + 한숨 같은 하강 글리산도(목소리 아님)","act":7},
+    {"id":"sfx_speaker_off","file":"audio/sfx/sfx_speaker_off.wav","vol":0.5,"when":"스피커 상자를 풀어 끔. 왈츠가 테이프처럼 늘어지며 꺼짐 1.8초","act":7},
+    {"id":"sfx_comb_pluck","file":"audio/sfx/sfx_comb_pluck.wav","vol":0.4,"when":"빗살 원통의 빗살이 튀어나올 때. C6 한 음, rate로 음정 바꿔 재생 가능(예: 1, 1.26, 1.5)","act":7},
+    {"id":"sfx_music_wave","file":"audio/sfx/sfx_music_wave.wav","vol":0.55,"when":"과감기 선율 파동. 오르골 화음이 와앙 퍼짐","act":7},
+    {"id":"sfx_note_tornado","file":"audio/sfx/sfx_note_tornado.wav","loop":true,"vol":0.35,"when":"음표 회오리가 화면에 있는 동안. 2초 루프, 오르골 트릴 + 바람","act":7},
+    {"id":"sfx_comb_warn","file":"audio/sfx/sfx_comb_warn.wav","vol":0.4,"when":"빗살 비 그림자 예고. 높은 쉬익 0.5초(끝에서 떨어짐과 맞물림)","act":7},
+    {"id":"sfx_comb_fall","file":"audio/sfx/sfx_comb_fall.wav","vol":0.55,"when":"빗살이 바닥에 꽂힘. 짱! 금속","act":7},
+    {"id":"sfx_melody_creak","file":"audio/sfx/sfx_melody_creak.wav","vol":0.6,"when":"멜로디가 너무 감겨 굳음. 큰 삐걱 + 스프링 긴장음","act":7},
+    {"id":"sfx_melody_spin","file":"audio/sfx/sfx_melody_spin.wav","vol":0.5,"when":"회전 발레 시작. 휘이잉 + 오르골 상승","act":7},
+    {"id":"sfx_memory_flash","file":"audio/sfx/sfx_memory_flash.wav","vol":0.5,"when":"기억 컷이 번쩍일 때. 영사기 철컥 + 반짝","act":7}
   ],
   "reuse": [
     "제2막 오프닝(act2open): bgm_story를 playbackRate 0.9로",

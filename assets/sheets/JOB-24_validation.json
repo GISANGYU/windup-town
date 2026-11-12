@@ -1,0 +1,166 @@
+{
+  "date": "2026-11-12",
+  "job": "JOB-24",
+  "assets": [
+    {
+      "id": "boss_melody_idle",
+      "file": "boss/boss_melody_idle.png",
+      "size": [
+        366,
+        614
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "boss_melody_wave",
+      "file": "boss/boss_melody_wave.png",
+      "size": [
+        526,
+        668
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "boss_melody_spin",
+      "file": "boss/boss_melody_spin.png",
+      "size": [
+        400,
+        614
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "boss_melody_rain",
+      "file": "boss/boss_melody_rain.png",
+      "size": [
+        402,
+        676
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "boss_melody_creak",
+      "file": "boss/boss_melody_creak.png",
+      "size": [
+        437,
+        675
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "boss_melody_unwind",
+      "file": "boss/boss_melody_unwind.png",
+      "size": [
+        437,
+        675
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "boss_melody_calm",
+      "file": "boss/boss_melody_calm.png",
+      "size": [
+        456,
+        541
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "npc_melody",
+      "file": "npc/npc_melody.png",
+      "size": [
+        432,
+        679
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "portrait_melody_wild",
+      "file": "portrait/portrait_melody_wild.png",
+      "size": [
+        583,
+        593
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "id": "portrait_melody_calm",
+      "file": "portrait/portrait_melody_calm.png",
+      "size": [
+        461,
+        600
+      ],
+      "mode": "RGBA",
+      "alpha_range": [
+        0,
+        255
+      ],
+      "remaining_magenta_pixels": 0,
+      "status": "OK",
+      "issues": []
+    }
+  ]
+}

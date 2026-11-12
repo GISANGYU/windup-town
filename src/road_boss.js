@@ -32,17 +32,31 @@
       ],
       weakPos: { high: { x: 930, y: GY - 285 }, rush: { x: 925, y: GY - 45 }, final: { x: 925, y: GY - 150 } },
       overT: { high: 6, rush: RUSH_STUN + RUSH_WINDOW, final: 7 }
+    },
+    // 7막: 너무 감긴 여왕. 공격 = 과감기 선율(태엽이면 춤) · 음표 회오리(점프) · 빗살 비(피하기). 약점 = 삐걱 굳을 때 등 열쇠 풀어 주기
+    melody: {
+      name: '멜로디 여왕', x: 1070, wall: 950, h: 260, bgm: 'bgm_melody_boss',
+      rounds: [
+        { queue: ['wave', 'tornado', 'wave'], weak: 'unwind', band: [0.28, 0.82], resist: 0 },
+        { queue: ['rain', 'wave', 'tornado', 'rain'], weak: 'unwind', band: [0.33, 0.72], resist: 0.04 },
+        { queue: ['wave', 'tornado', 'rain', 'wave'], weak: 'unwind', band: [0.38, 0.66], resist: 0.07, final: true }
+      ],
+      weakPos: { unwind: { x: 960, y: GY - 120 } },
+      overT: { unwind: 5 }
     }
   };
-  const ATK_T = { floor: 1.9, floorSeq: 2.8, magnet: 3.6, bombs: 3.4, strike: 3.4, coolant: 4.4, tongue: 3.6 };
+  const ATK_T = { floor: 1.9, floorSeq: 2.8, magnet: 3.6, bombs: 3.4, strike: 3.4, coolant: 4.4, tongue: 3.6, wave: 2.6, tornado: 3.4, rain: 3.2 };
 
   RB.init = function (r) {
     const k = r.L.boss, d = DEF[k];
     r.boss = { kind: k, d, x: d.x, state: 'intro', round: 0, queue: [], atk: null, t: 0, gap: 0, hits: 0,
-      reborn: false, collapsed: false, jamT: 0, shake: 0, haz: { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0 } };
+      reborn: k === 'melody', collapsed: false, jamT: 0, shake: 0, haz: newHaz() };
     const T = d === DEF.toad ? D().act4 : D().act5;
+    const b = r.boss;
     WT.Road.after(0.8, () => {
-      if (k === 'toad') {
+      if (k === 'melody') {
+        say('radio', '라디오 씨', D().act7.radio.melody, () => say('melody', b.d.name, D().act7.melody.intro, () => start(r), 'wild'));
+      } else if (k === 'toad') {
         say('radio', '라디오 씨', D().act4.radio.toad, () => say('toad', d.name, T.toad.intro, () => start(r), 'angry'), 'battery');
       } else {
         WT.Audio.play('sfx_volt_laugh');
@@ -57,7 +71,8 @@
     if (!b || b.state === 'intro' || b.state === 'collapse' || b.state === 'small') return;
     clearHaz(b); b.state = 'attack'; b.queue = b.d.rounds[b.round].queue.slice(); b.atk = null; b.gap = 1.2;
   };
-  function clearHaz(b) { b.haz = { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0 }; }
+  function newHaz() { return { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0, waves: [], tornados: [], combs: [] }; }
+  function clearHaz(b) { b.haz = newHaz(); }
 
   // ───────── 공격 ─────────
   function begin(r, type) {
@@ -70,6 +85,9 @@
       case 'bombs': H.bombs = [0, 1.1].map((d) => ({ x: b.d.wall - 40, d, live: false, rot: 0 })); break;
       case 'strike': H.strikes = [0, 0.75, 1.5, 2.25].map((d) => ({ d, sx: null, warn: 0, done: false })); break;
       case 'coolant': H.puddles = [0, 1, 2].map((i) => ({ x: 150 + i * 260 + rnd(-40, 40), w: 140, t: 0 })); A.play('sfx_coolant_spray'); break;
+      case 'wave': H.waves.push({ r: 0, hit: false }); A.play(A.defs.sfx_music_wave ? 'sfx_music_wave' : 'sfx_boss_bell'); break;
+      case 'tornado': H.tornados = [0, 1.3].map((d) => ({ x: b.d.wall - 30, d, live: false })); A.play(A.defs.sfx_melody_spin ? 'sfx_melody_spin' : 'sfx_gear_warn'); break;
+      case 'rain': H.combs = [0, 0.35, 0.7, 1.05, 1.4].map((d, i) => ({ d, x: null, warn: 0, hit: false, i })); break;
     }
     void p;
   }
@@ -121,6 +139,30 @@
       }
     });
     H.puddles = H.puddles.filter((q) => q.t < 4.4);
+    // 과감기 선율: 고리가 보글을 지나가면 태엽 모드는 춤 상태(건전지는 버팀)
+    H.waves.forEach((q) => {
+      q.r += 520 * dt;
+      if (!q.hit && q.r >= Math.abs(b.x - p.x)) {
+        q.hit = true;
+        const safe = b.broadcast && p.x < 260; // 최종 라운드: 라디오 씨 둘레는 느린 음악
+        if (p.power === 'wind' && !safe) r.danceT = Math.max(r.danceT || 0, b.broadcast ? 1.0 : 2.0);
+      }
+    });
+    H.waves = H.waves.filter((q) => q.r < 1500);
+    H.tornados.forEach((q) => {
+      if (q.dead) return;
+      q.d -= dt; if (q.d > 0) return;
+      q.live = true; q.x -= 300 * dt;
+      if (Math.abs(p.x - q.x) < 36 && p.y > GY - 58) { hurt(1); q.dead = true; }
+      if (q.x < 20) q.dead = true;
+    });
+    H.combs.forEach((q) => {
+      if (q.hit) return;
+      q.d -= dt; if (q.d > 0) return;
+      if (q.x == null) { q.x = Math.max(60, Math.min(b.d.wall - 60, p.x + rnd(-60, 60))); A.play(A.defs.sfx_comb_warn ? 'sfx_comb_warn' : 'sfx_lightning_warn', { vol: 0.3 }); }
+      q.warn += dt;
+      if (q.warn > 0.6) { q.hit = true; A.play(A.defs.sfx_comb_fall ? 'sfx_comb_fall' : 'sfx_boss_slam', { vol: 0.4 }); if (Math.abs(p.x - q.x) < 30) hurt(1); }
+    });
   }
   RB.force = function (r) { const b = r.boss; return b && b.haz.magnet > 0.4 && b.haz.magnet < 3.4 ? 300 : 0; };
 
@@ -128,8 +170,8 @@
   function overheat(r) {
     const b = r.boss, rd = b.d.rounds[b.round], p = r.p, A = WT.Audio;
     b.state = 'over'; b.t = 0; b.weak = rd.weak; b.atk = null; clearHaz(b);
-    A.play(b.kind === 'toad' ? 'sfx_boss_tired' : 'sfx_volt_overheat');
-    G.toast(D().act5.toast.overheat);
+    A.play(b.kind === 'toad' ? 'sfx_boss_tired' : b.kind === 'melody' ? (A.defs.sfx_melody_creak ? 'sfx_melody_creak' : 'sfx_boss_tired') : 'sfx_volt_overheat');
+    G.toast(b.kind === 'melody' ? D().act7.toast.creak : D().act5.toast.overheat);
     if (b.weak === 'rush') { // 과열 폭발로 밀려남: 어디 있었든 항상 같은 자리(약점에서 RUSH_DIST)로
       const reachX = b.d.weakPos.rush.x - 25;
       G.burst('dust', p.x - r.camX, p.y, 2);
@@ -145,6 +187,7 @@
   function weakReach(r) {
     const b = r.boss, p = r.p, w = b.d.weakPos[b.weak];
     if (!w || b.state !== 'over') return false;
+    if (b.weak === 'unwind') return p.x > b.d.wall - 170 && onFloor(p);
     if (b.weak === 'high') return Math.abs(p.x - w.x) < 120 && p.y < GY - (b.kind === 'toad' ? 150 : 220);
     if (b.weak === 'rush') return p.x > w.x - 25 && onFloor(p); // 밀려난 자리에서 2초 남짓 안에 달려와야 닿는 거리
     return Math.abs(p.x - w.x) < 90;
@@ -154,16 +197,23 @@
     if (!b || b.state !== 'over') return false;
     if (!weakReach(r)) { G.toast(b.weak === 'high' ? '더 높이! 발판에서 E' : '더 가까이!'); return true; }
     if (b.kind === 'volt' && b.weak === 'final' && b.plugged === false) { crank(r); return true; }
+    if (b.kind === 'melody') { unwindMelody(r); return true; }
     hitWeak(r);
     return true;
   };
   function hitWeak(r) {
     const b = r.boss, A = WT.Audio, w = b.d.weakPos[b.weak];
     b.state = 'hurt'; b.t = 0; b.hits++;
-    A.play(b.kind === 'toad' ? 'sfx_breaker' : 'sfx_plug_pull');
+    A.play(b.kind === 'toad' ? 'sfx_breaker' : b.kind === 'melody' ? 'sfx_wind_complete' : 'sfx_plug_pull');
     WT.UI.flash(); WT.UI.shake(0.25);
     G.burst('spring', w.x - r.camX, w.y, 1); G.burst('sparkle', w.x - r.camX, w.y, 8);
-    G.toast(b.kind === 'toad' ? D().act5.toast.lever : D().act5.toast.plug);
+    G.toast(b.kind === 'toad' ? D().act5.toast.lever : b.kind === 'melody' ? '스르르… 조금 풀렸다' : D().act5.toast.plug);
+  }
+  // 멜로디의 등 열쇠 풀기 (라운드마다 띠가 좁아지고 그녀가 버팀)
+  function unwindMelody(r) {
+    const b = r.boss, rd = b.d.rounds[b.round];
+    WT.Unwind.open(() => hitWeak(r), { title: '멜로디 여왕 풀어 주기', band: rd.band, resist: rd.resist, rate: 0.36, back: 'wind_melody_back',
+      guide: rd.final ? '라디오 씨의 느린 음악에 맞춰 · 천천히' : '천천히 · 서두르면 튕긴다' });
   }
   function crank(r) {
     const b = r.boss;
@@ -173,6 +223,22 @@
       notch: ['끼익…', '끼이익!', '돌아간다!'],
       onFail: () => { b.state = 'recover'; b.t = 0; G.toast(D().act5.toast.missed); }
     });
+  }
+  function melodyNext(r) {
+    const b = r.boss, A = WT.Audio;
+    if (b.round >= b.d.rounds.length - 1) { // 결말: 처음으로 천천히 멈춘다
+      b.state = 'calm'; b.t = 0; clearHaz(b); r.danceT = 0;
+      A.jingle('jingle_melody_rest');
+      WT.Road.after(1.6, () => say('melody', b.d.name, D().act7.melody.calm, () => WT.Road.bossDone('melody'), 'calm'));
+      return;
+    }
+    b.state = 'memory'; clearHaz(b); r.danceT = 0;
+    A.play(A.defs.sfx_memory_flash ? 'sfx_memory_flash' : 'sfx_story_next'); A.jingle('jingle_memory');
+    WT.Story.play(b.round === 0 ? D().act7mem1 : D().act7mem2, () => WT.Road.after(0.5, () => {
+      b.round++;
+      if (b.d.rounds[b.round].final) { say('radio', '라디오 씨', D().act7.radio.final, () => { b.broadcast = true; start(r); }); }
+      else say('melody', b.d.name, D().act7.melody.mem, () => start(r), 'wild');
+    }));
   }
   function smallVolt(r) {
     const b = r.boss;
@@ -226,6 +292,7 @@
         const last = b.round >= b.d.rounds.length - 1;
         if (b.kind === 'volt' && b.weak === 'final') { b.plugged = false; b.state = 'over'; b.t = -4; G.toast(D().act5.radio.final[0]); return; } // 크랭크가 드러남 → E
         if (b.kind === 'volt' && b.round === 1 && !b.reborn) { collapse(r); return; }
+        if (b.kind === 'melody') { melodyNext(r); return; }
         if (last) {
           b.state = 'down'; b.t = 0;
           WT.Audio.jingle('jingle_toad_defeat');
@@ -244,16 +311,17 @@
   };
   RB.music = function (r) {
     const b = r.boss;
-    const want = b.kind === 'toad' ? 'bgm_toad_boss' : b.reborn ? 'bgm_volt_final' : 'bgm_volt_boss';
-    return { want: b.state === 'intro' || b.state === 'small' || b.state === 'down' || b.state === 'collapse' ? null : want, fallback: 'bgm_boss',
+    const want = b.kind === 'toad' ? 'bgm_toad_boss' : b.kind === 'melody' ? (b.broadcast ? 'bgm_melody_final' : 'bgm_melody_boss') : b.reborn ? 'bgm_volt_final' : 'bgm_volt_boss';
+    return { want: ['intro', 'small', 'down', 'collapse', 'memory', 'calm'].includes(b.state) ? null : want, fallback: b.kind === 'melody' ? 'bgm_orgel_town' : 'bgm_boss',
       loops: { sfx_magnet_loop: b.haz.magnet > 0.3 ? 1 : 0, sfx_bomb_roll: b.haz.bombs.some((q) => q.live && !q.dead) ? 1 : 0 } };
   };
   RB.tip = function (r) {
-    const b = r.boss, p = r.p, T = D().act5.atk;
+    const b = r.boss, p = r.p, T = Object.assign({}, D().act5.atk, D().act7.atk);
     if (!b) return null;
     const needB = (b.atk && (b.atk.type === 'magnet' || b.atk.type === 'tongue')) || (b.state === 'over' && b.weak === 'rush');
     if (r.battery < 15 && (needB || b.state === 'attack')) return '건전지가 거의 없다 · 왼쪽 충전소에서 E';
     if (b.state === 'over') { if (b.kind === 'volt' && b.plugged === false) return 'E : 녹슨 크랭크 과감기!'; return T[b.weak][p.power]; }
+    if (r.danceT > 0 && p.power === 'wind') return '춤 상태! Q로 건전지면 버틴다';
     if (b.state === 'attack' && b.atk) return T[b.atk.type === 'tongue' ? 'magnet' : b.atk.type][p.power];
     return null;
   };
@@ -275,12 +343,21 @@
     // 보스
     const ids = bossIds(b);
     const shake = b.state === 'hurt' ? Math.sin(t * 50) * 6 : 0, bob = b.state === 'attack' ? Math.abs(Math.sin(t * 3)) * 4 : 0;
-    const ph = b.kind === 'toad' ? PH.toad : PH.volt;
+    const ph = b.kind === 'toad' ? PH.toad : b.kind === 'melody' ? PH.melody : PH.volt;
     WT.Render.shadow(b.x, GY, b.kind === 'toad' ? 260 : 300, 0.3);
     WT.drawThing(ctx, ids, ph, b.x + shake, GY - bob, { h: b.state === 'small' ? 120 : b.d.h, t, state: b.state, atk: b.atk && b.atk.type, weak: b.weak, plugged: b.plugged });
     // 자석 끌림
     if (H.magnet > 0.3) for (let i = 0; i < 3; i++) { const k = ((t * 1.6 + i / 3) % 1); WT.drawThing(ctx, 'fx_magnet_wave', (c) => { c.strokeStyle = '#d2463c'; c.lineWidth = 5; c.beginPath(); c.arc(0, 0, 40, -1.1, 1.1); c.stroke(); }, b.d.wall - 60 - k * 600, GY - 70, { h: 120, anchor: 'center', alpha: 1 - k, flip: true }); }
     if (H.magnet > 0.3 && b.kind === 'toad' && !WT.Assets.has('boss_toad_tongue')) { ctx.save(); ctx.strokeStyle = '#c0504a'; ctx.lineWidth = 16; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(b.d.wall + 10, GY - 120); ctx.lineTo(b.d.wall - 220, GY - 70); ctx.stroke(); ctx.restore(); }
+    // 과감기 선율 고리 · 음표 회오리 · 빗살
+    H.waves.forEach((q) => { ctx.save(); ctx.globalAlpha = Math.max(0, 1 - q.r / 1300); ctx.strokeStyle = '#e8a0a8'; ctx.lineWidth = 10; const r1 = Math.max(1, q.r), r2 = Math.max(1, q.r - 14); ctx.beginPath(); ctx.ellipse(b.x, GY - 120, r1, r1 * 0.55, 0, 0, Math.PI * 2); ctx.stroke(); ctx.lineWidth = 3; ctx.strokeStyle = C.yellow; ctx.beginPath(); ctx.ellipse(b.x, GY - 120, r2, r2 * 0.55, 0, 0, Math.PI * 2); ctx.stroke(); ctx.restore(); });
+    H.tornados.forEach((q) => { if (q.live && !q.dead) WT.drawThing(ctx, 'fx_note_tornado', (c) => { for (let i = 0; i < 5; i++) { const a = t * 12 + i * 1.3; PH.note(c, 22); c.rotate(a * 0.2); } }, q.x, GY - 40, { h: 90, anchor: 'center', rot: t * 6 }); });
+    H.combs.forEach((q) => {
+      if (q.x == null || (q.hit && q.warn > 1.0)) return;
+      if (!q.hit) { ctx.save(); ctx.globalAlpha = 0.3 + 0.4 * Math.abs(Math.sin(t * 20)); ctx.fillStyle = C.outline; ctx.beginPath(); ctx.ellipse(q.x, GY, 30, 7, 0, 0, 7); ctx.fill(); ctx.restore();
+        WT.drawThing(ctx, 'fx_comb_tooth', (c) => { c.fillStyle = '#d8dde3'; c.strokeStyle = C.outline; c.lineWidth = 3; c.beginPath(); c.moveTo(-8, -80); c.lineTo(8, -80); c.lineTo(0, 0); c.closePath(); c.fill(); c.stroke(); }, q.x, GY - 260 + q.warn / 0.6 * 200, { h: 90 }); }
+      else { q.warn += 1 / 60; WT.drawThing(ctx, 'fx_comb_tooth', (c) => { c.fillStyle = '#d8dde3'; c.strokeStyle = C.outline; c.lineWidth = 3; c.beginPath(); c.moveTo(-8, -80); c.lineTo(8, -80); c.lineTo(0, 0); c.closePath(); c.fill(); c.stroke(); }, q.x, GY + 10, { h: 90, alpha: Math.max(0, 1 - (q.warn - 0.6) * 2) }); }
+    });
     // 폭탄
     H.bombs.forEach((q) => { if (q.live && !q.dead) WT.drawThing(ctx, 'prop_battery_bomb', (c) => { PH.battery(c, 60); }, q.x, GY - 30, { h: 60, anchor: 'center', rot: q.rot }); });
     // 낙뢰
@@ -293,7 +370,7 @@
     if (b.state === 'over') {
       const w = b.d.weakPos[b.weak], pulse = 1 + Math.sin(t * 8) * 0.12;
       const id = b.kind === 'toad' ? 'prop_breaker' : 'prop_plug';
-      if (!(b.kind === 'volt' && b.plugged === false)) WT.drawThing(ctx, id, (c) => { c.fillStyle = b.kind === 'toad' ? C.red : '#c99a3a'; c.strokeStyle = C.outline; c.lineWidth = 4; c.fillRect(-14, -50, 28, 50); c.strokeRect(-14, -50, 28, 50); }, w.x, w.y + 30, { h: 60 * pulse });
+      if (b.kind !== 'melody' && !(b.kind === 'volt' && b.plugged === false)) WT.drawThing(ctx, id, (c) => { c.fillStyle = b.kind === 'toad' ? C.red : '#c99a3a'; c.strokeStyle = C.outline; c.lineWidth = 4; c.fillRect(-14, -50, 28, 50); c.strokeRect(-14, -50, 28, 50); }, w.x, w.y + 30, { h: 60 * pulse });
       ctx.save(); ctx.strokeStyle = C.yellow; ctx.lineWidth = 4; ctx.setLineDash([8, 6]); ctx.lineDashOffset = -t * 30; ctx.beginPath(); ctx.arc(w.x, w.y, 44 * pulse, 0, 7); ctx.stroke(); ctx.restore();
     }
     // 라디오 씨 (왼쪽 송신 자리)
@@ -312,6 +389,13 @@
     }
   };
   function bossIds(b) {
+    if (b.kind === 'melody') {
+      if (b.state === 'calm') return ['boss_melody_calm', 'boss_melody_idle'];
+      if (b.state === 'hurt' || b.state === 'memory') return ['boss_melody_unwind', 'boss_melody_idle'];
+      if (b.state === 'over') return ['boss_melody_creak', 'boss_melody_idle'];
+      if (b.atk) return [{ wave: 'boss_melody_wave', tornado: 'boss_melody_spin', rain: 'boss_melody_rain' }[b.atk.type], 'boss_melody_idle'];
+      return ['boss_melody_idle'];
+    }
     const v = b.kind === 'volt';
     if (b.state === 'small') return ['boss_volt_small'];
     if (b.state === 'down') return ['boss_toad_down', 'boss_toad_hurt', 'boss_toad_idle'];
@@ -340,7 +424,7 @@
     for (let i = 0; i < total; i++) {
       const cx = x + w - 24 - (total - 1 - i) * 34, gone = i < done;
       ctx.globalAlpha = gone ? 0.25 : 1;
-      WT.drawThing(ctx, b.kind === 'toad' ? 'prop_breaker' : 'prop_plug', (c) => { c.fillStyle = b.kind === 'toad' ? C.red : '#c99a3a'; c.strokeStyle = C.outline; c.lineWidth = 2; c.fillRect(-7, -24, 14, 24); c.strokeRect(-7, -24, 14, 24); }, cx, y + 36, { h: 28 });
+      WT.drawThing(ctx, b.kind === 'toad' ? 'prop_breaker' : b.kind === 'melody' ? 'prop_key' : 'prop_plug', (c) => { c.fillStyle = b.kind === 'toad' ? C.red : '#c99a3a'; c.strokeStyle = C.outline; c.lineWidth = 2; c.fillRect(-7, -24, 14, 24); c.strokeRect(-7, -24, 14, 24); }, cx, y + 36, { h: 28 });
       ctx.globalAlpha = 1;
     }
     ctx.restore();

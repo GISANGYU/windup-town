@@ -40,6 +40,7 @@
       return;
     }
     if (WT.BatteryModal && WT.BatteryModal.active) { WT.BatteryModal.key(c, true); return; }
+    if (WT.Unwind && WT.Unwind.active) { WT.Unwind.key(c); return; }
     if (s.scene === 'road' && !s.ui.dialog) { if (isKey(c, 'cancel')) return; WT.Road.key(c, true); return; }
     if (s.ui.dialog) {
       if (isKey(c, 'act') || isKey(c, 'jump') || c === 'Enter') WT.UI.advance();
@@ -69,9 +70,9 @@
   window.addEventListener('blur', () => held.clear());
 
   window.addEventListener('pointerdown', () => WT.Audio.unlock());
-  canvas.addEventListener('pointerdown', (e) => { const [x, y] = toGame(e); WT.Game.pointerDown(x, y); canvas.setPointerCapture(e.pointerId); });
-  canvas.addEventListener('pointermove', (e) => { const [x, y] = toGame(e); WT.Game.pointerMove(x, y); });
-  canvas.addEventListener('pointerup', () => WT.Game.pointerUp());
+  canvas.addEventListener('pointerdown', (e) => { const [x, y] = toGame(e); if (WT.Unwind && WT.Unwind.active) WT.Unwind.pointer('down', x, y); else WT.Game.pointerDown(x, y); canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove', (e) => { const [x, y] = toGame(e); if (WT.Unwind && WT.Unwind.active) WT.Unwind.pointer('move', x, y); else WT.Game.pointerMove(x, y); });
+  canvas.addEventListener('pointerup', (e) => { const [x, y] = toGame(e); if (WT.Unwind && WT.Unwind.active) WT.Unwind.pointer('up', x, y); WT.Game.pointerUp(); });
 
   // 시작
   WT.Game.reset();
@@ -83,16 +84,17 @@
   // ───────── 소리 연출 (매 프레임) ─────────
   const D = WT.DIALOGUE;
   let lastPanel = null;
-  const STORIES = () => [D.opening, D.ending, D.act2open, D.act2end, D.act3open, D.act3montage, D.act3recall, D.act3key, D.act4open, D.act4zone2, D.act4gate, D.act5open, D.act5collapse, D.act5reborn, D.act5end].filter(Boolean);
+  const STORIES = () => [D.opening, D.ending, D.act2open, D.act2end, D.act3open, D.act3montage, D.act3recall, D.act3key, D.act4open, D.act4zone2, D.act4gate, D.act5open, D.act5collapse, D.act5reborn, D.act5end, D.act6open, D.act6flash, D.act6voice, D.act6end, D.act7open, D.act7stairs, D.act7ballroom, D.act7mem1, D.act7mem2, D.act7end].filter(Boolean);
   // 컷신별 BGM (제3막~)
   function storyBgm(panels) {
     const map = new Map([[D.act3open, 'bgm_festival'], [D.act3montage, 'bgm_radio_theme'], [D.act3recall, 'bgm_recall_night'], [D.act3key, 'bgm_departure'],
-      [D.act4open, 'bgm_story'], [D.act5open, 'bgm_story'], [D.act5end, 'bgm_ending']]);
+      [D.act4open, 'bgm_story'], [D.act5open, 'bgm_story'], [D.act5end, 'bgm_ending'],
+      [D.act6open, 'bgm_parcel'], [D.act6flash, 'bgm_flashback_duet'], [D.act6end, 'bgm_story'], [D.act7open, 'bgm_orgel_town'], [D.act7stairs, 'bgm_ballroom'], [D.act7ballroom, 'bgm_ballroom'], [D.act7end, 'bgm_duet_ending']]);
     const id = map.get(panels);
     return id && WT.Audio.defs[id] ? id : id ? 'bgm_story' : null;
   }
   // 막 스크립트가 켜고 끄는 반복음
-  const LOOP_IDS = ['sfx_battery_hum', 'amb_radio_static', 'sfx_jump_charge', 'sfx_charge', 'sfx_elevator', 'sfx_conveyor', 'sfx_magnet_loop', 'sfx_bomb_roll'];
+  const LOOP_IDS = ['sfx_battery_hum', 'amb_radio_static', 'sfx_jump_charge', 'sfx_charge', 'sfx_elevator', 'sfx_conveyor', 'sfx_magnet_loop', 'sfx_bomb_roll', 'amb_orgel_scream', 'sfx_note_tornado'];
   function audioTick(t) {
     const A = WT.Audio, s = WT.Game.state, st = s.ui.story;
     // 불러오기: 로컬은 바로, 배포 사이트는 이미지가 80% 들어오거나 6초가 지나면 (이미지 먼저)
@@ -108,6 +110,8 @@
         else if (p.art === 'teaser') A.jingle('jingle_tease');
         else if (p.art === 'citySignal') { A.play('sfx_broadcast_chime'); A.jingle('jingle_city_signal'); }
         else if (p.art === 'radioDown') A.play('sfx_radio_off');
+        else if (p.art === 'parcel') A.play('sfx_parcel_shake');
+        else if (p.art === 'orgelScream') { A.play('sfx_parcel_open'); A.play('amb_orgel_scream', { delay: 0.3, vol: 0.4 }); }
       }
       want = (st.panels === D.opening || st.panels === D.act2open) ? 'bgm_story' : storyBgm(st.panels);
       if (st.panels === D.act2open) rate = 0.9;
@@ -120,7 +124,7 @@
     }
     // 제3막 이후: 막별 음악 결정(스템, 얇아짐)
     let mus = null;
-    if (!st) mus = (WT.Road && WT.Road.music && WT.Road.music(s)) || (WT.Act3 && WT.Act3.music && WT.Act3.music(s));
+    if (!st) mus = (WT.Road && WT.Road.music && WT.Road.music(s)) || (WT.Act6 && WT.Act6.music(s)) || (WT.Act3 && WT.Act3.music && WT.Act3.music(s));
     if (mus && mus.want !== undefined) want = mus.want;
     if (want && !A.defs[want]) want = mus && mus.fallback !== undefined ? mus.fallback : 'bgm_town_awake'; // 아직 없는 곡이면 대신
     if (s.ui.cutscene || A.held()) { want = null; A.layers(null); } // 그라모 깨어남·징글 동안은 BGM 비움
@@ -141,14 +145,19 @@
     const s = WT.Game.state; s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true;
     ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone');
     WT.Game.startAct2();
-  } else if (/[?&]act[345]/.test(location.search)) { // 점검용: ?act3 마을(3막 직전) · ?act4&zone=1~3 · ?act5 볼트 남작
-    const s = WT.Game.state, n = +location.search.match(/act([345])/)[1];
+  } else if (/[?&]act[34567]/.test(location.search)) { // 점검용: ?act3 마을(3막 직전) · ?act4&zone=1~3 · ?act5 볼트 남작 · ?act6 6막 직전 마을 · ?act7&zone=5~7
+    const s = WT.Game.state, n = +location.search.match(/act([34567])/)[1];
     const q = (k) => (location.search.match(new RegExp(k + '=([a-z0-9]+)')) || [])[1];
     s.quest.stage = 'completed'; s.world.musicOn = true; s.act1Done = true; s.npcs.pip.delivered = true; s.episode = 3;
     ['gramo', 'pip', 'lamp'].forEach((k) => { s.npcs[k].mood = 'awake'; }); s.house.unlocked.push('gramophone', 'cuckoo');
     s.player.x = 640; s.player.y = 470; WT.Game.setScene('town'); WT.UI.setScene('town');
     if (q('modal')) WT.BatteryModal.open(q('modal'), () => {}); // 점검용: &modal=insert|remove
-    if (n >= 4) {
+    if (q('unwind')) setTimeout(() => WT.Unwind.open(() => {}, { band: [0.3, 0.75] }), 100); // 점검용: &unwind=1 풀기 모달
+    if (n >= 6) { // 5막까지 끝난 마을
+      s.episode = 4; Object.assign(s.act3, { stage: 'done' }); s.inventory.gramoKey = false; s.npcs.gramo.keys = 2;
+      Object.assign(s.npcs.radio, { reborn: true, power: 'wind' }); WT.Act3.refresh();
+      if (n === 7) { WT.Act6.skipToRoad(); WT.Road.enter(+(q('zone') || 5)); const r = s.road; if (q('x')) { r.p.x = +q('x'); r.camX = Math.max(0, r.p.x - 420); } if (q('power')) r.p.power = q('power'); if (q('fight') && r.boss) WT.RoadBoss.startNow(r); }
+    } else if (n >= 4) {
       Object.assign(s.act3, { stage: 'gone' }); s.inventory.gramoKey = true; s.inventory.battery = 1;
       s.npcs.pip.power = s.npcs.lamp.power = 'battery'; s.npcs.pip.frozen = s.npcs.lamp.frozen = true; s.npcs.gramo.keys = 2;
       WT.Road.enter(n === 5 ? 4 : +(q('zone') || 1));
@@ -334,7 +343,7 @@
           ok('보스전에서 건전지가 다 떨어지면 라디오 씨가 알려 줌', !err && !!s.ui.dialog && s.ui.dialog.lines === D5.act5.radio.empty); closeAll(); step(45);
           ok('자동으로 태엽으로 돌아와 계속 움직임', r().p.power === 'wind' && !G.locked());
           place(it('charger').x, 'wind'); key('KeyE'); step(100); ok('아레나 충전소에서 다시 충전', r().battery === 100); }
-        const force = () => { b().queue = []; b().atk = null; b().gap = 0; b().haz = { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0 }; step(2); };
+        const force = () => { b().queue = []; b().atk = null; b().gap = 0; Object.assign(b().haz, { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0, waves: [], tornados: [], combs: [] }); step(2); };
         force(); ok('과열 1: 머리 위 레버', b().state === 'over' && b().weak === 'high');
         place(990, 'wind'); key('KeyE'); ok('땅에서는 레버에 안 닿음', b().state === 'over');
         place(880, 'wind', GY - 170); key('KeyE'); ok('높은 발판에서 E → 차단기', b().state === 'hurt' && b().hits === 1);
@@ -352,7 +361,7 @@
         const stepH = (n, keys) => { for (let i = 0; i < n; i++) G.update(1 / 60, { held: (k) => keys.includes(k) }); };
         const r = () => s.road, b = () => r().boss;
         const place = (x, power, y) => { const q = r().p; q.x = x; q.y = y || GY; q.vy = 0; q.vx = 0; q.onGround = true; q.shortT = 0; q.hurtT = 0; q.swapT = 0; q.inv = 0; if (power) q.power = power; return q; };
-        const force = () => { b().queue = []; b().atk = null; b().gap = 0; b().haz = { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0 }; step(2); };
+        const force = () => { b().queue = []; b().atk = null; b().gap = 0; Object.assign(b().haz, { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0, waves: [], tornados: [], combs: [] }); step(2); };
         ok('최종 보스: 볼트 남작', r().zone === 4 && b().kind === 'volt' && r().radioBat === 40);
         closeAll(); ok('남작 전투 시작', b().state === 'attack');
         force(); ok('과열 1: 라디오 씨 잡음 방송(건전지 -20)', b().state === 'over' && b().weak === 'high' && r().radioBat === 20);
@@ -373,6 +382,65 @@
         ok('결말 컷신', !!s.ui.story && s.ui.story.panels === D5.act5end); WT.Story.skip(); step(80);
         ok('마을로 · 친구들 깨어남 · 라디오 씨 남음', s.scene === 'town' && s.episode === 4 && !s.npcs.pip.frozen && s.npcs.radio.reborn && WT.npcVisible('radio'));
         p.x = WT.WORLD.npcs.radio.x; p.y = WT.WORLD.npcs.radio.y + 50; G.interact(); ok('결말 뒤 라디오 씨 대사', !!s.ui.dialog && s.ui.dialog.lines === D5.town4.radio); closeAll();
+      }
+      // ───── 제6막 「오르골이 도착한 날」 ─────
+      { const D6 = WT.DIALOGUE, U = WT.Unwind;
+        closeAll(); step(80);
+        p.x = 420; p.y = 520; p.z = 0; G.interact(); ok('6막: 피프가 소포를 가져옴', !!s.ui.dialog && s.ui.dialog.lines === D6.act6.pip.parcel); closeAll();
+        step(80); ok('6막 오프닝 컷신(소포 · 비명)', !!s.ui.story && s.ui.story.panels === D6.act6open);
+        WT.Story.skip(); step(130); ok('그라모가 오르골을 알아봄', !!s.ui.dialog && s.ui.dialog.lines === D6.act6.gramo.know);
+        closeAll(); ok('그라모의 회상 컷신', !!s.ui.story && s.ui.story.panels === D6.act6flash);
+        WT.Story.skip(); step(100); ok('풀어 주기 가르침', !!s.ui.dialog && s.ui.dialog.lines === D6.act6.gramo.teach);
+        closeAll(); ok('풀기 모달(띠 넓음)', U.active && U.state().band[0] < 0.25);
+        U.simulate(0.6, 1.0); ok('알맞은 속도면 진행이 참', U.state().p > 0.25);
+        { const p0 = U.state().p; U.simulate(1.4, 0.6); ok('너무 빠르면 튕김(진행 감소)', U.state().snaps >= 1 && U.state().p < p0); }
+        { U.simulate(0.6, 0.5); const p1 = U.state().p; U.simulate(0.02, 2.5); ok('너무 느리면 다시 감김', U.state().p < p1); }
+        U.finishNow(); step(80); ok('한 번 더 · 섬세하게', !!s.ui.dialog && s.ui.dialog.lines === D6.act6.gramo.again); closeAll();
+        ok('두 번째 풀기(띠 좁음)', U.active && U.state().band[0] >= 0.3);
+        U.simulate(0.5, 4); step(80); ok('알맞은 속도로 끝까지 풀림', !U.active && s.act6.calm);
+        ok('오르골의 진짜 속도', !!s.ui.dialog && s.ui.dialog.lines === D6.act6.gramo.done); closeAll();
+        ok('숨은 목소리 컷신', !!s.ui.story && s.ui.story.panels === D6.act6voice);
+        WT.Story.skip(); step(100); ok('라디오 씨가 왈츠 주파수를 잡음', !!s.ui.dialog && s.ui.dialog.lines === D6.act6.radio.signal);
+        closeAll(); ok('출발 컷신', !!s.ui.story && s.ui.story.panels === D6.act6end);
+        WT.Story.skip(); step(80); ok('7막 오프닝 컷신', !!s.ui.story && s.ui.story.panels === D6.act7open);
+        WT.Story.skip(); step(130); closeAll();
+      }
+      // ───── 제7막 「멈추지 않는 무도회」 ─────
+      { const RD = WT.Road, GY = WT.ROAD_GY, D7 = WT.DIALOGUE, U = WT.Unwind;
+        const stepH = (n, keys) => { for (let i = 0; i < n; i++) G.update(1 / 60, { held: (k) => keys.includes(k) }); };
+        const r = () => s.road, it = (type, n) => r().items.filter((q) => q.type === type)[n || 0], b = () => r().boss;
+        const place = (x, power, y) => { const q = r().p; q.x = x; q.y = y || GY; q.vy = 0; q.vx = 0; q.onGround = true; q.shortT = 0; q.hurtT = 0; q.swapT = 0; q.inv = 0; if (power) q.power = power; r().danceT = 0; return q; };
+        const force = () => { b().queue = []; b().atk = null; b().gap = 0; Object.assign(b().haz, { floor: null, seq: null, bombs: [], strikes: [], puddles: [], magnet: 0, waves: [], tornados: [], combs: [] }); step(2); };
+        ok('7막 구간 1 오르골 거리 · 라디오 씨 변신 모습', s.scene === 'road' && r().zone === 5 && r().radioReborn);
+        { const sp = it('speaker'); place(sp.x, 'wind'); stepH(40, []); ok('음악 구역: 태엽은 춤 상태(저절로 깡충)', r().p.dancing && r().p.y < GY);
+          place(sp.x, 'battery'); r().battery = 100; stepH(10, []); ok('건전지는 음악에 버팀', !r().p.dancing); }
+        { const d = it('dancer'); place(d.x - 90, 'wind'); stepH(40, ['right']); ok('춤추는 주민이 길을 막음', r().p.x < d.x - 30);
+          key('KeyE'); ok('주민 앞 E → 풀기 모달', U.active); U.finishNow(); step(70); ok('주민이 쉬고 길이 열림', d.state === 1);
+          stepH(40, ['right']); ok('지나감', r().p.x > d.x + 20); }
+        { const sp = it('speaker'); place(sp.x - 60, 'battery'); r().battery = 100; key('KeyE'); U.finishNow(); step(70); ok('스피커를 풀어 끔', sp.state === 1);
+          place(sp.x, 'wind'); stepH(20, []); ok('꺼진 스피커 옆은 춤추지 않음', !r().p.dancing); }
+        RD.clearNow(); step(5); step(110); step(80); ok('무도회장 계단 컷신', !!s.ui.story && s.ui.story.panels === D7.act7stairs); WT.Story.skip(); step(130); closeAll();
+        { const c = it('comb'); place(c.x + 60, 'wind'); r().hp = 3; r().testClock = true; r().t = RD.COMB_T - (c.off || 0) + 0.01; stepH(2, []); ok('빗살이 솟을 때 바닥에 있으면 맞음', r().hp === 2); }
+        RD.clearNow(); step(5); step(110); step(80); ok('무도회장 꼭대기 컷신', !!s.ui.story && s.ui.story.panels === D7.act7ballroom); WT.Story.skip(); step(130);
+        ok('보스: 멜로디 여왕', r().zone === 7 && b().kind === 'melody'); closeAll(); ok('멜로디전 시작', b().state === 'attack');
+        step(40); ok('첫 공격: 과감기 선율', !!b().atk && b().atk.type === 'wave');
+        place(500, 'wind'); stepH(80, []); ok('선율이 지나가면 태엽은 춤', r().danceT > 0 || r().p.dancing);
+        place(500, 'battery'); r().battery = 100; b().haz.waves.push({ r: 0, hit: false }); stepH(80, []); ok('건전지는 선율에 버팀', !(r().danceT > 0));
+        force(); ok('삐걱: 너무 감겨 굳음', b().state === 'over' && b().weak === 'unwind');
+        place(400, 'wind'); key('KeyE'); ok('멀리선 풀 수 없음', !U.active);
+        place(850, 'wind'); key('KeyE'); ok('등 열쇠 풀기 모달', U.active && U.state().band[0] === 0.28);
+        U.finishNow(); step(100); ok('기억 1 컷신', !!s.ui.story && s.ui.story.panels === D7.act7mem1); WT.Story.skip(); step(90); closeAll();
+        ok('2라운드', b().round === 1 && b().state === 'attack');
+        force(); place(850, 'wind'); key('KeyE'); ok('2라운드 풀기: 띠가 좁아지고 버팀', U.active && U.state().band[0] === 0.33 && U.state().opts.resist > 0);
+        U.finishNow(); step(100); ok('기억 2 컷신', !!s.ui.story && s.ui.story.panels === D7.act7mem2); WT.Story.skip(); step(90);
+        ok('라디오 씨가 느린 음악을 방송', !!s.ui.dialog && s.ui.dialog.lines === D7.act7.radio.final); closeAll();
+        ok('최종 라운드 · 방송 중', b().round === 2 && b().broadcast);
+        place(150, 'wind'); b().haz.waves.push({ r: 0, hit: false }); stepH(80, []); ok('라디오 씨 곁에선 선율에도 춤추지 않음', !(r().danceT > 0));
+        force(); place(850, 'wind'); key('KeyE'); ok('마지막 풀기', U.active && U.state().band[0] === 0.38); U.finishNow(); step(100);
+        ok('멜로디가 처음으로 멈춤', b().state === 'calm'); step(110); ok('…멈춰도 괜찮은 거구나', !!s.ui.dialog && s.ui.dialog.lines === D7.act7.melody.calm); closeAll(); step(100);
+        ok('7막 결말 컷신', !!s.ui.story && s.ui.story.panels === D7.act7end); WT.Story.skip(); step(80);
+        ok('마을로 · 멜로디가 남음 · 오르골 가구', s.scene === 'town' && s.episode === 5 && WT.npcVisible('melody') && s.house.unlocked.includes('orgel'));
+        { const m = WT.WORLD.npcs.melody; p.x = m.x - 10; p.y = m.y + 50; G.interact(); ok('마을의 멜로디 대사', !!s.ui.dialog && s.ui.dialog.who === 'melody'); closeAll(); }
       }
       // 과감기 실패
       // 오디오: manifest 51개 불러오기 시도, 실패해도 에러 없음

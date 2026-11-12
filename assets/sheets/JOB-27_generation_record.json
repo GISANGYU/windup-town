@@ -1,0 +1,125 @@
+{
+  "job": "JOB-27",
+  "date": "2026-11-12",
+  "mode": "built-in image_gen",
+  "prompt_file": "JOB-27_prompts.json",
+  "generations": [
+    {
+      "id": "story_50_parcel",
+      "file": "assets/story/story_50_parcel.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-12afe0c0-9fd9-4b8d-9739-6141c44648d2.png",
+      "review": "합격"
+    },
+    {
+      "id": "story_51_orgel_scream",
+      "file": "assets/story/story_51_orgel_scream.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-f3aafa94-cff1-423c-a09b-d50e6b247e9b.png",
+      "review": "재생성"
+    },
+    {
+      "id": "story_52_flashback_stage",
+      "file": "assets/story/story_52_flashback_stage.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-a0e23f50-f91e-4bd5-b454-4ccab85ee8e5.png",
+      "review": "재생성"
+    },
+    {
+      "id": "story_53_flashback_gift",
+      "file": "assets/story/story_53_flashback_gift.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-a387d5f7-ba9c-4dce-b744-4ae7dece7b94.png",
+      "review": "합격"
+    },
+    {
+      "id": "story_54_hidden_voice",
+      "file": "assets/story/story_54_hidden_voice.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-d916aa69-d212-4c1a-8a93-bcf8de3b9bbd.png",
+      "review": "재생성"
+    },
+    {
+      "id": "story_55_waltz_signal",
+      "file": "assets/story/story_55_waltz_signal.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-10aefa80-6fd7-4068-966b-7e7a5e98097b.png",
+      "review": "합격"
+    },
+    {
+      "id": "story_56_orgel_town",
+      "file": "assets/story/story_56_orgel_town.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-f0e1a1bb-64e8-41b8-947e-0cf8f03bd8cc.png",
+      "review": "재생성"
+    },
+    {
+      "id": "story_57_ballroom",
+      "file": "assets/story/story_57_ballroom.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-148d3169-fc9d-4bfa-9b07-f5c62f7d55b8.png",
+      "review": "재생성"
+    },
+    {
+      "id": "story_58_memory_1",
+      "file": "assets/story/story_58_memory_1.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-3cad6f14-36da-4605-9558-fb1dd9faa98c.png",
+      "review": "재생성"
+    },
+    {
+      "id": "story_59_memory_2",
+      "file": "assets/story/story_59_memory_2.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-667f0c6c-96e8-4d91-a2ed-d1ca14c03876.png",
+      "review": "합격"
+    },
+    {
+      "id": "story_60_melody_stops",
+      "file": "assets/story/story_60_melody_stops.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-de003ffb-c731-4096-abd8-fe3574835bba.png",
+      "review": "재생성"
+    },
+    {
+      "id": "story_61_duet",
+      "file": "assets/story/story_61_duet.png",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-f2475bce-29aa-4da9-9410-a92ca36693a4.png",
+      "review": "재생성"
+    }
+  ],
+  "revision_prompt_file": "JOB-27_revisions.json",
+  "revisions": [
+    {
+      "id": "story_51_orgel_scream",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-b6810c85-31b0-4ece-a0a6-9ec4fc65a475.png",
+      "fix": "Recompose the scene so the ENTIRE small open music box INCLUDING BASE AND TORN WRAPPING PAPER sits between 35% and 62% of image height. Move the whole cast upward and slightly reduce scale, leaving the entire bottom 35% as quiet uninterrupted grass/path. Keep all four characters faces fully within upper 55%. Preserve their covering-ears gestures and Gramo recognition. Gramo must have exactly TWO complete double-loop winding keys, not single-loop pegs. Keep original style and characters. No cast ground shadows."
+    },
+    {
+      "id": "story_52_flashback_stage",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-563ebe4f-c39c-41db-aa37-822dca796bde.png",
+      "fix": "Change ONLY young Gramo cabinet front: remove the lattice RADIO speaker grille below his mouth and make it plain wooden gramophone cabinet as reference-1 Gramo. Keep his BLACK short moustache. Show exactly THREE distinct complete double-loop keys down the visible back/side, spaced separately. Remove every oval dark cast ground shadow under both performers and box; retain natural stage wood texture. Preserve warm sepia, grain, vignette, composition and all other characters."
+    },
+    {
+      "id": "story_54_hidden_voice",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-eb8db27d-84b8-41fd-8865-2607904b023e.png",
+      "fix": "Move the entire table-top story arrangement and all faces upward by approximately 18% canvas height, reducing characters slightly if needed. Open music box including base must be entirely ABOVE 65% image height; Gramo and Bogle full faces and mouths above 60%. Bottom 30% becomes quiet natural table FRONT, no artificial band or text. Preserve ghostly Melody portrait, emotional expressions, two Gramo keys, colors and room."
+    },
+    {
+      "id": "story_56_orgel_town",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-21fbdb4a-2002-4735-bfa2-49a7645eedb4.png",
+      "fix": "Remove ALL ballerina/Melody figures and ALL queen music-box platforms from this street scene. There must be NO Melody queen here; she is waiting in the palace elsewhere. Replace those background figures with only tin soldiers, round yellow wind-up birds and striped top ladies consistent with the character reference. Change village architecture into pale pink/cream music-box buildings with gold scallops, visible winding keys, small music-box balconies and pastel roofs; retain watercolor technique. Bogle and Radio remain shocked at left. Preserve only the three toy types dancing with spiral eyes and snapping springs. Keep faces above 65%, no cast ground shadows."
+    },
+    {
+      "id": "story_57_ballroom",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-a90af49e-0184-4840-97df-797ddb3c0af6.png",
+      "fix": "Move small BOGLE up and slightly left onto a higher stair landing, so his red knob is at 40% image height, eyes near 48%, mouth near 53%, feet near 62%. He remains MUCH SMALLER than Melody. Do not leave any duplicate Bogle at bottom. Add subtle circling motion strokes around Melody tutu/ankles showing endless turning. Remove all cast shadows and glossy reflections from the floor. Keep the huge music box, dizzy queen, silver glowing key, grandeur and all other composition."
+    },
+    {
+      "id": "story_58_memory_1",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-94240f25-0dee-4b74-b1bd-3b14a45b6d68.png",
+      "fix": "Change ONLY young GRAMO to match the true gramophone identity: delete both round brass cheek dials and delete the lattice speaker grille; restore plain wooden cabinet front around a simple cartoon mouth and BLACK short neat moustache. Add exactly THREE separately visible complete double-loop back keys in a vertical row, do not overlap them. No Radio character traits. Remove cast ground shadows under characters and box. Preserve bowing gesture, joined hands, Melody, sepia, flowers, rounded vignette, stage and framing."
+    },
+    {
+      "id": "story_60_melody_stops",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-294ee2c3-bd50-4821-9132-c2bb19a331a1.png",
+      "fix": "Keep peaceful central Melody exactly as she is. Reposition the small yellow BIRD and pink TOP LADY UPWARD into the middle-right near soldier, with both their ENTIRE faces AND mouths above 60% of image height. Reduce their scale slightly and spread them across a midground arc if necessary. They remain seated/reclining and relaxed. Bottom 30% is quiet grass only, no important character face there. Preserve Radio slow golden notes, Bogle, calm Melody and silver stationary key. No cast shadows."
+    },
+    {
+      "id": "story_61_duet",
+      "source": "C:\\Users\\yu505\\.codex\\generated_images\\01a1cc00-42ec-7a30-ada4-0c150fa652c1\\exec-f04c90df-ced5-432d-8f32-39655ff30cd1.png",
+      "fix": "Recompose by moving ALL FOUR foreground dancers upward and reducing them slightly: PIP, LAMP, BOGLE and the SMALL DYNAMO must have their ENTIRE faces including mouths ABOVE 62% of canvas height. Put their feet at or above 73%, leaving bottom quarter quiet grass. Keep the bandstand performers positions and full identity; older Gramo has TWO complete double-loop back keys. Remove the violin and bow from Gramo hands: he plays music through his own gramophone horn, hands keeping time; Melody dances beside him. Preserve warm evening light, lanterns, all seven distinct characters, no duplicate figures. No cast shadows."
+    }
+  ],
+  "final_count": 12,
+  "normalization": "1280x720 RGBA PNG; format and size only, no compositing or retouching in code"
+}

@@ -41,6 +41,7 @@ WT.FURN = {
   cuckoo:     { asset: 'furn_cuckoo',          h: 130, foot: 64,  label: '뻐꾸기시계', key: '5' },
   bunting:    { asset: 'furn_bunting',         h: 110, foot: 110, label: '깃발 줄',    key: '6' },
   lantern:    { asset: 'furn_lantern',         h: 120, foot: 40,  label: '등불',       key: '7' },
-  banner:     { asset: 'furn_banner',          h: 130, foot: 40,  label: '깃대',       key: '8' }
+  banner:     { asset: 'furn_banner',          h: 130, foot: 40,  label: '깃대',       key: '8' },
+  orgel:      { asset: 'prop_orgel_calm',      h: 80,  foot: 60,  label: '오르골',     key: '9' }
 };
 WT.ROOM = { x1: 150, x2: 1130, y1: 330, y2: 690, grid: 20 };

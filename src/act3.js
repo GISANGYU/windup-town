@@ -31,6 +31,7 @@
     if (!s || !s.act3) return id !== 'radio' && id !== 'cuckoo';
     if (id === 'radio') return A3.at('arrived') && !A3.is('gone');
     if (id === 'cuckoo') return s.episode >= 3;
+    if (id === 'melody') return s.episode >= 5;
     return true;
   };
   WT.npcName = (id) => W.npcs[id].name;
@@ -141,8 +142,10 @@
   A3.talk = function (id) {
     const s = G.state, a = st(), T = D(), stage = a.stage;
     if (s.episode < 3) return false;
-    if (s.episode >= 4) { // 결말 뒤 마을
-      const L = WT.DIALOGUE.town4;
+    if (s.episode >= 4) { // 결말 뒤 마을 (4 = 5막 뒤, 5 = 7막 뒤)
+      if (WT.Act6 && WT.Act6.talk(id)) return true;
+      const L = s.episode >= 5 ? WT.DIALOGUE.town5 : WT.DIALOGUE.town4;
+      if (id === 'melody') { say('melody', L.melody, { mood: 'calm' }); return true; }
       if (L[id]) { say(id, L[id]); return true; }
       if (id === 'cuckoo') { say('cuckoo', ['째깍. 음악이 둘이 되니 박자 맞추기가 바쁘군. 뻐꾹.'], { who: 'boss', mood: 'cuckoo' }); return true; }
       return false;

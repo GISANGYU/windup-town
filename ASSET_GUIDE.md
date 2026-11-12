@@ -58,6 +58,7 @@
 | JOB-5 | 가구 + 이펙트 + UI | a: 가구 4개 / b: 이펙트 5개 / c: UI 2개 | anchor, ref_02 |
 | JOB-6 | 배경 | 3장 각각 따로 (시트 아님) | anchor, ref_04, ref_03 |
 | JOB-8 | 제2막 보스 (추가) | a: 백작 포즈 6개(idle, slam, throw, bell, tired, hurt) 한 장 / b: 뻐꾸기시계 + 초상화 2 + 가구 뻐꾸기시계 / c: 이펙트 4개(톱니, 스프링, 김, 종소리) / 배경·컷신·감기 모달은 각각 따로 | anchor, ref_02, ref_01, 완성된 npc_gramo_awake |
+| JOB-24 ~ JOB-27 | 6~7막(오르골 여왕) | JOB별 지시서 `jobs/JOB-24.md` ~ `jobs/JOB-27.md` | 각 지시서에 적힘 |
 | JOB-18 ~ JOB-22 | 새 3~5막(볼트 남작) | JOB별 지시서 `jobs/JOB-18.md` ~ `jobs/JOB-22.md`. 순서는 `jobs/README.md` | 각 지시서에 적힘 |
 | JOB-9 ~ JOB-17 | 제3~5막 (이전 이야기, 완료) | JOB별 지시서 `jobs/JOB-09.md` ~ `jobs/JOB-17.md`. 순서·의존은 `jobs/README.md` | 각 지시서에 적힘 |
 | JOB-7 | 컷신 + 감기 모달 (추가) | 컷신 5장 각각 따로(16:9, BACKGROUND RULES) / 감기 모달 2개는 마젠타 시트 1장 | anchor, ref_01, ref_03, 완성된 bg_town_ground |
@@ -186,6 +187,25 @@ Stubby rubber hose legs with big webbed feet. About twice BOGLE's height. Loud, 
 RADIO REBORN: the same honey-wood table RADIO but reborn by a wind-up key: a brass GRAMOPHONE HORN speaker blooms out of the top of his head like a flower,
 a big brass wind-up key turns slowly on his back, gold #F2C14E trim around the cabinet, his two dials became round cheeks and he now has pie-cut eyes above them,
 long bouncy rubber hose arms and legs with white gloves and red round shoes. Warm, joyful, full of music. His silhouette must look clearly different from the old stiff RADIO.
+```
+**MELODY QUEEN (멜로디 여왕, 제7막 보스)**
+```
+MELODY QUEEN: a porcelain BALLERINA figurine who lives on top of an ornate wooden MUSIC BOX (rose-pink #E8A0A8 box with gold #F2C14E trim and a mirror inside the lid).
+Cream porcelain skin, a pink tutu, a small gold tiara, rubber hose arms and legs with white gloves and pink ballet shoes.
+A big SILVER wind-up key on her back. Graceful and elegant, but when overwound she trembles on tiptoe with spiral dizzy eyes and a forced smile.
+About twice BOGLE's height including the music box. Sad and frightened rather than evil.
+```
+**ORGEL DANCERS (오르골 마을 주민, 제7막)**
+```
+ORGEL DANCERS: small wind-up toys of the music box town, each with a wind-up key on its back, rubber hose limbs, white gloves:
+TIN SOLDIER: a red #D2463C and blue #3E6DB5 tin soldier with a tall hat and a drum belt.
+WIND-UP BIRD: a round yellow #F2C14E tin bird with a key on its back and tiny legs.
+TOP LADY: a spinning-top shaped lady with a pink-and-cream striped skirt that is the top, a little handle hat.
+About the same height as PIP.
+```
+**YOUNG GRAMO (젊은 그라모, 회상 전용)**
+```
+YOUNG GRAMO: GRAMO decades ago: the same wooden gramophone but polished and shiny, the brass horn standing tall and bright, a neat short black moustache instead of the white bushy one, three keys on his back, energetic posture.
 ```
 **보스 아레나 방향 예외**: 볼트 남작과 두꺼비집 문지기는 아레나 오른쪽에 서므로 **모든 자세가 왼쪽**을 본다. 라디오 씨의 `npc_radio_jam`, `npc_radio_reborn_broadcast`는 왼쪽에 서서 **오른쪽**을 본다.
 
@@ -437,5 +457,52 @@ Mid layers: draw only the lower part, leave the upper part empty flat #FF00FF ma
 | 컷신 | `story/story_43_home.png` | 선택 | 1280×720 | front34 | 결말: 빛나는 실이 마을로 돌아오고 피프·가로등이 깨어남, 라디오 씨와 그라모가 함께 음악을 틂 |
 | 컷신 | `story/story_44_shadow_hall.png` | 선택 | 1280×720 | front34 | 3막 흑막 1: 어두운 발전소 홀. 여러 마을에서 끌려온 빛나는 실이 거대한 그림자(볼트 남작 실루엣)의 가슴으로 빨려 듦. 앞쪽에 작은 두꺼비 실루엣 |
 | 컷신 | `story/story_45_shadow_plan.png` | 선택 | 1280×720 | front34 | 3막 흑막 2: 그림자 남작이 건전지 하나를 치켜들고 설명, 탁자 위 지도의 마을들에 건전지 표시. 옆에서 두꺼비 그림자가 경례 |
+| 보스 | `boss/boss_melody_idle.png` | 필수 | 높이 260px | side | 멜로디 여왕 대기: 오르골 상자 위에서 발끝으로 떨며 회전(너무 감김) |
+| 보스 | `boss/boss_melody_wave.png` | 필수 | 높이 260px | side | 과감기 선율: 두 팔을 펼쳐 음악 파동을 내보냄 |
+| 보스 | `boss/boss_melody_spin.png` | 필수 | 높이 260px | side | 회전 발레: 팽이처럼 빠르게 회전 |
+| 보스 | `boss/boss_melody_rain.png` | 필수 | 높이 260px | side | 빗살 비: 두 팔을 치켜들어 오르골 빗살을 불러 내림 |
+| 보스 | `boss/boss_melody_creak.png` | 필수 | 높이 260px | side | 삐걱: 너무 감겨 굳음, 등 열쇠가 분명히 보임 |
+| 보스 | `boss/boss_melody_unwind.png` | 선택 | 높이 260px | side | 풀리는 중: 몸의 떨림이 가라앉고 눈이 돌아옴 |
+| 보스 | `boss/boss_melody_calm.png` | 필수 | 높이 260px | side | 결말: 상자 가장자리에 앉아 쉬는 멜로디(파이 눈, 온화) |
+| NPC | `npc/npc_melody.png` | 선택 | 높이 140px | front34 | 마을 결말용 멜로디(정면, 그라모 옆 듀엣) |
+| 초상화 | `portrait/portrait_melody_wild.png` | 선택 | 높이 200px | front34 | 대화 카드용 멜로디(과감기, 눈이 핑핑) |
+| 초상화 | `portrait/portrait_melody_calm.png` | 선택 | 높이 200px | front34 | 대화 카드용 멜로디(온화) |
+| NPC | `npc/npc_tin_dance_01.png` | 필수 | 높이 110px | side | 양철 병정 춤 1(너무 감김) |
+| NPC | `npc/npc_tin_dance_02.png` | 선택 | 높이 110px | side | 양철 병정 춤 2 |
+| NPC | `npc/npc_tin_rest.png` | 필수 | 높이 110px | side | 양철 병정 쉼(풀린 뒤 털썩 앉음) |
+| NPC | `npc/npc_bird_dance_01.png` | 필수 | 높이 110px | side | 태엽 새 춤 1 |
+| NPC | `npc/npc_bird_dance_02.png` | 선택 | 높이 110px | side | 태엽 새 춤 2 |
+| NPC | `npc/npc_bird_rest.png` | 필수 | 높이 110px | side | 태엽 새 쉼 |
+| NPC | `npc/npc_top_dance_01.png` | 필수 | 높이 110px | side | 팽이 아가씨 춤 1 |
+| NPC | `npc/npc_top_dance_02.png` | 선택 | 높이 110px | side | 팽이 아가씨 춤 2 |
+| NPC | `npc/npc_top_rest.png` | 필수 | 높이 110px | side | 팽이 아가씨 쉼(옆으로 누움) |
+| 길(5막) | `road/bg_orgel_far.png` | 필수 | 1280×720 | side | 7막 구간1 오르골 거리 먼 배경(좌우 반복) |
+| 길(5막) | `road/bg_orgel_mid.png` | 필수 | 1280×360 | side | 7막 구간1 중간 레이어(위쪽 마젠타) |
+| 길(5막) | `road/bg_ballroom_far.png` | 필수 | 1280×720 | side | 7막 구간2 무도회장 먼 배경(좌우 반복) |
+| 길(5막) | `road/bg_ballroom_mid.png` | 필수 | 1280×360 | side | 7막 구간2 중간 레이어 |
+| 길(5막) | `road/bg_melody_arena.png` | 필수 | 1280×720 | side | 멜로디 보스 아레나: 거대한 오르골 상자 뚜껑 위 무대(한 화면) |
+| 소품 | `props/prop_parcel_closed.png` | 필수 | 높이 50px | front34 | 6막 소포(닫힘, 끈으로 묶임, 덜덜 떨림) |
+| 소품 | `props/prop_orgel_wild.png` | 필수 | 높이 70px | front34 | 너무 감긴 낡은 오르골(뚜껑이 덜컹, 발레리나가 미친 듯 회전) |
+| 소품 | `props/prop_orgel_calm.png` | 필수 | 높이 70px | front34 | 풀린 오르골(제 속도로 노래) |
+| 길(5막) | `road/road_speaker.png` | 필수 | 높이 150px | side | 오르골 스피커 상자(나팔 달림, 음악을 뿜음) |
+| 길(5막) | `road/road_speaker_off.png` | 선택 | 높이 150px | side | 풀려서 꺼진 스피커 |
+| 길(5막) | `road/road_comb_drum.png` | 필수 | 높이 120px | side | 회전하는 오르골 빗살 원통(빗살이 튀어나옴) |
+| 이펙트 | `fx/fx_music_wave.png` | 선택 | 높이 160px | side | 과감기 음악 파동(분홍 고리) |
+| 이펙트 | `fx/fx_note_tornado.png` | 선택 | 높이 90px | side | 음표 회오리(바닥을 따라옴) |
+| 이펙트 | `fx/fx_comb_tooth.png` | 선택 | 높이 90px | side | 떨어지는 오르골 빗살 |
+| 감기 모달 | `wind/wind_orgel_back.png` | 필수 | 높이 430px | front34 | 풀기 모달 배경 1: 낡은 오르골 밑면 클로즈업, 가운데 열쇠 구멍(열쇠 없음) |
+| 감기 모달 | `wind/wind_melody_back.png` | 필수 | 높이 430px | front34 | 풀기 모달 배경 2: 멜로디 여왕의 등 클로즈업, 가운데 열쇠 구멍(열쇠 없음) |
+| 컷신 | `story/story_50_parcel.png` | 선택 | 1280×720 | front34 | 6막 1: 평화로운 마을, 피프가 덜덜 떨리는 소포를 들고 옴 |
+| 컷신 | `story/story_51_orgel_scream.png` | 선택 | 1280×720 | front34 | 6막 2: 소포 속 오르골이 비명 지르듯 미친 듯 돌고 모두 귀를 막음 |
+| 컷신 | `story/story_52_flashback_stage.png` | 선택 | 1280×720 | front34 | 6막 3: 회상(세피아). 젊은 그라모와 멜로디의 무대 듀엣 |
+| 컷신 | `story/story_53_flashback_gift.png` | 선택 | 1280×720 | front34 | 6막 4: 회상(세피아). 헤어지는 날 멜로디가 오르골을 건넴 |
+| 컷신 | `story/story_54_hidden_voice.png` | 선택 | 1280×720 | front34 | 6막 5: 풀린 오르골에서 흐르는 멜로디의 목소리, 듣는 그라모 |
+| 컷신 | `story/story_55_waltz_signal.png` | 선택 | 1280×720 | front34 | 6막 끝: 라디오 씨가 잡은 끝없이 빨라지는 왈츠, 출발 |
+| 컷신 | `story/story_56_orgel_town.png` | 선택 | 1280×720 | front34 | 7막 1: 쉬지 못하고 춤추는 오르골 마을 |
+| 컷신 | `story/story_57_ballroom.png` | 선택 | 1280×720 | front34 | 7막 2: 무도회장 꼭대기, 거대한 오르골 위의 멜로디 여왕 |
+| 컷신 | `story/story_58_memory_1.png` | 선택 | 1280×720 | front34 | 7막 기억 1(세피아, 짧게): 무대 위 첫 인사 |
+| 컷신 | `story/story_59_memory_2.png` | 선택 | 1280×720 | front34 | 7막 기억 2(세피아, 짧게): 멈춘 오르골 앞에서 우는 어린 멜로디 |
+| 컷신 | `story/story_60_melody_stops.png` | 선택 | 1280×720 | front34 | 7막 끝: 처음으로 천천히 멈추는 멜로디, 쉬기 시작하는 마을 |
+| 컷신 | `story/story_61_duet.png` | 선택 | 1280×720 | front34 | 결말: 마을 무대에서 그라모와 멜로디의 듀엣, 라디오 씨 방송 |
 
 각 ID의 개별 프롬프트(⑤)는 `assets/manifest.js`의 `prompt` 값을 그대로 쓴다.

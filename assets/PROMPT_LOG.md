@@ -268,3 +268,87 @@
 2026-11-12 | JOB-23 | assets/sheets/JOB-23_story_45_draft2.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 코일 내부 분홍색 틈과 콧수염 하이라이트 제거 | 재생성
 2026-11-12 | JOB-23 | assets/story/story_45_shadow_plan.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 건전지 회수 실, 마을 지도와 건전지 표시, 경례; 자막 안전영역 확보 | 합격
 2026-11-12 | JOB-23 | assets/story/story_44_shadow_hall.png | STYLE + BACKGROUND 고정 블록, manifest 원문, 참조 기반 실루엣 컷신: 마을에서 가슴으로 모이는 금빛 실, 두 실루엣, 밤 발전소 | 합격
+
+| 2026-11-12 | JOB-24 | boss/boss_melody_idle.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 멜로디 여왕 대기: 오르골 상자 위에서 발끝으로 떨며 회전(너무 감김); JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | boss/boss_melody_wave.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 과감기 선율: 두 팔을 펼쳐 음악 파동을 내보냄; JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | boss/boss_melody_spin.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 회전 발레: 팽이처럼 빠르게 회전; JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | boss/boss_melody_rain.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 빗살 비: 두 팔을 치켜들어 오르골 빗살을 불러 내림; JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | boss/boss_melody_creak.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 삐걱: 너무 감겨 굳음, 등 열쇠가 분명히 보임; JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | boss/boss_melody_unwind.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 풀리는 중: 몸의 떨림이 가라앉고 눈이 돌아옴; JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | boss/boss_melody_calm.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 결말: 상자 가장자리에 앉아 쉬는 멜로디(파이 눈, 온화); JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | npc/npc_melody.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 마을 결말용 멜로디(정면, 그라모 옆 듀엣); JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | portrait/portrait_melody_wild.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 대화 카드용 멜로디(과감기, 눈이 핑핑); JOB-24_prompts.json | 합격 |
+| 2026-11-12 | JOB-24 | portrait/portrait_melody_calm.png | built-in image_gen; STYLE + SPRITE + SIDE-SCROLL + MELODY QUEEN; anchor/ref_02/volt; 대화 카드용 멜로디(온화); JOB-24_prompts.json | 합격 |
+
+2026-11-12 | JOB-25 | assets/npc/npc_tin_dance_01.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_tin_dance_02.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_tin_rest.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_bird_dance_01.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_bird_dance_02.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_bird_rest.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_top_dance_01.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_top_dance_02.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 | assets/npc/npc_top_rest.png | 내장 image_gen; STYLE + SPRITE + SIDE-SCROLL + ORGEL DANCERS 원문 및 manifest prompt; anchor/ref_02/PIP 참조; 왼쪽 방향, 춤 나선 눈·쉼 파이 눈; 시트 절단 --merge 90 | 합격
+2026-11-12 | JOB-25 / 검수 | assets/sheets/JOB-25_contact.png; assets/sheets/JOB-25_validation.json | 9/9 RGBA·투명 배경·높이 300px 이상·잔여 마젠타 0·시각 검수 합격; check_assets/contact_sheet 완료; 재생성 0회 | 합격; 전체 OK 227, 없음 28(JOB-26/27), 확인 필요 0, 오류 0
+
+2026-11-12 | JOB-26 | assets/sheets/JOB-26_mid2_draft.png | 내장 image_gen 초안 검수: 야외 지형 제거, 실내 기둥·인형 실루엣만 보존; 원본·수정 프롬프트 generation_record에 보존 | 재생성
+2026-11-12 | JOB-26 | assets/sheets/JOB-26_b_draft.png | 내장 image_gen 초안 검수: 꺼진 스피커 나팔 높이 보정, 교체용 크기 정렬; 원본·수정 프롬프트 generation_record에 보존 | 재생성
+2026-11-12 | JOB-26 | assets/sheets/JOB-26_far1_draft.png | 내장 image_gen 초안 검수: 양끝 지형·구름을 정리해 반복 경계 개선; 원본·수정 프롬프트 generation_record에 보존 | 재생성
+2026-11-12 | JOB-26 | assets/sheets/JOB-26_a_draft.png | 내장 image_gen 초안 검수: 반투명 동작 잔상 제거, 열쇠 구멍 마젠타 정리; 원본·수정 프롬프트 generation_record에 보존 | 재생성
+2026-11-12 | JOB-26 | assets/road/bg_orgel_far.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 7막 구간1 오르골 거리 먼 배경(좌우 반복) | 합격
+2026-11-12 | JOB-26 | assets/road/bg_orgel_mid.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 7막 구간1 중간 레이어(위쪽 마젠타) | 합격
+2026-11-12 | JOB-26 | assets/road/bg_ballroom_far.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 7막 구간2 무도회장 먼 배경(좌우 반복) | 합격
+2026-11-12 | JOB-26 | assets/road/bg_ballroom_mid.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 7막 구간2 중간 레이어 | 합격
+2026-11-12 | JOB-26 | assets/road/bg_melody_arena.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 멜로디 보스 아레나: 거대한 오르골 상자 뚜껑 위 무대(한 화면) | 합격
+2026-11-12 | JOB-26 | assets/props/prop_parcel_closed.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 6막 소포(닫힘, 끈으로 묶임, 덜덜 떨림) | 합격
+2026-11-12 | JOB-26 | assets/props/prop_orgel_wild.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 너무 감긴 낡은 오르골(뚜껑이 덜컹, 발레리나가 미친 듯 회전) | 합격
+2026-11-12 | JOB-26 | assets/props/prop_orgel_calm.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 풀린 오르골(제 속도로 노래) | 합격
+2026-11-12 | JOB-26 | assets/road/road_speaker.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 오르골 스피커 상자(나팔 달림, 음악을 뿜음) | 합격
+2026-11-12 | JOB-26 | assets/road/road_speaker_off.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 풀려서 꺼진 스피커 | 합격
+2026-11-12 | JOB-26 | assets/road/road_comb_drum.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 회전하는 오르골 빗살 원통(빗살이 튀어나옴) | 합격
+2026-11-12 | JOB-26 | assets/fx/fx_music_wave.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 과감기 음악 파동(분홍 고리) | 합격
+2026-11-12 | JOB-26 | assets/fx/fx_note_tornado.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 음표 회오리(바닥을 따라옴) | 합격
+2026-11-12 | JOB-26 | assets/fx/fx_comb_tooth.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 떨어지는 오르골 빗살 | 합격
+2026-11-12 | JOB-26 | assets/wind/wind_orgel_back.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 풀기 모달 배경 1: 낡은 오르골 밑면 클로즈업, 가운데 열쇠 구멍(열쇠 없음) | 합격
+2026-11-12 | JOB-26 | assets/wind/wind_melody_back.png | 내장 image_gen; STYLE + SPRITE/BACKGROUND + SIDE-SCROLL 원문과 manifest prompt; anchor/ref02/ref03/ref04/road 형식 참조; 분홍·금빛 오르골 테마; 풀기 모달 배경 2: 멜로디 여왕의 등 클로즈업, 가운데 열쇠 구멍(열쇠 없음) | 합격
+2026-11-12 | JOB-26 / 검수 | assets/sheets/JOB-26_contact.png; assets/sheets/JOB-26_validation.json | 16/16 RGBA 및 자동 검사 OK; 투명 스프라이트 11개·중간 레이어 2개; 배경 3개 1280x720; 중간 레이어 1280x360; 모달 중앙 빈 소켓; 반복 경계 시각 검수(픽셀 단위 동일성 아님); 전체 OK243, 없음12(JOB-27), 확인 필요0, 오류0 | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_50_parcel.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_51_orgel_scream.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_52_flashback_stage.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_53_flashback_gift.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_54_hidden_voice.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_55_waltz_signal.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_56_orgel_town.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_57_ballroom.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_58_memory_1.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_59_memory_2.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_60_melody_stops.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_61_duet.png | 내장 image_gen, 고정 스타일 블록·기존 캐릭터 참조, 장면별 프롬프트는 JOB-27_prompts.json | 재생성
+
+2026-11-12 | JOB-27 | assets/story/story_51_orgel_scream.png | 내장 image_gen 수정: 오르골·포장지를 자막 위로 이동, 현재 그라모 열쇠 2개; 전체 수정 프롬프트 JOB-27_revisions.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_52_flashback_stage.png | 내장 image_gen 수정: 라디오 스피커 무늬 제거, 젊은 그라모 열쇠 3개, 바닥 그림자 제거; 전체 수정 프롬프트 JOB-27_revisions.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_54_hidden_voice.png | 내장 image_gen 수정: 얼굴·오르골을 자막 위로 이동; 전체 수정 프롬프트 JOB-27_revisions.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_56_orgel_town.png | 내장 image_gen 수정: 중복 멜로디 제거, 오르골 마을 건축 표현; 전체 수정 프롬프트 JOB-27_revisions.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_57_ballroom.png | 내장 image_gen 수정: 보글을 자막 위 계단으로 이동, 회전 표현, 바닥 반사·그림자 제거; 전체 수정 프롬프트 JOB-27_revisions.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_58_memory_1.png | 내장 image_gen 수정: 라디오 다이얼·스피커 무늬 제거, 젊은 그라모 열쇠 3개; 전체 수정 프롬프트 JOB-27_revisions.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_60_melody_stops.png | 내장 image_gen 수정: 쉬는 새·팽이 주민 얼굴을 자막 위로 이동; 전체 수정 프롬프트 JOB-27_revisions.json | 합격
+
+2026-11-12 | JOB-27 | assets/story/story_61_duet.png | 내장 image_gen 수정: 작은 주민 얼굴 자막 여백 확보, 불필요한 바이올린 제거; 전체 수정 프롬프트 JOB-27_revisions.json | 합격

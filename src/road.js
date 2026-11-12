@@ -23,6 +23,10 @@
     const s = G.state, p = s.player;
     G.irisThen(p.x, p.y - 50, () => WT.Story.play(WT.DIALOGUE.act4open, () => RD.enter(1)));
   };
+  RD.startAct7 = function () {
+    const s = G.state, p = s.player;
+    G.irisThen(p.x, p.y - 50, () => WT.Story.play(WT.DIALOGUE.act7open, () => RD.enter(5)));
+  };
   RD.enter = function (zone) {
     const s = G.state, prev = s.road;
     const L = WT.ROAD_LEVELS[zone - 1];
@@ -35,13 +39,17 @@
       checkpoint: L.items.find((i) => i.type === 'checkpoint').x,
       items: L.items.map((i) => Object.assign({}, i, { state: 0, t: 0, y: 0 })),
       p: null, follow: { x: 40, y: GY }, cleared: false, after: [],
-      radioBat: RADIO_BAT[zone - 1], boss: null
+      radioBat: RADIO_BAT[zone - 1] == null ? 100 : RADIO_BAT[zone - 1], boss: null,
+      radioReborn: !!(s.npcs.radio && s.npcs.radio.reborn), danceT: 0
     };
     spawn(s.road.checkpoint);
     const r = s.road;
     WT.Audio.play('sfx_wind_self');
     if (L.boss) WT.RoadBoss.init(r);
-    else after(0.9, () => WT.UI.dialog({ who: 'radio', name: '라디오 씨', mood: 'battery', lines: D4().radio['zone' + zone] }));
+    else {
+      const lines = zone >= 5 ? WT.DIALOGUE.act7.radio['zone' + zone] : D4().radio['zone' + zone];
+      after(0.9, () => WT.UI.dialog({ who: 'radio', name: '라디오 씨', mood: s.road.radioReborn ? 'awake' : 'battery', lines }));
+    }
   };
   RD.after = (t, fn) => after(t, fn);
   function after(t, fn) { R().after.push({ t, fn }); }
@@ -81,6 +89,7 @@
         case 'lift': out.push({ x: it.x, y: GY - it.y, w: it.w, h: 20, top: true, mover: it }); break;
         case 'bridge': if (it.state === 2) out.push({ x: it.x, y: GY, w: it.w, h: 24, top: true }); break;
         case 'platform': out.push({ x: it.x, y: GY - it.h, w: it.w, h: 20, top: true }); break;
+        case 'dancer': if (it.state === 0) out.push({ x: it.x - 30, y: GY - 100, w: 60, h: 100 }); break; // 춤추는 동안 길을 막음
       }
     });
     if (r.boss) WT.RoadBoss.solids(r, out);
@@ -135,6 +144,8 @@
   function act() {
     const r = R(), p = r.p, T = D().toast;
     if (r.boss && WT.RoadBoss.act(r)) return;
+    const un = r.items.find((it) => (it.type === 'dancer' || it.type === 'speaker') && it.state === 0 && Math.abs(it.x - p.x) < (it.type === 'dancer' ? 90 : 110));
+    if (un) { unwindItem(un); return; }
     const ch = near('charger', 70);
     if (ch) { p.chargingT = P.chargeTime; p.vx = 0; return; }
     const lift = r.items.find((it) => it.type === 'lift' && p.x > it.x - 30 && p.x < it.x + it.w + 30 && it.state === 0);
@@ -148,6 +159,32 @@
       G.toast(dev.type === 'lift' ? T.lift : T.bridge);
     }, { title: dev.type === 'lift' ? '태엽 발판 감기' : '도개교 감기', guide: '원 그리기 또는 A · D 번갈아', variant: 'self', speed: 2.6 });
   }
+
+  // 7막: 춤추는 주민·스피커를 풀어 준다 (풀기 모달, 띠 넓게)
+  function unwindItem(it) {
+    const T7 = WT.DIALOGUE.act7.toast;
+    WT.Unwind.open(() => {
+      it.state = 1;
+      if (it.type === 'dancer') { WT.Audio.play(WT.Audio.defs.sfx_dancer_rest ? 'sfx_dancer_rest' : 'sfx_land'); G.toast(T7.rest); }
+      else { WT.Audio.play(WT.Audio.defs.sfx_speaker_off ? 'sfx_speaker_off' : 'sfx_radio_off'); G.toast(T7.speakerOff); }
+      G.burst('note', it.x - R().camX, GY - 120, 4);
+    }, { title: it.type === 'dancer' ? '춤추는 주민 풀어 주기' : '스피커 풀어 주기', band: [0.22, 0.9], rate: 0.6, back: 'wind_orgel_back' });
+  }
+  // 빗살 원통 박자: bgm_ballroom의 빗살 틱(0초부터 2박 = 0.714초마다)에 맞춘다. 원통은 4박(1.428초)마다 솟음.
+  // off는 0 또는 0.714(엇박). 곡이 안 나오면 구간 시간으로 대신.
+  const BEAT2 = 0.714, COMB_T = BEAT2 * 2;
+  function combPhase(r, it) {
+    const pos = WT.Audio.bgmPos && WT.Audio.bgmPos(r.L.bgm);
+    const base = pos != null && !r.testClock ? pos : r.t;
+    return ((base + (it.off || 0)) % COMB_T + COMB_T) % COMB_T;
+  }
+  RD.COMB_T = COMB_T;
+  // 과감기 음악 안인가 (켜진 스피커 둘레 또는 보스의 선율)
+  function inMusic(r, p) {
+    if (r.danceT > 0) return true;
+    return r.items.some((it) => it.type === 'speaker' && it.state === 0 && Math.abs(it.x - p.x) < it.r);
+  }
+  RD.inMusic = () => { const r = R(); return !!r && inMusic(r, r.p); };
 
   // ───────── 갱신 ─────────
   function hurt(dmg) {
@@ -217,6 +254,16 @@
     let dir = 0;
     if (!frozen) { if (input.held('left')) dir -= 1; if (input.held('right')) dir += 1; }
     if (p.charge && p.onGround) dir *= 0.3; // 모으는 동안은 천천히
+    if (r.danceT > 0) r.danceT -= dt;
+    p.dancing = p.power === 'wind' && !frozen && inMusic(r, p);
+    if (p.dancing) {
+      if (!p.wasDancing) G.toast(WT.DIALOGUE.act7.toast.dance);
+      p.danceHop = (p.danceHop || 0) - dt; p.danceFlipT = (p.danceFlipT || 0) - dt;
+      if (p.onGround && p.danceHop <= 0) { p.vy = -430; p.onGround = false; p.danceHop = 0.5; p.charge = null; WT.Audio.play(WT.Audio.defs.sfx_dance_lock ? 'sfx_dance_lock' : 'sfx_jump', { rate: 0.9 + Math.random() * 0.3, vol: 0.3 }); }
+      if (p.danceFlipT <= 0) { p.danceFlip = !p.danceFlip; p.danceFlipT = 1; }
+      if (p.danceFlip) dir = -dir;
+    } else p.danceFlip = false;
+    p.wasDancing = p.dancing;
     const speed = P.walk * (p.power === 'battery' ? P.batteryMul : 1);
     if (p.hurtT <= 0 && !frozen) p.vx = dir * speed;
     if (dir) p.facing = dir > 0 ? 1 : -1;
@@ -269,6 +316,12 @@
         else if (p.power === 'wind' && p.moving && Math.random() < dt * 4) WT.Audio.play(WT.Audio.defs.sfx_splash ? 'sfx_splash' : 'sfx_step_02', { vol: 0.3 });
       }
       if (it.type === 'wire' && Math.abs(p.x - it.x) < 34 && p.y > GY - 30) hurt(1);
+      if (it.type === 'comb') {
+        const ph = combPhase(r, it), up = ph < 0.45;
+        if (up && !it.up) { it.up = true; if (Math.abs(p.x - it.x) < 700) WT.Audio.play(WT.Audio.defs.sfx_comb_pluck ? 'sfx_comb_pluck' : 'sfx_wind_notch', { rate: 0.9 + Math.random() * 0.4, vol: 0.3 }); }
+        if (!up) it.up = false;
+        if (up && p.x > it.x && p.x < it.x + it.w && p.y > GY - 46) hurt(1);
+      }
       if (it.type === 'end' && p.x > it.x && !r.cleared) clear();
     });
     if (r.boss) WT.RoadBoss.update(dt, r);
@@ -289,14 +342,15 @@
     WT.Audio.jingle('jingle_zone_clear');
     G.toast(D().toast.clear);
     const next = r.zone + 1;
-    after(1.4, () => G.irisThen(r.p.x - r.camX, r.p.y - 50, () =>
-      WT.Story.play(next === 2 ? WT.DIALOGUE.act4zone2 : WT.DIALOGUE.act4gate, () => RD.enter(next))));
+    const story = WT.DIALOGUE[WT.ROAD_LEVELS[next - 1].storyBefore];
+    after(1.4, () => G.irisThen(r.p.x - r.camX, r.p.y - 50, () => (story ? WT.Story.play(story, () => RD.enter(next)) : RD.enter(next))));
   }
   // 보스를 쓰러뜨린 뒤 (road_boss.js가 부름)
   RD.bossDone = function (kind) {
     const r = R();
     G.irisThen(WT.W / 2, WT.H / 2, () => {
       if (kind === 'toad') WT.Story.play(WT.DIALOGUE.act5open, () => RD.enter(4));
+      else if (kind === 'melody') WT.Story.play(WT.DIALOGUE.act7end, finish7);
       else WT.Story.play(WT.DIALOGUE.act5end, finish);
     });
     void r;
@@ -318,6 +372,19 @@
     G.toast('마을로 돌아왔다 · 음악이 둘이 되었다');
   }
   RD.finish = finish;
+  // 7막 끝: 마을로, 멜로디가 그라모 곁에 남는다
+  function finish7() {
+    const s = G.state, p = s.player;
+    s.road = null; s.scene = 'town'; s.episode = 5;
+    G.setScene('town'); WT.UI.setScene('town');
+    p.x = WT.WORLD.npcs.gramo.x - 40; p.y = WT.WORLD.npcs.gramo.y + 130; p.dir = 'up'; p.power = 'wind';
+    if (s.act6) s.act6.stage = 'done';
+    if (!s.house.unlocked.includes('orgel')) s.house.unlocked.push('orgel');
+    WT.Act3 && WT.Act3.refresh();
+    WT.Audio.play('sfx_reward_unlock');
+    G.toast('새 가구 · 오르골');
+  }
+  RD.finish7 = finish7;
   RD.clearNow = function () { const r = R(); if (r) { r.p.x = r.L.items.find((i) => i.type === 'end').x + 10; } };
 
   // ───────── 소리 ─────────
@@ -330,7 +397,9 @@
       sfx_jump_charge: p.charge && p.charge.t > 0.12 ? 1 : 0,
       sfx_charge: p.chargingT > 0 ? 1 : 0,
       sfx_conveyor: r.items.some((it) => it.type === 'conveyor' && Math.abs(p.x - (it.x + it.w / 2)) < it.w / 2 + 200) ? 0.8 : 0,
-      sfx_elevator: r.items.some((it) => it.type === 'elevator' && it.moving) ? 1 : 0
+      sfx_elevator: r.items.some((it) => it.type === 'elevator' && it.moving) ? 1 : 0,
+      amb_orgel_scream: r.items.some((it) => it.type === 'speaker' && it.state === 0 && Math.abs(it.x - p.x) < it.r + 150) ? 0.5 : 0,
+      sfx_note_tornado: r.boss && r.boss.haz.tornados && r.boss.haz.tornados.some((q) => q.live) ? 1 : 0
     };
     if (r.boss) { const m = WT.RoadBoss.music(r); Object.assign(loops, m.loops || {}); return { want: m.want, fallback: m.fallback || 'bgm_boss', thin: p.power === 'battery' ? 0.35 : 0, loops }; }
     return { want: r.L.bgm, fallback: 'bgm_town_awake', thin: p.power === 'battery' ? 0.55 : 0, loops };
@@ -340,7 +409,8 @@
   RD.tip = function () {
     const r = R();
     if (!r || G.locked()) return null;
-    const p = r.p, T = D().tip;
+    const p = r.p, T = Object.assign({}, D().tip, WT.DIALOGUE.act7.tip);
+    if (p.dancing) return p.power === 'wind' ? '춤 상태! Q로 건전지면 음악에 버틴다' : null;
     if (p.swapT > 0) return '갈아끼우는 중…';
     if (r.boss) return WT.RoadBoss.tip(r);
     if (p.power === 'wind' && r.wind < 20) return '태엽이 풀려 간다 · 나팔 기둥까지 서두르자';
@@ -379,7 +449,7 @@
   RD.draw = function (ctx, t, Rn) {
     const s = G.state, r = R();
     if (!r) return;
-    const Z = ZONE_COL[Math.min(r.zone, 3) - 1], cam = r.camX, p = r.p;
+    const Z = r.L.kind === 'orgel' ? { sky: ['#f3c6c8', '#e2a9b6'], far: '#d79aa8', mid: '#c48296', ground: '#b98a6a', top: '#e8a0a8' } : ZONE_COL[Math.min(r.zone, 3) - 1], cam = r.camX, p = r.p;
     if (r.boss && WT.Assets.has(r.L.bg)) { WT.drawThing(ctx, r.L.bg, null, WT.W / 2, WT.H, { h: WT.H, sx: WT.W / (WT.H * WT.Assets.aspect(r.L.bg)) }); }
     else {
     // 하늘 · 먼 배경 · 중간
@@ -397,7 +467,7 @@
     }
     ctx.save(); ctx.translate(-Math.round(cam), 0);
     // 땅
-    r.L.ground.forEach(([a, b]) => { if (b < cam - 50 || a > cam + WT.W + 50) return; tileFill(ctx, r.L.kind === 'grass' ? 'road_ground_grass' : 'road_ground_metal', a, GY, b - a, WT.H - GY, Z.ground, Z.top); ctx.strokeStyle = C.outline; ctx.lineWidth = 4; ctx.strokeRect(a, GY, b - a, WT.H - GY + 10); });
+    r.L.ground.forEach(([a, b]) => { if (b < cam - 50 || a > cam + WT.W + 50) return; tileFill(ctx, r.L.kind === 'grass' ? 'road_ground_grass' : r.L.kind === 'orgel' ? 'road_ground_orgel' : 'road_ground_metal', a, GY, b - a, WT.H - GY, Z.ground, Z.top); ctx.strokeStyle = C.outline; ctx.lineWidth = 4; ctx.strokeRect(a, GY, b - a, WT.H - GY + 10); });
     // 장치 · 장애물
     r.items.forEach((it) => { if (it.x + (it.w || 0) < cam - 200 || it.x > cam + WT.W + 200) return; drawItem(ctx, it, t, r); });
     if (r.boss) WT.RoadBoss.draw(ctx, t, r);
@@ -405,7 +475,8 @@
     if (!r.boss) {
       const f = r.follow, low = r.radioBat < 50, flick = low && Math.sin(t * 11) > 0.7;
       ctx.save(); if (flick) ctx.globalAlpha = 0.6;
-      WT.drawThing(ctx, 'npc_radio_idle', PH.radio, f.x, f.y, { h: 100, power: 'battery', t, flip: p.facing < 0, rot: low ? Math.sin(t * 2) * 0.03 : 0 });
+      if (r.radioReborn) { const bb = Math.abs(Math.sin(t * 6)); WT.drawThing(ctx, ['npc_radio_reborn_idle'], PH.radio, f.x, f.y - bb * 5, { h: 110, reborn: true, t, flip: p.facing < 0 }); }
+      else WT.drawThing(ctx, 'npc_radio_idle', PH.radio, f.x, f.y, { h: 100, power: 'battery', t, flip: p.facing < 0, rot: low ? Math.sin(t * 2) * 0.03 : 0 });
       ctx.restore();
     }
     drawBogle(ctx, t, r);
@@ -478,6 +549,27 @@
         if (Math.random() < 0.5) WT.drawThing(ctx, 'fx_static', PH.static, it.x + 18 + (Math.random() - 0.5) * 20, GY - 20 - Math.random() * 20, { h: 34, anchor: 'center' });
         break;
       }
+      case 'speaker': {
+        const on = it.state === 0;
+        if (on) { ctx.save(); ctx.globalAlpha = 0.12 + 0.06 * Math.sin(t * 6); ctx.fillStyle = '#e8a0a8'; ctx.beginPath(); ctx.ellipse(it.x, GY - 60, it.r, 120, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+          for (let i = 0; i < 3; i++) { const k = (t * 0.8 + i / 3) % 1; WT.drawThing(ctx, 'fx_music_wave', (c) => { c.strokeStyle = '#e8a0a8'; c.lineWidth = 4; c.beginPath(); c.arc(0, 0, 40, 0, Math.PI * 2); c.stroke(); }, it.x, GY - 130, { h: 60 + k * it.r * 1.2, anchor: 'center', alpha: 1 - k }); } }
+        WT.drawThing(ctx, on ? 'road_speaker' : ['road_speaker_off', 'road_speaker'], PH.speaker, it.x, GY, { h: 150, on, t, rot: on ? Math.sin(t * 12) * 0.03 : 0 });
+        break;
+      }
+      case 'dancer': {
+        const k = it.kind || 'tin', on = it.state === 0;
+        const ids = on ? [`npc_${k}_dance_0${Math.floor(t * 6) % 2 + 1}`, `npc_${k}_dance_01`] : [`npc_${k}_rest`];
+        const bob = on ? Math.abs(Math.sin(t * 9)) * 12 : 0;
+        WT.Render.shadow(it.x, GY, 50, 0.25);
+        WT.drawThing(ctx, ids, PH.dancer, it.x, GY - bob, { h: 110, kind: k, on, t, rot: on ? Math.sin(t * 9) * 0.15 : 0 });
+        break;
+      }
+      case 'comb': {
+        const ph = combPhase(r, it), up = ph < 0.45, warn = ph > COMB_T - 0.25;
+        if (!WT.drawThing(ctx, 'road_comb_drum', null, it.x + it.w / 2, GY + 30, { h: 70, sx: it.w / 200, alpha: 0.9 })) { ctx.fillStyle = '#c99a3a'; ctx.strokeStyle = C.outline; ctx.lineWidth = 4; ctx.fillRect(it.x, GY - 4, it.w, 18); ctx.strokeRect(it.x, GY - 4, it.w, 18); }
+        for (let x = it.x + 10; x < it.x + it.w; x += 22) { const hgt = up ? 44 : warn ? 8 : 2; ctx.fillStyle = '#d8dde3'; ctx.strokeStyle = C.outline; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x - 6, GY); ctx.lineTo(x, GY - hgt); ctx.lineTo(x + 6, GY); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+        break;
+      }
       case 'platform':
         if (!WT.drawThing(ctx, 'road_platform_metal', null, it.x + it.w / 2, GY - it.h + 34, { h: 40, sx: it.w / 200 })) { blk(it.x, GY - it.h, it.w, 20, '#7a7f88'); ctx.fillStyle = '#e07a3a'; for (let x = it.x + 6; x < it.x + it.w - 10; x += 24) ctx.fillRect(x, GY - it.h + 4, 10, 4); }
         break;
@@ -509,6 +601,7 @@
       if (!p.onGround) { sy = 1.08; sx = 0.94; }
     } else if (p.moving) rot = 0.08 * p.facing;
     if (p.landT > 0) { sy *= 0.88; sx *= 1.1; }
+    if (p.dancing) { rot += Math.sin(t * 14) * 0.25; for (let i = 0; i < 3; i++) { const a = t * 5 + i * 2.1; WT.drawThing(ctx, ['fx_note_01', 'fx_note_02'], PH.note, p.x + Math.cos(a) * 46, p.y - 70 + Math.sin(a) * 20, { h: 22, anchor: 'center' }); } }
     if (p.inv > 0 && Math.floor(t * 20) % 2) return;
     WT.Render.shadow(p.x, groundAt(p.x), 50, p.onGround ? 0.3 : 0.15);
     if (bat || p.sleepT > 0) { ctx.save(); ctx.filter = bat ? 'grayscale(1) contrast(1.05) brightness(1.04)' : 'grayscale(.6) brightness(.85)'; }
@@ -553,14 +646,14 @@
     const p = r.p;
     ctx.save();
     ctx.font = '24px "Do Hyeon", sans-serif'; ctx.textBaseline = 'middle';
-    const name = D().zoneName[r.zone - 1], w = ctx.measureText(name).width + 40;
+    const name = r.zone >= 5 ? WT.DIALOGUE.act7.zoneName[r.zone - 5] : D().zoneName[r.zone - 1], w = ctx.measureText(name).width + 40;
     ctx.fillStyle = 'rgba(244,230,200,.94)'; ctx.strokeStyle = C.outline; ctx.lineWidth = 4;
     ctx.beginPath(); ctx.roundRect(20, 18, w, 48, 14); ctx.fill(); ctx.stroke();
     ctx.fillStyle = C.outline; ctx.fillText(name, 40, 43);
     // 진행 막대(길) · 라디오 씨 건전지
     if (!r.boss) { ctx.fillStyle = 'rgba(43,34,48,.6)'; ctx.fillRect(40 + w, 38, 200, 8); ctx.fillStyle = C.yellow; ctx.fillRect(40 + w, 38, 200 * Math.min(1, p.x / r.L.len), 8); }
     ctx.restore();
-    if (!(r.boss && r.boss.reborn)) {
+    if (!(r.boss && r.boss.reborn) && !r.radioReborn) {
       const x = 590, y = 76, k = Math.max(0, r.radioBat / 100);
       ctx.save(); ctx.fillStyle = 'rgba(43,34,48,.88)'; ctx.strokeStyle = C.cream; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.roundRect(x, y, 190, 50, 14); ctx.fill(); ctx.stroke();

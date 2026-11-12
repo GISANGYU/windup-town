@@ -1,0 +1,251 @@
+{
+  "job": "JOB-26",
+  "files": [
+    {
+      "id": "bg_orgel_far",
+      "file": "road/bg_orgel_far.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 0,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "bg_orgel_mid",
+      "file": "road/bg_orgel_mid.png",
+      "size": [
+        1280,
+        360
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 294168,
+      "magenta_pixels": 102
+    },
+    {
+      "id": "bg_ballroom_far",
+      "file": "road/bg_ballroom_far.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 0,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "bg_ballroom_mid",
+      "file": "road/bg_ballroom_mid.png",
+      "size": [
+        1280,
+        360
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 342458,
+      "magenta_pixels": 186
+    },
+    {
+      "id": "bg_melody_arena",
+      "file": "road/bg_melody_arena.png",
+      "size": [
+        1280,
+        720
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 0,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "prop_parcel_closed",
+      "file": "props/prop_parcel_closed.png",
+      "size": [
+        506,
+        385
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 75508,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "prop_orgel_wild",
+      "file": "props/prop_orgel_wild.png",
+      "size": [
+        754,
+        640
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 210052,
+      "magenta_pixels": 8
+    },
+    {
+      "id": "prop_orgel_calm",
+      "file": "props/prop_orgel_calm.png",
+      "size": [
+        617,
+        602
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 133735,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "road_speaker",
+      "file": "road/road_speaker.png",
+      "size": [
+        544,
+        650
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 184821,
+      "magenta_pixels": 24
+    },
+    {
+      "id": "road_speaker_off",
+      "file": "road/road_speaker_off.png",
+      "size": [
+        544,
+        650
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 187648,
+      "magenta_pixels": 57
+    },
+    {
+      "id": "road_comb_drum",
+      "file": "road/road_comb_drum.png",
+      "size": [
+        832,
+        407
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 63742,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "fx_music_wave",
+      "file": "fx/fx_music_wave.png",
+      "size": [
+        634,
+        686
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 291728,
+      "magenta_pixels": 86
+    },
+    {
+      "id": "fx_note_tornado",
+      "file": "fx/fx_note_tornado.png",
+      "size": [
+        391,
+        529
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 127101,
+      "magenta_pixels": 33
+    },
+    {
+      "id": "fx_comb_tooth",
+      "file": "fx/fx_comb_tooth.png",
+      "size": [
+        116,
+        573
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 30923,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "wind_orgel_back",
+      "file": "wind/wind_orgel_back.png",
+      "size": [
+        745,
+        825
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 66218,
+      "magenta_pixels": 0
+    },
+    {
+      "id": "wind_melody_back",
+      "file": "wind/wind_melody_back.png",
+      "size": [
+        841,
+        840
+      ],
+      "mode": "RGBA",
+      "check": [
+        "OK",
+        []
+      ],
+      "transparent_pixels": 196810,
+      "magenta_pixels": 0
+    }
+  ],
+  "visual_review": "JOB-26_contact.png and JOB-26_repeat_preview.png inspected; no text, floor shadows, or baked-in arena platforms; two empty centered key sockets; all item silhouettes and upper mid transparency preserved.",
+  "seams": "Visual repeat review only; generated watercolor edge pixels are not numerically identical.",
+  "delivered": 16,
+  "automated_pass": true,
+  "speaker_canvas_match": true,
+  "remaining_missing": "JOB-27 cutscenes: 12; outside this JOB"
+}

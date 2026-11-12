@@ -25,7 +25,7 @@
 </head>
 <body>
 <h1>태엽 마을 사운드 미리듣기</h1>
-<p>1·2막은 tools/gen_audio.py, 3~5막은 tools/gen_audio_act3_5.py로 합성했다. ↻ 표시가 있는 파일은 반복 재생되므로 이음새를 확인할 수 있다. 볼륨은 vol 권장값으로 맞춰 둠.</p>
+<p>1·2막은 tools/gen_audio.py, 3~5막은 tools/gen_audio_act3_5.py·gen_audio_act3_5b.py, 6~7막은 tools/gen_audio_act6_7.py로 합성했다. ↻ 표시가 있는 파일은 반복 재생되므로 이음새를 확인할 수 있다. 볼륨은 vol 권장값으로 맞춰 둠.</p>
 <div class="bar" id="acts"></div>
 <div class="bar"><input id="q" type="search" placeholder="id·장면 검색"></div>
 <div id="stemBox"></div>
@@ -35,7 +35,7 @@
   const M = window.AUDIO_MANIFEST;
   const all = [...M.bgm.map((a) => ({ ...a, kind: 'bgm' })), ...M.sfx.map((a) => ({ ...a, kind: 'sfx' }))];
   const actOf = (a) => a.act || 12;
-  const ACTS = [[0, '전체'], [12, '1·2막'], [3, '3막'], [4, '4막'], [5, '5막']].filter(([k]) => k === 0 || all.some((a) => actOf(a) === k));
+  const ACTS = [[0, '전체'], [12, '1·2막'], [3, '3막'], [4, '4막'], [5, '5막'], [6, '6막'], [7, '7막']].filter(([k]) => k === 0 || all.some((a) => actOf(a) === k));
   let cur = 0;
   const $ = (id) => document.getElementById(id);
 

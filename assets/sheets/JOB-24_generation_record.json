@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-12",
+  "job": "JOB-24",
+  "mode": "built-in image_gen",
+  "prompts": "JOB-24_prompts.json",
+  "references": [
+    "C:/계원예술대학교/전공/2학년2학기/인터렉션웹/11주차/windup-town/assets/refs/style_anchor.png",
+    "C:/계원예술대학교/전공/2학년2학기/인터렉션웹/11주차/windup-town/assets/refs/ref_02_character.jpg",
+    "C:/계원예술대학교/전공/2학년2학기/인터렉션웹/11주차/windup-town/assets/boss/boss_volt_idle.png"
+  ],
+  "additional_references": {
+    "b": "assets/sheets/JOB-24_a.png",
+    "c": "assets/sheets/JOB-24_b.png"
+  },
+  "selected_sources": {
+    "a": "C:/Users/yu505/.codex/generated_images/01a1cbe7-32c7-70b1-a65a-f1f670679e83/exec-b11c41a2-3e4a-4f69-adcb-d110c4841934.png",
+    "b": "C:/Users/yu505/.codex/generated_images/01a1cbe7-32c7-70b1-a65a-f1f670679e83/exec-84ebbd0d-3cbb-4d56-ae40-568282ca676b.png",
+    "c": "C:/Users/yu505/.codex/generated_images/01a1cbe7-32c7-70b1-a65a-f1f670679e83/exec-e5de615f-f4b1-41da-b44a-d22569cab478.png"
+  },
+  "processing": "slice_sheet.py defaults; 4/3/3 sprites; source sheets preserved. No source art repainting. RGBA output with no remaining magenta pixels.",
+  "revisions": [],
+  "validation": {
+    "delivered": 10,
+    "all_job24_ok": true,
+    "visual_review": "JOB-24_contact.png reviewed against anchor at manifest heights. All boss poses look left; NPC faces viewer; spiral eyes soften during unwind and pie-cut eyes appear in calm/NPC. Creak key clear at screen right. All effects intact, no text or ground shadows. Each output >=300px tall.",
+    "limitations": [],
+    "whole_project_status": "221 OK, 0 review, 34 missing including 16 required; remaining are outside JOB-24 at verification time."
+  }
+}

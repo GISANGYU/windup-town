@@ -34,6 +34,12 @@
     const cv = $('#cardPortrait'), c = cv.getContext('2d');
     c.clearRect(0, 0, cv.width, cv.height);
     const id = `portrait_${opt.who}_${opt.mood}`;
+    if (opt.who === 'melody') { // 7막 보스 · 이후 마을
+      const pid = opt.mood === 'wild' ? 'portrait_melody_wild' : 'portrait_melody_calm';
+      if (WT.Assets.has(pid)) { WT.drawThing(c, pid, null, cv.width / 2, cv.height / 2, { h: cv.height * 0.9, anchor: 'center' }); return; }
+      WT.drawThing(c, opt.mood === 'wild' ? 'boss_melody_idle' : ['boss_melody_calm', 'npc_melody'], WT.PH.melody, cv.width / 2, cv.height * 0.98, { h: cv.height * 0.9, state: opt.mood === 'wild' ? 'attack' : 'calm', t: 0 });
+      return;
+    }
     if (opt.who === 'volt' || opt.who === 'voltSmall' || opt.who === 'toad') { // 3~5막 보스
       const pid = { volt: 'portrait_volt', voltSmall: 'portrait_volt_small', toad: 'portrait_toad' }[opt.who];
       if (WT.Assets.has(pid)) { WT.drawThing(c, pid, null, cv.width / 2, cv.height / 2, { h: cv.height * 0.9, anchor: 'center' }); return; }

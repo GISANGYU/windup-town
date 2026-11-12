@@ -535,6 +535,68 @@
     ctx.save(); ctx.translate(18, -196); ctx.rotate(st === 'hurt' || down ? 0.9 : -0.4); rr(ctx, -5, -46, 10, 46, 4, '#4a505a', 3); ell(ctx, 0, -50, 11, 11, C.red, 3); ctx.restore();
     if (st === 'over' && Math.sin(t * 6) > 0) ell(ctx, 60, -200, 16, 12, C.cream, 3);
   };
+
+  // ───────── 제6~7막 임시 도형 ─────────
+  const PINK = '#e8a0a8';
+  // 멜로디 여왕: 오르골 상자 위 발레리나 (왼쪽을 봄). o.state: attack|over|calm|hurt|memory
+  PH.melody = function (ctx, h, o) {
+    const k = h / 260; ctx.scale(k, k);
+    const t = o.t || 0, st = o.state, calm = st === 'calm' || st === 'memory' || st === 'hurt';
+    const spin = o.atk === 'tornado' || o.atk === 'spin';
+    // 오르골 상자
+    rr(ctx, -90, -70, 180, 70, 10, PINK); ctx.strokeStyle = C.yellow; ctx.lineWidth = 4; ctx.strokeRect(-80, -60, 160, 50);
+    // 다리 (발끝)
+    const wob = calm ? 0 : Math.sin(t * 30) * 3;
+    hose(ctx, -6, -130, -8 + wob, -72, -4, 5, C.cream); hose(ctx, 6, -130, spin ? 30 : 20, -100, 10, 5, C.cream);
+    ell(ctx, -8 + wob, -72, 7, 5, PINK, 2.5);
+    // 튀튀
+    style(ctx, PINK); ctx.beginPath(); ctx.ellipse(0, -138, spin ? 60 : 46, 14, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    // 몸
+    rr(ctx, -16, -190, 32, 56, 12, C.cream);
+    // 팔
+    const up = o.atk === 'wave' || o.atk === 'rain';
+    hose(ctx, -14, -180, up ? -60 : -44, up ? -230 : -150, -8, 5, C.cream); glove(ctx, up ? -60 : -44, up ? -230 : -150, 6);
+    hose(ctx, 14, -180, up ? 60 : 44, up ? -230 : -160, 8, 5, C.cream); glove(ctx, up ? 60 : 44, up ? -230 : -160, 6);
+    // 등 열쇠 (오른쪽)
+    ctx.save(); ctx.translate(26, -170); ctx.rotate(calm ? 0 : t * (st === 'over' ? 1 : 8)); ell(ctx, 10, 0, 9, 11, '#c0c4cc', 3); ell(ctx, 26, 0, 9, 11, '#c0c4cc', 3); rr(ctx, 0, -3, 14, 6, 2, '#c0c4cc', 2); ctx.restore();
+    // 머리
+    ell(ctx, 0, -214, 24, 24, C.cream, 4); ell(ctx, 0, -240, 12, 8, C.yellow, 3);
+    if (calm) { pieEye(ctx, -10, -216, 7, 1, -0.4); pieEye(ctx, 8, -216, 7, 1, -0.4); }
+    else { style(ctx, 'transparent', 2.5); [-10, 8].forEach((x) => { ctx.beginPath(); for (let a = 0; a < 9; a += 0.5) ctx.lineTo(x + Math.cos(a + t * 10) * a * 0.8, -216 + Math.sin(a + t * 10) * a * 0.8); ctx.stroke(); }); }
+    style(ctx, 'transparent', 3); ctx.beginPath(); ctx.arc(-1, -204, calm ? 6 : 9, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+    if (st === 'over') { ctx.strokeStyle = C.outline; ctx.lineWidth = 2; for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.moveTo(30 + i * 6, -200 - i * 10); ctx.lineTo(42 + i * 6, -206 - i * 10); ctx.stroke(); } }
+  };
+  // 오르골 마을 주민 (왼쪽을 봄). o.kind: tin|bird|top, o.on: 춤추는 중
+  PH.dancer = function (ctx, h, o) {
+    const k = h / 110; ctx.scale(k, k);
+    const t = o.t || 0, on = o.on;
+    if (o.kind === 'bird') { ell(ctx, 0, -40, 34, 30, C.yellow); style(ctx, '#e0a93a', 3); ctx.beginPath(); ctx.moveTo(-32, -44); ctx.lineTo(-48, -40); ctx.lineTo(-32, -36); ctx.closePath(); ctx.fill(); ctx.stroke(); ell(ctx, 10, on ? -60 + Math.sin(t * 20) * 8 : -46, 18, 10, '#e0a93a', 3); hose(ctx, -6, -12, -8, 0, 0, 4, C.red); hose(ctx, 6, -12, 8, 0, 0, 4, C.red); }
+    else if (o.kind === 'top') { style(ctx, PINK); ctx.beginPath(); ctx.moveTo(-36, -60); ctx.quadraticCurveTo(0, -80, 36, -60); ctx.lineTo(0, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); ell(ctx, 0, -76, 16, 16, C.cream, 3); rr(ctx, -4, -102, 8, 14, 2, C.wood, 2); }
+    else { rr(ctx, -18, -70, 36, 46, 8, C.red); rr(ctx, -16, -100, 32, 30, 6, C.cream); rr(ctx, -14, -124, 28, 26, 4, C.black); hose(ctx, -8, -24, on ? -18 : -10, 0, -4, 5, C.blue); hose(ctx, 8, -24, on ? 22 : 10, on ? -20 : 0, 4, 5, C.blue); }
+    // 눈: 춤추면 나선, 쉬면 파이 눈
+    const ey = o.kind === 'bird' ? -48 : o.kind === 'top' ? -78 : -88;
+    if (on) { style(ctx, 'transparent', 2); [-8, 6].forEach((x) => { ctx.beginPath(); for (let a = 0; a < 7; a += 0.5) ctx.lineTo(x + Math.cos(a + t * 12) * a * 0.7, ey + Math.sin(a + t * 12) * a * 0.7); ctx.stroke(); }); }
+    else { pieEye(ctx, -8, ey, 5, 0.6, -0.4); pieEye(ctx, 6, ey, 5, 0.6, -0.4); }
+    // 등 열쇠
+    ctx.save(); ctx.translate(20, ey + 20); ctx.rotate(on ? t * 14 : 0); ell(ctx, 6, 0, 5, 6, C.yellow, 2); ell(ctx, 16, 0, 5, 6, C.yellow, 2); ctx.restore();
+  };
+  // 오르골 스피커 상자 (나팔)
+  PH.speaker = function (ctx, h, o) {
+    const k = h / 150; ctx.scale(k, k);
+    rr(ctx, -40, -80, 80, 80, 10, PINK); ctx.strokeStyle = C.yellow; ctx.lineWidth = 3; ctx.strokeRect(-32, -72, 64, 64);
+    ctx.save(); ctx.translate(0, -80); ctx.rotate(o.on ? 0 : 0.6);
+    style(ctx, C.yellow); ctx.beginPath(); ctx.moveTo(-6, 0); ctx.lineTo(-34, -60); ctx.quadraticCurveTo(0, -76, 34, -60); ctx.lineTo(6, 0); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+    ctx.save(); ctx.translate(46, -40); ctx.rotate(o.on ? (o.t || 0) * 10 : 0); ell(ctx, 0, -8, 6, 7, C.yellow, 2); ell(ctx, 0, 8, 6, 7, C.yellow, 2); ctx.restore();
+  };
+  // 낡은 오르골 (o.wild: 너무 감김)
+  PH.orgel = function (ctx, h, o) {
+    const k = h / 70; ctx.scale(k, k);
+    rr(ctx, -34, -34, 68, 34, 6, '#8a5a3a');
+    ctx.save(); ctx.translate(-34, -34); ctx.rotate(o.wild ? -0.9 - Math.sin((o.t || 0) * 30) * 0.15 : -1.1); rr(ctx, 0, -4, 68, 6, 3, '#8a5a3a', 3); ctx.restore();
+    const r = o.wild ? (o.t || 0) * 30 : (o.t || 0) * 3;
+    ctx.save(); ctx.translate(0, -36); ctx.scale(Math.cos(r), 1); ell(ctx, 0, -12, 5, 12, PINK, 2); ctx.restore();
+    ctx.save(); ctx.translate(38, -18); ctx.rotate(o.wild ? (o.t || 0) * 20 : 0); ell(ctx, 0, -6, 4, 5, C.yellow, 2); ell(ctx, 0, 6, 4, 5, C.yellow, 2); ctx.restore();
+  };
   WT.PH_COLORS = { GREY, STEEL, SIGNAL, HONEY };
   WT.dotEyes = dotEyes;
   WT.PH = PH;
